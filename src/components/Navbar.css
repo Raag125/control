@@ -1,0 +1,354 @@
+/* ============================================================
+   A to Z Pest Solutions — Floating Pill Glassmorphic Navbar
+   ============================================================ */
+
+.unique-header-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.25rem 0;
+  transition: padding 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none; /* Let clicks pass through outside the navbar */
+}
+
+/* Scrolled state padding change */
+.wrap--scrolled {
+  padding: 0.75rem 0;
+}
+
+.unique-header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+  width: 100%;
+}
+
+/* Floating Navigation Island */
+.unique-nav-island {
+  pointer-events: auto; /* Re-enable clicks on the nav itself */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(22, 163, 74, 0.12);
+  border-radius: var(--radius-full);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.03),
+    0 10px 40px rgba(22, 163, 74, 0.06);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wrap--scrolled .unique-nav-island {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 
+    0 4px 25px rgba(0, 0, 0, 0.06),
+    0 12px 35px rgba(22, 163, 74, 0.08);
+}
+
+/* Logo Section */
+.unique-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.unique-logo-shield {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.unique-logo:hover .unique-logo-shield {
+  transform: rotate(-10deg) scale(1.05);
+}
+
+.unique-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.unique-logo-main {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--clr-text);
+  letter-spacing: -0.01em;
+}
+
+.unique-logo-sub {
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: var(--clr-primary-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Desktop Menu Links */
+.unique-desktop-menu {
+  display: none;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .unique-desktop-menu {
+    display: flex;
+  }
+}
+
+.unique-menu-item {
+  position: relative;
+}
+
+.unique-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clr-text-muted);
+  border-radius: var(--radius-full);
+  transition: all 0.2s var(--ease-smooth);
+  background: transparent;
+  cursor: pointer;
+}
+
+.unique-menu-btn:hover {
+  color: var(--clr-primary);
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.unique-menu-btn.btn-active {
+  color: var(--clr-primary-dark);
+  background: var(--clr-accent-light);
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* Unique Dropdown Panel (Desktop) */
+.unique-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 0.85rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  background: #ffffff;
+  border: 1px solid rgba(22, 163, 74, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.06),
+    0 15px 45px rgba(22, 163, 74, 0.08);
+  z-index: 110;
+}
+
+.unique-dropdown-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+}
+
+.unique-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.unique-dropdown-link:hover {
+  background: var(--clr-accent-light);
+  color: var(--clr-primary-dark);
+  transform: translateX(4px);
+}
+
+.drop-emoji {
+  font-size: 1.1rem;
+}
+
+/* Header Actions */
+.unique-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.unique-cta-btn {
+  padding: 0.55rem 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+}
+
+/* Burger Button */
+.unique-burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.05);
+  border: 1px solid rgba(22, 163, 74, 0.1);
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.unique-burger:hover {
+  background: var(--clr-accent-light);
+  color: var(--clr-primary);
+  border-color: rgba(22, 163, 74, 0.2);
+}
+
+@media (min-width: 1024px) {
+  .unique-burger {
+    display: none;
+  }
+}
+
+/* ============================================================
+   MOBILE PANEL (Floating directly below the nav island)
+   ============================================================ */
+.unique-mobile-overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0.5rem var(--container-px) var(--container-px);
+  pointer-events: auto;
+  z-index: 99;
+}
+
+.unique-mobile-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(22, 163, 74, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.06),
+    0 10px 25px rgba(22, 163, 74, 0.08);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.unique-mobile-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0;
+  margin: 0 0 1.25rem 0;
+}
+
+.unique-mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--clr-text-muted);
+  border-radius: var(--radius-md);
+  transition: all 0.2s var(--ease-smooth);
+  background: transparent;
+  cursor: pointer;
+}
+
+.unique-mobile-link:hover,
+.unique-mobile-link.mobile-active {
+  background: var(--clr-accent-light);
+  color: var(--clr-primary-dark);
+}
+
+.unique-mobile-sub {
+  list-style: none;
+  padding-left: 0.75rem;
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.unique-mobile-sub-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.unique-mobile-sub-link:hover {
+  background: rgba(22, 163, 74, 0.04);
+  color: var(--clr-primary);
+}
+
+/* Mobile Action CTA Buttons */
+.unique-mobile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.unique-mobile-action-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 0.85rem;
+  font-size: 0.9rem;
+}
+
+.unique-mobile-action-btn-wa {
+  width: 100%;
+  justify-content: center;
+  padding: 0.85rem;
+  font-size: 0.9rem;
+  border-color: #22c55e;
+  color: #15803d;
+  background: #ffffff;
+}
+
+.unique-mobile-action-btn-wa:hover {
+  background: #dcfce7;
+}
+
+/* Hide header details on mobile view screen sizes */
+@media (max-width: 1023px) {
+  .unique-header-wrap {
+    padding: 0.75rem 0;
+  }
+  
+  .unique-cta-btn {
+    display: none; /* Show only inside mobile expansion panel */
+  }
+}

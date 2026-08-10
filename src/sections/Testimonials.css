@@ -1,0 +1,51 @@
+.testimonials { overflow: clip; background: var(--clr-surface-2); }
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px)  { .testimonials__grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 560px)  { .testimonials__grid { grid-template-columns: 1fr; } }
+
+.testimonial-card {
+  background: #fff;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 0.9rem;
+  transition: all 0.3s var(--ease-smooth);
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.testimonial-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s var(--ease-smooth);
+}
+.testimonial-card:hover {
+  border-color: var(--clr-border-2);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.testimonial-card:hover::before { transform: scaleX(1); }
+
+.testimonial-card__quote { color: var(--clr-accent); flex-shrink: 0; opacity: 0.5; }
+.testimonial-card__stars { display: flex; gap: 0.2rem; color: #f59e0b; }
+.testimonial-card__text { font-size: 0.875rem; color: var(--clr-text-muted); line-height: 1.75; flex: 1; font-style: italic; }
+
+.testimonial-card__meta {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding-top: 0.75rem; border-top: 1px solid var(--clr-border);
+}
+.testimonial-card__avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: 0.95rem; flex-shrink: 0;
+}
+.testimonial-card__name  { display: block; font-size: 0.875rem; font-weight: 700; color: var(--clr-text); }
+.testimonial-card__location { display: block; font-size: 0.72rem; color: var(--clr-text-dim); margin-bottom: 0.35rem; }
+.testimonial-card__service { font-size: 0.65rem; }

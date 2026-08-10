@@ -1,0 +1,68 @@
+/* ============================================================
+   Animated Background - Pest Control Theme
+   ============================================================ */
+
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--clr-bg);
+}
+
+/* Protective Auras (Slow drifting gradients) */
+.aura {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.3;
+  will-change: transform;
+}
+
+.aura-1 {
+  width: 60vw;
+  height: 60vw;
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(187, 247, 208, 0.8) 0%, rgba(220, 252, 231, 0.2) 60%, transparent 80%);
+}
+
+.aura-2 {
+  width: 50vw;
+  height: 50vw;
+  bottom: -20%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(134, 239, 172, 0.6) 0%, rgba(220, 252, 231, 0.2) 60%, transparent 80%);
+}
+
+.aura-3 {
+  width: 40vw;
+  height: 40vw;
+  top: 40%;
+  left: 40%;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.4) 0%, transparent 70%);
+}
+
+/* Floating Eco Particles */
+.particles-container {
+  position: absolute;
+  inset: 0;
+}
+
+.particle {
+  position: absolute;
+  bottom: -10vh;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .aura {
+    filter: blur(80px);
+    opacity: 0.25;
+  }
+}

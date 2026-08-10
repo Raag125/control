@@ -1,0 +1,708 @@
+/* ============================================================
+   A to Z Pest Solutions — High-Tech Modern Hero Section
+   ============================================================ */
+
+.hero-modern-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: clamp(4.5rem, 8vh, 5.5rem);
+  padding-bottom: clamp(1rem, 2.5vh, 2rem);
+  overflow: clip;
+  background: var(--clr-bg);
+  box-sizing: border-box;
+}
+
+/* Background & Image Overlay */
+.hero-modern-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-modern-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.16;
+  filter: saturate(120%) contrast(105%);
+}
+
+.hero-modern-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 75% 35%, 
+    rgba(220, 252, 231, 0.45) 0%, 
+    rgba(255, 255, 255, 0.90) 55%, 
+    var(--clr-bg) 100%
+  );
+}
+
+.hero-modern-ambient-glow {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.12) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.hero-modern-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(22, 163, 74, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 163, 74, 0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 35%, black 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 35%, black 30%, transparent 85%);
+}
+
+/* Container & 2-Column Grid */
+.hero-modern-container {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: clamp(1.75rem, 3.5vw, 3.5rem);
+  width: 100%;
+}
+
+/* ──────────────────────────────────────────
+   LEFT COLUMN: Value Proposition
+   ────────────────────────────────────────── */
+.hero-modern-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.65rem, 1.5vh, 1.05rem);
+}
+
+/* Live Trust Pill */
+.hero-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.3rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.06);
+}
+
+.live-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--clr-primary);
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.live-pill-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  line-height: 1.2;
+}
+
+.live-pill-label strong {
+  color: var(--clr-primary-dim);
+}
+
+/* Title & Gradient Highlight */
+.hero-modern-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.1vw, 3.15rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--clr-text);
+  margin: 0;
+}
+
+.hero-text-gradient {
+  background: linear-gradient(135deg, var(--clr-primary) 0%, #15803d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline;
+}
+
+/* Subtitle */
+.hero-modern-subtitle {
+  font-size: clamp(0.88rem, 1.05vw, 0.98rem);
+  color: var(--clr-text-muted);
+  line-height: 1.55;
+  max-width: 510px;
+  margin: 0;
+}
+
+.hero-modern-subtitle strong {
+  color: var(--clr-text);
+}
+
+/* Action CTA Group */
+.hero-modern-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.15rem;
+}
+
+.hero-btn-call {
+  font-size: 0.88rem;
+  padding: 0.75rem 1.45rem;
+  font-weight: 700;
+  box-shadow: 0 5px 18px rgba(22, 163, 74, 0.28);
+  border: 1.5px solid transparent;
+}
+
+.hero-btn-whatsapp {
+  font-size: 0.86rem;
+  padding: 0.72rem 1.35rem;
+  font-weight: 700;
+  border: 1.5px solid #22c55e;
+  color: #15803d;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.hero-btn-whatsapp:hover {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #14532d;
+}
+
+.btn-icon {
+  flex-shrink: 0;
+}
+
+/* Assurances Row */
+.hero-modern-assurances {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  padding-top: 0.2rem;
+}
+
+.assurance-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+}
+
+.assurance-icon {
+  color: var(--clr-primary);
+  flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────
+   RIGHT COLUMN: Interactive Pest Threat Scanner Card
+   ────────────────────────────────────────── */
+.hero-modern-right {
+  width: 100%;
+  max-width: 440px;
+  justify-self: center;
+}
+
+.pest-showcase-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(22, 163, 74, 0.2);
+  border-radius: 24px;
+  padding: 1.1rem 1.25rem;
+  box-shadow: 
+    0 14px 40px rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(22, 163, 74, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.pest-showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pest-badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  background: var(--clr-accent-light);
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--clr-primary-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pest-count-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--clr-text-dim);
+}
+
+/* Pest Tabs */
+.pest-tabs-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.25rem;
+  background: #f1f7f3;
+  padding: 0.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(22, 163, 74, 0.12);
+  position: relative;
+}
+
+.pest-tab-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.15rem;
+  border-radius: 8px;
+  background: transparent;
+  gap: 0.1rem;
+  transition: color 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+  border: none;
+  z-index: 1;
+}
+
+.pest-tab-btn:hover {
+  transform: translateY(-1px);
+}
+
+.pest-tab-btn.tab-active {
+  color: var(--clr-primary-dark);
+}
+
+.tab-active-indicator {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  z-index: -1;
+}
+
+.tab-emoji {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.tab-name {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--clr-text-muted);
+  white-space: nowrap;
+}
+
+.pest-tab-btn.tab-active .tab-name {
+  color: var(--clr-primary-dark);
+  font-weight: 800;
+}
+
+/* Active Pest Detail Viewport */
+.pest-display-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Realistic Image View */
+.pest-image-box {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+  background: #1a2e1f;
+}
+
+.pest-real-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.pest-image-box:hover .pest-real-img {
+  transform: scale(1.03);
+}
+
+.pest-img-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* Floating Overlay Tags on Image */
+.pest-threat-tag {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(220, 38, 38, 0.92);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pest-warranty-tag {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(22, 163, 74, 0.94);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Pest Info Body */
+.pest-info-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.pest-title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.pest-current-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--clr-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pest-sub-threat {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #dc2626;
+  line-height: 1.2;
+}
+
+.pest-solution-box {
+  background: var(--clr-surface-2);
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  border-radius: 10px;
+  padding: 0.45rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.solution-label {
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--clr-primary-dim);
+}
+
+.solution-text {
+  font-size: 0.76rem;
+  color: var(--clr-text);
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 600;
+}
+
+.pest-book-link {
+  width: 100%;
+  justify-content: center;
+  padding: 0.62rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+}
+
+/* Card Social Proof Footer */
+.pest-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--clr-border);
+}
+
+.stars-cluster {
+  display: flex;
+  gap: 0.12rem;
+}
+
+.proof-caption {
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+}
+
+.proof-caption strong {
+  color: var(--clr-text);
+}
+
+/* ──────────────────────────────────────────
+   RESPONSIVE ADAPTATIONS: TABLET & MOBILE
+   ────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero-modern-section {
+    min-height: auto;
+    height: auto;
+    padding-top: 5.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-modern-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .hero-modern-left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-modern-subtitle {
+    max-width: 600px;
+  }
+
+  .hero-modern-actions {
+    justify-content: center;
+  }
+
+  .hero-modern-assurances {
+    justify-content: center;
+  }
+
+  .hero-modern-right {
+    max-width: 480px;
+  }
+}
+
+/* Mobile Screen Layout Redesign */
+@media (max-width: 640px) {
+  .hero-modern-section {
+    min-height: auto;
+    height: auto;
+    padding-top: 5rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .hero-modern-container {
+    gap: 1.4rem;
+    padding-inline: 1rem;
+  }
+
+  .hero-modern-left {
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.75rem;
+  }
+
+  .hero-live-pill {
+    padding: 0.28rem 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  .hero-title-break {
+    display: none;
+  }
+
+  .hero-modern-title {
+    font-size: clamp(1.8rem, 7.5vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-modern-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--clr-text-muted);
+  }
+
+  .hero-modern-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .hero-btn-call {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .hero-btn-call span {
+    font-size: 0.95rem;
+  }
+
+  .hero-btn-whatsapp {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  /* Compact Trust Assurance Chips */
+  .hero-modern-assurances {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    width: 100%;
+    padding-top: 0.1rem;
+  }
+
+  .assurance-item {
+    background: #ffffff;
+    border: 1px solid rgba(22, 163, 74, 0.2);
+    padding: 0.28rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Mobile Interactive Card */
+  .hero-modern-right {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .pest-showcase-card {
+    padding: 0.95rem 1rem;
+    border-radius: 20px;
+    gap: 0.55rem;
+    box-shadow: 
+      0 8px 30px rgba(22, 163, 74, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .pest-tabs-row {
+    gap: 0.2rem;
+    padding: 0.2rem;
+  }
+
+  .pest-tab-btn {
+    padding: 0.3rem 0.05rem;
+  }
+
+  .tab-emoji {
+    font-size: 0.95rem;
+  }
+
+  .tab-name {
+    font-size: 0.6rem;
+  }
+
+  .pest-image-box {
+    height: 135px;
+    border-radius: 12px;
+  }
+
+  .pest-threat-tag,
+  .pest-warranty-tag {
+    font-size: 0.64rem;
+    padding: 0.18rem 0.45rem;
+  }
+
+  .pest-current-name {
+    font-size: 1.08rem;
+  }
+
+  .pest-sub-threat {
+    font-size: 0.72rem;
+  }
+
+  .pest-solution-box {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .solution-label {
+    font-size: 0.6rem;
+  }
+
+  .solution-text {
+    font-size: 0.73rem;
+  }
+
+  .pest-book-link {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .pest-card-footer {
+    flex-direction: column;
+    gap: 0.15rem;
+    text-align: center;
+    padding-top: 0.35rem;
+  }
+
+  .proof-caption {
+    font-size: 0.68rem;
+  }
+}
+
+/* Super narrow devices (< 360px) */
+@media (max-width: 360px) {
+  .hero-modern-actions {
+    grid-template-columns: 1fr;
+  }
+}

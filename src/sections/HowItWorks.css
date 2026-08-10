@@ -1,0 +1,72 @@
+.how-section { overflow: clip; background: var(--clr-bg); }
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+@media (max-width: 900px) { .how-steps { grid-template-columns: 1fr; gap: 1.25rem; } }
+
+.how-step {
+  position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 0 1.5rem 2rem; gap: 1rem;
+}
+@media (max-width: 900px) {
+  .how-step {
+    flex-direction: row; text-align: left; align-items: flex-start;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    gap: 1.25rem;
+  }
+}
+
+.how-step__connector {
+  position: absolute;
+  top: 52px;
+  left: calc(50% + 32px);
+  right: calc(-50% + 32px);
+  height: 2px;
+  background: var(--clr-border);
+  z-index: 0;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .how-step__connector { display: none; } }
+.how-step__connector-fill {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent));
+  transform-origin: left;
+}
+
+.how-step__number {
+  position: absolute; top: -0.5rem; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 5rem; font-weight: 800;
+  color: rgba(22,163,74,0.06); line-height: 1; z-index: 0;
+  pointer-events: none; user-select: none;
+}
+@media (max-width: 900px) { .how-step__number { display: none; } }
+
+.how-step__icon-wrap {
+  position: relative; z-index: 1;
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(22,163,74,0.3);
+}
+@media (max-width: 900px) {
+  .how-step__icon-wrap { width: 52px; height: 52px; }
+  .how-step__icon-wrap svg { width: 20px; height: 20px; }
+}
+
+.how-step__content { position: relative; z-index: 1; }
+.how-step__title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--clr-text); margin-bottom: 0.5rem; }
+.how-step__desc  { font-size: 0.83rem; color: var(--clr-text-muted); line-height: 1.65; }
