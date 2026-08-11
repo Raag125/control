@@ -59,7 +59,10 @@ export default function Blogs() {
     The blog should be between 1500 to 2000 words. 
     Topic/Keywords: ${aiConfig.keywords}. 
     Additional Instructions: ${aiConfig.instructions || 'Keep it informative, engaging, and professional.'}
-    CRITICAL INSTRUCTION: You must include a super cool, highly clickable, SEO-optimized H1 title at the very beginning (format exactly as "# Your SEO Title Here"), followed by engaging content with proper markdown headings (H2, H3), bullet points if necessary, and a strong conclusion. Do not include any conversational filler like "Here is your blog post", output ONLY the markdown content.`
+    CRITICAL INSTRUCTION: You must strictly structure the blog using proper semantic markdown headings. Start with exactly one super cool, highly clickable, SEO-optimized H1 title at the very beginning (format exactly as "# Your SEO Title Here"). 
+    Throughout the body, use proper H2 (##) and H3 (###) headings to break up sections logically.
+    Whenever appropriate, include markdown image placeholders with highly descriptive SEO alt text, like: ![Descriptive Alt Text About Pest Control](https://placehold.co/800x400/15803d/ffffff?text=Image+Placeholder). 
+    Use bullet points and a strong conclusion. Do not include any conversational filler like "Here is your blog post", output ONLY the markdown content.`
 
     try {
       const res = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
