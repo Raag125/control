@@ -1,8 +1,10 @@
 import ServiceDetailPage from './ServiceDetailPage'
+import imgPest from '../../assets/services/honey_bee.png'
+
 export default function HoneyBeeTreatment() {
   return <ServiceDetailPage
     meta={{ title: 'Honey Bee Treatment & Removal in Bangalore | A to Z Pest Solutions', desc: 'Safe and humane honey bee hive removal and relocation in Bangalore. Eco-friendly, no harm to bees. Call 9845559710 for expert bee removal.', canonical: 'https://pestcontrolbengaluru.in/honey-bee-treatment' }}
-    emoji="🐝" title="Honey Bee Treatment" tagline="Safe, ethical honey bee removal and hive relocation — protecting people and pollinators alike."
+    image={imgPest} title="Honey Bee Treatment" tagline="Safe, ethical honey bee removal and hive relocation — protecting people and pollinators alike."
     intro="Honey bees are essential pollinators, but when they build hives near your home, office, or school, they can pose a serious stinging hazard — especially for those allergic to bee stings. A to Z Pest Solutions specializes in safe, humane bee hive removal and relocation. We remove hives without harming the bees wherever possible, relocating colonies to safe environments. Where removal is not feasible, we use targeted bee-safe treatments to disperse the colony."
     signs={['Visible bee hive on walls, trees, or roof','Increased bee activity around entry points','Honey or wax dripping from walls','Bees entering or exiting through cracks','Buzzing sounds inside walls','Bee swarms settling on trees or fences','Bees near children\'s play areas or schools','Bees aggressive near specific areas']}
     benefits={['Ethical, no-harm-to-bees approach wherever possible','Expert hive removal from any height or surface','Same-day emergency service available','No chemical residue on your property','Complete hive comb removal prevents re-infestation','Certified, uniformed bee removal specialists']}

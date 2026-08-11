@@ -5,14 +5,14 @@ import { Phone, X, Menu, ChevronDown, Shield, MessageCircle } from 'lucide-react
 import './Navbar.css'
 
 const serviceLinks = [
-  { to: '/termite-treatment',    label: 'Termite Treatment',     emoji: '🪵' },
-  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment',    emoji: '🛏️' },
-  { to: '/cockroach-treatment',  label: 'Cockroach Treatment',   emoji: '🪳' },
-  { to: '/rodent-treatment',     label: 'Rodent Treatment',      emoji: '🐀' },
-  { to: '/mosquito-treatment',   label: 'Mosquito Treatment',    emoji: '🦟' },
-  { to: '/honey-bee-treatment',  label: 'Honey Bee Treatment',   emoji: '🐝' },
-  { to: '/ticks-fleas-treatment','label': 'Ticks & Fleas',       emoji: '🦗' },
-  { to: '/wood-borer-treatment', label: 'Wood Borer Treatment',  emoji: '🪲' },
+  { to: '/termite-treatment',    label: 'Termite Treatment',     image: '/images/pests/termite.png' },
+  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment',    image: '/images/pests/bedbug.png' },
+  { to: '/cockroach-treatment',  label: 'Cockroach Treatment',   image: '/images/pests/cockroach.png' },
+  { to: '/rodent-treatment',     label: 'Rodent Treatment',      image: '/images/pests/rodent.png' },
+  { to: '/mosquito-treatment',   label: 'Mosquito Treatment',    image: '/images/pests/mosquito.png' },
+  { to: '/honey-bee-treatment',  label: 'Honey Bee Treatment',   image: '/images/pests/honeybee.png' },
+  { to: '/ticks-fleas-treatment','label': 'Ticks & Fleas',       image: '/images/pests/tick.png' },
+  { to: '/wood-borer-treatment', label: 'Wood Borer Treatment',  image: '/images/pests/woodborer.png' },
 ]
 
 const navLinks = [
@@ -20,6 +20,7 @@ const navLinks = [
   { to: '/about-us',  label: 'About Us' },
   { to: '/services',  label: 'Services', hasDropdown: true },
   { to: '/franchise', label: 'Franchise' },
+  { to: '/blogs',     label: 'Blogs' },
   { to: '/faq',       label: 'FAQs' },
   { to: '/contact',   label: 'Contact' },
 ]
@@ -31,6 +32,7 @@ export default function Navbar() {
   const [mobileServOpen, setMobileServOpen] = useState(false)
   const location = useLocation()
   const dropRef = useRef(null)
+  const headerRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,19 +49,26 @@ export default function Navbar() {
     setMobileServOpen(false)
   }, [location.pathname])
 
-  // Close dropdown on click outside
+  // Close dropdown and mobile menu on click outside
   useEffect(() => {
     const handler = (e) => {
-      if (dropRef.current && !dropRef.current.contains(e.target)) {
+      if (headerRef.current && !headerRef.current.contains(e.target)) {
+        setDropOpen(false)
+        setMenuOpen(false)
+      } else if (dropRef.current && !dropRef.current.contains(e.target)) {
         setDropOpen(false)
       }
     }
     document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
+    document.addEventListener('touchstart', handler) // Added for mobile devices
+    return () => {
+      document.removeEventListener('mousedown', handler)
+      document.removeEventListener('touchstart', handler)
+    }
   }, [])
 
   return (
-    <header className={`unique-header-wrap ${scrolled ? 'wrap--scrolled' : ''}`}>
+    <header ref={headerRef} className={`unique-header-wrap ${scrolled ? 'wrap--scrolled' : ''}`}>
       <div className="unique-header-container">
         <nav className="unique-nav-island" aria-label="Main Navigation">
           
@@ -78,16 +87,21 @@ export default function Navbar() {
           <ul className="unique-desktop-menu">
             {navLinks.map((link) => 
               link.hasDropdown ? (
-                <li key={link.to} className="unique-menu-item dropdown-item" ref={dropRef}>
-                  <button
-                    className={`unique-menu-btn ${dropOpen ? 'dropdown-active' : ''}`}
-                    onClick={() => setDropOpen(!dropOpen)}
-                    aria-expanded={dropOpen}
-                    aria-label="Services dropdown menu"
+                <li 
+                  key={link.to} 
+                  className="unique-menu-item dropdown-item" 
+                  ref={dropRef}
+                  onMouseEnter={() => setDropOpen(true)}
+                  onMouseLeave={() => setDropOpen(false)}
+                >
+                  <NavLink
+                    to={link.to}
+                    className={({ isActive }) => `unique-menu-btn ${isActive || dropOpen ? 'btn-active' : ''}`}
+                    onClick={() => setDropOpen(false)}
                   >
                     <span>{link.label}</span>
                     <ChevronDown size={14} className={`chevron-icon ${dropOpen ? 'rotated' : ''}`} />
-                  </button>
+                  </NavLink>
                   
                   <AnimatePresence>
                     {dropOpen && (
@@ -106,7 +120,9 @@ export default function Navbar() {
                               className="unique-dropdown-link"
                               onClick={() => setDropOpen(false)}
                             >
-                              <span className="drop-emoji">{s.emoji}</span>
+                              <div style={{ width: '24px', height: '24px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
+                                <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              </div>
                               <span className="drop-label">{s.label}</span>
                             </NavLink>
                           ))}
@@ -168,13 +184,23 @@ export default function Navbar() {
                 {navLinks.map((link) => 
                   link.hasDropdown ? (
                     <li key={link.to} className="unique-mobile-item">
-                      <button 
-                        className="unique-mobile-link mobile-dropdown-trigger"
-                        onClick={() => setMobileServOpen(!mobileServOpen)}
-                      >
-                        <span>{link.label}</span>
-                        <ChevronDown size={18} className={mobileServOpen ? 'rotated' : ''} />
-                      </button>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                        <NavLink
+                          to={link.to}
+                          className={({ isActive }) => `unique-mobile-link ${isActive ? 'mobile-active' : ''}`}
+                          onClick={() => setMenuOpen(false)}
+                          style={{ flex: 1 }}
+                        >
+                          {link.label}
+                        </NavLink>
+                        <button 
+                          className="mobile-dropdown-trigger-btn"
+                          onClick={() => setMobileServOpen(!mobileServOpen)}
+                          style={{ padding: '0.85rem', background: 'transparent', border: 'none', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                          <ChevronDown size={18} className={mobileServOpen ? 'rotated' : ''} />
+                        </button>
+                      </div>
                       
                       <AnimatePresence>
                         {mobileServOpen && (
@@ -191,8 +217,11 @@ export default function Navbar() {
                                   to={s.to} 
                                   className="unique-mobile-sub-link"
                                   onClick={() => setMenuOpen(false)}
+                                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
                                 >
-                                  <span>{s.emoji}</span>
+                                  <div style={{ width: '20px', height: '20px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
+                                    <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                  </div>
                                   <span>{s.label}</span>
                                 </NavLink>
                               </li>

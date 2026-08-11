@@ -87,7 +87,7 @@ export default function HeroSection() {
       {/* Background with modern interior & subtle defense grid */}
       <div className="hero-modern-bg" aria-hidden="true">
         <img 
-          src="/images/hero-modern-defense.png" 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000" 
           alt="Modern pest defense interior" 
           className="hero-modern-bg-img" 
         />
@@ -129,23 +129,33 @@ export default function HeroSection() {
           <div className="hero-modern-actions">
             <a 
               href="tel:+919845559710" 
-              className="btn btn-primary hero-btn-call"
-              aria-label="Call 9845559710 for instant free inspection"
+              className="btn btn-primary hero-btn-main-action"
+              aria-label="Book Free Inspection"
             >
-              <Phone size={17} className="btn-icon" aria-hidden="true" />
-              <span>Call 9845559710 (Free Inspection)</span>
+              <CheckCircle2 size={17} className="btn-icon" aria-hidden="true" />
+              <span>Book Free Inspection</span>
             </a>
             
-            <a 
-              href="https://wa.me/919845559710?text=Hi%2C%20I%20need%20a%20free%20pest%20control%20inspection%20in%20Bangalore."
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="btn btn-outline hero-btn-whatsapp"
-              aria-label="Chat on WhatsApp"
-            >
-              <MessageCircle size={17} className="btn-icon" aria-hidden="true" />
-              <span>WhatsApp Us</span>
-            </a>
+            <div className="hero-secondary-actions">
+              <a 
+                href="tel:+919845559710" 
+                className="btn btn-outline hero-btn-call"
+                aria-label="Call Us"
+              >
+                <Phone size={17} className="btn-icon" aria-hidden="true" />
+                <span>Call Us</span>
+              </a>
+              <a 
+                href="https://wa.me/919845559710?text=Hi%2C%20I%20need%20a%20free%20pest%20control%20inspection%20in%20Bangalore."
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-outline hero-btn-whatsapp"
+                aria-label="Chat on WhatsApp"
+              >
+                <MessageCircle size={17} className="btn-icon" aria-hidden="true" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </div>
 
           {/* Key Assurance Badges */}

@@ -1,8 +1,10 @@
 import ServiceDetailPage from './ServiceDetailPage'
+import imgPest from '../../assets/services/bed_bug.png'
+
 export default function BedBugsTreatment() {
   return <ServiceDetailPage
     meta={{ title: 'Bed Bugs Treatment in Bangalore | A to Z Pest Solutions', desc: 'Professional bed bug treatment in Bangalore. Effective heat and chemical treatment to completely eliminate bed bugs. Call 9845559710 for FREE inspection.', canonical: 'https://pestcontrolbengaluru.in/bed-bugs-treatment' }}
-    emoji="🛏️" title="Bed Bugs Treatment" tagline="Reclaim your sleep. Our targeted treatment eliminates bed bugs from every hidden corner."
+    image={imgPest} title="Bed Bugs Treatment" tagline="Reclaim your sleep. Our targeted treatment eliminates bed bugs from every hidden corner."
     intro="Bed bugs are resilient, nocturnal pests that feed on human blood, causing itchy welts, sleepless nights, and intense anxiety. A to Z Pest Solutions employs a combination of steam heat treatment and specialized insecticide application to eliminate bed bug infestations from mattresses, bed frames, headboards, sofas, and all other harboring spots — ensuring you get a good night's sleep again."
     signs={['Red, itchy welts appearing after sleep','Small bloodstains on bed sheets','Dark rust-colored fecal spots on mattress','Musty, sweet odor in bedroom','Live bugs in mattress seams or crevices','Shed exoskeletons on furniture','Eggs or eggshells in hidden crevices','Visible bugs in bed frame joints']}
     benefits={['100% elimination guarantee','Steam and chemical dual treatment','Child-safe, odorless formulations','Experienced, certified technicians','Free follow-up if bugs return','Same-day service available']}

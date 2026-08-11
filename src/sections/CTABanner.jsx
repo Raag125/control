@@ -21,10 +21,10 @@ export default function CTABanner() {
               🚨 Act Now — Don't Let Pests Take Over
             </div>
             <h2 className="display-lg text-center">
-              Ready for a <span className="gradient-text">Pest-Free</span> Home?
+              Ready for a <span style={{ color: '#fbbf24' }}>Pest-Free</span> Home?
             </h2>
-            <p className="body-lg text-muted text-center" style={{ maxWidth: 560, margin: '1rem auto 0' }}>
-              Call us today for a <strong style={{ color: 'var(--clr-primary)' }}>FREE inspection</strong> and expert
+            <p className="body-lg text-muted text-center" style={{ maxWidth: 560, margin: '1rem auto 0', color: 'rgba(255,255,255,0.9)' }}>
+              Call us today for a <strong style={{ color: '#fbbf24' }}>FREE inspection</strong> and expert
               consultation. Available 24/7 — 365 days a year across Bangalore.
             </p>
             <div className="cta-banner__actions">

@@ -1,8 +1,10 @@
 import ServiceDetailPage from './ServiceDetailPage'
+import imgPest from '../../assets/services/termite.png'
+
 export default function TermiteTreatment() {
   return <ServiceDetailPage
     meta={{ title: 'Termite Treatment in Bangalore | A to Z Pest Solutions', desc: 'Expert termite treatment in Bangalore. Anti-termite soil treatment, wood treatment, and long-lasting protection. Call 9845559710 for FREE inspection.', canonical: 'https://pestcontrolbengaluru.in/termite-treatment' }}
-    emoji="🪵" title="Termite Treatment" tagline="Stop termites before they destroy your property's structural integrity and wooden assets."
+    image={imgPest} title="Termite Treatment" tagline="Stop termites before they destroy your property's structural integrity and wooden assets."
     intro="Termites are among the most destructive pests in Bangalore, silently feeding on wooden structures, furniture, and flooring — often causing thousands of rupees in damage before being detected. At A to Z Pest Solutions, we use scientifically proven anti-termite treatments including pre-construction soil treatment, post-construction drilling & injection, and surface wood treatment to provide comprehensive protection against both subterranean and drywood termites."
     signs={['Hollow-sounding wood when tapped','Mud tubes along walls or foundations','Discarded wings near windows or doors','Bubbling or uneven paint on walls','Damaged or weakened wooden furniture','Frass (termite droppings) resembling sawdust','Tight-fitting doors and windows suddenly','Visible cracks in wooden structures']}
     benefits={['ISO-certified treatment methods','Odorless, family-safe chemicals used','5-year warranty on pre-construction treatment','30+ years of termite control expertise','Certified, uniformed technicians','Free follow-up inspection included']}

@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { Phone, MessageCircle, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 import CTABanner from '../../sections/CTABanner'
 import '../PageStyles.css'
 
@@ -46,8 +48,58 @@ const OTHER_SERVICES = [
   { to: '/wood-borer-treatment', label: '🪲 Wood Borer Treatment' },
 ]
 
-export default function ServiceDetailPage({ meta, emoji, title, tagline, intro, signs, benefits, process, faqs }) {
+gsap.registerPlugin(ScrollTrigger)
+
+export default function ServiceDetailPage({ meta, image, title, tagline, intro, signs, benefits, process, faqs }) {
   const slugId = title.replace(/\s/g, '-').toLowerCase()
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Process items stagger
+      gsap.from('.service-detail__process-item', {
+        scrollTrigger: {
+          trigger: '.service-detail__process',
+          start: 'top 85%',
+        },
+        x: -30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power2.out'
+      })
+
+      // Sidebar cards stagger
+      gsap.from('.service-sidebar__card', {
+        scrollTrigger: {
+          trigger: '.service-sidebar',
+          start: 'top 80%',
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power2.out'
+      })
+
+      // FAQ list stagger
+      if (document.querySelector('.faq-list')) {
+        gsap.from('.faq-item', {
+          scrollTrigger: {
+            trigger: '.faq-list',
+            start: 'top 85%',
+          },
+          y: 20,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out'
+        })
+      }
+    }, containerRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <>
@@ -57,13 +109,21 @@ export default function ServiceDetailPage({ meta, emoji, title, tagline, intro, 
         <link rel="canonical" href={meta.canonical} />
       </Helmet>
 
-      <div className="page-enter">
+      <div className="page-enter" ref={containerRef}>
         {/* Hero */}
         <section className="page-hero" aria-label={`${title} page header`}>
           <div className="page-hero__bg" aria-hidden="true" />
+          {/* Animated floating orbs */}
+          <div className="orb orb--1" aria-hidden="true" />
+          <div className="orb orb--2" aria-hidden="true" />
+          <div className="orb orb--3" aria-hidden="true" />
           <div className="container page-hero__content">
             <div className="eyebrow">🛡️ Expert Treatment</div>
-            <div className="service-detail__hero-icon" role="img" aria-label={title}>{emoji}</div>
+            {image && (
+              <div style={{ width: '120px', height: '120px', margin: '0 auto 1.5rem', borderRadius: '50%', overflow: 'hidden', border: '4px solid var(--clr-bg)', boxShadow: 'var(--shadow-lg)' }}>
+                <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            )}
             <h1 className="display-xl">{title}</h1>
             <p className="body-lg text-muted" style={{ maxWidth: 580, margin: '1rem auto 0' }}>{tagline}</p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
@@ -88,7 +148,7 @@ export default function ServiceDetailPage({ meta, emoji, title, tagline, intro, 
         </section>
 
         {/* Detail */}
-        <section className="section" aria-labelledby={`${slugId}-detail`}>
+        <section className="section service-section-bg" aria-labelledby={`${slugId}-detail`}>
           <div className="container">
             <div className="service-detail">
               {/* Main */}
@@ -124,13 +184,9 @@ export default function ServiceDetailPage({ meta, emoji, title, tagline, intro, 
                   </h3>
                   <div className="service-detail__process">
                     {process.map((step, i) => (
-                      <motion.div
+                      <div
                         key={step.title}
                         className="service-detail__process-item"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.1 }}
                         aria-label={`Step ${i + 1}: ${step.title}`}
                       >
                         <div className="service-detail__process-num" aria-hidden="true">{i + 1}</div>
@@ -138,7 +194,7 @@ export default function ServiceDetailPage({ meta, emoji, title, tagline, intro, 
                           <h4>{step.title}</h4>
                           <p>{step.desc}</p>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
