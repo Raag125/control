@@ -44,12 +44,14 @@ export default function BlogsPage() {
                     {new Date(blog.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                   </div>
                   <h3 className="blog-card__title">
-                    <Link to={`/blogs/${blog.slug}`}>{blog.title}</Link>
+                    <Link to={`/blogs/${blog.slug}`} className="blog-card__overlay-link">
+                      {blog.title}
+                    </Link>
                   </h3>
                   <p className="blog-card__excerpt">{blog.excerpt}</p>
-                  <Link to={`/blogs/${blog.slug}`} className="blog-card__btn">
+                  <span className="blog-card__btn">
                     Read Article <span>→</span>
-                  </Link>
+                  </span>
                 </div>
               </motion.div>
             ))}
