@@ -11,7 +11,7 @@ const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
 
 export function seedIfEmpty() {
   const currentBlogs = read(KEYS.blogs);
-  if ((currentBlogs.length === 0 || (currentBlogs.length === 1 && currentBlogs[0].id === 'BLG-001')) && initialBlogs && initialBlogs.length > 0) {
+  if (currentBlogs.length < 50 && initialBlogs && initialBlogs.length > 0) {
     write(KEYS.blogs, initialBlogs)
   }
 
@@ -194,3 +194,6 @@ export function getStats() {
     recentOrders:orders.slice(0,5)
   }
 }
+
+// Auto-seed on load
+seedIfEmpty();

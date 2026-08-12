@@ -6,13 +6,20 @@ import './Navbar.css'
 
 const serviceLinks = [
   { to: '/termite-treatment',    label: 'Termite Treatment',     image: '/images/pests/termite.png' },
-  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment',    image: '/images/pests/bedbug.png' },
+  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment',    image: '/images/pests/bed_bug.png' },
   { to: '/cockroach-treatment',  label: 'Cockroach Treatment',   image: '/images/pests/cockroach.png' },
   { to: '/rodent-treatment',     label: 'Rodent Treatment',      image: '/images/pests/rodent.png' },
   { to: '/mosquito-treatment',   label: 'Mosquito Treatment',    image: '/images/pests/mosquito.png' },
-  { to: '/honey-bee-treatment',  label: 'Honey Bee Treatment',   image: '/images/pests/honeybee.png' },
-  { to: '/ticks-fleas-treatment','label': 'Ticks & Fleas',       image: '/images/pests/tick.png' },
-  { to: '/wood-borer-treatment', label: 'Wood Borer Treatment',  image: '/images/pests/woodborer.png' },
+  { to: '/honey-bee-treatment',  label: 'Honey Bee Treatment',   image: '/images/pests/honey_bee.png' },
+  { to: '/wood-borer-treatment', label: 'Wood Borer Treatment',  image: '/images/pests/wood_borer.png' },
+  { to: '/ant-pest-control',     label: 'Ant Pest Control',      image: '/images/pests/ant.png' },
+  { to: '/tick-pest-control',    label: 'Tick Pest Control',     image: '/images/pests/tick.png' },
+  { to: '/flea-pest-control',    label: 'Flea Pest Control',     image: '/images/pests/flea.png' },
+  { to: '/pre-construction-termite-treatment', label: 'Pre-Construction Termite', image: '/images/pests/pre_construction.png' },
+  { to: '/post-construction-termite-treatment', label: 'Post-Construction Termite', image: '/images/pests/post_construction.png' },
+  { to: '/residential-pest-control', label: 'Residential Pest Control', image: '/images/pests/residential.png' },
+  { to: '/commercial-pest-control', label: 'Commercial Pest Control', image: '/images/pests/commercial.png' },
+  { to: '/general-pest-control', label: 'General Pest Control',  image: '/images/pests/general.png' },
 ]
 
 const navLinks = [
