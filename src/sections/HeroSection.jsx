@@ -75,6 +75,78 @@ const PEST_SHOWCASE = [
     path: '/mosquito-treatment',
     warranty: 'Rapid Knockdown',
     emoji: '🦟'
+  },
+  {
+    id: 'honeybee',
+    name: 'Honey Bee Hives',
+    shortName: 'Honey Bee',
+    image: '/images/pests/honeybee.png',
+    threat: 'Stings & Wall Cavity Damage',
+    threatLevel: 'High Risk',
+    solution: 'Safe Hive Removal & Ethical Relocation',
+    path: '/honey-bee-treatment',
+    warranty: 'Safe & Ethical',
+    emoji: '🐝'
+  },
+  {
+    id: 'ticks-fleas',
+    name: 'Ticks & Fleas',
+    shortName: 'Ticks/Fleas',
+    image: '/images/pests/tick.png',
+    threat: 'Lyme Disease, Typhus & Pet Anemia',
+    threatLevel: 'High Risk',
+    solution: '3-Stage IGR & Adulticide Lifecycle Treatment',
+    path: '/ticks-fleas-treatment',
+    warranty: 'Pet & Child Safe',
+    emoji: '🦗'
+  },
+  {
+    id: 'woodborer',
+    name: 'Wood Borer Beetles',
+    shortName: 'Wood Borer',
+    image: '/images/pests/woodborer.png',
+    threat: 'Destruction of Wooden Furniture & Beams',
+    threatLevel: 'High Risk',
+    solution: 'Precision Injection & Borate Preservation',
+    path: '/wood-borer-treatment',
+    warranty: 'Long-Lasting Defense',
+    emoji: '🪲'
+  },
+  {
+    id: 'ant',
+    name: 'Ant Infestations',
+    shortName: 'Ants',
+    image: '/images/pests/ant.png',
+    threat: 'Food Contamination & Wood Damage',
+    threatLevel: 'Medium Risk',
+    solution: 'Colony-Targeting Gel Bait System',
+    path: '/ant-pest-control',
+    warranty: 'Total Eradication',
+    emoji: '🐜'
+  },
+  {
+    id: 'pre-construction',
+    name: 'Pre-Construction Termite',
+    shortName: 'Pre-Const Termite',
+    image: '/images/pests/pre_construction.png',
+    threat: 'Future Structural Termite Damage',
+    threatLevel: 'High Risk',
+    solution: '5-Stage IS 6313 Soil Treatment Barrier',
+    path: '/pre-construction-termite-treatment',
+    warranty: '10-Year Warranty',
+    emoji: '🏗️'
+  },
+  {
+    id: 'post-construction',
+    name: 'Post-Construction Termite',
+    shortName: 'Post-Const Termite',
+    image: '/images/pests/post_construction.png',
+    threat: 'Active Termite Infestation',
+    threatLevel: 'High Risk',
+    solution: 'Drill-Fill-Seal Barrier Method',
+    path: '/post-construction-termite-treatment',
+    warranty: '5-Year Warranty',
+    emoji: '🏠'
   }
 ]
 
@@ -115,8 +187,8 @@ export default function HeroSection() {
 
           {/* Bold Modern Headline */}
           <h1 className="hero-modern-title">
-            Science-Backed, Guaranteed <br className="hero-title-break" />
-            <span className="hero-text-gradient">Pest Eradication</span> In Bangalore.
+            Smart, Guaranteed <br className="hero-title-break" />
+            <span className="hero-text-gradient">Pest Protection</span> For Your Home.
           </h1>
 
           {/* Subtitle */}

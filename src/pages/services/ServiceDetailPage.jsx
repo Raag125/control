@@ -187,13 +187,16 @@ function ReviewsSection({ serviceTitle }) {
 
 const OTHER_SERVICES = [
   { to: '/termite-treatment', label: '🪵 Termite Treatment' },
+  { to: '/pre-construction-termite-treatment', label: '🏗️ Pre-Construction Termite' },
+  { to: '/post-construction-termite-treatment', label: '🏠 Post-Construction Termite' },
   { to: '/bed-bugs-treatment', label: '🛏️ Bed Bugs Treatment' },
   { to: '/cockroach-treatment', label: '🪳 Cockroach Treatment' },
   { to: '/rodent-treatment', label: '🐀 Rodent Treatment' },
   { to: '/mosquito-treatment', label: '🦟 Mosquito Treatment' },
   { to: '/honey-bee-treatment', label: '🐝 Honey Bee Treatment' },
-  { to: '/ticks-fleas-treatment', 'label': '🦗 Ticks & Fleas' },
+  { to: '/ticks-fleas-treatment', label: '🦗 Ticks & Fleas' },
   { to: '/wood-borer-treatment', label: '🪲 Wood Borer Treatment' },
+  { to: '/ant-pest-control', label: '🐜 Ant Pest Control' },
 ]
 
 gsap.registerPlugin(ScrollTrigger)
@@ -409,7 +412,7 @@ export default function ServiceDetailPage({ meta, image, bgImage, title, tagline
                 <div className="service-sidebar__card">
                   <h3>Our Other Services</h3>
                   <ul className="service-sidebar__list" aria-label="Other pest control services we offer">
-                    {OTHER_SERVICES.filter((s) => !meta.canonical.includes(s.to.replace('/', ''))).slice(0, 5).map((s) => (
+                    {OTHER_SERVICES.filter((s) => !meta.canonical.includes(s.to.replace('/', ''))).map((s) => (
                       <li key={s.to}>
                         <Link
                           to={s.to}
