@@ -228,8 +228,9 @@
 
 /* ── Mobile Bottom Nav (≤768px) ── */
 @media(max-width:768px){
-  .adm-sidebar{transform:translateX(-100%)}
+  .adm-sidebar{transform:translateX(-100%);z-index:300;padding-bottom:80px}
   .adm-sidebar.open{transform:translateX(0)}
+  .adm-topbar-date{display:none}
   .adm-main{margin-left:0;padding-bottom:68px}
   .adm-content{padding:1rem}
   .adm-stats-grid{grid-template-columns:repeat(2,1fr)}

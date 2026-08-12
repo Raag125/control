@@ -77,10 +77,19 @@ export default function AdminLayout({ children, pendingCount }) {
             <span className="adm-topbar__title"><PageTitle /></span>
           </div>
           <div className="adm-topbar__right">
-            <span style={{ fontSize: '.72rem', color: 'var(--a-muted)' }}>
+            <span style={{ fontSize: '.72rem', color: 'var(--a-muted)' }} className="adm-topbar-date">
               {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
             </span>
-            <div className="adm-avatar">A</div>
+            <div className="adm-avatar" title="Admin">A</div>
+            <button 
+              className="adm-btn adm-btn--danger adm-btn--sm" 
+              onClick={handleLogout} 
+              style={{ padding: '.35rem .6rem', fontSize: '.72rem', gap: '.3rem' }}
+              title="Sign Out"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Logout</span>
+            </button>
           </div>
         </header>
 
