@@ -44,14 +44,25 @@ function ReviewsSection({ serviceTitle }) {
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
-    const fetchReviews = () => {
+    const fetchReviews = async () => {
       try {
-        const all = JSON.parse(localStorage.getItem('azt_reviews')) || []
+        let all = []
+        try {
+          const res = await fetch('/api/reviews')
+          if (res.ok) {
+            all = await res.json()
+            localStorage.setItem('azt_reviews', JSON.stringify(all))
+          } else {
+            all = JSON.parse(localStorage.getItem('azt_reviews')) || []
+          }
+        } catch {
+          all = JSON.parse(localStorage.getItem('azt_reviews')) || []
+        }
+
         const approved = all.filter(r => r.service === serviceTitle && r.status === 'approved')
         
         setReviews(prev => {
           if (prev.length !== approved.length) return approved;
-          // Compare IDs to see if there's a difference
           const prevIds = prev.map(p => p.id).join(',')
           const newIds = approved.map(a => a.id).join(',')
           return prevIds === newIds ? prev : approved;
@@ -65,12 +76,10 @@ function ReviewsSection({ serviceTitle }) {
     return () => clearInterval(intervalId)
   }, [serviceTitle])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name || !formData.text) return
-    const all = JSON.parse(localStorage.getItem('azt_reviews')) || []
     const newRev = {
-      id: 'REV-' + Math.random().toString(36).slice(2, 9).toUpperCase(),
       service: serviceTitle,
       name: formData.name,
       rating: formData.rating,
@@ -78,8 +87,20 @@ function ReviewsSection({ serviceTitle }) {
       status: 'pending',
       date: new Date().toISOString()
     }
-    all.unshift(newRev)
-    localStorage.setItem('azt_reviews', JSON.stringify(all))
+
+    try {
+      await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newRev)
+      })
+    } catch (err) {
+      console.warn('API submission failed, falling back to localStorage:', err)
+      const all = JSON.parse(localStorage.getItem('azt_reviews')) || []
+      all.unshift({ ...newRev, id: 'REV-' + Math.random().toString(36).slice(2, 9).toUpperCase() })
+      localStorage.setItem('azt_reviews', JSON.stringify(all))
+    }
+
     setSubmitted(true)
     setShowForm(false)
     setFormData({ name: '', rating: 5, text: '' })

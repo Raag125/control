@@ -6,24 +6,29 @@ export default function Reviews() {
   const [editingId, setEditingId] = useState(null)
   const [editForm, setEditForm] = useState(null)
 
+  const loadData = async () => {
+    const data = await getReviews()
+    setReviews(data)
+  }
+
   useEffect(() => {
-    setReviews(getReviews())
+    loadData()
   }, [])
 
-  const handleApprove = (rev) => {
-    saveReview({ ...rev, status: 'approved' })
-    setReviews(getReviews())
+  const handleApprove = async (rev) => {
+    const updated = await saveReview({ ...rev, status: 'approved' })
+    setReviews(updated)
   }
-  
-  const handleDeny = (rev) => {
-    saveReview({ ...rev, status: 'denied' })
-    setReviews(getReviews())
+
+  const handleDeny = async (rev) => {
+    const updated = await saveReview({ ...rev, status: 'denied' })
+    setReviews(updated)
   }
-  
-  const handleDelete = (id) => {
+
+  const handleDelete = async (id) => {
     if(window.confirm('Delete this review?')) {
-      deleteReview(id)
-      setReviews(getReviews())
+      const updated = await deleteReview(id)
+      setReviews(updated)
     }
   }
 
@@ -32,10 +37,10 @@ export default function Reviews() {
     setEditForm({ ...r })
   }
 
-  const handleEditSave = () => {
-    saveReview(editForm)
+  const handleEditSave = async () => {
+    const updated = await saveReview(editForm)
     setEditingId(null)
-    setReviews(getReviews())
+    setReviews(updated)
   }
 
   const renderStars = (rating) => {

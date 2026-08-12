@@ -77,8 +77,37 @@ export const saveBlog      = b   => {
 }
 export const deleteBlog    = id  => { const all=read(KEYS.blogs).filter(b=>b.id!==id); write(KEYS.blogs,all); return all }
 
-export const getReviews = () => read(KEYS.reviews)
-export const saveReview = r => {
+export const getReviews = async () => {
+  try {
+    const res = await fetch('/api/reviews')
+    if (res.ok) {
+      const data = await res.json()
+      write(KEYS.reviews, data)
+      return data
+    }
+  } catch (e) {
+    console.warn('Backend API unreachable, falling back to localStorage', e)
+  }
+  return read(KEYS.reviews)
+}
+
+export const saveReview = async (r) => {
+  try {
+    const res = await fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(r)
+    })
+    if (res.ok) {
+      const data = await res.json()
+      if (data.reviews) {
+        write(KEYS.reviews, data.reviews)
+        return data.reviews
+      }
+    }
+  } catch (e) {
+    console.warn('Backend API unreachable, falling back to localStorage', e)
+  }
   const all = read(KEYS.reviews)
   const i = all.findIndex(x=>x.id===r.id)
   if(i>-1) { all[i] = {...all[i], ...r} }
@@ -86,7 +115,24 @@ export const saveReview = r => {
   write(KEYS.reviews, all)
   return all
 }
-export const deleteReview = id => {
+
+export const deleteReview = async (id) => {
+  try {
+    const res = await fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'delete', id })
+    })
+    if (res.ok) {
+      const data = await res.json()
+      if (data.reviews) {
+        write(KEYS.reviews, data.reviews)
+        return data.reviews
+      }
+    }
+  } catch (e) {
+    console.warn('Backend API unreachable, falling back to localStorage', e)
+  }
   const all = read(KEYS.reviews).filter(r=>r.id!==id)
   write(KEYS.reviews, all)
   return all

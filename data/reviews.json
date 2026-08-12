@@ -1,0 +1,29 @@
+[
+  {
+    "id": "REV-001",
+    "service": "Termite Treatment",
+    "name": "Rajesh Kumar",
+    "rating": 5,
+    "text": "Excellent termite treatment. Highly recommend!",
+    "status": "approved",
+    "date": "2026-08-01T10:00:00Z"
+  },
+  {
+    "id": "REV-002",
+    "service": "Bed Bugs Treatment",
+    "name": "Priya Sharma",
+    "rating": 4,
+    "text": "Very effective bed bug removal. Team was professional.",
+    "status": "approved",
+    "date": "2026-08-02T10:00:00Z"
+  },
+  {
+    "id": "REV-003",
+    "service": "Cockroach Treatment",
+    "name": "Amit Patel",
+    "rating": 5,
+    "text": "Professional and clean service.",
+    "status": "pending",
+    "date": "2026-08-03T10:00:00Z"
+  }
+]
