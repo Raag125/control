@@ -781,18 +781,24 @@
 
   /* Tabs row */
   .pest-tabs-row {
-    gap: 0.2rem;
-    padding: 0.2rem;
+    gap: 0.35rem;
+    padding: 0.4rem;
   }
 
   .pest-tab-btn {
-    padding: 0.3rem 0.05rem;
-    flex: 0 0 calc(25% - 0.15rem);
-    max-width: calc(25% - 0.15rem);
+    padding: 0.45rem 0.1rem;
+    flex: 0 0 calc(25% - 0.27rem);
+    max-width: calc(25% - 0.27rem);
   }
 
-  .tab-emoji { font-size: 1rem; }
-  .tab-name  { font-size: 0.62rem; }
+  .tab-emoji { 
+    font-size: 1.25rem; 
+    margin-bottom: 0.15rem; 
+  }
+  .tab-name  { 
+    font-size: 0.68rem; 
+    line-height: 1.15;
+  }
 
   /* Image */
   .pest-image-box {

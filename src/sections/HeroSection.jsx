@@ -341,9 +341,9 @@ export default function HeroSection() {
                   <Link 
                     to={currentPest.path} 
                     className="btn btn-primary pest-book-link"
-                    aria-label={`Book treatment for ${currentPest.name}`}
+                    aria-label={`Book pest control for ${currentPest.name}`}
                   >
-                    <span>Book {currentPest.shortName} Treatment</span>
+                    <span>Book {currentPest.shortName} Pest Control</span>
                     <ArrowRight size={14} aria-hidden="true" />
                   </Link>
                 </div>

@@ -5,13 +5,13 @@ import { Phone, X, Menu, ChevronDown, Shield, MessageCircle } from 'lucide-react
 import './Navbar.css'
 
 const serviceLinks = [
-  { to: '/termite-treatment',    label: 'Termite Treatment',     image: '/images/pests/termite.png' },
-  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment',    image: '/images/pests/bed_bug.png' },
-  { to: '/cockroach-treatment',  label: 'Cockroach Treatment',   image: '/images/pests/cockroach.png' },
-  { to: '/rodent-treatment',     label: 'Rodent Treatment',      image: '/images/pests/rodent.png' },
-  { to: '/mosquito-treatment',   label: 'Mosquito Treatment',    image: '/images/pests/mosquito.png' },
-  { to: '/honey-bee-treatment',  label: 'Honey Bee Treatment',   image: '/images/pests/honey_bee.png' },
-  { to: '/wood-borer-treatment', label: 'Wood Borer Treatment',  image: '/images/pests/wood_borer.png' },
+  { to: '/termite-treatment',    label: 'Termite Pest Control',     image: '/images/pests/termite.png' },
+  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Pest Control',    image: '/images/pests/bed_bug.png' },
+  { to: '/cockroach-treatment',  label: 'Cockroach Pest Control',   image: '/images/pests/cockroach.png' },
+  { to: '/rodent-treatment',     label: 'Rodent Pest Control',      image: '/images/pests/rodent.png' },
+  { to: '/mosquito-treatment',   label: 'Mosquito Pest Control',    image: '/images/pests/mosquito.png' },
+  { to: '/honey-bee-treatment',  label: 'Honey Bee Pest Control',   image: '/images/pests/honey_bee.png' },
+  { to: '/wood-borer-treatment', label: 'Wood Borer Pest Control',  image: '/images/pests/wood_borer.png' },
   { to: '/ant-pest-control',     label: 'Ant Pest Control',      image: '/images/pests/ant.png' },
   { to: '/tick-pest-control',    label: 'Tick Pest Control',     image: '/images/pests/tick.png' },
   { to: '/flea-pest-control',    label: 'Flea Pest Control',     image: '/images/pests/flea.png' },

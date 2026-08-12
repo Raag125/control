@@ -8,7 +8,7 @@ const SERVICES = [
   {
     emoji: '🪵',
     image: '/images/pests/termite.png',
-    title: 'Termite Treatment',
+    title: 'Termite Pest Control',
     tagline: 'Drill-Fill-Seal Subterranean Protection',
     desc: 'CIB-registered termiticide barrier treatments using the industry-standard Drill-Fill-Seal method. Protects foundations and wood for up to 5 years.',
     to: '/termite-treatment',
@@ -17,7 +17,7 @@ const SERVICES = [
   {
     emoji: '🛏️',
     image: '/images/pests/bedbug.png',
-    title: 'Bed Bugs Treatment',
+    title: 'Bed Bugs Pest Control',
     tagline: 'Dual-Stage Steam & Chemical Defense',
     desc: 'Clinically proven 120°C high-heat steaming combined with targeted residual insecticide. Kills eggs, nymphs, and adult bed bugs instantly.',
     to: '/bed-bugs-treatment',
@@ -26,7 +26,7 @@ const SERVICES = [
   {
     emoji: '🪳',
     image: '/images/pests/cockroach.png',
-    title: 'Cockroach Treatment',
+    title: 'Cockroach Pest Control',
     tagline: 'Fipronil Gel Baiting Cascade',
     desc: 'Integrated Pest Management (IPM) using Bayer Maxforce gel baits and residual sprays. Odorless elimination of colonies within 24-72 hours.',
     to: '/cockroach-treatment',
@@ -35,7 +35,7 @@ const SERVICES = [
   {
     emoji: '🐀',
     image: '/images/pests/rodent.png',
-    title: 'Rodent Treatment',
+    title: 'Rodent Pest Control',
     tagline: 'Integrated Rodent Management (IRM)',
     desc: 'Humane trapping, tamper-resistant bait stations, and physical exclusion (gap sealing) to permanently eliminate rat and mouse intrusions.',
     to: '/rodent-treatment',
@@ -44,7 +44,7 @@ const SERVICES = [
   {
     emoji: '🦟',
     image: '/images/pests/mosquito.png',
-    title: 'Mosquito Treatment',
+    title: 'Mosquito Pest Control',
     tagline: 'Dengue & Malaria Vector Control',
     desc: 'WHO-recommended dual approach: Bti larvicidal treatment for breeding sites and ULV cold fogging for adult mosquito population control.',
     to: '/mosquito-treatment',
@@ -62,7 +62,7 @@ const SERVICES = [
   {
     emoji: '🦗',
     image: '/images/pests/bedbug.png',
-    title: 'Ticks & Fleas Treatment',
+    title: 'Ticks & Fleas Pest Control',
     tagline: '3-Stage Lifecycle Disruption',
     desc: 'Targeted application of Insect Growth Regulators (IGRs) and adulticides to break the breeding cycle. Safe for indoor pet environments.',
     to: '/ticks-fleas-treatment',
@@ -71,7 +71,7 @@ const SERVICES = [
   {
     emoji: '🪲',
     image: '/images/pests/termite.png',
-    title: 'Wood Borer Treatment',
+    title: 'Wood Borer Pest Control',
     tagline: 'Deep Injection & Borate Preservation',
     desc: 'Precision insecticide injection directly into flight holes combined with borate surface treatments. Preserves antique and structural timber.',
     to: '/wood-borer-treatment',
@@ -139,7 +139,7 @@ export default function ServicesGrid() {
                 
                 <div className="service-card__actions">
                   <Link to={s.to} className="service-card__link" aria-label={`Learn more about ${s.title}`}>
-                    <span>Treatment Details</span>
+                    <span>Pest Control Details</span>
                     <ArrowRight size={14} aria-hidden="true" />
                   </Link>
                   <a
