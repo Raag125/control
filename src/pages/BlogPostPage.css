@@ -3,6 +3,7 @@
   min-height: 100vh;
   background: var(--clr-bg);
   padding-bottom: 4rem;
+  overflow-x: hidden;
 }
 
 
@@ -114,6 +115,9 @@
   color: var(--clr-text);
   line-height: 1.8;
   font-size: 1.1rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 .blog-markdown-content h1,
@@ -210,7 +214,6 @@
   }
   
   .blog-content-layout {
-    margin-top: -1.5rem;
     gap: 2rem;
   }
   
