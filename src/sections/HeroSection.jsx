@@ -109,20 +109,20 @@ export default function HeroSection() {
           <div className="hero-live-pill">
             <span className="live-pulse-dot" aria-hidden="true" />
             <span className="live-pill-label">
-              Bangalore's #1 Eco Pest Defense &bull; <strong>Since 1993</strong>
+              Bangalore's Trusted Pest Defense &bull; <strong>Est. 1993</strong>
             </span>
           </div>
 
           {/* Bold Modern Headline */}
           <h1 className="hero-modern-title">
-            Smart, Guaranteed <br className="hero-title-break" />
-            <span className="hero-text-gradient">Pest Protection</span> For Your Home.
+            Science-Backed, Guaranteed <br className="hero-title-break" />
+            <span className="hero-text-gradient">Pest Eradication</span> In Bangalore.
           </h1>
 
           {/* Subtitle */}
           <p className="hero-modern-subtitle">
-            Say goodbye to termites, bed bugs, cockroaches, and rodents. Certified technicians using 
-            <strong> 100% odorless, WHO-approved, child and pet-safe </strong> formulas with instant 60-min dispatch across Bengaluru.
+            Protect your property from termites, bed bugs, cockroaches, and rodents. PCAI-certified technicians deploying 
+            <strong> CIB & WHOPES-approved, child and pet-safe </strong> methodologies with rapid 60-minute dispatch.
           </p>
 
           {/* Action Buttons */}
@@ -162,15 +162,15 @@ export default function HeroSection() {
           <div className="hero-modern-assurances">
             <div className="assurance-item">
               <ShieldCheck size={15} className="assurance-icon" aria-hidden="true" />
-              <span>WHO &amp; CIB Approved</span>
+              <span>WHOPES & CIB Approved Chemicals</span>
             </div>
             <div className="assurance-item">
               <Clock size={15} className="assurance-icon" aria-hidden="true" />
-              <span>60-Min Express Dispatch</span>
+              <span>60-Min Emergency Dispatch</span>
             </div>
             <div className="assurance-item">
               <CheckCircle2 size={15} className="assurance-icon" aria-hidden="true" />
-              <span>100% Free Follow-Up Guarantee</span>
+              <span>Free Warranty Retreatment</span>
             </div>
           </div>
         </motion.div>

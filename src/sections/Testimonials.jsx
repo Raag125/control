@@ -5,46 +5,46 @@ import './Testimonials.css'
 
 const REVIEWS = [
   {
-    name: 'Priya Sharma',
+    name: 'Priya Ramnath',
     location: 'Whitefield, Bangalore',
     rating: 5,
-    text: 'I booked termite treatment for my new flat and the team was incredibly professional. They explained every step clearly and the cockroach treatment they recommended alongside worked brilliantly. Totally pest-free now!',
-    service: 'Termite & Cockroach Treatment',
+    text: 'We had a severe termite infestation that had been silently damaging our teak flooring for over two years. A to Z\'s team conducted a thorough inspection, gave us a clear written quote, and completed the Drill-Fill-Seal treatment in one day. Eleven months later — not a single mud tube. The technicians were professional, punctual, and very knowledgeable. Best money I\'ve spent on home maintenance.',
+    service: 'Post-Construction Termite Treatment',
   },
   {
-    name: 'Rajan Mehta',
+    name: 'Karthik Srinivasan',
     location: 'Indiranagar, Bangalore',
     rating: 5,
-    text: 'Excellent service! Had a serious bed bug infestation and their team resolved it from day one. They also handled ticks and fleas for my dogs — safe and effective. Highly recommended!',
-    service: 'Bed Bugs & Ticks Treatment',
+    text: 'We came back from a 10-day holiday to discover our guest bedroom had a bed bug problem from a visiting relative. I called A to Z at 8 PM and they arrived the next morning at 9 AM sharp. The steam treatment was odorless and the technician was incredibly thorough — even treating behind the wall sockets. Two weeks later, zero bites. The 90-day warranty gave us complete peace of mind.',
+    service: 'Bed Bugs Steam Treatment',
   },
   {
-    name: 'Sunitha Rao',
+    name: 'Sunitha Gopal',
     location: 'Koramangala, Bangalore',
     rating: 5,
-    text: 'Their rodent treatment solved my rat problem permanently. I was amazed at how safely they handled the honey bee hive removal — didn\'t harm a single bee. Truly a reliable company.',
-    service: 'Rodent & Honey Bee Treatment',
+    text: 'Running a cloud kitchen, cockroach control is non-negotiable for our FSSAI license. A to Z set up a quarterly AMC contract for us. The gel bait treatment is completely odorless and we don\'t need to shut down during treatment. In 18 months of the contract, we have had zero cockroach activity and our last three FSSAI inspections passed without any pest control observations. Extremely reliable service.',
+    service: 'Commercial Cockroach Control (Quarterly AMC)',
   },
   {
-    name: 'Amit Kulkarni',
+    name: 'Rajeev Nambiar',
     location: 'Jayanagar, Bangalore',
     rating: 5,
-    text: 'Cockroach and mosquito treatment worked like magic. My kitchen is completely clean now and the balcony is mosquito-free. Super professional staff and transparent pricing.',
-    service: 'Cockroach & Mosquito Treatment',
+    text: 'We found a large honey bee hive (football-sized) inside our bathroom wall cavity. A to Z sent a specialist who removed the entire hive without a single person getting stung — even with the hive inside the wall. They opened a small access point, removed every fragment of honeycomb, sealed the wall, and even coordinated with an apiary to relocate the bees. Absolutely professional. Would highly recommend for any bee-related emergency.',
+    service: 'Honey Bee Hive Removal & Relocation',
   },
   {
-    name: 'Deepa Nair',
+    name: 'Ananya Krishnamurthy',
     location: 'HSR Layout, Bangalore',
     rating: 5,
-    text: 'Had both termite and bed bug treatments done. Technicians arrived on time, used the safest methods, and I haven\'t faced any pest issues since. Absolutely worth every rupee!',
-    service: 'Termite & Bed Bugs Treatment',
+    text: 'Had a persistent rodent problem for months — gnawed wires, droppings in the kitchen, scratching in the ceiling at night. Called three companies before A to Z — none of them offered exclusion (sealing entry points). A to Z\'s team found 7 entry gaps we had missed, sealed all of them with wire mesh, placed tamper-resistant bait stations, and the problem was completely resolved in 3 weeks. One year later, no re-entry.',
+    service: 'Integrated Rodent Management',
   },
   {
     name: 'Vikram Hegde',
-    location: 'RT Nagar, Bangalore',
+    location: 'Malleshwaram, Bangalore',
     rating: 5,
-    text: 'Best pest control in Bengaluru without a doubt! The wood borer treatment for my furniture was done perfectly. Their rodent control at my office space was also excellent.',
-    service: 'Wood Borer & Rodent Treatment',
+    text: 'Our 80-year-old ancestral home had a severe wood borer problem in the original teak beams and wooden doors. The A to Z specialist correctly identified the species as Common Furniture Beetle and treated every single exit hole with insecticide injection followed by borate surface treatment. Six months later, no new holes, no new frass. The team handled our antique woodwork with great care — no damage to any surface. Highly professional.',
+    service: 'Wood Borer Beetle Treatment',
   },
 ]
 
@@ -61,8 +61,8 @@ export default function Testimonials() {
             What Our Clients <span className="gradient-text">Say</span>
           </h2>
           <p>
-            Over 15,000 satisfied customers trust A to Z Pest Solutions across Bangalore.
-            Here's what they have to say about our services.
+            Over 18,000 verified clients across Bangalore rate A to Z Pest Solutions 4.9★ on Google and JustDial.
+            These are real stories from real families and business owners.
           </p>
         </div>
 

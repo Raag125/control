@@ -18,14 +18,14 @@ export default function CTABanner() {
           <div className="cta-banner__glow" aria-hidden="true" />
           <div className="cta-banner__content">
             <div className="eyebrow" style={{ margin: '0 auto 1rem' }}>
-              🚨 Act Now — Don't Let Pests Take Over
+              🚨 Act Now — Stop Infestations Before They Spread
             </div>
             <h2 className="display-lg text-center">
-              Ready for a <span style={{ color: '#fbbf24' }}>Pest-Free</span> Home?
+              Demand Scientific <span style={{ color: '#fbbf24' }}>Pest Eradication.</span>
             </h2>
             <p className="body-lg text-muted text-center" style={{ maxWidth: 560, margin: '1rem auto 0', color: 'rgba(255,255,255,0.9)' }}>
-              Call us today for a <strong style={{ color: '#fbbf24' }}>FREE inspection</strong> and expert
-              consultation. Available 24/7 — 365 days a year across Bangalore.
+              Call us today for a <strong style={{ color: '#fbbf24' }}>comprehensive property audit</strong> and a 
+              fixed-price treatment plan. Available 24/7 across Bangalore.
             </p>
             <div className="cta-banner__actions">
               <a

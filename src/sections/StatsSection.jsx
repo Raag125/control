@@ -3,12 +3,12 @@ import { useInView } from 'react-intersection-observer'
 import './StatsSection.css'
 
 const STATS = [
-  { value: '30+',   label: 'Years of Experience',      desc: 'Proudly serving Bangalore since 1993' },
-  { value: '15K+',  label: 'Happy Customers',           desc: 'Homes & businesses protected' },
-  { value: '8',     label: 'Pest Control Services',     desc: 'Complete solutions under one roof' },
-  { value: '99%',   label: 'Customer Satisfaction',     desc: 'Rated excellent by our clients' },
-  { value: '24/7',  label: 'Emergency Support',         desc: 'Available every day of the year' },
-  { value: '100%',  label: 'Eco-Friendly Solutions',    desc: 'Safe for your family & pets' },
+  { value: '30+',   label: 'Years of Expertise',        desc: 'Established in 1993 — Bangalore\'s trusted name in pest control' },
+  { value: '18K+',  label: 'Properties Protected',      desc: 'Homes, offices & commercial spaces across Bengaluru' },
+  { value: '12',    label: 'Specialized Services',      desc: 'Covering every common pest found in Bangalore' },
+  { value: '4.9★',  label: 'Average Rating',            desc: 'Verified by Google & JustDial customer reviews' },
+  { value: '60 Min', label: 'Emergency Response',       desc: 'Same-day dispatch across all Bangalore zones' },
+  { value: '100%',  label: 'WHO-Approved Chemicals',    desc: 'CIB-registered, child-safe & pet-friendly formulas only' },
 ]
 
 export default function StatsSection() {

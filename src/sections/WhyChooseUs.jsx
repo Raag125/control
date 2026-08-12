@@ -4,14 +4,14 @@ import { Shield, Clock, Leaf, Award, Users, BadgeCheck, Zap, HeartHandshake } fr
 import './WhyChooseUs.css'
 
 const REASONS = [
-  { icon: Shield,        title: '30+ Years of Trust',       desc: 'Serving Bengaluru since 1993, we bring decades of field expertise to every job.' },
-  { icon: Leaf,          title: '100% Eco-Friendly',        desc: 'WHO-approved, child-safe, and pet-friendly chemicals — zero compromise on safety.' },
-  { icon: Clock,         title: 'Same-Day Service',         desc: 'Emergency pest control available. We respond fast so you don\'t have to wait.' },
-  { icon: BadgeCheck,    title: 'Licensed & Certified',     desc: 'Our team is fully licensed, background-verified, and professionally trained.' },
-  { icon: Award,         title: 'Guaranteed Results',       desc: '100% satisfaction guarantee with free follow-up treatment if pests return.' },
-  { icon: Users,         title: '15,000+ Happy Clients',    desc: 'Trusted by thousands of homeowners and businesses across Bangalore.' },
-  { icon: Zap,           title: 'Advanced Techniques',      desc: 'We use the latest tools and scientifically-proven methods for lasting results.' },
-  { icon: HeartHandshake,'title': 'No Hidden Charges',      desc: 'Transparent pricing with detailed quotes — what we quote is what you pay.' },
+  { icon: Shield,        title: '30+ Years of Expertise',     desc: 'Established in 1993, A to Z Pest Solutions is one of Bangalore\'s oldest and most trusted pest management companies — with over 18,000 properties protected.' },
+  { icon: Leaf,          title: 'CIB & WHO-Approved Only',     desc: 'We exclusively use chemicals registered with India\'s Central Insecticides Board (CIB) and approved by the WHO Pesticide Evaluation Scheme (WHOPES) — guaranteeing safety for children, pets, and pregnant women.' },
+  { icon: Clock,         title: '60-Min Emergency Dispatch',   desc: 'Our rapid-response fleet covers all Bangalore zones — Whitefield to Jayanagar, Marathahalli to Rajajinagar. Emergency treatments dispatched within 60 minutes of your call.' },
+  { icon: BadgeCheck,    title: 'PCAI-Certified Technicians',  desc: 'Every technician holds active certification from the Pest Control Association of India (PCAI), has undergone 200+ hours of field training, and is background-verified before deployment.' },
+  { icon: Award,         title: 'Warranty-Backed Results',     desc: 'We stand behind every treatment: 5-year warranty on termite, 90-day warranty on bed bugs, and free follow-up retreatment for all services within the warranty period — at zero additional cost.' },
+  { icon: Users,         title: '18,000+ Protected Homes',     desc: 'From individual studio apartments to 5-star hotels and FSSAI-licensed restaurant chains — over 18,000 Bangalore properties trust A to Z for their pest management needs.' },
+  { icon: Zap,           title: 'Science-Backed IPM Approach', desc: 'We follow WHO\'s Integrated Pest Management (IPM) protocol — using biological, physical, and chemical controls in the right combination for maximum efficacy with minimum chemical use.' },
+  { icon: HeartHandshake, title: 'Zero Hidden Charges',        desc: 'Every quote is itemized and fixed. No post-treatment surprise additions. What we quote after the free inspection is exactly what you pay — guaranteed in writing.' },
 ]
 
 const cardVariants = {
@@ -32,11 +32,10 @@ export default function WhyChooseUs() {
         <div className="section-header">
           <div className="eyebrow" aria-hidden="true">🏆 Why Choose Us</div>
           <h2 id="why-heading" className="display-lg">
-            Bangalore Trusts <span className="gradient-text">A to Z</span>
+            Why 18,000+ Bangalore Families Choose <span className="gradient-text">A to Z</span>
           </h2>
           <p>
-            We're not just pest controllers — we're your long-term home protection partners.
-            Here's what sets us apart from the rest.
+            Not all pest control is equal. Our combination of 30+ years of expertise, CIB-certified chemicals, PCAI-trained technicians, and industry-leading warranties makes us Bangalore's most trusted pest management company.
           </p>
         </div>
 

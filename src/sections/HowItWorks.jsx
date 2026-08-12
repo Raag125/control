@@ -7,26 +7,26 @@ const STEPS = [
   {
     icon: Search,
     step: '01',
-    title: 'Find Us & Book',
-    desc: 'Search for "Pest Control Bangalore", call us on 9845559710, or book instantly on WhatsApp. Tell us your pest problem and location.',
+    title: 'Instant Booking',
+    desc: 'Call 9845559710 or message on WhatsApp. Describe your pest issue, and we\'ll schedule a certified technician to your Bangalore location — often within 60 minutes.',
   },
   {
     icon: CheckSquare,
     step: '02',
-    title: 'Free Inspection',
-    desc: 'Our expert technician visits your property, identifies the infestation type and severity, and recommends the best treatment plan.',
+    title: 'Detailed Inspection',
+    desc: 'Our PCAI-trained expert conducts a thorough site survey to identify the pest species, locate breeding sources, and assess infestation severity. We provide a transparent, fixed quote.',
   },
   {
     icon: CalendarCheck,
     step: '03',
-    title: 'Treatment Day',
-    desc: 'Our certified team arrives on time with professional equipment and applies targeted, eco-friendly treatments to eliminate pests.',
+    title: 'Targeted Treatment',
+    desc: 'We execute the treatment using CIB & WHO-approved formulations. Whether it\'s Drill-Fill-Seal for termites or Gel Baiting for cockroaches, we use the precise scientific method required.',
   },
   {
     icon: Sparkles,
     step: '04',
-    title: 'Pest-Free Guarantee',
-    desc: 'Enjoy your pest-free space! We follow up to ensure complete results. If pests return within the warranty period, we retreat for FREE.',
+    title: 'Guaranteed Protection',
+    desc: 'We issue an official warranty certificate (up to 5 years). If the pests return within the warranty period, we return and re-treat the affected area completely free of charge.',
   },
 ]
 

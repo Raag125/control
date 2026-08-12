@@ -9,8 +9,8 @@ const SERVICES = [
     emoji: '🪵',
     image: '/images/pests/termite.png',
     title: 'Termite Treatment',
-    tagline: 'Stop Costly Structural Damage',
-    desc: 'Advanced anti-termite drill-fill-seal soil treatment and timber impregnations for complete subterranean termite eradication.',
+    tagline: 'Drill-Fill-Seal Subterranean Protection',
+    desc: 'CIB-registered termiticide barrier treatments using the industry-standard Drill-Fill-Seal method. Protects foundations and wood for up to 5 years.',
     to: '/termite-treatment',
     tag: '5-Year Warranty',
   },
@@ -18,64 +18,64 @@ const SERVICES = [
     emoji: '🛏️',
     image: '/images/pests/bedbug.png',
     title: 'Bed Bugs Treatment',
-    tagline: 'Deep Steam & Chemical Defense',
-    desc: 'Targeted high-heat steaming and dual-stage micro-chemical mist to destroy bed bugs and their eggs from mattresses and furniture.',
+    tagline: 'Dual-Stage Steam & Chemical Defense',
+    desc: 'Clinically proven 120°C high-heat steaming combined with targeted residual insecticide. Kills eggs, nymphs, and adult bed bugs instantly.',
     to: '/bed-bugs-treatment',
-    tag: '100% Guaranteed',
+    tag: '90-Day Guarantee',
   },
   {
     emoji: '🪳',
     image: '/images/pests/cockroach.png',
     title: 'Cockroach Treatment',
-    tagline: 'Odorless Gel Baiting System',
-    desc: 'Bayer Maxforce gel-baiting and crevice spray that targets cockroach nests in kitchens and bathrooms with zero smell.',
+    tagline: 'Fipronil Gel Baiting Cascade',
+    desc: 'Integrated Pest Management (IPM) using Bayer Maxforce gel baits and residual sprays. Odorless elimination of colonies within 24-72 hours.',
     to: '/cockroach-treatment',
-    tag: 'Most Popular',
+    tag: 'Odorless / Safe',
   },
   {
     emoji: '🐀',
     image: '/images/pests/rodent.png',
     title: 'Rodent Treatment',
-    tagline: 'Humane Trapping & Exclusion',
-    desc: 'Smart multi-catch bait stations and entry point sealing to eliminate rats and mice while keeping pets safe.',
+    tagline: 'Integrated Rodent Management (IRM)',
+    desc: 'Humane trapping, tamper-resistant bait stations, and physical exclusion (gap sealing) to permanently eliminate rat and mouse intrusions.',
     to: '/rodent-treatment',
-    tag: 'Fast Removal',
+    tag: 'Exclusion + Trapping',
   },
   {
     emoji: '🦟',
     image: '/images/pests/mosquito.png',
     title: 'Mosquito Treatment',
-    tagline: 'Fogging & Larvicide Protection',
-    desc: 'Thermal outdoor fogging and eco larvicidal surface mist to protect your family from dengue and malaria risks.',
+    tagline: 'Dengue & Malaria Vector Control',
+    desc: 'WHO-recommended dual approach: Bti larvicidal treatment for breeding sites and ULV cold fogging for adult mosquito population control.',
     to: '/mosquito-treatment',
-    tag: 'Outdoor & Indoor',
+    tag: 'Indoor & Outdoor',
   },
   {
     emoji: '🐝',
     image: '/images/pests/termite.png', // Fallback or eco relocator
     title: 'Honey Bee Relocation',
-    tagline: 'Ethical Hive Removal',
-    desc: 'Safe, eco-conscious honey bee removal and hive relocation without harming these vital pollinators.',
+    tagline: 'Safe & Ethical Hive Removal',
+    desc: 'Professional beekeeper-grade removal of hives from walls, trees, and rooftops. We prioritize safe relocation of these essential pollinators.',
     to: '/honey-bee-treatment',
-    tag: 'Eco-Friendly',
+    tag: 'Eco-Conscious',
   },
   {
     emoji: '🦗',
     image: '/images/pests/bedbug.png',
     title: 'Ticks & Fleas Treatment',
-    tagline: 'Family & Pet Safe Formulations',
-    desc: 'Specialized herbal and WHO-approved pet-safe treatments that eradicate ticks and fleas from carpets and corners.',
+    tagline: '3-Stage Lifecycle Disruption',
+    desc: 'Targeted application of Insect Growth Regulators (IGRs) and adulticides to break the breeding cycle. Safe for indoor pet environments.',
     to: '/ticks-fleas-treatment',
-    tag: 'Pet Safe',
+    tag: 'Pet & Child Safe',
   },
   {
     emoji: '🪲',
     image: '/images/pests/termite.png',
     title: 'Wood Borer Treatment',
-    tagline: 'Preserve Wooden Furniture',
-    desc: 'Specialized chemical injection and surface coats to eradicate powder post beetles and wood borers permanently.',
+    tagline: 'Deep Injection & Borate Preservation',
+    desc: 'Precision insecticide injection directly into flight holes combined with borate surface treatments. Preserves antique and structural timber.',
     to: '/wood-borer-treatment',
-    tag: 'Long Lasting',
+    tag: 'Preserves Furniture',
   },
 ]
 
@@ -97,10 +97,10 @@ export default function ServicesGrid() {
         <div className="section-header">
           <div className="eyebrow" aria-hidden="true">⚡ Targeted Solutions</div>
           <h2 id="services-heading" className="display-lg">
-            Specialized Pest <span className="gradient-text">Extermination Services</span>
+            Specialized Pest <span className="gradient-text">Management Services</span>
           </h2>
           <p>
-            Certified, science-backed treatments using authentic WHO-approved formulations across all areas in Bangalore.
+            Evidence-based treatments utilizing WHOPES-approved formulations and industry-standard protocols for lasting eradication across Bangalore.
           </p>
         </div>
 

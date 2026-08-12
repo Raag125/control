@@ -5,21 +5,21 @@ import { Link } from 'react-router-dom'
 import './ResidentialCommercial.css'
 
 const RESIDENTIAL = [
-  'Complete protection against all household pests',
-  'Child-safe and pet-friendly formulations',
-  'Termite, bed bug, cockroach, mosquito control',
-  'Flexible scheduling including evenings & weekends',
-  'Discreet, uniformed professional technicians',
-  'Guaranteed follow-up service included',
+  'WHO-approved & CIB-registered safe chemical formulations',
+  'Specialized treatments for termites, bed bugs & cockroaches',
+  'Child, pet & elderly-safe protocols (odorless options)',
+  'Flexible scheduling including weekends and holidays',
+  'PCAI-certified, background-verified technicians',
+  'Long-term warranties with free follow-up inspections',
 ]
 
 const COMMERCIAL = [
-  'Compliance with FSSAI and health department norms',
-  'Pest control for offices, hotels & restaurants',
-  'Hospital-grade, odorless treatment options',
-  'Preventive maintenance contracts available',
-  'Minimal disruption to business operations',
-  'Detailed service reports and documentation',
+  'FSSAI & HACCP compliant pest management protocols',
+  'Tailored for hotels, restaurants, hospitals & IT parks',
+  'Zero-disruption treatments (gel baiting & after-hours)',
+  'Quarterly & Annual Maintenance Contracts (AMC)',
+  'Dedicated account managers and priority emergency response',
+  'Digital service reports and audit-ready compliance documentation',
 ]
 
 export default function ResidentialCommercial() {
@@ -54,9 +54,7 @@ export default function ResidentialCommercial() {
               </div>
             </div>
             <p className="rc-card__desc">
-              At A to Z Pest Solutions, we understand the importance of a pest-free home. Our residential
-              services are designed to provide complete protection for your family against all household
-              pests — using advanced, eco-friendly techniques for lasting results.
+              At A to Z Pest Solutions, we understand that a pest-free home is essential for your family's health and peace of mind. Our residential treatments use targeted, low-toxicity methodologies — creating a safe haven from disease-carrying vectors and property-damaging insects without disrupting your daily life.
             </p>
             <ul className="rc-card__list" aria-label="Residential pest control features">
               {RESIDENTIAL.map((item) => (
@@ -88,9 +86,7 @@ export default function ResidentialCommercial() {
               </div>
             </div>
             <p className="rc-card__desc">
-              A pest-free commercial environment in Bangalore is essential for your business reputation,
-              employee safety, and customer satisfaction. Our expert services protect offices, hotels,
-              restaurants, warehouses, hospitals, and retail spaces from all pest infestations.
+              A pest-free environment is critical for business continuity, brand reputation, and regulatory compliance in Bangalore. We provide audit-ready, proactive pest management programs tailored for the hospitality, healthcare, IT, and food processing sectors — ensuring zero operational downtime.
             </p>
             <ul className="rc-card__list" aria-label="Commercial pest control features">
               {COMMERCIAL.map((item) => (
