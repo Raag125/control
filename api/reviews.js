@@ -1,42 +1,37 @@
-import { put, list } from '@vercel/blob'
+import { MongoClient } from 'mongodb'
 
-const BLOB_FILENAME = 'azt-reviews.json'
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN || 'vercel_blob_rw_2iDMFpYeFLXr1PcM_uZIf5crS1UBjA8Ego7ydwXA2ibiOMZ'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://navneetnamdev191_db_user:mZMtHM1NNvQdfos9@cluster0.5s6gngc.mongodb.net/pest_control?retryWrites=true&w=majority'
 
-async function getReviews() {
-  try {
-    const { blobs } = await list({ prefix: BLOB_FILENAME, token: BLOB_TOKEN })
-    if (!blobs || blobs.length === 0) {
-      const seed = [
-        { id: 'REV-001', service: 'Termite Treatment', name: 'Rajesh Kumar', rating: 5, text: 'Excellent termite treatment. Highly recommend!', status: 'approved', date: '2026-08-01T10:00:00Z' },
-        { id: 'REV-002', service: 'Bed Bugs Treatment', name: 'Priya Sharma', rating: 4, text: 'Very effective bed bug removal. Team was professional.', status: 'approved', date: '2026-08-02T10:00:00Z' },
-        { id: 'REV-003', service: 'Cockroach Treatment', name: 'Amit Patel', rating: 5, text: 'Professional and clean service.', status: 'pending', date: '2026-08-03T10:00:00Z' },
-      ]
-      await saveReviews(seed)
-      return seed
-    }
-    const sorted = blobs.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt))
-    const downloadUrl = sorted[0].downloadUrl || sorted[0].url
-    const response = await fetch(downloadUrl + '?t=' + Date.now(), {
-      headers: { Authorization: `Bearer ${BLOB_TOKEN}` }
-    })
-    return await response.json()
-  } catch (e) {
-    console.error('Error fetching reviews from blob:', e)
-    return [
-      { id: 'REV-001', service: 'Termite Treatment', name: 'Rajesh Kumar', rating: 5, text: 'Excellent termite treatment. Highly recommend!', status: 'approved', date: '2026-08-01T10:00:00Z' },
-      { id: 'REV-002', service: 'Bed Bugs Treatment', name: 'Priya Sharma', rating: 4, text: 'Very effective bed bug removal. Team was professional.', status: 'approved', date: '2026-08-02T10:00:00Z' },
-    ]
+let cachedClient = null
+let cachedDb = null
+
+async function connectToDatabase() {
+  if (cachedClient && cachedDb) {
+    return { client: cachedClient, db: cachedDb }
   }
+
+  const client = await MongoClient.connect(MONGODB_URI)
+  const db = client.db('pest_control')
+
+  cachedClient = client
+  cachedDb = db
+  return { client, db }
 }
 
-async function saveReviews(reviews) {
-  await put(BLOB_FILENAME, JSON.stringify(reviews, null, 2), {
-    access: 'private',
-    addRandomSuffix: false,
-    contentType: 'application/json',
-    token: BLOB_TOKEN,
-  })
+async function getReviewsCollection() {
+  const { db } = await connectToDatabase()
+  const collection = db.collection('reviews')
+  const count = await collection.countDocuments()
+  
+  if (count === 0) {
+    const seed = [
+      { id: 'REV-001', service: 'Termite Treatment', name: 'Rajesh Kumar', rating: 5, text: 'Excellent termite treatment. Highly recommend!', status: 'approved', date: '2026-08-01T10:00:00Z' },
+      { id: 'REV-002', service: 'Bed Bugs Treatment', name: 'Priya Sharma', rating: 4, text: 'Very effective bed bug removal. Team was professional.', status: 'approved', date: '2026-08-02T10:00:00Z' },
+      { id: 'REV-003', service: 'Cockroach Treatment', name: 'Amit Patel', rating: 5, text: 'Professional and clean service.', status: 'pending', date: '2026-08-03T10:00:00Z' },
+    ]
+    await collection.insertMany(seed)
+  }
+  return collection
 }
 
 export default async function handler(req, res) {
@@ -50,9 +45,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    const collection = await getReviewsCollection()
+
     if (req.method === 'GET') {
-      const reviews = await getReviews()
-      return res.status(200).json(reviews)
+      const reviews = await collection.find({}).sort({ date: -1 }).toArray()
+      const sanitized = reviews.map(({ _id, ...rest }) => rest)
+      return res.status(200).json(sanitized)
     }
 
     if (req.method === 'POST') {
@@ -65,34 +63,36 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, error: 'Empty body' })
       }
 
-      let reviews = await getReviews()
-
       if (payload.action === 'delete') {
-        reviews = reviews.filter(r => r.id !== payload.id)
+        await collection.deleteOne({ id: payload.id })
       } else if (payload.id) {
-        const idx = reviews.findIndex(r => r.id === payload.id)
-        if (idx > -1) {
-          reviews[idx] = { ...reviews[idx], ...payload }
-        } else {
-          reviews.unshift(payload)
-        }
+        const { _id, ...updateData } = payload
+        await collection.updateOne(
+          { id: payload.id },
+          { $set: updateData },
+          { upsert: true }
+        )
       } else {
         const newRev = {
-          ...payload,
           id: 'REV-' + Math.random().toString(36).slice(2, 9).toUpperCase(),
-          date: new Date().toISOString(),
+          service: payload.service,
+          name: payload.name,
+          rating: Number(payload.rating) || 5,
+          text: payload.text,
           status: 'pending',
+          date: new Date().toISOString(),
         }
-        reviews.unshift(newRev)
+        await collection.insertOne(newRev)
       }
 
-      await saveReviews(reviews)
-      return res.status(200).json({ success: true, reviews })
+      const all = await collection.find({}).sort({ date: -1 }).toArray()
+      const sanitized = all.map(({ _id, ...rest }) => rest)
+      return res.status(200).json({ success: true, reviews: sanitized })
     }
 
     return res.status(405).json({ error: 'Method not allowed' })
   } catch (err) {
-    console.error('API Handler Error:', err)
+    console.error('MongoDB API Error:', err)
     return res.status(500).json({ success: false, error: err.message })
   }
 }
