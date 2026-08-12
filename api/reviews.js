@@ -16,7 +16,10 @@ async function getReviews() {
       return seed
     }
     const sorted = blobs.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt))
-    const response = await fetch(sorted[0].url + '?t=' + Date.now())
+    const downloadUrl = sorted[0].downloadUrl || sorted[0].url
+    const response = await fetch(downloadUrl + '?t=' + Date.now(), {
+      headers: { Authorization: `Bearer ${BLOB_TOKEN}` }
+    })
     return await response.json()
   } catch (e) {
     console.error('Error fetching reviews from blob:', e)
@@ -29,7 +32,7 @@ async function getReviews() {
 
 async function saveReviews(reviews) {
   await put(BLOB_FILENAME, JSON.stringify(reviews, null, 2), {
-    access: 'public',
+    access: 'private',
     addRandomSuffix: false,
     contentType: 'application/json',
     token: BLOB_TOKEN,
