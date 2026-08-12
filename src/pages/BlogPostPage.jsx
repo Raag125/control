@@ -47,22 +47,21 @@ export default function BlogPostPage() {
 
       <AnimatedBackground />
       
-      <div className="blog-hero">
-        <div className="blog-hero-overlay"></div>
+      <div className="container blog-header" style={{ paddingTop: '7rem', paddingBottom: '2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
+        <div className="blog-meta" style={{ marginBottom: '1rem', color: 'var(--clr-primary)' }}>
+          {new Date(blog.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </div>
+        <h1 className="blog-title" style={{ color: 'var(--clr-primary-dark)', textShadow: 'none', marginBottom: '2rem' }}>
+          {blog.title}
+        </h1>
         <img 
           src={blog.image || 'https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&q=80&w=2000'} 
           alt={blog.imageAlt || blog.title} 
-          className="blog-hero-img" 
+          style={{ width: '100%', height: 'auto', borderRadius: '16px', objectFit: 'contain', maxHeight: '60vh', backgroundColor: 'var(--clr-bg)' }}
         />
-        <div className="container blog-hero-content">
-          <div className="blog-meta">
-            {new Date(blog.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </div>
-          <h1 className="blog-title">{blog.title}</h1>
-        </div>
       </div>
 
-      <div className="container blog-content-layout">
+      <div className="container blog-content-layout" style={{ marginTop: '1rem' }}>
         
         {/* LEFT MAIN CONTENT */}
         <div className="blog-main-column">
