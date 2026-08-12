@@ -62,6 +62,14 @@ async function scrape() {
         const $content = $post('.elementor-widget-theme-post-content').length ? $post('.elementor-widget-theme-post-content').first() : $post('main, article, .elementor-location-single').first();
         $content.find('script, style, form, .sharedaddy').remove();
         
+        // Fix lazy-loaded images
+        $content.find('img').each((i, el) => {
+          const dataSrc = $(el).attr('data-src') || $(el).attr('data-lazy-src') || $(el).attr('data-opt-src');
+          if (dataSrc) {
+            $(el).attr('src', dataSrc);
+          }
+        });
+        
         let contentHtml = $content.html() || '';
         let markdown = turndownService.turndown(contentHtml);
         

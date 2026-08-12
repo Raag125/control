@@ -27,7 +27,7 @@
 .blog-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(5, 22, 12, 0.3) 0%, var(--clr-bg) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, var(--clr-bg) 100%);
   z-index: 1;
 }
 
@@ -50,8 +50,8 @@
 .blog-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
   line-height: 1.2;
-  color: #fff;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  color: var(--clr-primary-dark);
+  text-shadow: 0 4px 15px rgba(255, 255, 255, 0.8);
 }
 
 .blog-content-layout {
