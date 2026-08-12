@@ -285,8 +285,9 @@
 
 /* Pest Tabs */
 .pest-tabs-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.25rem;
   background: #f1f7f3;
   padding: 0.25rem;
@@ -309,6 +310,8 @@
   cursor: pointer;
   border: none;
   z-index: 1;
+  flex: 0 0 calc(20% - 0.2rem);
+  max-width: calc(20% - 0.2rem);
 }
 
 .pest-tab-btn:hover {
@@ -338,7 +341,9 @@
   font-size: 0.66rem;
   font-weight: 700;
   color: var(--clr-text-muted);
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.15;
 }
 
 .pest-tab-btn.tab-active .tab-name {
@@ -782,6 +787,8 @@
 
   .pest-tab-btn {
     padding: 0.3rem 0.05rem;
+    flex: 0 0 calc(25% - 0.15rem);
+    max-width: calc(25% - 0.15rem);
   }
 
   .tab-emoji { font-size: 1rem; }
