@@ -77,6 +77,11 @@ async function scrape() {
         // Let's just do basic cleanup.
         markdown = markdown.replace(/\n{3,}/g, '\n\n').trim();
         
+        // Fix internal links pointing to the old domain and map /blog/ to /blogs/
+        markdown = markdown.replace(/https:\/\/pestcontrolbengaluru\.in\/blog\/([a-zA-Z0-9-]+)\/?/g, '/blogs/$1');
+        markdown = markdown.replace(/\/blog\/([a-zA-Z0-9-]+)\/?/g, '/blogs/$1');
+        markdown = markdown.replace(/https:\/\/pestcontrolbengaluru\.in\//g, '/');
+
         const slug = url.replace('https://pestcontrolbengaluru.in/', '').replace(/\//g, '');
         
         blogs.push({
