@@ -20,11 +20,9 @@
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
-  gap: 2.5rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: clamp(2rem, 5vw, 2.5rem);
 }
-@media (max-width: 1024px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px)  { .footer__grid { grid-template-columns: 1fr; gap: 2rem; } }
 
 /* Brand */
 .footer__logo {

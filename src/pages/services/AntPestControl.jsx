@@ -1,10 +1,11 @@
 import ServiceDetailPage from './ServiceDetailPage'
 import imgPest from '../../assets/services/ant.png'
+import bgImage from '../../assets/services/bg/cockroach.png'
 
 export default function AntPestControl() {
   return <ServiceDetailPage
     meta={{ title: 'Ant Pest Control in Bangalore | A to Z Pest Solutions', desc: 'Professional ant pest control in Bangalore. Eliminate ant colonies safely and effectively. Fast response and guaranteed results.', canonical: 'https://pestcontrolbengaluru.in/ant-pest-control' }}
-    image={imgPest} title="Ant Pest Control" tagline="Target the colony, eliminate the queen, and stop ant trails for good."
+    image={imgPest} bgImage={bgImage} title="Ant Pest Control" tagline="Target the colony, eliminate the queen, and stop ant trails for good."
     intro="Ants in Bangalore can quickly become a relentless nuisance, invading kitchens and contaminating food. Because ants live in large colonies, over-the-counter sprays only kill the visible workers, causing the colony to split and spread. At A to Z Pest Solutions, we use advanced baiting systems that worker ants carry back to the nest, effectively eliminating the entire colony, including the queen."
     signs={['Visible ant trails on walls or countertops','Swarmers (winged ants) near windows','Small piles of dirt or frass (sawdust) near skirting boards','Ants congregating around pet food or sugar spills','Rustling noises inside wooden structures (Carpenter Ants)']}
     benefits={['Complete colony eradication, including the queen','Non-toxic, safe baits for kitchens and indoor use','Prevents "budding" (colony splitting) caused by bad sprays','Targeted barrier treatments to block entry points','Long-lasting results and warranties','Expert identification of specific ant species']}

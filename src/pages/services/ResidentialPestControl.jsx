@@ -1,10 +1,11 @@
 import ServiceDetailPage from './ServiceDetailPage'
 import imgPest from '../../assets/services/residential.png'
+import bgImage from '../../assets/services/bg/residential.png'
 
 export default function ResidentialPestControl() {
   return <ServiceDetailPage
     meta={{ title: 'Residential Pest Control in Bangalore | A to Z Pest Solutions', desc: 'Comprehensive residential pest control in Bangalore. Protect your home and family from cockroaches, termites, rodents, mosquitoes, and bed bugs. Safe & eco-friendly.', canonical: 'https://pestcontrolbengaluru.in/residential-pest-control' }}
-    image={imgPest} title="Residential Pest Control" tagline="Protect your home and family with comprehensive, eco-friendly pest management."
+    image={imgPest} bgImage={bgImage} title="Residential Pest Control" tagline="Protect your home and family with comprehensive, eco-friendly pest management."
     intro="Your home should be your safe haven, not a breeding ground for pests. At A to Z Pest Solutions, we offer complete residential pest control services tailored to Bangalore's unique climate. From eradicating cockroaches in the kitchen to stopping silent destroyers like termites, we use advanced, low-toxicity treatments that are completely safe for children and pets."
     signs={['Cockroach droppings in kitchen cabinets','Unexplained itchy bites from bed bugs or mosquitoes','Hollow-sounding wood or mud tubes (termites)','Scratching noises in walls or ceilings (rodents)','Visible ant trails near food sources']}
     benefits={['Safe for children, pregnant women, and pets','Eco-friendly, WHO-approved chemicals','Long-term prevention, not just a quick fix','Odorless and hassle-free treatments','Warranties on most services','Trained & background-verified technicians']}

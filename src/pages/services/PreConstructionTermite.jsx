@@ -1,10 +1,11 @@
 import ServiceDetailPage from './ServiceDetailPage'
 import imgPest from '../../assets/services/pre_construction.png'
+import bgImage from '../../assets/services/bg/termite.png'
 
 export default function PreConstructionTermite() {
   return <ServiceDetailPage
     meta={{ title: 'Pre Construction Termite Treatment Bangalore | A to Z Pest Solutions', desc: 'Protect your new building from termites before it is built. Expert pre-construction termite treatment in Bangalore as per BIS IS 6313.', canonical: 'https://pestcontrolbengaluru.in/pre-construction-termite-treatment' }}
-    image={imgPest} title="Pre Construction Termite Treatment" tagline="Build a termite-proof foundation for long-lasting structural integrity."
+    image={imgPest} bgImage={bgImage} title="Pre Construction Termite Treatment" tagline="Build a termite-proof foundation for long-lasting structural integrity."
     intro="Pre-construction anti-termite treatment is the most effective way to protect a new building from subterranean termites. By applying a specialized chemical barrier to the soil before the foundation is laid, A to Z Pest Solutions ensures that termites cannot enter the structure from the ground up. We strictly adhere to the Bureau of Indian Standards (BIS) IS 6313 to guarantee maximum protection."
     signs={['Not applicable (Preventive measure before construction)','High water table or damp soil on site (increases risk)','Proximity to older, termite-infested buildings or trees','Wood-heavy construction plans']}
     benefits={['Creates an impenetrable continuous chemical barrier','Much cheaper than post-construction damage repairs','Prevents structural damage to foundations and masonry','Protects future wooden fixtures and flooring','Long-lasting protection (often 10-15+ years)','Backed by long-term warranties and guarantees']}

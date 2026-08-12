@@ -1,9 +1,10 @@
 .rc-section { overflow: clip; background: var(--clr-bg); }
 
 .rc-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); 
+  gap: clamp(1.5rem, 3vw, 2.5rem);
 }
-@media (max-width: 800px) { .rc-grid { grid-template-columns: 1fr; } }
 
 .rc-card {
   background: #fff;

@@ -1,10 +1,11 @@
 import ServiceDetailPage from './ServiceDetailPage'
 import imgPest from '../../assets/services/tick.png'
+import bgImage from '../../assets/services/bg/ticks_fleas.png'
 
 export default function TickPestControl() {
   return <ServiceDetailPage
     meta={{ title: 'Tick Pest Control in Bangalore | A to Z Pest Solutions', desc: 'Protect your family and pets from dangerous tick-borne diseases. Expert tick pest control services in Bangalore.', canonical: 'https://pestcontrolbengaluru.in/tick-pest-control' }}
-    image={imgPest} title="Tick Pest Control" tagline="Keep your pets and family safe from disease-carrying ticks."
+    image={imgPest} bgImage={bgImage} title="Tick Pest Control" tagline="Keep your pets and family safe from disease-carrying ticks."
     intro="Ticks are dangerous parasites that feed on the blood of pets and humans, transmitting diseases like Lyme disease and Tick Fever. In Bangalore, ticks often hitch a ride on pets and infest gardens, carpets, and furniture. A to Z Pest Solutions provides specialized tick eradication treatments, focusing on both indoor areas and outdoor resting sites to break their lifecycle completely."
     signs={['Finding attached ticks on your pets or yourself','Unexplained rashes, fever, or fatigue','Small, dark bugs crawling on walls or curtains','Excessive scratching or biting by your pets','Presence of tick eggs in cracks and crevices']}
     benefits={['Reduces the risk of tick-borne illnesses','Thorough treatment of both indoors and outdoors','Safe for pets once the treatment has dried','Breaks the tick breeding cycle','Expert advice on pet and yard maintenance','Fast-acting solutions for immediate relief']}
@@ -16,9 +17,16 @@ export default function TickPestControl() {
       { title: 'Follow-up', desc: 'A secondary treatment is often recommended to target newly hatched ticks and break the lifecycle.' },
     ]}
     faqs={[
-      { q: 'Can you treat my dog/cat for ticks?', a: 'We treat your home and garden to eliminate the tick environment. You must consult a veterinarian for direct treatment on your pet.' },
-      { q: 'How long should pets stay away after treatment?', a: 'Pets and children should be kept away from treated areas until the spray has completely dried, usually about 2-4 hours.' },
-      { q: 'Why do I need outdoor treatment as well?', a: 'Ticks usually originate outdoors in tall grass or shrubs. Treating the exterior prevents them from re-entering your home.' },
+      { q: "What are tick fleas?", a: "Tick fleas are external parasites that feed on the blood of mammals and birds." },
+      { q: "What do tick fleas look like?", a: "Tick fleas are small, flat, and oval-shaped, with a reddish-brown color." },
+      { q: "Where are tick fleas found?", a: "Tick fleas are found on pets, wildlife, and in grassy, bushy, or wooded areas." },
+      { q: "What are the signs of tick flea infestation?", a: "Signs include excessive scratching, biting, and hair loss on pets, and tiny jumping insects in the home." },
+      { q: "How do tick fleas spread?", a: "Tick fleas spread through direct contact with infested animals or contaminated environments." },
+      { q: "What health risks do tick fleas pose?", a: "Tick fleas can transmit diseases like typhus, tularemia, and tapeworms to humans and pets." },
+      { q: "How to get rid of tick fleas?", a: "Use a combination of medicated shampoos, topical treatments, and environmental cleaning." },
+      { q: "Can I treat tick fleas myself?", a: "Self-treatment is possible but often ineffective; professional help is recommended." },
+      { q: "How long does tick flea treatment take?", a: "Depends on the infestation level. If the problem is high minimum 2 weeks to fully eliminate the infestation." },
+      { q: "How can I prevent tick fleas?", a: "Use preventative medications on pets, avoid tick-prone areas, and keep a clean and clutter-free home." }
     ]}
   />
 }

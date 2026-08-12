@@ -1,6 +1,6 @@
 // ── Admin Data Layer — localStorage persistence + seed ──
 
-const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_services', visitors:'azt_visitors', blogs:'azt_blogs', settings:'azt_settings' }
+const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_services', visitors:'azt_visitors', blogs:'azt_blogs', settings:'azt_settings', reviews:'azt_reviews' }
 const read  = k => { try { return JSON.parse(localStorage.getItem(k)) || [] } catch { return [] } }
 const readObj = k => { try { return JSON.parse(localStorage.getItem(k)) || {} } catch { return {} } }
 const write = (k,v) => localStorage.setItem(k, JSON.stringify(v))
@@ -45,6 +45,11 @@ export function seedIfEmpty() {
   write(KEYS.blogs, [
     { id: 'BLG-001', title: 'How to Identify a Termite Infestation Before It\'s Too Late', slug: 'identify-termite-infestation', excerpt: 'Termites cause billions in damage each year. Learn the early warning signs...', content: 'Termites are known as silent destroyers...', status: 'published', date: '2026-08-01T10:00:00Z', image: 'https://images.unsplash.com/photo-1582298967912-87178a3c86cb?auto=format&fit=crop&q=80&w=1200' },
   ])
+  write(KEYS.reviews, [
+    { id:'REV-001', service:'Termite Treatment', name:'Rajesh Kumar', rating:5, text:'Excellent termite treatment. Highly recommend!', status:'approved', date:'2026-08-01T10:00:00Z' },
+    { id:'REV-002', service:'Bed Bugs Treatment', name:'Priya Sharma', rating:4, text:'Very effective bed bug removal. Team was professional.', status:'approved', date:'2026-08-02T10:00:00Z' },
+    { id:'REV-003', service:'Cockroach Treatment', name:'Amit Patel', rating:5, text:'Professional and clean service.', status:'pending', date:'2026-08-03T10:00:00Z' },
+  ])
 }
 
 // CRUD
@@ -71,6 +76,21 @@ export const saveBlog      = b   => {
   write(KEYS.blogs,all); return all 
 }
 export const deleteBlog    = id  => { const all=read(KEYS.blogs).filter(b=>b.id!==id); write(KEYS.blogs,all); return all }
+
+export const getReviews = () => read(KEYS.reviews)
+export const saveReview = r => {
+  const all = read(KEYS.reviews)
+  const i = all.findIndex(x=>x.id===r.id)
+  if(i>-1) { all[i] = {...all[i], ...r} }
+  else { all.unshift({...r, id:'REV-'+uid(), date:new Date().toISOString()}) }
+  write(KEYS.reviews, all)
+  return all
+}
+export const deleteReview = id => {
+  const all = read(KEYS.reviews).filter(r=>r.id!==id)
+  write(KEYS.reviews, all)
+  return all
+}
 
 export const getSettings   = ()  => readObj(KEYS.settings)
 export const saveSettings  = s   => { const all = getSettings(); const updated = {...all, ...s}; write(KEYS.settings, updated); return updated }

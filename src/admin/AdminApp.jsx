@@ -10,6 +10,7 @@ import Payments    from './pages/Payments'
 import Visitors    from './pages/Visitors'
 import Services    from './pages/Services'
 import Blogs       from './pages/Blogs'
+import Reviews     from './pages/Reviews'
 import './admin.css'
 
 function RequireAuth({ children }) {
@@ -35,6 +36,7 @@ function AdminRoutes() {
         <Route path="visitors"  element={<Visitors />} />
         <Route path="services"  element={<Services />} />
         <Route path="blogs"     element={<Blogs />} />
+        <Route path="reviews"   element={<Reviews />} />
         <Route path="*"         element={<Navigate to="dashboard" replace />} />
       </Routes>
     </AdminLayout>

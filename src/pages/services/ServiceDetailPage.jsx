@@ -37,20 +37,147 @@ function FAQItem({ q, a }) {
   )
 }
 
+function ReviewsSection({ serviceTitle }) {
+  const [reviews, setReviews] = useState([])
+  const [showForm, setShowForm] = useState(false)
+  const [formData, setFormData] = useState({ name: '', rating: 5, text: '' })
+  const [submitted, setSubmitted] = useState(false)
+
+  useEffect(() => {
+    const fetchReviews = () => {
+      try {
+        const all = JSON.parse(localStorage.getItem('azt_reviews')) || []
+        const approved = all.filter(r => r.service === serviceTitle && r.status === 'approved')
+        
+        setReviews(prev => {
+          if (prev.length !== approved.length) return approved;
+          // Compare IDs to see if there's a difference
+          const prevIds = prev.map(p => p.id).join(',')
+          const newIds = approved.map(a => a.id).join(',')
+          return prevIds === newIds ? prev : approved;
+        })
+      } catch { setReviews([]) }
+    }
+
+    fetchReviews()
+    const intervalId = setInterval(fetchReviews, 2000)
+
+    return () => clearInterval(intervalId)
+  }, [serviceTitle])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!formData.name || !formData.text) return
+    const all = JSON.parse(localStorage.getItem('azt_reviews')) || []
+    const newRev = {
+      id: 'REV-' + Math.random().toString(36).slice(2, 9).toUpperCase(),
+      service: serviceTitle,
+      name: formData.name,
+      rating: formData.rating,
+      text: formData.text,
+      status: 'pending',
+      date: new Date().toISOString()
+    }
+    all.unshift(newRev)
+    localStorage.setItem('azt_reviews', JSON.stringify(all))
+    setSubmitted(true)
+    setShowForm(false)
+    setFormData({ name: '', rating: 5, text: '' })
+  }
+
+  const renderStars = (rating) => {
+    return Array(5).fill(0).map((_, i) => (
+      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: '1.2rem' }}>★</span>
+    ))
+  }
+
+  return (
+    <section className="section" style={{ backgroundColor: 'rgba(22, 163, 74, 0.03)', borderTop: '1px solid var(--clr-border)' }}>
+      <div className="container">
+        <div className="section-header" style={{ textAlign: 'center' }}>
+          <h2 className="display-lg">Customer <span className="gradient-text">Reviews</span></h2>
+          <p className="text-muted" style={{ maxWidth: 600, margin: '1rem auto' }}>See what our clients have to say about our {serviceTitle} service.</p>
+        </div>
+
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          {reviews.length > 0 ? (
+            <div style={{ display: 'grid', gap: '1.5rem', marginBottom: '2.5rem' }}>
+              {reviews.map(r => (
+                <div key={r.id} style={{ background: '#fff', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--clr-border)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <h4 style={{ fontWeight: 700, color: 'var(--clr-text)', fontSize: '1rem' }}>{r.name}</h4>
+                    <div>{renderStars(r.rating)}</div>
+                  </div>
+                  <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem', lineHeight: 1.6 }}>{r.text}</p>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--a-muted)', marginTop: '0.75rem' }}>{new Date(r.date).toLocaleDateString()}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '2rem', background: '#fff', borderRadius: 'var(--radius-md)', border: '1px dashed var(--clr-border)', color: 'var(--clr-text-muted)', marginBottom: '2rem' }}>
+              No reviews yet. Be the first to review our {serviceTitle} service!
+            </div>
+          )}
+
+          <div style={{ textAlign: 'center' }}>
+            {submitted ? (
+              <div style={{ padding: '1rem', background: 'rgba(22, 163, 74, 0.1)', color: 'var(--clr-primary)', borderRadius: 'var(--radius-md)', fontWeight: 600 }}>
+                Thank you! Your review has been submitted...
+              </div>
+            ) : showForm ? (
+              <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--clr-border)', textAlign: 'left' }}>
+                <h4 style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</h4>
+
+                <div className="form-group" style={{ marginBottom: '1rem' }}>
+                  <label className="form-label">Your Name</label>
+                  <input type="text" className="form-input" required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="John Doe" />
+                </div>
+
+                <div className="form-group" style={{ marginBottom: '1rem' }}>
+                  <label className="form-label">Rating</label>
+                  <select className="form-select" value={formData.rating} onChange={e => setFormData({ ...formData, rating: Number(e.target.value) })}>
+                    <option value={5}>⭐⭐⭐⭐⭐ (5/5)</option>
+                    <option value={4}>⭐⭐⭐⭐ (4/5)</option>
+                    <option value={3}>⭐⭐⭐ (3/5)</option>
+                    <option value={2}>⭐⭐ (2/5)</option>
+                    <option value={1}>⭐ (1/5)</option>
+                  </select>
+                </div>
+
+                <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                  <label className="form-label">Review</label>
+                  <textarea className="form-textarea" required rows="4" value={formData.text} onChange={e => setFormData({ ...formData, text: e.target.value })} placeholder="Tell us about your experience..."></textarea>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button type="submit" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>Submit Review</button>
+                  <button type="button" className="btn btn-outline" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setShowForm(false)}>Cancel</button>
+                </div>
+              </form>
+            ) : (
+              <button className="btn btn-primary" onClick={() => setShowForm(true)}>Leave a Review</button>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const OTHER_SERVICES = [
-  { to: '/termite-treatment',    label: '🪵 Termite Treatment' },
-  { to: '/bed-bugs-treatment',   label: '🛏️ Bed Bugs Treatment' },
-  { to: '/cockroach-treatment',  label: '🪳 Cockroach Treatment' },
-  { to: '/rodent-treatment',     label: '🐀 Rodent Treatment' },
-  { to: '/mosquito-treatment',   label: '🦟 Mosquito Treatment' },
-  { to: '/honey-bee-treatment',  label: '🐝 Honey Bee Treatment' },
-  { to: '/ticks-fleas-treatment','label': '🦗 Ticks & Fleas' },
+  { to: '/termite-treatment', label: '🪵 Termite Treatment' },
+  { to: '/bed-bugs-treatment', label: '🛏️ Bed Bugs Treatment' },
+  { to: '/cockroach-treatment', label: '🪳 Cockroach Treatment' },
+  { to: '/rodent-treatment', label: '🐀 Rodent Treatment' },
+  { to: '/mosquito-treatment', label: '🦟 Mosquito Treatment' },
+  { to: '/honey-bee-treatment', label: '🐝 Honey Bee Treatment' },
+  { to: '/ticks-fleas-treatment', 'label': '🦗 Ticks & Fleas' },
   { to: '/wood-borer-treatment', label: '🪲 Wood Borer Treatment' },
 ]
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function ServiceDetailPage({ meta, image, title, tagline, intro, signs, benefits, process, faqs }) {
+export default function ServiceDetailPage({ meta, image, bgImage, title, tagline, intro, signs, benefits, process, faqs }) {
   const slugId = title.replace(/\s/g, '-').toLowerCase()
   const containerRef = useRef(null)
 
@@ -111,8 +238,13 @@ export default function ServiceDetailPage({ meta, image, title, tagline, intro, 
 
       <div className="page-enter" ref={containerRef}>
         {/* Hero */}
-        <section className="page-hero" aria-label={`${title} page header`}>
-          <div className="page-hero__bg" aria-hidden="true" />
+        <section className={`page-hero ${bgImage ? 'page-hero--dark' : ''}`} aria-label={`${title} page header`}>
+          <div className="page-hero__bg-wrapper">
+            {bgImage && (
+              <img src={bgImage} alt={`${title} Professional Service Background`} className="page-hero__bg-img" />
+            )}
+            <div className="page-hero__bg-overlay" />
+          </div>
           {/* Animated floating orbs */}
           <div className="orb orb--1" aria-hidden="true" />
           <div className="orb orb--2" aria-hidden="true" />
@@ -149,6 +281,10 @@ export default function ServiceDetailPage({ meta, image, title, tagline, intro, 
 
         {/* Detail */}
         <section className="section service-section-bg" aria-labelledby={`${slugId}-detail`}>
+          {/* Animated background elements below the hero */}
+          <div className="orb orb--1" style={{ top: '15%', left: '-5%', opacity: 0.3 }} aria-hidden="true" />
+          <div className="orb orb--2" style={{ top: '45%', right: '-5%', opacity: 0.2 }} aria-hidden="true" />
+          <div className="orb orb--3" style={{ bottom: '10%', left: '10%', opacity: 0.25 }} aria-hidden="true" />
           <div className="container">
             <div className="service-detail">
               {/* Main */}
@@ -160,18 +296,19 @@ export default function ServiceDetailPage({ meta, image, title, tagline, intro, 
 
                 {/* Signs */}
                 <div style={{ marginTop: '2rem' }}>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h3 className="signs-title" style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} aria-hidden="true" />
                     Signs You Need This Treatment
                   </h3>
                   <ul
-                    style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.65rem' }}
+                    className="signs-list"
+                    style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '0.65rem' }}
                     aria-label="Signs that indicate you need this pest treatment"
                   >
                     {signs.map((s) => (
-                      <li key={s} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--clr-text-muted)' }}>
+                      <li key={s} className="signs-item" style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--clr-text-muted)' }}>
                         <CheckCircle2 size={15} style={{ color: 'var(--clr-primary)', flexShrink: 0, marginTop: 2 }} aria-hidden="true" />
-                        {s}
+                        <span>{s}</span>
                       </li>
                     ))}
                   </ul>
@@ -286,6 +423,8 @@ export default function ServiceDetailPage({ meta, image, title, tagline, intro, 
             </div>
           </section>
         )}
+
+        <ReviewsSection serviceTitle={title} />
 
         <CTABanner />
       </div>

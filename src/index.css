@@ -220,14 +220,9 @@ input, textarea, select { font: inherit; }
 .section-header p { color: var(--clr-text-muted); font-size: clamp(0.95rem, 1.3vw, 1.08rem); max-width: 580px; margin-inline: auto; margin-top: 1rem; line-height: 1.75; }
 
 /* ── Grid ── */
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-@media (max-width: 768px) {
-  .grid-2 { grid-template-columns: 1fr; }
-  .grid-3 { grid-template-columns: 1fr; }
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-}
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); gap: clamp(1rem, 3vw, 1.5rem); }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: clamp(1rem, 3vw, 1.5rem); }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: clamp(1rem, 3vw, 1.5rem); }
 
 /* ── Badge ── */
 .badge {

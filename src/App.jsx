@@ -47,26 +47,6 @@ function VisitorTracker() {
 }
 
 export default function App() {
-  useEffect(() => {
-    // Disable right-click context menu
-    const handleContextMenu = (e) => e.preventDefault()
-    // Disable F12 and Ctrl+Shift+I dev tools (basic deterrent)
-    const handleKeyDown = (e) => {
-      if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-        (e.ctrlKey && e.key === 'U')
-      ) {
-        e.preventDefault()
-      }
-    }
-    document.addEventListener('contextmenu', handleContextMenu)
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu)
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
 
   return (
     <Router>

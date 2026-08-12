@@ -558,7 +558,6 @@
   /* ── Section shell ── */
   .hero-modern-section {
     min-height: 100dvh;
-    height: 100dvh;
     align-items: center;       /* center vertically */
     padding-top: clamp(3.5rem, 10vh, 5.5rem);
     padding-bottom: 2rem;
