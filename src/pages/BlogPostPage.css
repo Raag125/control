@@ -210,6 +210,34 @@
   font-weight: 700;
 }
 
+/* Markdown Tables */
+.blog-markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.blog-markdown-content th,
+.blog-markdown-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  text-align: left;
+}
+
+.blog-markdown-content th {
+  background: rgba(22, 163, 74, 0.05);
+  font-weight: 700;
+  color: var(--clr-primary-dark);
+}
+
+.blog-markdown-content tr:nth-child(even) {
+  background: rgba(22, 163, 74, 0.02);
+}
+
 @media (max-width: 1024px) {
   .blog-content-layout {
     grid-template-columns: 1fr;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getBlogBySlug, getBlogs } from '../admin/adminData'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { Helmet } from 'react-helmet-async'
 import { Phone, MessageCircle, ArrowRight } from 'lucide-react'
 import AnimatedBackground from '../components/AnimatedBackground'
@@ -66,7 +67,7 @@ export default function BlogPostPage() {
         {/* LEFT MAIN CONTENT */}
         <div className="blog-main-column">
           <div className="blog-markdown-content">
-            <ReactMarkdown>{blog.content}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{blog.content}</ReactMarkdown>
           </div>
         </div>
 
