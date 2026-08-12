@@ -4,7 +4,7 @@ import ModalPortal from '../ModalPortal'
 import ReactMarkdown from 'react-markdown'
 import toast from 'react-hot-toast'
 
-const EMPTY_BLOG = { id:'', title:'', slug:'', excerpt:'', content:'', status:'draft', image:'' }
+const EMPTY_BLOG = { id:'', title:'', slug:'', excerpt:'', metaDesc: '', metaKeywords: '', content:'', status:'draft', image:'', imageAlt: '' }
 
 export default function Blogs() {
   const [blogs, setBlogs] = useState(getBlogs)
@@ -221,8 +221,20 @@ export default function Blogs() {
                     <input className="adm-input" value={form.image} onChange={e=>setForm(f=>({...f, image: e.target.value}))} placeholder="https://..." />
                   </div>
                   <div className="adm-form-group">
-                    <label className="adm-label">Excerpt (Meta Description)</label>
-                    <textarea className="adm-textarea" value={form.excerpt} onChange={e=>setForm(f=>({...f, excerpt: e.target.value}))} />
+                    <label className="adm-label">Cover Image Alt Text</label>
+                    <input className="adm-input" value={form.imageAlt || ''} onChange={e=>setForm(f=>({...f, imageAlt: e.target.value}))} placeholder="Alt text for SEO..." />
+                  </div>
+                  <div className="adm-form-group">
+                    <label className="adm-label">Excerpt (Short description)</label>
+                    <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.excerpt} onChange={e=>setForm(f=>({...f, excerpt: e.target.value}))} />
+                  </div>
+                  <div className="adm-form-group">
+                    <label className="adm-label">Meta Description (SEO)</label>
+                    <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.metaDesc || ''} onChange={e=>setForm(f=>({...f, metaDesc: e.target.value}))} placeholder="SEO Meta Description..." />
+                  </div>
+                  <div className="adm-form-group">
+                    <label className="adm-label">Meta Keywords (SEO)</label>
+                    <input className="adm-input" value={form.metaKeywords || ''} onChange={e=>setForm(f=>({...f, metaKeywords: e.target.value}))} placeholder="pest control, termite, bangalore..." />
                   </div>
                 </div>
 

@@ -1,3 +1,5 @@
+import initialBlogs from './blogsData.json'
+
 // ── Admin Data Layer — localStorage persistence + seed ──
 
 const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_services', visitors:'azt_visitors', blogs:'azt_blogs', settings:'azt_settings', reviews:'azt_reviews' }
@@ -8,6 +10,11 @@ const uid   = () => Math.random().toString(36).slice(2,9).toUpperCase()
 const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
 
 export function seedIfEmpty() {
+  const currentBlogs = read(KEYS.blogs);
+  if ((currentBlogs.length === 0 || (currentBlogs.length === 1 && currentBlogs[0].id === 'BLG-001')) && initialBlogs && initialBlogs.length > 0) {
+    write(KEYS.blogs, initialBlogs)
+  }
+
   if (read(KEYS.orders).length > 0) return
   const orders = [
     { id:'AZ-001', customer:'Rajesh Kumar',   phone:'9876543210', service:'Termite Treatment',   area:'Koramangala',  date:'2026-08-08', time:'10:00 AM', status:'completed',   amount:3500, notes:'',               createdAt:'2026-08-08T05:00:00Z' },
@@ -41,9 +48,6 @@ export function seedIfEmpty() {
     { id:'SVC-010', name:'Commercial Pest Control',   category:'General',  startingPrice:3000, duration:'3-5 hrs', warranty:'90 Days',  isActive:true, emoji:'🏢', path:'/commercial-pest-control',      description:'Tailored pest management for offices and restaurants.' },
     { id:'SVC-011', name:'Pre-Construction Termite',  category:'Termite',  startingPrice:8000, duration:'4-6 hrs', warranty:'10 Years', isActive:true, emoji:'🏗️', path:'/pre-construction-termite-treatment', description:'Soil treatment before construction.' },
     { id:'SVC-012', name:'Post-Construction Termite', category:'Termite',  startingPrice:3500, duration:'3-5 hrs', warranty:'5 Years',  isActive:true, emoji:'🏚️', path:'/post-construction-termite-treatment', description:'Drill-fill-seal for existing structures.' },
-  ])
-  write(KEYS.blogs, [
-    { id: 'BLG-001', title: 'How to Identify a Termite Infestation Before It\'s Too Late', slug: 'identify-termite-infestation', excerpt: 'Termites cause billions in damage each year. Learn the early warning signs...', content: 'Termites are known as silent destroyers...', status: 'published', date: '2026-08-01T10:00:00Z', image: 'https://images.unsplash.com/photo-1582298967912-87178a3c86cb?auto=format&fit=crop&q=80&w=1200' },
   ])
   write(KEYS.reviews, [
     { id:'REV-001', service:'Termite Treatment', name:'Rajesh Kumar', rating:5, text:'Excellent termite treatment. Highly recommend!', status:'approved', date:'2026-08-01T10:00:00Z' },
