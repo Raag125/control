@@ -12,7 +12,10 @@ const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
 export function seedIfEmpty() {
   const currentBlogs = read(KEYS.blogs);
   const hasEmptyContent = currentBlogs.length > 0 && currentBlogs.some(b => !b.content || b.content.trim() === '');
-  if ((currentBlogs.length < 50 || hasEmptyContent) && initialBlogs && initialBlogs.length > 0) {
+  const hasPlaceholderImages = currentBlogs.length > 0 && currentBlogs.some(b => b.image && b.image.includes('/images/pests/'));
+  const needsYoutubeRefresh = currentBlogs.length > 0 && !JSON.stringify(currentBlogs).includes('youtube.com/embed');
+  
+  if ((currentBlogs.length < 50 || hasEmptyContent || hasPlaceholderImages || needsYoutubeRefresh) && initialBlogs && initialBlogs.length > 0) {
     write(KEYS.blogs, initialBlogs);
   }
 

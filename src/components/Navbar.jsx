@@ -4,22 +4,37 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, X, Menu, ChevronDown, Shield, MessageCircle } from 'lucide-react'
 import './Navbar.css'
 
-const serviceLinks = [
-  { to: '/termite-treatment',    label: 'Termite Pest Control',     image: '/images/pests/termite.png' },
-  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Pest Control',    image: '/images/pests/bed_bug.png' },
-  { to: '/cockroach-treatment',  label: 'Cockroach Pest Control',   image: '/images/pests/cockroach.png' },
-  { to: '/rodent-treatment',     label: 'Rodent Pest Control',      image: '/images/pests/rodent.png' },
-  { to: '/mosquito-treatment',   label: 'Mosquito Pest Control',    image: '/images/pests/mosquito.png' },
-  { to: '/honey-bee-treatment',  label: 'Honey Bee Pest Control',   image: '/images/pests/honey_bee.png' },
-  { to: '/wood-borer-treatment', label: 'Wood Borer Pest Control',  image: '/images/pests/wood_borer.png' },
-  { to: '/ant-pest-control',     label: 'Ant Pest Control',      image: '/images/pests/ant.png' },
-  { to: '/tick-pest-control',    label: 'Tick Pest Control',     image: '/images/pests/tick.png' },
-  { to: '/flea-pest-control',    label: 'Flea Pest Control',     image: '/images/pests/flea.png' },
-  { to: '/pre-construction-termite-treatment', label: 'Pre-Construction Termite', image: '/images/pests/pre_construction.png' },
-  { to: '/post-construction-termite-treatment', label: 'Post-Construction Termite', image: '/images/pests/post_construction.png' },
-  { to: '/residential-pest-control', label: 'Residential Pest Control', image: '/images/pests/residential.png' },
-  { to: '/commercial-pest-control', label: 'Commercial Pest Control', image: '/images/pests/commercial.png' },
-  { to: '/general-pest-control', label: 'General Pest Control',  image: '/images/pests/general.png' },
+const serviceCategories = [
+  {
+    name: 'Common Pests',
+    items: [
+      { to: '/termite-treatment',    label: 'Termite Control',     image: '/images/pests/termite.png' },
+      { to: '/bed-bugs-treatment',   label: 'Bed Bugs Control',    image: '/images/pests/bed_bug.png' },
+      { to: '/cockroach-treatment',  label: 'Cockroach Control',   image: '/images/pests/cockroach.png' },
+      { to: '/rodent-treatment',     label: 'Rodent Control',      image: '/images/pests/rodent.png' },
+      { to: '/mosquito-treatment',   label: 'Mosquito Control',    image: '/images/pests/mosquito.png' },
+    ]
+  },
+  {
+    name: 'Specialized',
+    items: [
+      { to: '/honey-bee-treatment',  label: 'Honey Bee Control',   image: '/images/pests/honey_bee.png' },
+      { to: '/wood-borer-treatment', label: 'Wood Borer Control',  image: '/images/pests/wood_borer.png' },
+      { to: '/ant-pest-control',     label: 'Ant Control',      image: '/images/pests/ant.png' },
+      { to: '/tick-pest-control',    label: 'Tick Control',     image: '/images/pests/tick.png' },
+      { to: '/flea-pest-control',    label: 'Flea Control',     image: '/images/pests/flea.png' },
+    ]
+  },
+  {
+    name: 'Sector Solutions',
+    items: [
+      { to: '/pre-construction-termite-treatment', label: 'Pre-Construction', image: '/images/pests/pre_construction.png' },
+      { to: '/post-construction-termite-treatment', label: 'Post-Construction', image: '/images/pests/post_construction.png' },
+      { to: '/residential-pest-control', label: 'Residential', image: '/images/pests/residential.png' },
+      { to: '/commercial-pest-control', label: 'Commercial', image: '/images/pests/commercial.png' },
+      { to: '/general-pest-control', label: 'General Control',  image: '/images/pests/general.png' },
+    ]
+  }
 ]
 
 const navLinks = [
@@ -119,19 +134,27 @@ export default function Navbar() {
                         exit={{ opacity: 0, y: 15, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                       >
-                        <div className="unique-dropdown-grid">
-                          {serviceLinks.map((s) => (
-                            <NavLink 
-                              key={s.to} 
-                              to={s.to} 
-                              className="unique-dropdown-link"
-                              onClick={() => setDropOpen(false)}
-                            >
-                              <div style={{ width: '24px', height: '24px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
-                                <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <div className="unique-dropdown-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', padding: '0.5rem' }}>
+                          {serviceCategories.map((cat) => (
+                            <div key={cat.name} className="dropdown-category-col">
+                              <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--clr-primary)', marginBottom: '0.75rem', letterSpacing: '0.05em', fontWeight: 'bold' }}>{cat.name}</h4>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                                {cat.items.map((s) => (
+                                  <NavLink 
+                                    key={s.to} 
+                                    to={s.to} 
+                                    className="unique-dropdown-link"
+                                    onClick={() => setDropOpen(false)}
+                                    style={{ padding: '0.5rem', margin: '0 -0.5rem' }}
+                                  >
+                                    <div style={{ width: '24px', height: '24px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
+                                      <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
+                                    <span className="drop-label">{s.label}</span>
+                                  </NavLink>
+                                ))}
                               </div>
-                              <span className="drop-label">{s.label}</span>
-                            </NavLink>
+                            </div>
                           ))}
                         </div>
                       </motion.div>
@@ -211,29 +234,41 @@ export default function Navbar() {
                       
                       <AnimatePresence>
                         {mobileServOpen && (
-                          <motion.ul 
+                          <motion.div 
                             className="unique-mobile-sub"
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.25 }}
+                            style={{ overflow: 'hidden' }}
                           >
-                            {serviceLinks.map((s) => (
-                              <li key={s.to}>
-                                <NavLink 
-                                  to={s.to} 
-                                  className="unique-mobile-sub-link"
-                                  onClick={() => setMenuOpen(false)}
-                                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
-                                >
-                                  <div style={{ width: '20px', height: '20px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
-                                    <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ padding: '0.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                              {serviceCategories.map((cat) => (
+                                <div key={cat.name}>
+                                  <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--clr-primary)', fontWeight: 'bold', marginBottom: '0.25rem', paddingLeft: '1rem', letterSpacing: '0.05em' }}>
+                                    {cat.name}
                                   </div>
-                                  <span>{s.label}</span>
-                                </NavLink>
-                              </li>
-                            ))}
-                          </motion.ul>
+                                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.25rem' }}>
+                                    {cat.items.map((s) => (
+                                      <li key={s.to}>
+                                        <NavLink 
+                                          to={s.to} 
+                                          className="unique-mobile-sub-link"
+                                          onClick={() => setMenuOpen(false)}
+                                          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', fontSize: '0.8rem' }}
+                                        >
+                                          <div style={{ width: '18px', height: '18px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
+                                            <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                          </div>
+                                          <span style={{ lineHeight: '1.2' }}>{s.label}</span>
+                                        </NavLink>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          </motion.div>
                         )}
                       </AnimatePresence>
                     </li>

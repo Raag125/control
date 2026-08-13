@@ -567,6 +567,7 @@
     align-items: center;       /* center vertically */
     padding-top: clamp(3.5rem, 10vh, 5.5rem);
     padding-bottom: 2rem;
+    overflow: hidden;
   }
 
   /* ── Cinematic backdrop ── */
@@ -599,31 +600,41 @@
     display: flex;
     flex-direction: column;
     justify-content: center; /* text and card centered */
-    gap: 2.25rem;
-    padding-inline: 1.1rem;
+    gap: 1.75rem;
+    padding-inline: var(--container-px, 1.1rem);
     padding-bottom: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* ── Left: content column ── */
   .hero-modern-left {
     align-items: center;
     text-align: center;
-    gap: 1.15rem;
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   /* ── Trust pill — subtle glass chip ── */
   .hero-live-pill {
-    padding: 0.28rem 0.75rem;
+    padding: 0.28rem clamp(0.45rem, 2.5vw, 0.75rem);
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: none;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .live-pill-label {
-    font-size: 0.71rem;
+    font-size: clamp(0.63rem, 2.8vw, 0.72rem);
     color: rgba(255, 255, 255, 0.80);
+    text-align: center;
   }
 
   .live-pill-label strong {
@@ -633,18 +644,22 @@
   .live-pulse-dot {
     background: #4ade80;
     box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55);
+    flex-shrink: 0;
   }
 
   /* ── Headline ── */
   .hero-title-break { display: none; }
 
   .hero-modern-title {
-    font-size: clamp(1.9rem, 8.5vw, 2.45rem);
-    line-height: 1.12;
+    font-size: clamp(1.45rem, 6.2vw, 2.25rem);
+    line-height: 1.15;
     letter-spacing: -0.024em;
     color: #ffffff;
     text-wrap: balance;
     margin: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-text-gradient {
@@ -663,43 +678,51 @@
   .hero-modern-actions {
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.5rem;
     width: 100%;
-    margin-top: 0.2rem;
+    max-width: 100%;
+    margin-top: 0.15rem;
+    box-sizing: border-box;
   }
 
   /* Primary CTA */
   .hero-btn-main-action {
-    padding: 0.95rem 1rem;
-    font-size: 0.95rem;
+    padding: clamp(0.75rem, 2.5vh, 0.95rem) 0.85rem;
+    font-size: clamp(0.85rem, 3.8vw, 0.95rem);
     font-weight: 800;
     justify-content: center;
     width: 100%;
+    max-width: 100%;
     gap: 0.45rem;
     border-radius: var(--radius-full);
     box-shadow: 0 8px 24px rgba(22, 163, 74, 0.35);
+    box-sizing: border-box;
   }
 
   /* Secondary row: Call + WhatsApp side by side */
   .hero-secondary-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    gap: 0.45rem;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-btn-call {
-    padding: 0.8rem 0.5rem;
-    font-size: 0.86rem;
+    padding: clamp(0.65rem, 2.2vh, 0.8rem) 0.3rem;
+    font-size: clamp(0.76rem, 3.4vw, 0.86rem);
     font-weight: 700;
     justify-content: center;
     width: 100%;
-    gap: 0.4rem;
+    max-width: 100%;
+    gap: 0.35rem;
     background: rgba(255, 255, 255, 0.96);
     color: var(--clr-primary-dark);
     border: 1.5px solid rgba(255, 255, 255, 0.5);
     border-radius: var(--radius-full);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+    box-sizing: border-box;
   }
 
   .hero-btn-call:hover {
@@ -708,17 +731,19 @@
   }
 
   .hero-btn-whatsapp {
-    padding: 0.8rem 0.5rem;
-    font-size: 0.86rem;
+    padding: clamp(0.65rem, 2.2vh, 0.8rem) 0.3rem;
+    font-size: clamp(0.76rem, 3.4vw, 0.86rem);
     font-weight: 700;
     justify-content: center;
     width: 100%;
-    gap: 0.4rem;
+    max-width: 100%;
+    gap: 0.35rem;
     background: linear-gradient(135deg, #25d366 0%, #16a34a 100%);
     color: #ffffff;
     border: 1.5px solid transparent;
     border-radius: var(--radius-full);
     box-shadow: 0 4px 14px rgba(37, 211, 102, 0.30);
+    box-sizing: border-box;
   }
 
   .hero-btn-whatsapp:hover {
@@ -726,15 +751,18 @@
     transform: translateY(-1px);
   }
 
-  /* ── Assurances: single compact row, 2 chips max ── */
+  /* ── Assurances: single compact row with responsive scaling ── */
   .hero-modern-assurances {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    justify-content: center;
+    gap: 0.35rem;
     width: 100%;
+    max-width: 100%;
     padding-top: 0;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   /* Show only first two assurance items on mobile */
@@ -745,14 +773,17 @@
   .assurance-item {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 0.28rem 0.6rem;
+    padding: 0.25rem clamp(0.4rem, 2vw, 0.55rem);
     border-radius: var(--radius-full);
-    font-size: 0.69rem;
+    font-size: clamp(0.62rem, 2.6vw, 0.69rem);
     font-weight: 600;
     color: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .assurance-icon {
@@ -764,15 +795,20 @@
   .hero-modern-right {
     max-width: 100%;
     width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .pest-showcase-card {
-    padding: 0.9rem 0.95rem;
+    padding: 0.85rem 0.9rem;
     border-radius: 18px;
     gap: 0.6rem;
     box-shadow:
       0 8px 28px rgba(22, 163, 74, 0.10),
       0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Header: just the badge, drop the "tap to inspect" label */

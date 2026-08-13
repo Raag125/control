@@ -27,6 +27,7 @@
     "react-intersection-observer": "^11.0.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.18.2",
+    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "three": "^0.185.1",
     "turndown": "^7.2.4",

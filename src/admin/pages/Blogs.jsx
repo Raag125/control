@@ -114,10 +114,31 @@ export default function Blogs() {
     }
   }
 
+  // Extract all markdown images from content to allow editing alt text
+  const extractImages = (content) => {
+    if (!content) return [];
+    const regex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+    const images = [];
+    let match;
+    while ((match = regex.exec(content)) !== null) {
+      images.push({ full: match[0], alt: match[1], url: match[2] });
+    }
+    return images;
+  };
+
+  const handleAltChange = (oldFull, newAlt, url) => {
+    const newFull = `![${newAlt}](${url})`;
+    setForm(f => ({ ...f, content: f.content.replace(oldFull, newFull) }));
+  };
+  
+  const contentImages = extractImages(form.content);
+
   return (
     <div>
       <div className="adm-section-header">
-        <h2 className="adm-section-title">Blog & Content AI</h2>
+        <h2 className="adm-section-title">
+          Blog & Content AI <span style={{fontSize: '0.9rem', fontWeight: 500, color: 'var(--a-muted)'}}>({blogs.length} Total)</span>
+        </h2>
         <div style={{ display:'flex', gap:'.5rem' }}>
           <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => setSettingsModal(true)}>
             ⚙️ AI Settings
@@ -236,6 +257,28 @@ export default function Blogs() {
                     <label className="adm-label">Meta Keywords (SEO)</label>
                     <input className="adm-input" value={form.metaKeywords || ''} onChange={e=>setForm(f=>({...f, metaKeywords: e.target.value}))} placeholder="pest control, termite, bangalore..." />
                   </div>
+
+                  {contentImages.length > 0 && (
+                    <div className="adm-form-group" style={{ marginTop: '1rem', borderTop: '1px solid var(--a-border)', paddingTop: '1rem' }}>
+                      <label className="adm-label" style={{ marginBottom: '0.5rem' }}>In-Content Images Alt Texts</label>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxHeight: '200px', overflowY: 'auto', paddingRight: '0.5rem' }}>
+                        {contentImages.map((img, idx) => (
+                          <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', padding: '0.5rem', background: 'var(--a-bg)', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--a-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={img.url}>
+                              {img.url.split('/').pop()}
+                            </span>
+                            <input 
+                              className="adm-input" 
+                              style={{ padding: '0.4rem', fontSize: '0.75rem' }}
+                              value={img.alt} 
+                              onChange={e => handleAltChange(img.full, e.target.value, img.url)} 
+                              placeholder="Alt text..." 
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* RIGHT: Content & Preview */}
