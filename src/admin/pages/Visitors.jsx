@@ -39,7 +39,7 @@ export default function Visitors() {
       </div>
 
       {/* Top pages + browsers */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem', marginBottom:'1.25rem' }}>
+      <div className="adm-grid-2col" style={{ marginBottom:'1.25rem' }}>
         <div className="adm-card">
           <div className="adm-section-title" style={{ marginBottom:'.85rem' }}>Top Pages</div>
           {topPages.length === 0

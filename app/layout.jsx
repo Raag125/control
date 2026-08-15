@@ -9,6 +9,12 @@ import AnimatedBackground from '../src/components/AnimatedBackground'
 import { Toaster } from 'react-hot-toast'
 import LeadPopup from '../src/components/LeadPopup'
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export const metadata = {
   metadataBase: new URL('https://pestcontrolbengaluru.in'),
   title: {

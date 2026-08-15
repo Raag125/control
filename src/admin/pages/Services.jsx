@@ -64,7 +64,7 @@ export default function Services() {
       </div>
 
       {/* Cards grid on desktop, list on mobile */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'1rem' }}>
+      <div className="adm-services-grid">
         {filtered.length === 0
           ? <div className="adm-empty adm-card" style={{ gridColumn:'1/-1' }}><div className="adm-empty__icon">⚙️</div><div className="adm-empty__text">No services found</div></div>
           : filtered.map(svc => (

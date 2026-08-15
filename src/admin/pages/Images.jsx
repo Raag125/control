@@ -106,7 +106,7 @@ export default function Images() {
       </div>
 
       {/* Image Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
+      <div className="adm-images-grid">
         {filtered.map(img => (
           <div key={img.id} className="adm-card adm-card--hover" style={{ display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
             
