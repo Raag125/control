@@ -105,7 +105,7 @@ export default function LeadPopup() {
                   exit={{ opacity: 0 }}
                 >
                   <CheckCircle2 size={44} className="lead-success-icon" />
-                  <h3>We'll call you shortly!</h3>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--clr-text)', marginBottom: '.5rem' }}>We'll call you shortly!</div>
                   <p>Our team will contact you within 30 minutes.</p>
                 </motion.div>
               ) : (
@@ -113,7 +113,7 @@ export default function LeadPopup() {
                   {/* Header */}
                   <div className="lead-header">
                     <div className="lead-badge">🔥 Free Offer</div>
-                    <h2 className="lead-title">Get a <span>Free Inspection</span></h2>
+                    <div className="lead-title">Get a <span>Free Inspection</span></div>
                     <p className="lead-sub">Our expert visits your home at no cost. Zero obligation.</p>
                   </div>
 

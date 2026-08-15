@@ -143,7 +143,7 @@ export default function Footer() {
 
           {/* CTA / Trust Column */}
           <div className="footer__col footer__cta-col">
-            <h3 className="footer__col-title">Pest Free Living</h3>
+            <div className="footer__col-title">Pest Free Living</div>
             <p className="footer__cta-desc">
               Book a free inspection today. Expert pest control for homes & businesses, 24/7 service across Bengaluru.
             </p>

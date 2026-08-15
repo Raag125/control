@@ -323,7 +323,7 @@ export default function HeroSection() {
                 {/* Pest Info Body */}
                 <div className="pest-info-body">
                   <div className="pest-title-row">
-                    <h2 className="pest-current-name">{currentPest.name}</h2>
+                    <div className="pest-current-name">{currentPest.name}</div>
                     <span className="pest-sub-threat">{currentPest.threat}</span>
                   </div>
 

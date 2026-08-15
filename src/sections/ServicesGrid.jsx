@@ -133,14 +133,14 @@ export default function ServicesGrid() {
               <div className="service-card__body">
                 <div className="service-card__head">
                   <span className="service-card__emoji" aria-hidden="true">{s.emoji}</span>
-                  <h3 className="service-card__title">{s.title}</h3>
+                  <strong className="service-card__title">{s.title}</strong>
                 </div>
                 <p className="service-card__tagline">{s.tagline}</p>
                 <p className="service-card__desc">{s.desc}</p>
                 
                 <div className="service-card__actions">
-                  <Link href={s.to} className="service-card__link" aria-label={`Learn more about ${s.title}`}>
-                    <span>Pest Control Details</span>
+                  <Link href={s.to} className="service-card__link" aria-label={`Explore ${s.title} service in Bangalore`}>
+                    <span>Explore {s.title}</span>
                     <ArrowRight size={14} aria-hidden="true" />
                   </Link>
                   <a
@@ -148,10 +148,10 @@ export default function ServicesGrid() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="service-card__whatsapp"
-                    aria-label={`Chat on WhatsApp about ${s.title}`}
+                    aria-label={`Get instant quote for ${s.title} on WhatsApp`}
                   >
                     <MessageCircle size={14} aria-hidden="true" />
-                    <span>Quick Quote</span>
+                    <span>{s.title} Quote</span>
                   </a>
                 </div>
               </div>

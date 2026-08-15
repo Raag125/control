@@ -54,7 +54,7 @@ export default function WhyChooseUs() {
               <div className="why-card__icon" aria-hidden="true">
                 <Icon size={22} />
               </div>
-              <h3 className="why-card__title">{title}</h3>
+              <strong className="why-card__title">{title}</strong>
               <p className="why-card__desc">{desc}</p>
             </motion.div>
           ))}

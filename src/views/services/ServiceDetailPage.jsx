@@ -126,7 +126,7 @@ function ReviewsSection({ serviceTitle }) {
               {reviews.map(r => (
                 <div key={r.id} style={{ background: '#fff', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--clr-border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <h4 style={{ fontWeight: 700, color: 'var(--clr-text)', fontSize: '1rem' }}>{r.name}</h4>
+                    <div style={{ fontWeight: 700, color: 'var(--clr-text)', fontSize: '1rem' }}>{r.name}</div>
                     <div>{renderStars(r.rating)}</div>
                   </div>
                   <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem', lineHeight: 1.6 }}>{r.text}</p>
@@ -147,7 +147,7 @@ function ReviewsSection({ serviceTitle }) {
               </div>
             ) : showForm ? (
               <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--clr-border)', textAlign: 'left' }}>
-                <h4 style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</h4>
+                <div style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</div>
 
                 <div className="form-group" style={{ marginBottom: '1rem' }}>
                   <label className="form-label">Your Name</label>
@@ -375,7 +375,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
                     >
                       <div className="service-detail__process-num" aria-hidden="true">{i + 1}</div>
                       <div className="service-detail__process-content">
-                        <h4>{step.title}</h4>
+                        <strong style={{ display: 'block', fontSize: '1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }}>{step.title}</strong>
                         <p>{step.desc}</p>
                       </div>
                     </div>
@@ -394,7 +394,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
                   borderColor: 'var(--clr-border-2)',
                 }}
               >
-                <h3>Book {title}</h3>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Book {title}</div>
                 <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-muted)', marginBottom: '1rem' }}>
                   Get expert help today — free inspection, no hidden charges, eco-friendly treatment.
                 </p>
@@ -420,7 +420,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
 
               {/* Benefits */}
               <div className="service-sidebar__card">
-                <h3>Why Choose A to Z</h3>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Why Choose A to Z</div>
                 <ul className="service-sidebar__list" aria-label="Benefits of choosing our treatment">
                   {benefits.map((b) => (
                     <li key={b}>
@@ -433,7 +433,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
 
               {/* Other Services */}
               <div className="service-sidebar__card">
-                <h3>Our Other Services</h3>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Our Other Services</div>
                 <ul className="service-sidebar__list" aria-label="Other pest control services we offer">
                   {OTHER_SERVICES.filter((s) => !title || !s.label.toLowerCase().includes(title.toLowerCase().split(' ')[0])).map((s) => (
                     <li key={s.to}>

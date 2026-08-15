@@ -74,7 +74,7 @@ export default function HowItWorks() {
               </div>
 
               <div className="how-step__content">
-                <h3 className="how-step__title">{title}</h3>
+                <strong className="how-step__title">{title}</strong>
                 <p className="how-step__desc">{desc}</p>
               </div>
             </motion.div>
