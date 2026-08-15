@@ -48,15 +48,15 @@ export default function Dashboard() {
                   ? <tr><td colSpan={6}><div className="adm-empty"><div className="adm-empty__icon">📋</div><div className="adm-empty__text">No orders yet</div></div></td></tr>
                   : s.recentOrders.map(o => (
                     <tr key={o.id}>
-                      <td style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace' }}>{o.id}</td>
-                      <td>
+                      <td data-label="Order ID" style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace' }}>{o.id}</td>
+                      <td data-label="Customer">
                         <div style={{ fontWeight: 600 }}>{o.customer}</div>
                         <div style={{ fontSize: '.68rem', color: 'var(--a-muted)' }}>{o.phone}</div>
                       </td>
-                      <td>{o.service}</td>
-                      <td>{o.area}</td>
-                      <td style={{ fontWeight: 700 }}>₹{o.amount.toLocaleString('en-IN')}</td>
-                      <td><span className={`adm-badge adm-badge--${STATUS_BADGE[o.status] || 'gray'}`}>{o.status}</span></td>
+                      <td data-label="Service">{o.service}</td>
+                      <td data-label="Area">{o.area}</td>
+                      <td data-label="Amount" style={{ fontWeight: 700 }}>₹{o.amount.toLocaleString('en-IN')}</td>
+                      <td data-label="Status"><span className={`adm-badge adm-badge--${STATUS_BADGE[o.status] || 'gray'}`}>{o.status}</span></td>
                     </tr>
                   ))
                 }

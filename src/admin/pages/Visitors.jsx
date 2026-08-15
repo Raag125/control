@@ -99,16 +99,16 @@ export default function Visitors() {
                 ? <tr><td colSpan={7}><div className="adm-empty"><div className="adm-empty__icon">👁️</div><div className="adm-empty__text">No visitor data yet. Visitors will appear as people browse the site.</div></div></td></tr>
                 : visible.map((v,i) => (
                   <tr key={v.id}>
-                    <td style={{ color:'var(--a-dim)', fontSize:'.7rem' }}>{(page-1)*PER_PAGE+i+1}</td>
-                    <td style={{ fontSize:'.7rem', color:'var(--a-muted)', whiteSpace:'nowrap' }}>
+                    <td data-label="#" style={{ color:'var(--a-dim)', fontSize:'.7rem' }}>{(page-1)*PER_PAGE+i+1}</td>
+                    <td data-label="Time" style={{ fontSize:'.7rem', color:'var(--a-muted)', whiteSpace:'nowrap' }}>
                       {new Date(v.timestamp).toLocaleDateString('en-IN')}<br/>
                       <span style={{ color:'var(--a-dim)' }}>{new Date(v.timestamp).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span>
                     </td>
-                    <td style={{ fontFamily:'monospace', fontSize:'.72rem', color:'var(--a-green2)', maxWidth:'160px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{v.page}</td>
-                    <td style={{ fontFamily:'monospace', fontSize:'.72rem' }}>{v.ip}</td>
-                    <td><span className={`adm-badge adm-badge--${TYPE_COLOR[v.type]||'gray'}`}>{TYPE_ICON[v.type]} {v.type}</span></td>
-                    <td style={{ fontSize:'.78rem' }}>{v.browser}</td>
-                    <td style={{ fontSize:'.78rem', color:'var(--a-muted)' }}>{v.os}</td>
+                    <td data-label="Page" style={{ fontFamily:'monospace', fontSize:'.72rem', color:'var(--a-green2)', maxWidth:'160px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{v.page}</td>
+                    <td data-label="IP" style={{ fontFamily:'monospace', fontSize:'.72rem' }}>{v.ip}</td>
+                    <td data-label="Device"><span className={`adm-badge adm-badge--${TYPE_COLOR[v.type]||'gray'}`}>{TYPE_ICON[v.type]} {v.type}</span></td>
+                    <td data-label="Browser" style={{ fontSize:'.78rem' }}>{v.browser}</td>
+                    <td data-label="OS" style={{ fontSize:'.78rem', color:'var(--a-muted)' }}>{v.os}</td>
                   </tr>
                 ))
               }

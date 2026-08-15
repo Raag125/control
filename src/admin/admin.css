@@ -283,6 +283,66 @@
   .adm-select{width:100%}
   .adm-filter-bar .adm-btn{width:100%;justify-content:center}
 
+  /* ── Mobile Table-to-Card Native Transformation ── */
+  .adm-table-wrap {
+    background: transparent !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+  .adm-table, 
+  .adm-table thead, 
+  .adm-table tbody, 
+  .adm-table th, 
+  .adm-table td, 
+  .adm-table tr {
+    display: block !important;
+    width: 100% !important;
+  }
+  .adm-table thead {
+    display: none !important;
+  }
+  .adm-table tr {
+    background: var(--a-card) !important;
+    border: 1px solid var(--a-border) !important;
+    border-radius: 14px !important;
+    padding: 0.85rem 1rem !important;
+    margin-bottom: 0.75rem !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  }
+  .adm-table tr:hover td {
+    background: transparent !important;
+  }
+  .adm-table td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0.45rem 0 !important;
+    border-bottom: 1px solid var(--a-border) !important;
+    font-size: 0.8rem !important;
+    color: var(--a-text) !important;
+  }
+  .adm-table td:last-child {
+    border-bottom: none !important;
+    padding-top: 0.65rem !important;
+    margin-top: 0.25rem !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+  }
+  .adm-table td[data-label]::before {
+    content: attr(data-label) !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--a-muted) !important;
+    flex-shrink: 0 !important;
+    margin-right: 0.75rem !important;
+  }
+  .adm-table-actions {
+    width: 100% !important;
+    justify-content: flex-end !important;
+  }
+
   /* Scrollable Touch-Friendly Bottom Navigation Bar */
   .adm-bottom-nav{
     position:fixed;bottom:0;left:0;right:0;z-index:180;

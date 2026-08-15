@@ -167,17 +167,17 @@ export default function Blogs() {
                 ? <tr><td colSpan={4}><div className="adm-empty"><div className="adm-empty__icon">✍️</div><div className="adm-empty__text">No blogs found</div></div></td></tr>
                 : filtered.map(b => (
                   <tr key={b.id}>
-                    <td>
+                    <td data-label="Title">
                       <div style={{ fontWeight:600, fontSize:'.85rem' }}>{b.title}</div>
                       <div style={{ fontSize:'.68rem', color:'var(--a-muted)' }}>/{b.slug}</div>
                     </td>
-                    <td>
+                    <td data-label="Status">
                       <span className={`adm-badge adm-badge--${b.status==='published'?'green':'gray'}`}>
                         {b.status}
                       </span>
                     </td>
-                    <td style={{ fontSize:'.72rem', color:'var(--a-muted)' }}>{new Date(b.date).toLocaleDateString('en-IN')}</td>
-                    <td>
+                    <td data-label="Date" style={{ fontSize:'.72rem', color:'var(--a-muted)' }}>{new Date(b.date).toLocaleDateString('en-IN')}</td>
+                    <td data-label="Actions">
                       <div className="adm-table-actions">
                         <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => openEdit(b)}>Edit</button>
                         <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={() => setDel(b.id)}>Del</button>

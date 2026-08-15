@@ -75,17 +75,17 @@ export default function Orders({ onStatsChange }) {
                 ? <tr><td colSpan={8}><div className="adm-empty"><div className="adm-empty__icon">📋</div><div className="adm-empty__text">No orders found</div></div></td></tr>
                 : filtered.map(o => (
                   <tr key={o.id}>
-                    <td style={{ fontWeight:700, color:'var(--a-green2)', fontFamily:'monospace', fontSize:'.72rem' }}>{o.id}</td>
-                    <td>
+                    <td data-label="ID" style={{ fontWeight:700, color:'var(--a-green2)', fontFamily:'monospace', fontSize:'.72rem' }}>{o.id}</td>
+                    <td data-label="Customer">
                       <div style={{ fontWeight:600, fontSize:'.82rem' }}>{o.customer}</div>
                       <div style={{ fontSize:'.68rem', color:'var(--a-muted)' }}>{o.phone}</div>
                     </td>
-                    <td style={{ fontSize:'.78rem' }}>{o.service}</td>
-                    <td style={{ fontSize:'.78rem' }}>{o.area}</td>
-                    <td style={{ fontSize:'.72rem', color:'var(--a-muted)' }}>{o.date}<br/>{o.time}</td>
-                    <td style={{ fontWeight:700 }}>₹{Number(o.amount).toLocaleString('en-IN')}</td>
-                    <td><span className={`adm-badge adm-badge--${STATUS_COLOR[o.status]||'gray'}`}>{o.status}</span></td>
-                    <td>
+                    <td data-label="Service" style={{ fontSize:'.78rem' }}>{o.service}</td>
+                    <td data-label="Area" style={{ fontSize:'.78rem' }}>{o.area}</td>
+                    <td data-label="Date" style={{ fontSize:'.72rem', color:'var(--a-muted)' }}>{o.date}<br/>{o.time}</td>
+                    <td data-label="Amount" style={{ fontWeight:700 }}>₹{Number(o.amount).toLocaleString('en-IN')}</td>
+                    <td data-label="Status"><span className={`adm-badge adm-badge--${STATUS_COLOR[o.status]||'gray'}`}>{o.status}</span></td>
+                    <td data-label="Actions">
                       <div className="adm-table-actions">
                         <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => openEdit(o)}>Edit</button>
                         <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={() => setDel(o.id)}>Del</button>

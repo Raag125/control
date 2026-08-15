@@ -73,17 +73,17 @@ export default function Reviews() {
               <tr><td colSpan="7" style={{textAlign:'center', padding:'2rem', color:'var(--a-muted)'}}>No reviews found</td></tr>
             ) : reviews.map(r => editingId === r.id ? (
               <tr key={r.id}>
-                <td style={{ whiteSpace: 'nowrap' }}>{new Date(r.date).toLocaleDateString()}</td>
-                <td>{r.service}</td>
-                <td><input type="text" className="adm-input" value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} style={{width: '100px'}} /></td>
-                <td>
+                <td data-label="Date" style={{ whiteSpace: 'nowrap' }}>{new Date(r.date).toLocaleDateString()}</td>
+                <td data-label="Service">{r.service}</td>
+                <td data-label="Customer"><input type="text" className="adm-input" value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} style={{width: '100px'}} /></td>
+                <td data-label="Rating">
                   <select className="adm-input" value={editForm.rating} onChange={e => setEditForm({...editForm, rating: Number(e.target.value)})}>
                     <option value="5">5 ★</option><option value="4">4 ★</option><option value="3">3 ★</option><option value="2">2 ★</option><option value="1">1 ★</option>
                   </select>
                 </td>
-                <td><textarea className="adm-input" value={editForm.text} onChange={e => setEditForm({...editForm, text: e.target.value})} rows="2" style={{width:'100%', minWidth:'200px'}} /></td>
-                <td>{r.status}</td>
-                <td>
+                <td data-label="Review"><textarea className="adm-input" value={editForm.text} onChange={e => setEditForm({...editForm, text: e.target.value})} rows="2" style={{width:'100%', minWidth:'200px'}} /></td>
+                <td data-label="Status">{r.status}</td>
+                <td data-label="Actions">
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     <button className="adm-btn adm-btn--sm" onClick={handleEditSave}>Save</button>
                     <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => setEditingId(null)}>Cancel</button>
@@ -92,21 +92,21 @@ export default function Reviews() {
               </tr>
             ) : (
               <tr key={r.id}>
-                <td style={{ whiteSpace: 'nowrap' }}>{new Date(r.date).toLocaleDateString()}</td>
-                <td>{r.service}</td>
-                <td><strong>{r.name}</strong></td>
-                <td style={{ whiteSpace: 'nowrap' }}>{renderStars(r.rating)}</td>
-                <td style={{ maxWidth: '250px' }}>
+                <td data-label="Date" style={{ whiteSpace: 'nowrap' }}>{new Date(r.date).toLocaleDateString()}</td>
+                <td data-label="Service">{r.service}</td>
+                <td data-label="Customer"><strong>{r.name}</strong></td>
+                <td data-label="Rating" style={{ whiteSpace: 'nowrap' }}>{renderStars(r.rating)}</td>
+                <td data-label="Review" style={{ maxWidth: '250px' }}>
                   <div style={{ overflow:'hidden', textOverflow:'ellipsis', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' }} title={r.text}>
                     {r.text}
                   </div>
                 </td>
-                <td>
+                <td data-label="Status">
                   <span className={`adm-status ${r.status==='approved'?'paid':r.status==='pending'?'pending':'refunded'}`}>
                     {r.status}
                   </span>
                 </td>
-                <td>
+                <td data-label="Actions">
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     {r.status === 'pending' && (
                       <>

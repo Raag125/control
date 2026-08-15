@@ -76,15 +76,15 @@ export default function Payments() {
                 ? <tr><td colSpan={9}><div className="adm-empty"><div className="adm-empty__icon">💳</div><div className="adm-empty__text">No payments found</div></div></td></tr>
                 : filtered.map(p=>(
                   <tr key={p.id}>
-                    <td style={{ fontFamily:'monospace', fontSize:'.7rem', color:'var(--a-green2)', fontWeight:700 }}>{p.id}</td>
-                    <td style={{ fontFamily:'monospace', fontSize:'.7rem' }}>{p.orderId}</td>
-                    <td style={{ fontWeight:600, fontSize:'.82rem' }}>{p.customer}</td>
-                    <td style={{ fontWeight:700 }}>₹{Number(p.amount).toLocaleString('en-IN')}</td>
-                    <td><span className="adm-badge adm-badge--gray" style={{ textTransform:'uppercase' }}>{p.method}</span></td>
-                    <td><span className={`adm-badge adm-badge--${STATUS_COLOR[p.status]||'gray'}`}>{p.status}</span></td>
-                    <td style={{ fontSize:'.7rem', fontFamily:'monospace', color:'var(--a-muted)' }}>{p.reference||'—'}</td>
-                    <td style={{ fontSize:'.7rem', color:'var(--a-muted)' }}>{p.date?new Date(p.date).toLocaleDateString('en-IN'):''}</td>
-                    <td>
+                    <td data-label="Pay ID" style={{ fontFamily:'monospace', fontSize:'.7rem', color:'var(--a-green2)', fontWeight:700 }}>{p.id}</td>
+                    <td data-label="Order Ref" style={{ fontFamily:'monospace', fontSize:'.7rem' }}>{p.orderId}</td>
+                    <td data-label="Customer" style={{ fontWeight:600, fontSize:'.82rem' }}>{p.customer}</td>
+                    <td data-label="Amount" style={{ fontWeight:700 }}>₹{Number(p.amount).toLocaleString('en-IN')}</td>
+                    <td data-label="Method"><span className="adm-badge adm-badge--gray" style={{ textTransform:'uppercase' }}>{p.method}</span></td>
+                    <td data-label="Status"><span className={`adm-badge adm-badge--${STATUS_COLOR[p.status]||'gray'}`}>{p.status}</span></td>
+                    <td data-label="Reference" style={{ fontSize:'.7rem', fontFamily:'monospace', color:'var(--a-muted)' }}>{p.reference||'—'}</td>
+                    <td data-label="Date" style={{ fontSize:'.7rem', color:'var(--a-muted)' }}>{p.date?new Date(p.date).toLocaleDateString('en-IN'):''}</td>
+                    <td data-label="Actions">
                       <div className="adm-table-actions">
                         <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={()=>openEdit(p)}>Edit</button>
                         <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={()=>setDel(p.id)}>Del</button>
