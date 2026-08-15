@@ -1,28 +1,42 @@
-import { Link } from 'react-router-dom'
-import { Phone, Mail, MapPin, Shield, ChevronRight, Clock } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Phone, Mail, MapPin, Shield, ChevronDown, Clock, MessageCircle, Sparkles } from 'lucide-react'
 import './Footer.css'
 
 const services = [
-  { to: '/termite-treatment',    label: 'Termite Treatment' },
+  { to: '/termite-treatment',    label: 'Termite Control' },
   { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment' },
-  { to: '/cockroach-treatment',  label: 'Cockroach Treatment' },
-  { to: '/rodent-treatment',     label: 'Rodent Treatment' },
-  { to: '/mosquito-treatment',   label: 'Mosquito Treatment' },
-  { to: '/honey-bee-treatment',  label: 'Honey Bee Treatment' },
-  { to: '/ticks-fleas-treatment','label': 'Ticks & Fleas Treatment' },
+  { to: '/cockroach-treatment',  label: 'Cockroach Eradication' },
+  { to: '/rodent-treatment',     label: 'Rodent Management' },
+  { to: '/mosquito-treatment',   label: 'Mosquito Control' },
+  { to: '/honey-bee-treatment',  label: 'Honey Bee Relocation' },
   { to: '/wood-borer-treatment', label: 'Wood Borer Treatment' },
+  { to: '/general-pest-control', label: 'General Pest Control' },
 ]
 
 const quickLinks = [
   { to: '/',          label: 'Home' },
   { to: '/about-us',  label: 'About Us' },
-  { to: '/services',  label: 'Our Services' },
+  { to: '/services',  label: 'Services' },
+  { to: '/blogs',     label: 'Blogs & Guides' },
   { to: '/franchise', label: 'Franchise' },
-  { to: '/faq',       label: "FAQ's" },
+  { to: '/faq',       label: 'FAQ' },
   { to: '/contact',   label: 'Contact Us' },
 ]
 
 export default function Footer() {
+  const pathname = usePathname()
+  if (pathname?.startsWith('/admin')) return null
+
+  const [openSection, setOpenSection] = useState(null)
+
+  const toggleSection = (section) => {
+    setOpenSection(openSection === section ? null : section)
+  }
+
   return (
     <footer className="footer" role="contentinfo" aria-label="Site footer">
       {/* Decorative glow */}
@@ -33,7 +47,7 @@ export default function Footer() {
 
           {/* Brand Column */}
           <div className="footer__brand">
-            <Link to="/" className="footer__logo" aria-label="A to Z Pest Solutions — Home">
+            <Link href="/" className="footer__logo" aria-label="A to Z Pest Solutions — Home">
               <div className="footer__logo-icon" aria-hidden="true">
                 <Shield size={22} />
               </div>
@@ -43,40 +57,62 @@ export default function Footer() {
               </div>
             </Link>
             <p className="footer__desc">
-              Bangalore's most trusted pest control company since 1993. Eco-friendly, safe,
-              and highly effective treatments for homes and businesses — 365 days a year.
+              Bangalore's most trusted pest control company since 1993. CIB & WHOPES approved, child & pet safe treatments across Bengaluru.
             </p>
+
+            <div className="footer__mobile-actions" aria-label="Quick mobile contact options">
+              <a href="tel:+919845559710" className="btn btn-primary footer__mob-btn" aria-label="Call 9845559710">
+                <Phone size={15} aria-hidden="true" />
+                Call 9845559710
+              </a>
+              <a 
+                href="https://wa.me/919845559710?text=Hi%2C%20I%20need%20pest%20control%20in%20Bangalore." 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-outline footer__mob-btn"
+                aria-label="WhatsApp Us"
+              >
+                <MessageCircle size={15} aria-hidden="true" />
+                WhatsApp
+              </a>
+            </div>
+
             <div className="footer__contact-list">
               <a href="tel:+919845559710" className="footer__contact-item" aria-label="Call us at 9845559710">
-                <Phone size={15} aria-hidden="true" />
-                <span>9845559710</span>
+                <Phone size={14} aria-hidden="true" />
+                <span>+91 98455 59710</span>
               </a>
               <a href="mailto:info@pestcontrolbengaluru.in" className="footer__contact-item" aria-label="Email info@pestcontrolbengaluru.in">
-                <Mail size={15} aria-hidden="true" />
+                <Mail size={14} aria-hidden="true" />
                 <span>info@pestcontrolbengaluru.in</span>
               </a>
               <div className="footer__contact-item">
-                <MapPin size={15} aria-hidden="true" />
+                <MapPin size={14} aria-hidden="true" />
                 <address style={{ fontStyle: 'normal' }}>
-                  No. 64, 6th Main, Hanumanthappa Layout,<br />
-                  Sultanpalya, RT Nagar, Bengaluru – 560032
+                  No. 64, 6th Main, Sultanpalya, RT Nagar, Bengaluru 560032
                 </address>
               </div>
               <div className="footer__contact-item">
-                <Clock size={15} aria-hidden="true" />
-                <span>Open 24/7 — 365 Days a Year</span>
+                <Clock size={14} aria-hidden="true" />
+                <span>Available 24/7 — 365 Days</span>
               </div>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <nav className="footer__col" aria-label="Quick links">
-            <h3 className="footer__col-title">Quick Links</h3>
-            <ul role="list">
+          {/* Quick Links Column (Accordion on mobile) */}
+          <nav className={`footer__col ${openSection === 'quick' ? 'is-open' : ''}`} aria-label="Quick navigation links">
+            <button 
+              className="footer__col-title-btn" 
+              onClick={() => toggleSection('quick')}
+              aria-expanded={openSection === 'quick'}
+            >
+              <span>Quick Links</span>
+              <ChevronDown size={16} className="footer__accordion-icon" aria-hidden="true" />
+            </button>
+            <ul role="list" className="footer__link-list">
               {quickLinks.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="footer__link">
-                    <ChevronRight size={13} aria-hidden="true" />
+                  <Link href={l.to} className="footer__link">
                     {l.label}
                   </Link>
                 </li>
@@ -84,14 +120,20 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Services */}
-          <nav className="footer__col" aria-label="Our services">
-            <h3 className="footer__col-title">Our Services</h3>
-            <ul role="list">
+          {/* Services Column (Accordion on mobile) */}
+          <nav className={`footer__col ${openSection === 'services' ? 'is-open' : ''}`} aria-label="Pest control services">
+            <button 
+              className="footer__col-title-btn" 
+              onClick={() => toggleSection('services')}
+              aria-expanded={openSection === 'services'}
+            >
+              <span>Our Services</span>
+              <ChevronDown size={16} className="footer__accordion-icon" aria-hidden="true" />
+            </button>
+            <ul role="list" className="footer__link-list">
               {services.map((s) => (
                 <li key={s.to}>
-                  <Link to={s.to} className="footer__link">
-                    <ChevronRight size={13} aria-hidden="true" />
+                  <Link href={s.to} className="footer__link">
                     {s.label}
                   </Link>
                 </li>
@@ -99,49 +141,31 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* CTA Column */}
+          {/* CTA / Trust Column */}
           <div className="footer__col footer__cta-col">
-            <h3 className="footer__col-title">Get a Free Inspection</h3>
+            <h3 className="footer__col-title">Pest Free Living</h3>
             <p className="footer__cta-desc">
-              Struggling with pests? Our experts are ready to help. Book a free inspection today.
+              Book a free inspection today. Expert pest control for homes & businesses, 24/7 service across Bengaluru.
             </p>
-            <a
-              href="tel:+919845559710"
-              className="btn btn-primary footer__cta-btn"
-              aria-label="Call now for free pest inspection"
-            >
-              <Phone size={15} aria-hidden="true" />
-              Call Now — Free Inspection
-            </a>
-            <a
-              href="https://wa.me/919845559710?text=Hi%2C%20I%20need%20pest%20control%20in%20Bangalore."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline footer__cta-btn"
-              aria-label="WhatsApp us for pest control"
-            >
-              💬 Chat on WhatsApp
-            </a>
-            <div className="footer__badges" aria-label="Trust badges">
-              <span className="badge">✅ Since 1993</span>
+            <div className="footer__badges" aria-label="Trust highlights">
+              <span className="badge">🏆 Since 1993</span>
               <span className="badge">🌿 Eco-Friendly</span>
-              <span className="badge">⚡ Same-Day</span>
+              <span className="badge">⚡ 60-Min Response</span>
+              <span className="badge">🛡️ PCAI Certified</span>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div className="divider" />
-
-      {/* Bottom Bar */}
+      {/* Bottom Minimal Bar */}
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
           <p className="footer__copy">
-            © 2011–2026 <strong>A to Z Pest Solutions</strong>. All Rights Reserved.
+            © 1993–2026 <strong>A to Z Pest Solutions</strong>. All Rights Reserved.
           </p>
           <p className="footer__legal">
-            Pest Control in Bangalore | Termite, Bed Bugs, Cockroach, Rodent & Mosquito Control
+            Serving Koramangala, Indiranagar, Whitefield, HSR Layout, Jayanagar, Rajajinagar & all Bengaluru zones.
           </p>
         </div>
       </div>

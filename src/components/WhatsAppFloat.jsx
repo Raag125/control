@@ -1,7 +1,11 @@
+'use client'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import './WhatsAppFloat.css'
 
 export default function WhatsAppFloat() {
+  const pathname = usePathname()
+  if (pathname?.startsWith('/admin')) return null
   return (
     <AnimatePresence>
       <div className="contact-float-group" aria-label="Quick contact buttons">

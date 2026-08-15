@@ -1,6 +1,7 @@
+'use client'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { ArrowRight, MessageCircle } from 'lucide-react'
 import './ServicesGrid.css'
 
@@ -12,16 +13,16 @@ const SERVICES = [
     tagline: 'Drill-Fill-Seal Subterranean Protection',
     desc: 'CIB-registered termiticide barrier treatments using the industry-standard Drill-Fill-Seal method. Protects foundations and wood for up to 5 years.',
     to: '/termite-treatment',
-    tag: '5-Year Warranty',
+    tag: 'CIB Certified',
   },
   {
     emoji: '🛏️',
     image: '/images/pests/bedbug.png',
     title: 'Bed Bugs Pest Control',
-    tagline: 'Dual-Stage Steam & Chemical Defense',
-    desc: 'Clinically proven 120°C high-heat steaming combined with targeted residual insecticide. Kills eggs, nymphs, and adult bed bugs instantly.',
+    tagline: 'Dual Odorless Mist & Residual Defense',
+    desc: 'CIB-approved odorless knockdown spray combined with targeted residual insecticide. Kills eggs, nymphs, and adult bed bugs — no strong odors, same-day re-entry.',
     to: '/bed-bugs-treatment',
-    tag: '90-Day Guarantee',
+    tag: 'Odorless / Safe',
   },
   {
     emoji: '🪳',
@@ -52,7 +53,7 @@ const SERVICES = [
   },
   {
     emoji: '🐝',
-    image: '/images/pests/termite.png', // Fallback or eco relocator
+    image: '/images/pests/honey_bee.png',
     title: 'Honey Bee Relocation',
     tagline: 'Safe & Ethical Hive Removal',
     desc: 'Professional beekeeper-grade removal of hives from walls, trees, and rooftops. We prioritize safe relocation of these essential pollinators.',
@@ -61,7 +62,7 @@ const SERVICES = [
   },
   {
     emoji: '🦗',
-    image: '/images/pests/bedbug.png',
+    image: '/images/pests/tick.png',
     title: 'Ticks & Fleas Pest Control',
     tagline: '3-Stage Lifecycle Disruption',
     desc: 'Targeted application of Insect Growth Regulators (IGRs) and adulticides to break the breeding cycle. Safe for indoor pet environments.',
@@ -70,7 +71,7 @@ const SERVICES = [
   },
   {
     emoji: '🪲',
-    image: '/images/pests/termite.png',
+    image: '/images/pests/wood_borer.png',
     title: 'Wood Borer Pest Control',
     tagline: 'Deep Injection & Borate Preservation',
     desc: 'Precision insecticide injection directly into flight holes combined with borate surface treatments. Preserves antique and structural timber.',
@@ -138,7 +139,7 @@ export default function ServicesGrid() {
                 <p className="service-card__desc">{s.desc}</p>
                 
                 <div className="service-card__actions">
-                  <Link to={s.to} className="service-card__link" aria-label={`Learn more about ${s.title}`}>
+                  <Link href={s.to} className="service-card__link" aria-label={`Learn more about ${s.title}`}>
                     <span>Pest Control Details</span>
                     <ArrowRight size={14} aria-hidden="true" />
                   </Link>
@@ -164,7 +165,7 @@ export default function ServicesGrid() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
         >
-          <Link to="/services" className="btn btn-outline" aria-label="View all pest control services">
+          <Link href="/services" className="btn btn-outline" aria-label="View all pest control services">
             View All 8 Services <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </motion.div>

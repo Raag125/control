@@ -1,5 +1,6 @@
+'use client'
 import { useEffect, useState } from 'react'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
 import { isAuthenticated } from './adminAuth'
 import { seedIfEmpty, getOrders } from './adminData'
 import AdminLogin  from './AdminLogin'
@@ -11,64 +12,46 @@ import Visitors    from './pages/Visitors'
 import Services    from './pages/Services'
 import Blogs       from './pages/Blogs'
 import Reviews     from './pages/Reviews'
+import Images      from './pages/Images'
+import Clients     from './pages/Clients'
 import './admin.css'
 
-function RequireAuth({ children }) {
-  return isAuthenticated() ? children : <Navigate to="/admin/login" replace />
-}
-
-function AdminRoutes() {
+export default function AdminApp() {
+  const [authed, setAuthed] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
   const [pending, setPending] = useState(0)
+
   const refreshPending = () => setPending(getOrders().filter(o => o.status === 'pending').length)
 
   useEffect(() => {
+    setMounted(true)
+    setAuthed(isAuthenticated())
     seedIfEmpty()
     refreshPending()
-  }, [])
+  }, [pathname])
 
-  return (
-    <AdminLayout pendingCount={pending}>
-      <Routes>
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="orders"    element={<Orders onStatsChange={refreshPending} />} />
-        <Route path="payments"  element={<Payments />} />
-        <Route path="visitors"  element={<Visitors />} />
-        <Route path="services"  element={<Services />} />
-        <Route path="blogs"     element={<Blogs />} />
-        <Route path="reviews"   element={<Reviews />} />
-        <Route path="*"         element={<Navigate to="dashboard" replace />} />
-      </Routes>
-    </AdminLayout>
-  )
-}
-
-export default function AdminApp() {
-  const [authed, setAuthed] = useState(isAuthenticated())
-  const location = useLocation()
-
-  // Re-check auth on every navigation
-  useEffect(() => { setAuthed(isAuthenticated()) }, [location])
-
-  if (!authed && !location.pathname.includes('/login')) {
-    return <AdminLogin onSuccess={() => { setAuthed(true) }} />
-  }
+  if (!mounted) return null
 
   if (!authed) {
     return <AdminLogin onSuccess={() => { setAuthed(true) }} />
   }
 
+  const renderTab = () => {
+    if (pathname.includes('/orders')) return <Orders onStatsChange={refreshPending} />
+    if (pathname.includes('/payments')) return <Payments />
+    if (pathname.includes('/visitors')) return <Visitors />
+    if (pathname.includes('/services')) return <Services />
+    if (pathname.includes('/blogs')) return <Blogs />
+    if (pathname.includes('/reviews')) return <Reviews />
+    if (pathname.includes('/images')) return <Images />
+    if (pathname.includes('/clients')) return <Clients />
+    return <Dashboard />
+  }
+
   return (
-    <Routes>
-      <Route path="login" element={<Navigate to="/admin/dashboard" replace />} />
-      <Route
-        path="*"
-        element={
-          <RequireAuth>
-            <AdminRoutes />
-          </RequireAuth>
-        }
-      />
-    </Routes>
+    <AdminLayout pendingCount={pending}>
+      {renderTab()}
+    </AdminLayout>
   )
 }

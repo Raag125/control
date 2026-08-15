@@ -1,5 +1,6 @@
+'use client'
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { getStats } from '../adminData'
 
 const STATUS_BADGE = { completed:'green', confirmed:'blue', 'in-progress':'yellow', pending:'yellow', cancelled:'red' }
@@ -33,7 +34,7 @@ export default function Dashboard() {
         <div className="adm-card adm-dash-full">
           <div className="adm-section-header">
             <span className="adm-section-title">Recent Orders</span>
-            <Link to="/admin/orders" className="adm-btn adm-btn--outline adm-btn--sm">View All →</Link>
+            <Link href="/admin/orders" className="adm-btn adm-btn--outline adm-btn--sm">View All →</Link>
           </div>
           <div className="adm-table-wrap">
             <table className="adm-table">
@@ -74,7 +75,7 @@ export default function Dashboard() {
               { to: '/admin/services', label: '⚙️ Manage Services',  color: 'ghost'   },
               { to: '/admin/visitors', label: '📊 View Analytics',   color: 'ghost'   },
             ].map(a => (
-              <Link key={a.to} to={a.to} className={`adm-btn adm-btn--${a.color}`} style={{ justifyContent: 'flex-start' }}>{a.label}</Link>
+              <Link key={a.to} href={a.to} className={`adm-btn adm-btn--${a.color}`} style={{ justifyContent: 'flex-start' }}>{a.label}</Link>
             ))}
           </div>
         </div>
@@ -100,7 +101,7 @@ export default function Dashboard() {
               <span style={{ fontWeight: 700 }}>{s.totalVisitors}</span>
             </div>
             <div style={{ marginTop: '.5rem', paddingTop: '.75rem', borderTop: '1px solid var(--a-border)' }}>
-              <Link to="/admin/services" className="adm-btn adm-btn--outline adm-btn--sm" style={{ width: '100%', justifyContent: 'center' }}>Manage Services →</Link>
+              <Link href="/admin/services" className="adm-btn adm-btn--outline adm-btn--sm" style={{ width: '100%', justifyContent: 'center' }}>Manage Services →</Link>
             </div>
           </div>
         </div>

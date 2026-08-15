@@ -1,15 +1,29 @@
 import initialBlogs from './blogsData.json'
 
-// ── Admin Data Layer — localStorage persistence + seed ──
+// ── Admin Data Layer — localStorage persistence + seed (Server-Safe for Next.js) ──
 
 const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_services', visitors:'azt_visitors', blogs:'azt_blogs', settings:'azt_settings', reviews:'azt_reviews' }
-const read  = k => { try { return JSON.parse(localStorage.getItem(k)) || [] } catch { return [] } }
-const readObj = k => { try { return JSON.parse(localStorage.getItem(k)) || {} } catch { return {} } }
-const write = (k,v) => localStorage.setItem(k, JSON.stringify(v))
+const read  = k => { 
+  if (typeof window === 'undefined') {
+    if (k === KEYS.blogs) return initialBlogs || []
+    return []
+  }
+  try { return JSON.parse(localStorage.getItem(k)) || [] } catch { return [] } 
+}
+const readObj = k => { 
+  if (typeof window === 'undefined') return {}
+  try { return JSON.parse(localStorage.getItem(k)) || {} } catch { return {} } 
+}
+const write = (k,v) => {
+  if (typeof window === 'undefined') return
+  try { localStorage.setItem(k, JSON.stringify(v)) } catch {}
+}
 const uid   = () => Math.random().toString(36).slice(2,9).toUpperCase()
 const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
 
 export function seedIfEmpty() {
+  if (typeof window === 'undefined') return
+
   const currentBlogs = read(KEYS.blogs);
   const hasEmptyContent = currentBlogs.length > 0 && currentBlogs.some(b => !b.content || b.content.trim() === '');
   const hasPlaceholderImages = currentBlogs.length > 0 && currentBlogs.some(b => b.image && b.image.includes('/images/pests/'));
@@ -73,8 +87,16 @@ export const getServices   = ()  => read(KEYS.services)
 export const saveService   = s   => { const all=read(KEYS.services); const i=all.findIndex(x=>x.id===s.id); if(i>-1)all[i]=s; else all.unshift({...s,id:'SVC-'+uid(),createdAt:new Date().toISOString()}); write(KEYS.services,all); return all }
 export const deleteService = id  => { const all=read(KEYS.services).filter(s=>s.id!==id); write(KEYS.services,all); return all }
 
-export const getBlogs      = ()  => read(KEYS.blogs)
-export const getBlogBySlug = slug => read(KEYS.blogs).find(b=>b.slug===slug)
+export const getBlogs      = ()  => {
+  const blogs = read(KEYS.blogs)
+  return (blogs && blogs.length > 0) ? blogs : (initialBlogs || [])
+}
+
+export const getBlogBySlug = slug => {
+  const all = getBlogs()
+  return all.find(b => b.slug === slug)
+}
+
 export const saveBlog      = b   => { 
   const all=read(KEYS.blogs); 
   const i=all.findIndex(x=>x.id===b.id); 
@@ -86,6 +108,7 @@ export const saveBlog      = b   => {
 export const deleteBlog    = id  => { const all=read(KEYS.blogs).filter(b=>b.id!==id); write(KEYS.blogs,all); return all }
 
 export const getReviews = async () => {
+  if (typeof window === 'undefined') return read(KEYS.reviews)
   try {
     const res = await fetch('/api/reviews')
     if (res.ok) {
@@ -100,6 +123,7 @@ export const getReviews = async () => {
 }
 
 export const saveReview = async (r) => {
+  if (typeof window === 'undefined') return read(KEYS.reviews)
   try {
     const res = await fetch('/api/reviews', {
       method: 'POST',
@@ -125,6 +149,7 @@ export const saveReview = async (r) => {
 }
 
 export const deleteReview = async (id) => {
+  if (typeof window === 'undefined') return read(KEYS.reviews)
   try {
     const res = await fetch('/api/reviews', {
       method: 'POST',
@@ -151,25 +176,28 @@ export const saveSettings  = s   => { const all = getSettings(); const updated =
 
 export const getVisitors = () => read(KEYS.visitors)
 
-export function parseUA(ua=navigator.userAgent) {
-  const mobile=(/Mobi|Android|iPhone|iPod/i.test(ua))&&!(/iPad/i.test(ua))
-  const tablet=/iPad|Tablet/i.test(ua)
+export function parseUA(ua) {
+  if (typeof window === 'undefined' && !ua) return { type: 'Desktop', browser: 'Server', os: 'Linux' }
+  const userAgent = ua || (typeof navigator !== 'undefined' ? navigator.userAgent : '')
+  const mobile=(/Mobi|Android|iPhone|iPod/i.test(userAgent))&&!(/iPad/i.test(userAgent))
+  const tablet=/iPad|Tablet/i.test(userAgent)
   const type=tablet?'Tablet':mobile?'Mobile':'Desktop'
   let browser='Unknown'
-  if(/Edg/i.test(ua))browser='Edge'
-  else if(/Chrome/i.test(ua))browser='Chrome'
-  else if(/Firefox/i.test(ua))browser='Firefox'
-  else if(/Safari/i.test(ua))browser='Safari'
+  if(/Edg/i.test(userAgent))browser='Edge'
+  else if(/Chrome/i.test(userAgent))browser='Chrome'
+  else if(/Firefox/i.test(userAgent))browser='Firefox'
+  else if(/Safari/i.test(userAgent))browser='Safari'
   let os='Unknown'
-  if(/Windows/i.test(ua))os='Windows'
-  else if(/Android/i.test(ua))os='Android'
-  else if(/iPhone|iPad/i.test(ua))os='iOS'
-  else if(/Mac/i.test(ua))os='macOS'
-  else if(/Linux/i.test(ua))os='Linux'
+  if(/Windows/i.test(userAgent))os='Windows'
+  else if(/Android/i.test(userAgent))os='Android'
+  else if(/iPhone|iPad/i.test(userAgent))os='iOS'
+  else if(/Mac/i.test(userAgent))os='macOS'
+  else if(/Linux/i.test(userAgent))os='Linux'
   return {type,browser,os}
 }
 
 export function logVisit(page) {
+  if (typeof window === 'undefined') return
   const all=read(KEYS.visitors)
   const {type,browser,os}=parseUA()
   all.unshift({id:Date.now(),page,timestamp:new Date().toISOString(),type,browser,os,ip:sessionStorage.getItem('azt_ip')||'…'})
@@ -177,6 +205,7 @@ export function logVisit(page) {
 }
 
 export async function fetchAndCacheIP() {
+  if (typeof window === 'undefined') return
   if(sessionStorage.getItem('azt_ip'))return
   try{const r=await fetch('https://api.ipify.org?format=json');const d=await r.json();sessionStorage.setItem('azt_ip',d.ip)}
   catch{sessionStorage.setItem('azt_ip','Private')}
@@ -199,5 +228,7 @@ export function getStats() {
   }
 }
 
-// Auto-seed on load
-seedIfEmpty();
+// Auto-seed on load in browser
+if (typeof window !== 'undefined') {
+  seedIfEmpty();
+}

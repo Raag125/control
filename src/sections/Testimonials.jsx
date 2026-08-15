@@ -1,3 +1,4 @@
+'use client'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Star, Quote } from 'lucide-react'
@@ -15,8 +16,8 @@ const REVIEWS = [
     name: 'Karthik Srinivasan',
     location: 'Indiranagar, Bangalore',
     rating: 5,
-    text: 'We came back from a 10-day holiday to discover our guest bedroom had a bed bug problem from a visiting relative. I called A to Z at 8 PM and they arrived the next morning at 9 AM sharp. The steam treatment was odorless and the technician was incredibly thorough — even treating behind the wall sockets. Two weeks later, zero bites. The 90-day warranty gave us complete peace of mind.',
-    service: 'Bed Bugs Steam Treatment',
+    text: 'We came back from a 10-day holiday to discover our guest bedroom had a bed bug problem from a visiting relative. I called A to Z at 8 PM and they arrived the next morning at 9 AM sharp. The treatment was completely odorless and the technician was incredibly thorough — even treating behind the wall sockets. Two weeks later, zero bites. The follow-up support gave us complete peace of mind.',
+    service: 'Bed Bugs Treatment',
   },
   {
     name: 'Sunitha Gopal',

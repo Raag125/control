@@ -1,6 +1,7 @@
+'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { 
   Phone, 
   MessageCircle, 
@@ -25,7 +26,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Drill-Fill-Seal Barrier & Timber Protection',
     path: '/termite-treatment',
-    warranty: '5-Year Warranty',
+    assurance: 'CIB Certified',
     emoji: '🪵'
   },
   {
@@ -35,9 +36,9 @@ const PEST_SHOWCASE = [
     image: '/images/pests/bedbug.png',
     threat: 'Bites, Skin Allergies & Insomnia',
     threatLevel: 'High Risk',
-    solution: 'Deep Thermal Steam & Dual Odorless Mist',
+    solution: 'Dual Odorless Mist & Residual Insecticide Defense',
     path: '/bed-bugs-treatment',
-    warranty: '90-Day Warranty',
+    assurance: '90-Day Follow-up',
     emoji: '🛏️'
   },
   {
@@ -49,7 +50,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'Medium Risk',
     solution: 'Advanced Odorless Gel Baiting & Flushing',
     path: '/cockroach-treatment',
-    warranty: '100% Eradication',
+    assurance: '100% Eradication',
     emoji: '🪳'
   },
   {
@@ -61,7 +62,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Multi-Catch Trapping & Bait Stations',
     path: '/rodent-treatment',
-    warranty: 'Complete Removal',
+    assurance: 'Complete Removal',
     emoji: '🐀'
   },
   {
@@ -73,7 +74,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'Seasonal Alert',
     solution: 'Thermal Fogging & Larvicidal Surface Mist',
     path: '/mosquito-treatment',
-    warranty: 'Rapid Knockdown',
+    assurance: 'Rapid Knockdown',
     emoji: '🦟'
   },
   {
@@ -85,7 +86,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Safe Hive Removal & Ethical Relocation',
     path: '/honey-bee-treatment',
-    warranty: 'Safe & Ethical',
+    assurance: 'Safe & Ethical',
     emoji: '🐝'
   },
   {
@@ -97,7 +98,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: '3-Stage IGR & Adulticide Lifecycle Treatment',
     path: '/ticks-fleas-treatment',
-    warranty: 'Pet & Child Safe',
+    assurance: 'Pet & Child Safe',
     emoji: '🦗'
   },
   {
@@ -109,7 +110,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Precision Injection & Borate Preservation',
     path: '/wood-borer-treatment',
-    warranty: 'Long-Lasting Defense',
+    assurance: 'Long-Lasting Defense',
     emoji: '🪲'
   },
   {
@@ -121,7 +122,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'Medium Risk',
     solution: 'Colony-Targeting Gel Bait System',
     path: '/ant-pest-control',
-    warranty: 'Total Eradication',
+    assurance: 'Total Eradication',
     emoji: '🐜'
   },
   {
@@ -133,7 +134,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: '5-Stage IS 6313 Soil Treatment Barrier',
     path: '/pre-construction-termite-treatment',
-    warranty: '10-Year Warranty',
+    assurance: 'Long-Term Protection',
     emoji: '🏗️'
   },
   {
@@ -145,7 +146,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Drill-Fill-Seal Barrier Method',
     path: '/post-construction-termite-treatment',
-    warranty: '5-Year Warranty',
+    assurance: 'CIB Certified',
     emoji: '🏠'
   }
 ]
@@ -159,8 +160,8 @@ export default function HeroSection() {
       {/* Background with modern interior & subtle defense grid */}
       <div className="hero-modern-bg" aria-hidden="true">
         <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000" 
-          alt="Modern pest defense interior" 
+          src="/images/hero-banner.jpg" 
+          alt="Modern pest defense interior background" 
           className="hero-modern-bg-img" 
         />
         <div className="hero-modern-gradient-overlay" />
@@ -171,12 +172,7 @@ export default function HeroSection() {
       <div className="container hero-modern-container">
         
         {/* ── LEFT: Content & Value Proposition ── */}
-        <motion.div 
-          className="hero-modern-left"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <div className="hero-modern-left hero-fade-in-up">
           {/* Live Trust Pill */}
           <div className="hero-live-pill">
             <span className="live-pulse-dot" aria-hidden="true" />
@@ -187,7 +183,7 @@ export default function HeroSection() {
 
           {/* Bold Modern Headline */}
           <h1 className="hero-modern-title">
-            Smart, Guaranteed <br className="hero-title-break" />
+            Smart, Reliable <br className="hero-title-break" />
             <span className="hero-text-gradient">Pest Protection</span> For Your Home.
           </h1>
 
@@ -242,10 +238,10 @@ export default function HeroSection() {
             </div>
             <div className="assurance-item">
               <CheckCircle2 size={15} className="assurance-icon" aria-hidden="true" />
-              <span>Free Warranty Retreatment</span>
+              <span>Free Follow-Up Retreatment</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* ── RIGHT: Interactive Realistic Pest Showcase ── */}
         <motion.div 
@@ -318,10 +314,10 @@ export default function HeroSection() {
                     <span>{currentPest.threatLevel}</span>
                   </div>
 
-                  {/* Floating Warranty Tag */}
-                  <div className="pest-warranty-tag">
+                  {/* Floating Assurance Tag */}
+                  <div className="pest-assurance-tag">
                     <Sparkles size={12} aria-hidden="true" />
-                    <span>{currentPest.warranty}</span>
+                    <span>{currentPest.assurance}</span>
                   </div>
                 </div>
 
@@ -339,7 +335,7 @@ export default function HeroSection() {
 
                   {/* Direct Treatment Link */}
                   <Link 
-                    to={currentPest.path} 
+                    href={currentPest.path} 
                     className="btn btn-primary pest-book-link"
                     aria-label={`Book pest control for ${currentPest.name}`}
                   >

@@ -1,3 +1,4 @@
+'use client'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Search, CheckSquare, CalendarCheck, Sparkles } from 'lucide-react'
@@ -25,8 +26,8 @@ const STEPS = [
   {
     icon: Sparkles,
     step: '04',
-    title: 'Guaranteed Protection',
-    desc: 'We issue an official warranty certificate (up to 5 years). If the pests return within the warranty period, we return and re-treat the affected area completely free of charge.',
+    title: 'Complete Protection',
+    desc: 'We issue an official service completion certificate. If pests return, we revisit and re-treat the affected area completely free of charge.',
   },
 ]
 

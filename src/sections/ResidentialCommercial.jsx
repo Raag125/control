@@ -1,7 +1,8 @@
+'use client'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Home, Building2, CheckCircle2 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import './ResidentialCommercial.css'
 
 const RESIDENTIAL = [
@@ -64,7 +65,7 @@ export default function ResidentialCommercial() {
                 </li>
               ))}
             </ul>
-            <Link to="/contact" className="btn btn-primary rc-card__cta" aria-label="Book residential pest control">
+            <Link href="/contact" className="btn btn-primary rc-card__cta" aria-label="Book residential pest control">
               Book Home Inspection
             </Link>
           </motion.div>
@@ -96,7 +97,7 @@ export default function ResidentialCommercial() {
                 </li>
               ))}
             </ul>
-            <Link to="/contact" className="btn btn-primary rc-card__cta" aria-label="Book commercial pest control">
+            <Link href="/contact" className="btn btn-primary rc-card__cta" aria-label="Book commercial pest control">
               Book Business Inspection
             </Link>
           </motion.div>

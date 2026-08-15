@@ -1,41 +1,42 @@
+'use client'
 import { useState, useEffect, useRef } from 'react'
-import { NavLink, Link, useLocation } from 'react-router-dom'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, X, Menu, ChevronDown, Shield, MessageCircle } from 'lucide-react'
+import { Phone, X, Menu, ChevronDown, ChevronRight, MessageCircle } from 'lucide-react'
 import './Navbar.css'
 
-const serviceCategories = [
+// ── Dropdown columns – matches reference image layout ──────────────────────
+const dropdownColumns = [
   {
-    name: 'Common Pests',
+    title: 'Our Services',
     items: [
-      { to: '/termite-treatment',    label: 'Termite Control',     image: '/images/pests/termite.png' },
-      { to: '/bed-bugs-treatment',   label: 'Bed Bugs Control',    image: '/images/pests/bed_bug.png' },
-      { to: '/cockroach-treatment',  label: 'Cockroach Control',   image: '/images/pests/cockroach.png' },
-      { to: '/rodent-treatment',     label: 'Rodent Control',      image: '/images/pests/rodent.png' },
-      { to: '/mosquito-treatment',   label: 'Mosquito Control',    image: '/images/pests/mosquito.png' },
-    ]
+      { to: '/cockroach-treatment',              label: 'Cockroach Pest Control',          image: '/images/pests/cockroach.png' },
+      { to: '/bed-bugs-treatment',               label: 'Bed Bug Pest Control',             image: '/images/pests/bed_bug.png' },
+      { to: '/termite-treatment',                label: 'Termite Pest Control',             image: '/images/pests/termite.png' },
+      { to: '/rodent-treatment',                 label: 'Rodent Pest Control',              image: '/images/pests/rodent.png' },
+      { to: '/mosquito-treatment',               label: 'Mosquito Pest Control',            image: '/images/pests/mosquito.png' },
+      { to: '/honey-bee-treatment',                 label: 'Honey Bee Pest Control',     image: '/images/pests/honey_bee.png' },
+      { to: '/ant-pest-control',                 label: 'Ant Pest Control',                 image: '/images/pests/ant.png' },
+      { to: '/flea-pest-control',                label: 'Flea Pest Control',                image: '/images/pests/flea.png' },
+      { to: '/tick-pest-control',                label: 'Tick Pest Control',                image: '/images/pests/tick.png' },
+      { to: '/wood-borer-treatment',             label: 'Wood Borer Pest Control',          image: '/images/pests/wood_borer.png' },
+      { to: '/general-pest-control',             label: 'General Pest Control',             image: '/images/pests/general.png' },
+    ],
   },
   {
-    name: 'Specialized',
+    title: 'Specialized Services',
     items: [
-      { to: '/honey-bee-treatment',  label: 'Honey Bee Control',   image: '/images/pests/honey_bee.png' },
-      { to: '/wood-borer-treatment', label: 'Wood Borer Control',  image: '/images/pests/wood_borer.png' },
-      { to: '/ant-pest-control',     label: 'Ant Control',      image: '/images/pests/ant.png' },
-      { to: '/tick-pest-control',    label: 'Tick Control',     image: '/images/pests/tick.png' },
-      { to: '/flea-pest-control',    label: 'Flea Control',     image: '/images/pests/flea.png' },
-    ]
+      { to: '/pre-construction-termite-treatment',  label: 'Pre-Construction Termite',   image: '/images/pests/pre_construction.png' },
+      { to: '/post-construction-termite-treatment', label: 'Post-Construction Termite',  image: '/images/pests/post_construction.png' },
+      { to: '/residential-pest-control',            label: 'Residential Pest Control',   image: '/images/pests/residential.png' },
+      { to: '/commercial-pest-control',             label: 'Commercial Pest Control',    image: '/images/pests/commercial.png' },
+    ],
   },
-  {
-    name: 'Sector Solutions',
-    items: [
-      { to: '/pre-construction-termite-treatment', label: 'Pre-Construction', image: '/images/pests/pre_construction.png' },
-      { to: '/post-construction-termite-treatment', label: 'Post-Construction', image: '/images/pests/post_construction.png' },
-      { to: '/residential-pest-control', label: 'Residential', image: '/images/pests/residential.png' },
-      { to: '/commercial-pest-control', label: 'Commercial', image: '/images/pests/commercial.png' },
-      { to: '/general-pest-control', label: 'General Control',  image: '/images/pests/general.png' },
-    ]
-  }
 ]
+
+// ── Mobile accordian uses same structure ──────────────────────────────────
+const mobileAllCategories = dropdownColumns
 
 const navLinks = [
   { to: '/',          label: 'Home' },
@@ -48,56 +49,86 @@ const navLinks = [
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [dropOpen, setDropOpen] = useState(false)
-  const [mobileServOpen, setMobileServOpen] = useState(false)
-  const location = useLocation()
-  const dropRef = useRef(null)
+  const pathname = usePathname()
+  if (pathname?.startsWith('/admin')) return null
+
+  const [scrolled,        setScrolled]        = useState(false)
+  const [menuOpen,        setMenuOpen]        = useState(false)
+  const [dropOpen,        setDropOpen]        = useState(false)
+  const [mobileServOpen,  setMobileServOpen]  = useState(false)
+  const [navHeight,       setNavHeight]       = useState(0)
+  const dropRef   = useRef(null)
   const headerRef = useRef(null)
 
+  // ── Measure header height so the fixed overlay sits flush below ──
   useEffect(() => {
+    const measure = () => {
+      if (headerRef.current) setNavHeight(headerRef.current.offsetHeight)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (headerRef.current) ro.observe(headerRef.current)
+    return () => ro.disconnect()
+  }, [])
+
+  // ── Throttled scroll listener ──
+  useEffect(() => {
+    let ticking = false
     const onScroll = () => {
-      setScrolled(window.scrollY > 20)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20)
+          ticking = false
+        })
+        ticking = true
+      }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close all menus on navigation
+  // ── Close menus on navigation ──
   useEffect(() => {
     setMenuOpen(false)
     setDropOpen(false)
     setMobileServOpen(false)
-  }, [location.pathname])
+  }, [pathname])
 
-  // Close dropdown and mobile menu on click outside
+  // ── Close on outside click ──
   useEffect(() => {
     const handler = (e) => {
       if (headerRef.current && !headerRef.current.contains(e.target)) {
         setDropOpen(false)
         setMenuOpen(false)
-      } else if (dropRef.current && !dropRef.current.contains(e.target)) {
-        setDropOpen(false)
       }
     }
     document.addEventListener('mousedown', handler)
-    document.addEventListener('touchstart', handler) // Added for mobile devices
+    document.addEventListener('touchstart', handler, { passive: true })
     return () => {
       document.removeEventListener('mousedown', handler)
       document.removeEventListener('touchstart', handler)
     }
   }, [])
 
+  // ── Lock body scroll when mobile menu is open ──
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   return (
     <header ref={headerRef} className={`unique-header-wrap ${scrolled ? 'wrap--scrolled' : ''}`}>
       <div className="unique-header-container">
         <nav className="unique-nav-island" aria-label="Main Navigation">
-          
+
           {/* LOGO */}
-          <Link to="/" className="unique-logo" aria-label="A to Z Pest Solutions — Home">
+          <Link href="/" className="unique-logo" aria-label="A to Z Pest Solutions — Home">
             <div className="unique-logo-shield">
-              <Shield size={18} strokeWidth={2.5} />
+              <img src="/images/logo.png" alt="A to Z Pest Solutions Emblem" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
             </div>
             <div className="unique-logo-text">
               <span className="unique-logo-main">A to Z</span>
@@ -107,55 +138,97 @@ export default function Navbar() {
 
           {/* DESKTOP LINKS */}
           <ul className="unique-desktop-menu">
-            {navLinks.map((link) => 
-              link.hasDropdown ? (
-                <li 
-                  key={link.to} 
-                  className="unique-menu-item dropdown-item" 
+            {navLinks.map((link) => {
+              const isActive = link.to === '/' ? pathname === '/' : pathname.startsWith(link.to)
+              return link.hasDropdown ? (
+                <li
+                  key={link.to}
+                  className="unique-menu-item dropdown-item"
                   ref={dropRef}
                   onMouseEnter={() => setDropOpen(true)}
                   onMouseLeave={() => setDropOpen(false)}
                 >
-                  <NavLink
-                    to={link.to}
-                    className={({ isActive }) => `unique-menu-btn ${isActive || dropOpen ? 'btn-active' : ''}`}
+                  <Link
+                    href={link.to}
+                    className={`unique-menu-btn ${isActive || dropOpen ? 'btn-active' : ''}`}
                     onClick={() => setDropOpen(false)}
                   >
                     <span>{link.label}</span>
                     <ChevronDown size={14} className={`chevron-icon ${dropOpen ? 'rotated' : ''}`} />
-                  </NavLink>
-                  
+                  </Link>
+
                   <AnimatePresence>
                     {dropOpen && (
-                      <motion.div 
-                        className="unique-dropdown-panel"
-                        initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                      <motion.div
+                        className="nav-services-panel"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
                       >
-                        <div className="unique-dropdown-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', padding: '0.5rem' }}>
-                          {serviceCategories.map((cat) => (
-                            <div key={cat.name} className="dropdown-category-col">
-                              <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--clr-primary)', marginBottom: '0.75rem', letterSpacing: '0.05em', fontWeight: 'bold' }}>{cat.name}</h4>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                                {cat.items.map((s) => (
-                                  <NavLink 
-                                    key={s.to} 
-                                    to={s.to} 
-                                    className="unique-dropdown-link"
-                                    onClick={() => setDropOpen(false)}
-                                    style={{ padding: '0.5rem', margin: '0 -0.5rem' }}
-                                  >
-                                    <div style={{ width: '24px', height: '24px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
-                                      <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    </div>
-                                    <span className="drop-label">{s.label}</span>
-                                  </NavLink>
+                        <div className="nav-services-inner">
+                          {/* Left Section: Our Services (2 Sub-columns side-by-side) */}
+                          <div className="nav-services-section nav-our-services">
+                            <div className="nav-col-header">{dropdownColumns[0].title}</div>
+                            <div className="nav-col-subgrid">
+                              <ul className="nav-col-list">
+                                {dropdownColumns[0].items.slice(0, 6).map((item) => (
+                                  <li key={item.to}>
+                                    <Link
+                                      href={item.to}
+                                      className="nav-col-link"
+                                      onClick={() => setDropOpen(false)}
+                                    >
+                                      <div className="nav-col-icon">
+                                        <img src={item.image} alt="" aria-hidden="true" />
+                                      </div>
+                                      <span className="nav-col-label">{item.label}</span>
+                                      <ChevronRight size={14} className="nav-col-arrow" />
+                                    </Link>
+                                  </li>
                                 ))}
-                              </div>
+                              </ul>
+                              <ul className="nav-col-list">
+                                {dropdownColumns[0].items.slice(6).map((item) => (
+                                  <li key={item.to}>
+                                    <Link
+                                      href={item.to}
+                                      className="nav-col-link"
+                                      onClick={() => setDropOpen(false)}
+                                    >
+                                      <div className="nav-col-icon">
+                                        <img src={item.image} alt="" aria-hidden="true" />
+                                      </div>
+                                      <span className="nav-col-label">{item.label}</span>
+                                      <ChevronRight size={14} className="nav-col-arrow" />
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
                             </div>
-                          ))}
+                          </div>
+
+                          {/* Right Section: Specialized Services */}
+                          <div className="nav-services-section nav-specialized-services">
+                            <div className="nav-col-header">{dropdownColumns[1].title}</div>
+                            <ul className="nav-col-list">
+                              {dropdownColumns[1].items.map((item) => (
+                                <li key={item.to}>
+                                  <Link
+                                    href={item.to}
+                                    className="nav-col-link"
+                                    onClick={() => setDropOpen(false)}
+                                  >
+                                    <div className="nav-col-icon">
+                                      <img src={item.image} alt="" aria-hidden="true" />
+                                    </div>
+                                    <span className="nav-col-label">{item.label}</span>
+                                    <ChevronRight size={14} className="nav-col-arrow" />
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       </motion.div>
                     )}
@@ -163,22 +236,21 @@ export default function Navbar() {
                 </li>
               ) : (
                 <li key={link.to} className="unique-menu-item">
-                  <NavLink
-                    to={link.to}
-                    className={({ isActive }) => `unique-menu-btn ${isActive ? 'btn-active' : ''}`}
-                    end={link.to === '/'}
+                  <Link
+                    href={link.to}
+                    className={`unique-menu-btn ${isActive ? 'btn-active' : ''}`}
                   >
                     {link.label}
-                  </NavLink>
+                  </Link>
                 </li>
               )
-            )}
+            })}
           </ul>
 
-          {/* CALL TO ACTION BUTTON */}
+          {/* CALL TO ACTION */}
           <div className="unique-actions">
-            <a 
-              href="tel:+919845559710" 
+            <a
+              href="tel:+919845559710"
               className="btn btn-primary unique-cta-btn"
               aria-label="Call A to Z Pest Solutions"
             >
@@ -186,8 +258,8 @@ export default function Navbar() {
               <span>Call Now</span>
             </a>
 
-            {/* MOBILE HAMBURGER */}
-            <button 
+            {/* HAMBURGER */}
+            <button
               className={`unique-burger ${menuOpen ? 'burger-active' : ''}`}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-expanded={menuOpen}
@@ -199,106 +271,99 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* MOBILE FULL-SCREEN EXPANSION PANEL */}
+      {/* ── MOBILE PANEL — position:fixed so it never shifts the page ── */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div 
+          <motion.div
             className="unique-mobile-overlay"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            style={{ top: navHeight }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
             <div className="unique-mobile-panel">
               <ul className="unique-mobile-menu">
-                {navLinks.map((link) => 
-                  link.hasDropdown ? (
+                {navLinks.map((link) => {
+                  const isActive = link.to === '/' ? pathname === '/' : pathname.startsWith(link.to)
+                  return link.hasDropdown ? (
                     <li key={link.to} className="unique-mobile-item">
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <NavLink
-                          to={link.to}
-                          className={({ isActive }) => `unique-mobile-link ${isActive ? 'mobile-active' : ''}`}
+                      <div className="mobile-services-row">
+                        <Link
+                          href={link.to}
+                          className={`unique-mobile-link ${isActive ? 'mobile-active' : ''}`}
                           onClick={() => setMenuOpen(false)}
-                          style={{ flex: 1 }}
                         >
                           {link.label}
-                        </NavLink>
-                        <button 
-                          className="mobile-dropdown-trigger-btn"
+                        </Link>
+                        <button
+                          className="mobile-expand-btn"
                           onClick={() => setMobileServOpen(!mobileServOpen)}
-                          style={{ padding: '0.85rem', background: 'transparent', border: 'none', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          aria-expanded={mobileServOpen}
+                          aria-label="Toggle services submenu"
                         >
                           <ChevronDown size={18} className={mobileServOpen ? 'rotated' : ''} />
                         </button>
                       </div>
-                      
+
                       <AnimatePresence>
                         {mobileServOpen && (
-                          <motion.div 
-                            className="unique-mobile-sub"
+                          <motion.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25 }}
+                            transition={{ duration: 0.22 }}
                             style={{ overflow: 'hidden' }}
                           >
-                            <div style={{ padding: '0.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                              {serviceCategories.map((cat) => (
-                                <div key={cat.name}>
-                                  <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--clr-primary)', fontWeight: 'bold', marginBottom: '0.25rem', paddingLeft: '1rem', letterSpacing: '0.05em' }}>
-                                    {cat.name}
-                                  </div>
-                                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.25rem' }}>
-                                    {cat.items.map((s) => (
-                                      <li key={s.to}>
-                                        <NavLink 
-                                          to={s.to} 
-                                          className="unique-mobile-sub-link"
-                                          onClick={() => setMenuOpen(false)}
-                                          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', fontSize: '0.8rem' }}
-                                        >
-                                          <div style={{ width: '18px', height: '18px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
-                                            <img src={s.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                          </div>
-                                          <span style={{ lineHeight: '1.2' }}>{s.label}</span>
-                                        </NavLink>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              ))}
-                            </div>
+                            {mobileAllCategories.map((cat) => (
+                              <div key={cat.title} className="mobile-cat-section">
+                                <div className="mobile-cat-header">{cat.title}</div>
+                                <ul className="mobile-cat-list">
+                                  {cat.items.map((item) => (
+                                    <li key={item.to}>
+                                      <Link
+                                        href={item.to}
+                                        className="mobile-cat-link"
+                                        onClick={() => setMenuOpen(false)}
+                                      >
+                                        <div className="mobile-cat-icon">
+                                          <img src={item.image} alt="" aria-hidden="true" />
+                                        </div>
+                                        <span>{item.label}</span>
+                                        <ChevronRight size={13} className="mobile-cat-arrow" />
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </li>
                   ) : (
                     <li key={link.to} className="unique-mobile-item">
-                      <NavLink
-                        to={link.to}
-                        className={({ isActive }) => `unique-mobile-link ${isActive ? 'mobile-active' : ''}`}
-                        end={link.to === '/'}
+                      <Link
+                        href={link.to}
+                        className={`unique-mobile-link ${isActive ? 'mobile-active' : ''}`}
                         onClick={() => setMenuOpen(false)}
                       >
                         {link.label}
-                      </NavLink>
+                      </Link>
                     </li>
                   )
-                )}
+                })}
               </ul>
 
               <div className="unique-mobile-actions">
-                <a 
-                  href="tel:+919845559710" 
-                  className="btn btn-primary unique-mobile-action-btn"
-                >
+                <a href="tel:+919845559710" className="btn btn-primary unique-mobile-action-btn">
                   <Phone size={16} />
                   <span>Call 9845559710</span>
                 </a>
-                <a 
-                  href="https://wa.me/919845559710" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://wa.me/919845559710"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn btn-outline unique-mobile-action-btn-wa"
                 >
                   <MessageCircle size={16} />

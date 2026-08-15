@@ -1,0 +1,32 @@
+import ServiceDetailPage from './ServiceDetailPage'
+import imgPest from '../../assets/services/bed_bug.png'
+import bgImage from '../../assets/services/bg/bedbug.png'
+
+export default function BedBugsTreatment() {
+  return <ServiceDetailPage
+    meta={{ title: 'Bed Bug Treatment in Bangalore | A to Z Pest Solutions', desc: 'Professional bed bug treatment in Bangalore using CIB-approved odorless insecticides. Professional bed bug treatment. Call 9845559710 for FREE inspection today.' }}
+    image={imgPest} bgImage={bgImage} title="Bed Bugs Treatment" tagline="One female bed bug lays up to 500 eggs in her lifetime. Act fast — our dual-stage odorless treatment eliminates every last one."
+    intro="Cimex lectularius (bed bugs) are among the hardest pests to eliminate without professional intervention. These nocturnal blood-feeders hide in mattress seams, bed frames, headboards, electrical sockets, and even picture frames — making DIY sprays almost completely ineffective. According to NCBI research, bed bug infestations have surged 500% globally in the last decade, with Bangalore's rising hotel and apartment culture driving a sharp local increase. A to Z Pest Solutions employs a clinically proven dual-stage protocol: a targeted odorless contact spray to knockdown active populations instantly, followed by residual insecticide application (Cypermethrin 25% EC) that provides 90-day lasting protection — no strong odors, no need to vacate."
+    signs={['Itchy, red welts in zigzag lines on arms, legs, or neck after waking','Small rust-brown bloodstains or dark fecal spots on bedsheets and pillows','A distinctive sweet, musty odor (from bed bug scent glands) in the bedroom','Shed translucent exoskeletons in mattress seams or behind headboards','Live bed bugs — flat, apple-seed-sized, reddish-brown insects — in crevices','Tiny white eggs (1mm) glued in clusters inside furniture joints','Unexplained skin irritation or allergic reactions intensifying at night','Bites appearing on multiple family members simultaneously']}
+    benefits={['Odorless dual-mist treatment kills 100% of eggs, nymphs, and adults','Residual Cypermethrin treatment provides 90-day post-treatment protection','100% odorless treatment — no need to vacate for extended periods','No chemical residue on bedding or clothing after drying','Trained technicians inspect and treat over 40 known hiding spots','Free re-treatment visit if bed bugs return','Safe for children, elderly, and allergy-sensitive individuals','Discreet service — unmarked vehicles available on request']}
+    process={[
+      { title: 'Detailed Infestation Mapping', desc: 'Technicians use UV torches and flat-blade tools to inspect mattress seams, box springs, headboards, sofas, curtains, skirting boards, and electrical outlets — documenting all infestation zones.' },
+      { title: 'Pre-Treatment Preparation', desc: 'We guide you on quick pre-treatment prep: stripping bedding (launder at 60°C+), clearing clutter around beds, and leaving wardrobes open — taking less than 30 minutes of your time.' },
+      { title: 'Odorless Contact Knockdown Spray', desc: 'CIB-approved odorless contact insecticide is applied systematically to all infested surfaces, mattress seams, bed frames, sofa joints and crevices — killing active bed bugs instantly with no smell or residue.' },
+      { title: 'Residual Insecticide Application', desc: 'Cypermethrin 25% EC or Deltamethrin residual spray is applied to baseboards, furniture joints, wall crevices, and all non-fabric harboring areas. This creates a protective barrier lasting 90 days.' },
+      { title: '14-Day Follow-Up Inspection', desc: 'We return after 14 days (peak egg-hatch window) to verify elimination and re-treat any newly hatched nymphs if detected — at no additional charge.' },
+    ]}
+    faqs={[
+      { q: "How do I know if I have bed bugs or mosquito bites?", a: "Bed bug bites typically appear in linear rows or clusters of 3 (called 'breakfast, lunch, dinner') on exposed skin. They are intensely itchy and appear after sleep. Mosquito bites are more randomly distributed and appear immediately after exposure outdoors." },
+      { q: "How did bed bugs get into my home?", a: "Bed bugs are expert hitchhikers. They spread via luggage from hotels, second-hand furniture, shared laundry facilities, and even movie theater seats. In Bangalore, hotel stays and transit are the most common sources of introduction." },
+      { q: "How long does bed bug treatment take?", a: "A standard 1BHK treatment takes 2–3 hours. A 3BHK can take 4–6 hours. Heavy infestations may require a second session 14 days later. Most clients return to their beds the same evening." },
+      { q: "Do I need to throw away my mattress?", a: "No. Our odorless dual-mist treatment effectively eliminates all bed bugs and eggs from mattresses. Replacing the mattress is unnecessary and will not solve the infestation if other furniture is not treated." },
+      { q: "Are bed bug treatments safe for my baby or pet?", a: "Yes. We use CIB-approved low-toxicity Cypermethrin at safe concentrations with zero strong odor. We recommend keeping pets and infants away from treated areas for 4 hours while the surfaces dry." },
+      { q: "Can bed bugs spread disease?", a: "While bed bugs are not known to transmit infectious diseases, their bites cause significant psychological distress, secondary skin infections from scratching, and in rare cases, anemia from chronic blood loss. Immediate treatment is strongly recommended." },
+      { q: "What is the cost of bed bug treatment in Bangalore?", a: "Treatment costs range from ₹2,500 for a studio apartment to ₹8,000 for a 3BHK, depending on infestation severity and number of rooms. Contact us for a free inspection and personalized quote." },
+      { q: "Why did my own spray not work?", a: "Over-the-counter sprays only contact-kill bugs they directly touch. Bed bugs hide in dozens of locations — inside mattress folds, inside electrical sockets, inside wall cracks — that sprays cannot penetrate. Professional dual-mist treatment covers all 40+ known harboring sites." },
+      { q: "How long before I can sleep in my bed after treatment?", a: "You can sleep in your treated room the same evening. We recommend waiting 4–6 hours for surfaces to dry completely before replacing bedding." },
+      { q: "What follow-up support do you provide?", a: "We provide free follow-up visits if any bed bug activity is detected after treatment." },
+    ]}
+  />
+}

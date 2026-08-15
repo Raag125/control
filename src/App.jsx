@@ -86,6 +86,7 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/blogs" element={<BlogsPage />} />
               <Route path="/blogs/:slug" element={<BlogPostPage />} />
+              <Route path="/:slug" element={<BlogPostPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

@@ -1,3 +1,4 @@
+'use client'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Shield, Clock, Leaf, Award, Users, BadgeCheck, Zap, HeartHandshake } from 'lucide-react'
@@ -5,13 +6,13 @@ import './WhyChooseUs.css'
 
 const REASONS = [
   { icon: Shield,        title: '30+ Years of Expertise',     desc: 'Established in 1993, A to Z Pest Solutions is one of Bangalore\'s oldest and most trusted pest management companies — with over 18,000 properties protected.' },
-  { icon: Leaf,          title: 'CIB & WHO-Approved Only',     desc: 'We exclusively use chemicals registered with India\'s Central Insecticides Board (CIB) and approved by the WHO Pesticide Evaluation Scheme (WHOPES) — guaranteeing safety for children, pets, and pregnant women.' },
+  { icon: Leaf,          title: 'CIB & WHO-Approved Only',     desc: 'We exclusively use chemicals registered with India\'s Central Insecticides Board (CIB) and approved by the WHO Pesticide Evaluation Scheme (WHOPES) — ensuring maximum safety for children, pets, and pregnant women.' },
   { icon: Clock,         title: '60-Min Emergency Dispatch',   desc: 'Our rapid-response fleet covers all Bangalore zones — Whitefield to Jayanagar, Marathahalli to Rajajinagar. Emergency treatments dispatched within 60 minutes of your call.' },
   { icon: BadgeCheck,    title: 'PCAI-Certified Technicians',  desc: 'Every technician holds active certification from the Pest Control Association of India (PCAI), has undergone 200+ hours of field training, and is background-verified before deployment.' },
-  { icon: Award,         title: 'Warranty-Backed Results',     desc: 'We stand behind every treatment: 5-year warranty on termite, 90-day warranty on bed bugs, and free follow-up retreatment for all services within the warranty period — at zero additional cost.' },
+  { icon: Award,         title: 'Service Completion Assurance',     desc: 'We stand behind every treatment with free follow-up visits if pests return. Our service completion certificate ensures your peace of mind at zero extra cost.' },
   { icon: Users,         title: '18,000+ Protected Homes',     desc: 'From individual studio apartments to 5-star hotels and FSSAI-licensed restaurant chains — over 18,000 Bangalore properties trust A to Z for their pest management needs.' },
   { icon: Zap,           title: 'Science-Backed IPM Approach', desc: 'We follow WHO\'s Integrated Pest Management (IPM) protocol — using biological, physical, and chemical controls in the right combination for maximum efficacy with minimum chemical use.' },
-  { icon: HeartHandshake, title: 'Zero Hidden Charges',        desc: 'Every quote is itemized and fixed. No post-treatment surprise additions. What we quote after the free inspection is exactly what you pay — guaranteed in writing.' },
+  { icon: HeartHandshake, title: 'Zero Hidden Charges',        desc: 'Every quote is itemized and fixed. No post-treatment surprise additions. What we quote after the free inspection is exactly what you pay — fixed in writing.' },
 ]
 
 const cardVariants = {
