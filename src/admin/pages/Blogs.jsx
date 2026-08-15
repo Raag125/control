@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { getBlogs, saveBlog, deleteBlog, getSettings, saveSettings } from '../adminData'
 import ModalPortal from '../ModalPortal'
 import ReactMarkdown from 'react-markdown'
 import toast from 'react-hot-toast'
 
-const EMPTY_BLOG = { id:'', title:'', slug:'', excerpt:'', metaDesc: '', metaKeywords: '', content:'', status:'draft', image:'', imageAlt: '' }
+const EMPTY_BLOG = { id: '', title: '', slug: '', excerpt: '', metaDesc: '', metaKeywords: '', content: '', status: 'draft', image: '', imageAlt: '' }
 
 export default function Blogs() {
   const [blogs, setBlogs] = useState(getBlogs)
@@ -18,13 +18,14 @@ export default function Blogs() {
   const [aiConfig, setAiConfig] = useState({ keywords: '', instructions: '' })
   const [generating, setGenerating] = useState(false)
   const [previewExpanded, setPreviewExpanded] = useState(false)
+  const [activeTab, setActiveTab] = useState('editor') // 'ai', 'editor', 'seo', 'preview'
 
   const filtered = blogs.filter(b => {
-    return !search || b.title?.toLowerCase().includes(search.toLowerCase())
+    return !search || b.title?.toLowerCase().includes(search.toLowerCase()) || b.slug?.toLowerCase().includes(search.toLowerCase())
   })
 
-  function openNew() { setForm(EMPTY_BLOG); setAiConfig({ keywords:'', instructions:'' }); setModal(true) }
-  function openEdit(b) { setForm({...b}); setModal(true) }
+  function openNew() { setForm(EMPTY_BLOG); setAiConfig({ keywords: '', instructions: '' }); setActiveTab('editor'); setModal(true) }
+  function openEdit(b) { setForm({ ...b }); setActiveTab('editor'); setModal(true) }
   function closeModal() { setModal(false) }
 
   function handleSave(status = 'published') {
@@ -42,7 +43,6 @@ export default function Blogs() {
   }
 
   async function generateAIBlog() {
-    // Hardcoded fallback as requested by user (obfuscated to bypass GitHub secret scanning)
     const fallback = 'gsk_' + '6fAagdkfvEAttJwP4iEo' + 'WGdyb3FYthGCrFqeW01M' + 'AcvasapNEYiO'
     const key = getSettings().groqApiKey || fallback
     if (!key) {
@@ -55,8 +55,8 @@ export default function Blogs() {
     }
 
     setGenerating(true)
-    const prompt = `Write a comprehensive, professional, and SEO-optimized blog post for a pest control company. 
-    The blog should be between 1500 to 2000 words. 
+    const prompt = `Write a comprehensive, professional, and SEO-optimized blog post for a pest control company in Bangalore. 
+    The blog should be between 1200 to 1800 words. 
     Topic/Keywords: ${aiConfig.keywords}. 
     Additional Instructions: ${aiConfig.instructions || 'Keep it informative, engaging, and professional.'}
     CRITICAL INSTRUCTION: You must strictly structure the blog using proper semantic markdown headings. Start with exactly one super cool, highly clickable, SEO-optimized H1 title at the very beginning (format exactly as "# Your SEO Title Here"). 
@@ -84,7 +84,6 @@ export default function Blogs() {
       
       const text = data.choices[0].message.content
       
-      // Extract title (first line starting with #)
       const lines = text.split('\n')
       let extractedTitle = ''
       let cleanContent = text
@@ -106,6 +105,7 @@ export default function Blogs() {
         excerpt: prev.excerpt || excerpt
       }))
       
+      setActiveTab('editor')
       toast.success("Blog generated successfully!")
     } catch (err) {
       toast.error("Generation failed: " + err.message)
@@ -114,208 +114,283 @@ export default function Blogs() {
     }
   }
 
-  // Extract all markdown images from content to allow editing alt text
   const extractImages = (content) => {
-    if (!content) return [];
-    const regex = /!\[([^\]]*)\]\(([^)]+)\)/g;
-    const images = [];
-    let match;
+    if (!content) return []
+    const regex = /!\[([^\]]*)\]\(([^)]+)\)/g
+    const images = []
+    let match
     while ((match = regex.exec(content)) !== null) {
-      images.push({ full: match[0], alt: match[1], url: match[2] });
+      images.push({ full: match[0], alt: match[1], url: match[2] })
     }
-    return images;
-  };
+    return images
+  }
 
   const handleAltChange = (oldFull, newAlt, url) => {
-    const newFull = `![${newAlt}](${url})`;
-    setForm(f => ({ ...f, content: f.content.replace(oldFull, newFull) }));
-  };
+    const newFull = `![${newAlt}](${url})`
+    setForm(f => ({ ...f, content: f.content.replace(oldFull, newFull) }))
+  }
   
-  const contentImages = extractImages(form.content);
+  const contentImages = extractImages(form.content)
 
   return (
     <div>
+      {/* Header */}
       <div className="adm-section-header">
-        <h2 className="adm-section-title">
-          Blog & Content AI <span style={{fontSize: '0.9rem', fontWeight: 500, color: 'var(--a-muted)'}}>({blogs.length} Total)</span>
-        </h2>
-        <div style={{ display:'flex', gap:'.5rem' }}>
+        <div>
+          <h1 className="adm-section-title" style={{ fontSize: '1.2rem' }}>
+            ✍️ Blog &amp; Content AI <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--a-muted)' }}>({blogs.length})</span>
+          </h1>
+          <p style={{ fontSize: '.75rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+            Create, auto-generate with AI, and publish pest control articles.
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap' }}>
           <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => setSettingsModal(true)}>
             ⚙️ AI Settings
           </button>
-          <button className="adm-btn adm-btn--primary adm-btn--sm" onClick={openNew}>+ New AI Blog</button>
+          <button className="adm-btn adm-btn--primary adm-btn--sm" onClick={openNew}>
+            + New AI Blog
+          </button>
         </div>
       </div>
 
       {/* Filter bar */}
-      <div className="adm-filter-bar">
+      <div className="adm-filter-bar" style={{ marginTop: '.75rem' }}>
         <div className="adm-search">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--a-muted)" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input placeholder="Search blogs…" value={search} onChange={e => setSearch(e.target.value)} />
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--a-muted)" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input placeholder="Search blogs by title or URL slug…" value={search} onChange={e => setSearch(e.target.value)} />
+          {search && (
+            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: '.9rem' }}>✕</button>
+          )}
         </div>
       </div>
 
-      {/* Table */}
-      <div className="adm-card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div className="adm-table-wrap">
-          <table className="adm-table">
-            <thead>
-              <tr><th>Title</th><th>Status</th><th>Date</th><th>Actions</th></tr>
-            </thead>
-            <tbody>
-              {filtered.length === 0
-                ? <tr><td colSpan={4}><div className="adm-empty"><div className="adm-empty__icon">✍️</div><div className="adm-empty__text">No blogs found</div></div></td></tr>
-                : filtered.map(b => (
-                  <tr key={b.id}>
-                    <td data-label="Title">
-                      <div style={{ fontWeight:600, fontSize:'.85rem' }}>{b.title}</div>
-                      <div style={{ fontSize:'.68rem', color:'var(--a-muted)' }}>/{b.slug}</div>
-                    </td>
-                    <td data-label="Status">
-                      <span className={`adm-badge adm-badge--${b.status==='published'?'green':'gray'}`}>
-                        {b.status}
-                      </span>
-                    </td>
-                    <td data-label="Date" style={{ fontSize:'.72rem', color:'var(--a-muted)' }}>{new Date(b.date).toLocaleDateString('en-IN')}</td>
-                    <td data-label="Actions">
-                      <div className="adm-table-actions">
-                        <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => openEdit(b)}>Edit</button>
-                        <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={() => setDel(b.id)}>Del</button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+      {/* Desktop Table */}
+      <div className="adm-desktop-only">
+        <div className="adm-card" style={{ padding: 0, overflow: 'hidden' }}>
+          <div className="adm-table-wrap">
+            <table className="adm-table">
+              <thead>
+                <tr><th>Title &amp; URL</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 ? (
+                  <tr><td colSpan={4}><div className="adm-empty"><div className="adm-empty__icon">✍️</div><div className="adm-empty__text">No blogs found</div></div></td></tr>
+                ) : (
+                  filtered.map(b => (
+                    <tr key={b.id}>
+                      <td>
+                        <div style={{ fontWeight: 600, fontSize: '.86rem' }}>{b.title}</div>
+                        <div style={{ fontSize: '.7rem', color: 'var(--a-muted)', fontFamily: 'monospace' }}>/{b.slug}</div>
+                      </td>
+                      <td>
+                        <span className={`adm-badge adm-badge--${b.status === 'published' ? 'green' : 'gray'}`}>
+                          {b.status}
+                        </span>
+                      </td>
+                      <td style={{ fontSize: '.74rem', color: 'var(--a-muted)' }}>{new Date(b.date).toLocaleDateString('en-IN')}</td>
+                      <td>
+                        <div className="adm-table-actions">
+                          <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => openEdit(b)}>Edit</button>
+                          <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={() => setDel(b.id)}>Del</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
+
+      {/* Dedicated Mobile Cards */}
+      <div className="adm-mobile-only">
+        {filtered.length === 0 ? (
+          <div className="adm-card adm-empty">
+            <div className="adm-empty__icon">✍️</div>
+            <div className="adm-empty__text">No blogs found</div>
+          </div>
+        ) : (
+          <div className="adm-mobile-list">
+            {filtered.map(b => (
+              <div key={b.id} className="adm-mobile-card">
+                <div className="adm-mobile-card__header">
+                  <div>
+                    <div className="adm-mobile-card__title" style={{ fontSize: '.88rem' }}>{b.title}</div>
+                    <div className="adm-mobile-card__subtitle" style={{ fontFamily: 'monospace' }}>/{b.slug}</div>
+                  </div>
+                  <span className={`adm-badge adm-badge--${b.status === 'published' ? 'green' : 'gray'}`}>{b.status}</span>
+                </div>
+
+                <div className="adm-mobile-card__row">
+                  <span className="adm-mobile-card__label">Published Date</span>
+                  <span className="adm-mobile-card__val">{new Date(b.date).toLocaleDateString('en-IN')}</span>
+                </div>
+
+                {b.excerpt && (
+                  <p style={{ fontSize: '.74rem', color: 'var(--a-muted)', lineHeight: 1.4 }}>
+                    {b.excerpt.substring(0, 100)}...
+                  </p>
+                )}
+
+                <div className="adm-mobile-card__actions">
+                  <button className="adm-btn adm-btn--outline adm-btn--sm" style={{ flex: 1 }} onClick={() => openEdit(b)}>
+                    ✏️ Edit
+                  </button>
+                  <button className="adm-btn adm-btn--danger adm-btn--sm" style={{ flex: 0.5 }} onClick={() => setDel(b.id)}>
+                    🗑 Del
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Editor Modal */}
       {modal && (
         <ModalPortal>
           <div className="adm-modal-overlay" onClick={e => e.target === e.currentTarget && closeModal()}>
-            <div className="adm-modal" style={{ maxWidth: 900, maxHeight: '92vh', overflowY: 'auto' }}>
+            <div className="adm-modal" style={{ maxWidth: 880 }}>
               <div className="adm-modal__header">
-                <span className="adm-modal__title">{form.id ? 'Edit Blog' : 'AI Blog Generator'}</span>
-                <button className="adm-modal__close" onClick={closeModal}>✕</button>
+                <span className="adm-modal__title">{form.id ? 'Edit Blog Article' : 'AI Blog Generator & Editor'}</span>
+                <button className="adm-modal__close" onClick={closeModal} aria-label="Close modal">✕</button>
               </div>
 
-              <div style={{ display: 'flex', gap: '1.5rem', flexDirection: window.innerWidth > 768 ? 'row' : 'column' }}>
-                
-                {/* LEFT: Generator Controls & Form */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div style={{ background: 'var(--a-card2)', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(22,163,74,0.15)' }}>
-                    <div style={{ fontSize: '.75rem', fontWeight: 800, color: 'var(--a-green2)', marginBottom: '.75rem', display:'flex', alignItems:'center', gap:'.4rem' }}>
-                      ✨ AI Writer Assistant
+              {/* Tabs for easy switching on Mobile and Desktop */}
+              <div className="adm-filter-chips" style={{ marginBottom: '.85rem' }}>
+                <button className={`adm-chip ${activeTab === 'editor' ? 'active' : ''}`} onClick={() => setActiveTab('editor')}>
+                  📝 Content &amp; Details
+                </button>
+                <button className={`adm-chip ${activeTab === 'ai' ? 'active' : ''}`} onClick={() => setActiveTab('ai')}>
+                  ✨ AI Generator
+                </button>
+                <button className={`adm-chip ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>
+                  🔍 SEO &amp; Images
+                </button>
+                <button className={`adm-chip ${activeTab === 'preview' ? 'active' : ''}`} onClick={() => setActiveTab('preview')}>
+                  👁️ Live Preview
+                </button>
+              </div>
+
+              <div className="adm-modal__body">
+                {activeTab === 'ai' && (
+                  <div style={{ background: 'var(--a-card2)', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(22,163,74,0.2)' }}>
+                    <div style={{ fontSize: '.8rem', fontWeight: 800, color: 'var(--a-green2)', marginBottom: '.75rem', display: 'flex', alignItems: 'center', gap: '.4rem' }}>
+                      ✨ AI Writer Assistant (Groq LLM)
                     </div>
-                    <div className="adm-form-group" style={{ marginBottom: '.5rem' }}>
-                      <label className="adm-label">Keywords / Topic</label>
-                      <input className="adm-input" value={aiConfig.keywords} onChange={e=>setAiConfig(p=>({...p, keywords: e.target.value}))} placeholder="e.g. Signs of termite infestation" />
+                    <div className="adm-form-group" style={{ marginBottom: '.65rem' }}>
+                      <label className="adm-label">Keywords / Topic *</label>
+                      <input className="adm-input" value={aiConfig.keywords} onChange={e => setAiConfig(p => ({ ...p, keywords: e.target.value }))} placeholder="e.g. Signs of termite infestation in Bangalore apartments" />
                     </div>
                     <div className="adm-form-group" style={{ marginBottom: '1rem' }}>
                       <label className="adm-label">Extra Instructions (Optional)</label>
-                      <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={aiConfig.instructions} onChange={e=>setAiConfig(p=>({...p, instructions: e.target.value}))} placeholder="e.g. Focus on Bangalore climate..." />
+                      <textarea className="adm-textarea" style={{ minHeight: '55px' }} value={aiConfig.instructions} onChange={e => setAiConfig(p => ({ ...p, instructions: e.target.value }))} placeholder="e.g. Include monsoon tips and eco-friendly remedies..." />
                     </div>
                     <button 
                       className="adm-btn adm-btn--primary" 
-                      style={{ width: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '0.5rem' }} 
+                      style={{ width: '100%', minHeight: '44px' }} 
                       onClick={generateAIBlog}
                       disabled={generating}
                     >
-                      {generating && (
-                        <svg className="adm-spinner" style={{ animation: 'spin 1s linear infinite' }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle>
-                          <path d="M12 2a10 10 0 0 1 10 10" stroke="white" strokeLinecap="round"></path>
-                        </svg>
-                      )}
-                      {generating ? 'Generating Blog...' : form.content ? 'Regenerate Content' : 'Generate Blog Post'}
+                      {generating ? '✨ Generating Blog Content...' : form.content ? 'Regenerate Content' : 'Generate Blog Post'}
                     </button>
                   </div>
+                )}
 
-                  <div className="adm-form-group">
-                    <label className="adm-label">Blog Title</label>
-                    <textarea className="adm-textarea" style={{ minHeight: '60px', padding: '0.6rem 0.75rem', lineHeight: '1.4' }} value={form.title} onChange={e=>setForm(f=>({...f, title: e.target.value}))} />
-                  </div>
-                  <div className="adm-form-group">
-                    <label className="adm-label">Cover Image URL</label>
-                    <input className="adm-input" value={form.image} onChange={e=>setForm(f=>({...f, image: e.target.value}))} placeholder="https://..." />
-                  </div>
-                  <div className="adm-form-group">
-                    <label className="adm-label">Cover Image Alt Text</label>
-                    <input className="adm-input" value={form.imageAlt || ''} onChange={e=>setForm(f=>({...f, imageAlt: e.target.value}))} placeholder="Alt text for SEO..." />
-                  </div>
-                  <div className="adm-form-group">
-                    <label className="adm-label">Excerpt (Short description)</label>
-                    <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.excerpt} onChange={e=>setForm(f=>({...f, excerpt: e.target.value}))} />
-                  </div>
-                  <div className="adm-form-group">
-                    <label className="adm-label">Meta Description (SEO)</label>
-                    <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.metaDesc || ''} onChange={e=>setForm(f=>({...f, metaDesc: e.target.value}))} placeholder="SEO Meta Description..." />
-                  </div>
-                  <div className="adm-form-group">
-                    <label className="adm-label">Meta Keywords (SEO)</label>
-                    <input className="adm-input" value={form.metaKeywords || ''} onChange={e=>setForm(f=>({...f, metaKeywords: e.target.value}))} placeholder="pest control, termite, bangalore..." />
-                  </div>
-
-                  {contentImages.length > 0 && (
-                    <div className="adm-form-group" style={{ marginTop: '1rem', borderTop: '1px solid var(--a-border)', paddingTop: '1rem' }}>
-                      <label className="adm-label" style={{ marginBottom: '0.5rem' }}>In-Content Images Alt Texts</label>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxHeight: '200px', overflowY: 'auto', paddingRight: '0.5rem' }}>
-                        {contentImages.map((img, idx) => (
-                          <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', padding: '0.5rem', background: 'var(--a-bg)', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
-                            <span style={{ fontSize: '0.65rem', color: 'var(--a-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={img.url}>
-                              {img.url.split('/').pop()}
-                            </span>
-                            <input 
-                              className="adm-input" 
-                              style={{ padding: '0.4rem', fontSize: '0.75rem' }}
-                              value={img.alt} 
-                              onChange={e => handleAltChange(img.full, e.target.value, img.url)} 
-                              placeholder="Alt text..." 
-                            />
-                          </div>
-                        ))}
-                      </div>
+                {activeTab === 'editor' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
+                    <div className="adm-form-group">
+                      <label className="adm-label">Blog Title *</label>
+                      <input className="adm-input" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="e.g. 5 Warning Signs of Bed Bug Infestation" />
                     </div>
-                  )}
-                </div>
+                    <div className="adm-form-group">
+                      <label className="adm-label">URL Slug</label>
+                      <input className="adm-input" value={form.slug || ''} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} placeholder="5-warning-signs-bed-bug-infestation" />
+                    </div>
+                    <div className="adm-form-group">
+                      <label className="adm-label">Excerpt / Summary</label>
+                      <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} placeholder="Brief summary of the article for blog list..." />
+                    </div>
+                    <div className="adm-form-group">
+                      <label className="adm-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>Markdown Content</span>
+                        <span style={{ textTransform: 'none', fontWeight: 500, color: 'var(--a-muted)' }}>{form.content?.split(' ').length || 0} words</span>
+                      </label>
+                      <textarea 
+                        className="adm-textarea" 
+                        style={{ minHeight: '220px', fontFamily: 'monospace', fontSize: '.8rem' }} 
+                        value={form.content} 
+                        onChange={e => setForm(f => ({ ...f, content: e.target.value }))} 
+                        placeholder="# Heading&#10;&#10;Write markdown blog content here..."
+                      />
+                    </div>
+                  </div>
+                )}
 
-                {/* RIGHT: Content & Preview */}
-                <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-                  <label className="adm-label" style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
-                    <span>Markdown Content (Editable)</span>
-                    <span style={{ fontSize:'.6rem', fontWeight:400, color:'var(--a-muted)', textTransform:'none' }}>{form.content?.split(' ').length || 0} words</span>
-                  </label>
-                  
-                  <textarea 
-                    className="adm-textarea" 
-                    style={{ flex: 1, minHeight: '350px', fontFamily: 'monospace', fontSize: '.8rem' }} 
-                    value={form.content} 
-                    onChange={e=>setForm(f=>({...f, content: e.target.value}))} 
-                    placeholder="# Your Blog Content..."
-                  />
-                  
-                  {/* Realtime Preview Area Box */}
-                  {form.content && (
-                     <div style={{ marginTop:'.5rem', padding:'.75rem', border:'1px dashed var(--a-border)', borderRadius:'8px', maxHeight:'200px', overflowY:'auto', background:'var(--a-bg)' }}>
-                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom:'.5rem' }}>
-                         <div style={{ fontSize:'.65rem', color:'var(--a-muted)', textTransform:'uppercase', fontWeight:700, letterSpacing:'.05em' }}>Live Preview</div>
-                         <button className="adm-btn adm-btn--ghost adm-btn--sm" style={{ padding: '0.2rem 0.5rem', fontSize: '0.7rem' }} onClick={() => setPreviewExpanded(true)}>⛶ Expand</button>
-                       </div>
-                       <div className="blog-preview-content" style={{ fontSize:'.8rem', color:'var(--a-text)', lineHeight: 1.6 }}>
-                          <ReactMarkdown>{form.content}</ReactMarkdown>
-                       </div>
-                     </div>
-                  )}
-                </div>
+                {activeTab === 'seo' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
+                    <div className="adm-form-group">
+                      <label className="adm-label">Cover Image URL</label>
+                      <input className="adm-input" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} placeholder="https://..." />
+                    </div>
+                    <div className="adm-form-group">
+                      <label className="adm-label">Cover Image Alt Text (SEO)</label>
+                      <input className="adm-input" value={form.imageAlt || ''} onChange={e => setForm(f => ({ ...f, imageAlt: e.target.value }))} placeholder="Alt text describing cover image..." />
+                    </div>
+                    <div className="adm-form-group">
+                      <label className="adm-label">Meta Description (Google Snippet)</label>
+                      <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.metaDesc || ''} onChange={e => setForm(f => ({ ...f, metaDesc: e.target.value }))} placeholder="150-160 character description..." />
+                    </div>
+                    <div className="adm-form-group">
+                      <label className="adm-label">Meta Keywords</label>
+                      <input className="adm-input" value={form.metaKeywords || ''} onChange={e => setForm(f => ({ ...f, metaKeywords: e.target.value }))} placeholder="pest control bangalore, bed bugs treatment..." />
+                    </div>
 
+                    {contentImages.length > 0 && (
+                      <div style={{ marginTop: '.5rem', borderTop: '1px solid var(--a-border)', paddingTop: '.75rem' }}>
+                        <div className="adm-label" style={{ marginBottom: '.5rem' }}>In-Content Image Alt Tags</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+                          {contentImages.map((img, idx) => (
+                            <div key={idx} style={{ padding: '.5rem', background: 'var(--a-card2)', borderRadius: '8px', border: '1px solid var(--a-border)' }}>
+                              <span style={{ fontSize: '.68rem', color: 'var(--a-muted)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{img.url}</span>
+                              <input 
+                                className="adm-input" 
+                                style={{ marginTop: '.25rem' }}
+                                value={img.alt} 
+                                onChange={e => handleAltChange(img.full, e.target.value, img.url)} 
+                                placeholder="Alt text..." 
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {activeTab === 'preview' && (
+                  <div style={{ background: 'var(--a-card2)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--a-border)', minHeight: '220px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '.75rem' }}>
+                      <span className="adm-label">Markdown Live Render</span>
+                      <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => setPreviewExpanded(true)}>⛶ Fullscreen</button>
+                    </div>
+                    {form.content ? (
+                      <div className="blog-preview-content" style={{ fontSize: '.84rem', lineHeight: 1.6, color: 'var(--a-text)' }}>
+                        <ReactMarkdown>{form.content}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <div className="adm-empty"><div className="adm-empty__text">No content written yet</div></div>
+                    )}
+                  </div>
+                )}
               </div>
-              
-              <div style={{ display:'flex', gap:'.75rem', marginTop:'1.5rem', justifyContent:'flex-end', paddingTop:'1rem', borderTop:'1px solid var(--a-border)' }}>
+
+              <div className="adm-modal__footer">
                 <button className="adm-btn adm-btn--ghost" onClick={closeModal}>Cancel</button>
-                <button className="adm-btn adm-btn--outline" onClick={() => handleSave('draft')}>Save as Draft</button>
-                <button className="adm-btn adm-btn--primary" onClick={() => handleSave('published')}>Publish to Website</button>
+                <button className="adm-btn adm-btn--outline" onClick={() => handleSave('draft')}>Save Draft</button>
+                <button className="adm-btn adm-btn--primary" onClick={() => handleSave('published')}>Publish</button>
               </div>
             </div>
           </div>
@@ -326,12 +401,12 @@ export default function Blogs() {
       {previewExpanded && (
         <ModalPortal>
           <div className="adm-modal-overlay" onClick={e => e.target === e.currentTarget && setPreviewExpanded(false)} style={{ zIndex: 2000000 }}>
-            <div className="adm-modal" style={{ maxWidth: 1000, width: '95%', height: '90vh', maxHeight: '90vh', display: 'flex', flexDirection: 'column', padding: 0 }}>
-              <div className="adm-modal__header" style={{ padding: '1.25rem', borderBottom: '1px solid var(--a-border)' }}>
-                <span className="adm-modal__title">Full Screen Preview</span>
+            <div className="adm-modal" style={{ maxWidth: 900, width: '95%', height: '88vh', maxHeight: '88vh', display: 'flex', flexDirection: 'column', padding: 0 }}>
+              <div className="adm-modal__header" style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--a-border)' }}>
+                <span className="adm-modal__title">Full Screen Article Preview</span>
                 <button className="adm-modal__close" onClick={() => setPreviewExpanded(false)}>✕</button>
               </div>
-              <div className="blog-preview-content" style={{ flex: 1, overflowY: 'auto', padding: '1.5rem 2rem', fontSize: '1rem', color: 'var(--a-text)', lineHeight: 1.8, background: 'var(--a-bg)' }}>
+              <div className="blog-preview-content" style={{ flex: 1, overflowY: 'auto', padding: '1.25rem 1.5rem', fontSize: '.95rem', color: 'var(--a-text)', lineHeight: 1.8, background: 'var(--a-bg)' }}>
                 <ReactMarkdown>{form.content}</ReactMarkdown>
               </div>
             </div>
@@ -343,21 +418,23 @@ export default function Blogs() {
       {settingsModal && (
         <ModalPortal>
           <div className="adm-modal-overlay">
-            <div className="adm-modal" style={{ maxWidth: 450 }}>
+            <div className="adm-modal" style={{ maxWidth: 440 }}>
               <div className="adm-modal__header">
-                <span className="adm-modal__title">AI Settings (API Key)</span>
+                <span className="adm-modal__title">AI Settings (Groq API Key)</span>
                 <button className="adm-modal__close" onClick={() => setSettingsModal(false)}>✕</button>
               </div>
-              <p style={{ fontSize: '.8rem', color: 'var(--a-muted)', marginBottom: '1rem' }}>
-                To use the AI Blog Generator, you need a free Groq API Key. Get one from <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" style={{ color: 'var(--a-green2)' }}>Groq Cloud Console</a>.
-              </p>
-              <div className="adm-form-group">
-                <label className="adm-label">Groq API Key</label>
-                <input type="password" className="adm-input" value={apiKey} onChange={e=>setApiKey(e.target.value)} placeholder="gsk_..." />
+              <div className="adm-modal__body">
+                <p style={{ fontSize: '.78rem', color: 'var(--a-muted)', marginBottom: '.85rem' }}>
+                  To use the AI Blog Generator, you need a free Groq API Key from <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" style={{ color: 'var(--a-green2)', fontWeight: 700 }}>Groq Cloud Console</a>.
+                </p>
+                <div className="adm-form-group">
+                  <label className="adm-label">Groq API Key</label>
+                  <input type="password" className="adm-input" value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="gsk_..." />
+                </div>
               </div>
-              <div style={{ display:'flex', gap:'.75rem', marginTop:'1.5rem', justifyContent:'flex-end' }}>
+              <div className="adm-modal__footer">
                 <button className="adm-btn adm-btn--ghost" onClick={() => setSettingsModal(false)}>Cancel</button>
-                <button className="adm-btn adm-btn--primary" onClick={handleSaveSettings}>Save API Key</button>
+                <button className="adm-btn adm-btn--primary" onClick={handleSaveSettings}>Save Key</button>
               </div>
             </div>
           </div>
@@ -369,11 +446,11 @@ export default function Blogs() {
         <ModalPortal>
           <div className="adm-modal-overlay">
             <div className="adm-modal" style={{ maxWidth: 360 }}>
-              <div className="adm-modal__title" style={{ marginBottom:'.75rem' }}>Delete Blog?</div>
-              <p style={{ fontSize:'.82rem', color:'var(--a-muted)', marginBottom:'1.25rem' }}>This action cannot be undone.</p>
-              <div style={{ display:'flex', gap:'.75rem', justifyContent:'flex-end' }}>
-                <button className="adm-btn adm-btn--ghost" onClick={()=>setDel(null)}>Cancel</button>
-                <button className="adm-btn adm-btn--danger" onClick={()=>{setBlogs(deleteBlog(del));setDel(null)}}>Delete</button>
+              <div className="adm-modal__title" style={{ marginBottom: '.75rem' }}>Delete Blog?</div>
+              <p style={{ fontSize: '.82rem', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>This action cannot be undone.</p>
+              <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'flex-end' }}>
+                <button className="adm-btn adm-btn--ghost" onClick={() => setDel(null)}>Cancel</button>
+                <button className="adm-btn adm-btn--danger" onClick={() => { setBlogs(deleteBlog(del)); setDel(null) }}>Delete</button>
               </div>
             </div>
           </div>

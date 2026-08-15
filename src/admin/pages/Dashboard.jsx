@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import { getStats } from '../adminData'
 
-const STATUS_BADGE = { completed:'green', confirmed:'blue', 'in-progress':'yellow', pending:'yellow', cancelled:'red' }
+const STATUS_BADGE = { completed: 'green', confirmed: 'blue', 'in-progress': 'yellow', pending: 'yellow', cancelled: 'red' }
 
 function StatCard({ icon, val, label, sub, color }) {
   return (
@@ -30,78 +30,137 @@ export default function Dashboard() {
       </div>
 
       <div className="adm-dash-grid">
-        {/* Recent Orders */}
-        <div className="adm-card adm-dash-full">
+        {/* Recent Orders Card */}
+        <div className="adm-card adm-dash-full" style={{ padding: '1.25rem' }}>
           <div className="adm-section-header">
-            <span className="adm-section-title">Recent Orders</span>
-            <Link href="/admin/orders" className="adm-btn adm-btn--outline adm-btn--sm">View All →</Link>
+            <div>
+              <h2 className="adm-section-title">Recent Orders</h2>
+              <p style={{ fontSize: '.72rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>Latest booking activity</p>
+            </div>
+            <Link href="/admin/orders" className="adm-btn adm-btn--outline adm-btn--sm">View All Orders →</Link>
           </div>
-          <div className="adm-table-wrap">
-            <table className="adm-table">
-              <thead>
-                <tr>
-                  <th>Order ID</th><th>Customer</th><th>Service</th><th>Area</th><th>Amount</th><th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {s.recentOrders.length === 0
-                  ? <tr><td colSpan={6}><div className="adm-empty"><div className="adm-empty__icon">📋</div><div className="adm-empty__text">No orders yet</div></div></td></tr>
-                  : s.recentOrders.map(o => (
-                    <tr key={o.id}>
-                      <td data-label="Order ID" style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace' }}>{o.id}</td>
-                      <td data-label="Customer">
-                        <div style={{ fontWeight: 600 }}>{o.customer}</div>
-                        <div style={{ fontSize: '.68rem', color: 'var(--a-muted)' }}>{o.phone}</div>
-                      </td>
-                      <td data-label="Service">{o.service}</td>
-                      <td data-label="Area">{o.area}</td>
-                      <td data-label="Amount" style={{ fontWeight: 700 }}>₹{o.amount.toLocaleString('en-IN')}</td>
-                      <td data-label="Status"><span className={`adm-badge adm-badge--${STATUS_BADGE[o.status] || 'gray'}`}>{o.status}</span></td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
+
+          {/* Desktop Table View */}
+          <div className="adm-desktop-only">
+            <div className="adm-table-wrap">
+              <table className="adm-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th><th>Customer</th><th>Service</th><th>Area</th><th>Amount</th><th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {s.recentOrders.length === 0
+                    ? <tr><td colSpan={6}><div className="adm-empty"><div className="adm-empty__icon">📋</div><div className="adm-empty__text">No orders yet</div></div></td></tr>
+                    : s.recentOrders.map(o => (
+                      <tr key={o.id}>
+                        <td style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace' }}>{o.id}</td>
+                        <td>
+                          <div style={{ fontWeight: 600 }}>{o.customer}</div>
+                          <div style={{ fontSize: '.68rem', color: 'var(--a-muted)' }}>{o.phone}</div>
+                        </td>
+                        <td>{o.service}</td>
+                        <td>{o.area}</td>
+                        <td style={{ fontWeight: 700 }}>₹{o.amount.toLocaleString('en-IN')}</td>
+                        <td><span className={`adm-badge adm-badge--${STATUS_BADGE[o.status] || 'gray'}`}>{o.status}</span></td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Dedicated Mobile Cards View */}
+          <div className="adm-mobile-only">
+            {s.recentOrders.length === 0 ? (
+              <div className="adm-empty" style={{ padding: '1.5rem 0' }}>
+                <div className="adm-empty__icon">📋</div>
+                <div className="adm-empty__text">No orders yet</div>
+              </div>
+            ) : (
+              <div className="adm-mobile-list">
+                {s.recentOrders.map(o => (
+                  <div key={o.id} className="adm-mobile-card">
+                    <div className="adm-mobile-card__header">
+                      <div>
+                        <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: '.78rem' }}>{o.id}</span>
+                        <div className="adm-mobile-card__title" style={{ marginTop: '.2rem' }}>{o.customer}</div>
+                      </div>
+                      <span className={`adm-badge adm-badge--${STATUS_BADGE[o.status] || 'gray'}`}>{o.status}</span>
+                    </div>
+
+                    <div className="adm-mobile-card__grid">
+                      <div className="adm-mobile-card__row">
+                        <span className="adm-mobile-card__label">Service</span>
+                        <span className="adm-mobile-card__val" style={{ maxWidth: '120px' }}>{o.service}</span>
+                      </div>
+                      <div className="adm-mobile-card__row">
+                        <span className="adm-mobile-card__label">Amount</span>
+                        <span className="adm-mobile-card__val adm-mobile-card__val--highlight">₹{o.amount.toLocaleString('en-IN')}</span>
+                      </div>
+                      <div className="adm-mobile-card__row">
+                        <span className="adm-mobile-card__label">Area</span>
+                        <span className="adm-mobile-card__val">{o.area || '—'}</span>
+                      </div>
+                      <div className="adm-mobile-card__row">
+                        <span className="adm-mobile-card__label">Phone</span>
+                        <a href={`tel:${o.phone}`} className="adm-mobile-card__val" style={{ color: 'var(--a-green2)', textDecoration: 'none' }}>📞 {o.phone}</a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
         {/* Quick Actions */}
         <div className="adm-card">
-          <div className="adm-section-title" style={{ marginBottom: '1rem' }}>Quick Actions</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
+          <h2 className="adm-section-title" style={{ marginBottom: '.85rem' }}>Quick Actions</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '.6rem' }}>
             {[
-              { to: '/admin/orders',   label: '➕ Add New Order',    color: 'primary' },
-              { to: '/admin/payments', label: '💳 Log Payment',      color: 'outline' },
-              { to: '/admin/services', label: '⚙️ Manage Services',  color: 'ghost'   },
-              { to: '/admin/visitors', label: '📊 View Analytics',   color: 'ghost'   },
+              { to: '/admin/orders',   label: '➕ Add New Order',   color: 'primary' },
+              { to: '/admin/payments', label: '💳 Log Payment',     color: 'outline' },
+              { to: '/admin/clients',  label: '👥 View Leads',      color: 'ghost'   },
+              { to: '/admin/blogs',    label: '✨ New AI Blog',     color: 'ghost'   },
             ].map(a => (
-              <Link key={a.to} href={a.to} className={`adm-btn adm-btn--${a.color}`} style={{ justifyContent: 'flex-start' }}>{a.label}</Link>
+              <Link
+                key={a.label}
+                href={a.to}
+                className={`adm-btn adm-btn--${a.color}`}
+                style={{ justifyContent: 'flex-start', minHeight: '44px' }}
+              >
+                {a.label}
+              </Link>
             ))}
           </div>
         </div>
 
         {/* Active Services Summary */}
         <div className="adm-card">
-          <div className="adm-section-title" style={{ marginBottom: '1rem' }}>Service Overview</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+          <h2 className="adm-section-title" style={{ marginBottom: '.85rem' }}>Service Overview</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
               <span style={{ color: 'var(--a-muted)' }}>Active Services</span>
-              <span style={{ fontWeight: 700, color: 'var(--a-green2)' }}>{s.activeServices}</span>
+              <span style={{ fontWeight: 800, color: 'var(--a-green2)' }}>{s.activeServices}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
               <span style={{ color: 'var(--a-muted)' }}>Total Revenue</span>
-              <span style={{ fontWeight: 700 }}>₹{s.revenue.toLocaleString('en-IN')}</span>
+              <span style={{ fontWeight: 800 }}>₹{s.revenue.toLocaleString('en-IN')}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
               <span style={{ color: 'var(--a-muted)' }}>Completed Orders</span>
-              <span style={{ fontWeight: 700, color: 'var(--a-success)' }}>{getStats().totalOrders - s.pending}</span>
+              <span style={{ fontWeight: 800, color: 'var(--a-success)' }}>{getStats().totalOrders - s.pending}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0' }}>
               <span style={{ color: 'var(--a-muted)' }}>Total Site Visitors</span>
-              <span style={{ fontWeight: 700 }}>{s.totalVisitors}</span>
+              <span style={{ fontWeight: 800 }}>{s.totalVisitors}</span>
             </div>
-            <div style={{ marginTop: '.5rem', paddingTop: '.75rem', borderTop: '1px solid var(--a-border)' }}>
-              <Link href="/admin/services" className="adm-btn adm-btn--outline adm-btn--sm" style={{ width: '100%', justifyContent: 'center' }}>Manage Services →</Link>
+            <div style={{ marginTop: '.35rem', paddingTop: '.75rem', borderTop: '1px solid var(--a-border)' }}>
+              <Link href="/admin/services" className="adm-btn adm-btn--outline adm-btn--sm" style={{ width: '100%', justifyContent: 'center', minHeight: '38px' }}>
+                Manage Services →
+              </Link>
             </div>
           </div>
         </div>
