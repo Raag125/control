@@ -19,7 +19,7 @@ export default function BlogsPage() {
       <div className="container" style={{ position: 'relative', zIndex: 1, paddingTop: '8rem', paddingBottom: '4rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <h1 className="page-title">Pest Control <span className="text-gradient">Insights</span></h1>
-          <p className="page-subtitle">Expert advice, tips, and news about keeping your home safe and pest-free.</p>
+          <p className="page-subtitle">Expert <strong>pest control insights</strong>, tips, and advice on keeping your home and office pest-free in Bangalore.</p>
         </div>
 
         {blogs.length === 0 ? (

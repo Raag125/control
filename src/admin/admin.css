@@ -44,6 +44,142 @@
 .adm-desktop-only { display: block; }
 .adm-mobile-only  { display: none; }
 
+/* ── Login Page (Mobile & Desktop) ── */
+.adm-login {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 10%, rgba(22, 163, 74, 0.08) 0%, transparent 60%), var(--a-bg);
+  padding: 1.25rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.adm-login::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(22, 163, 74, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.adm-login::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.adm-login__card {
+  background: var(--a-card);
+  border: 1px solid var(--a-border2);
+  border-radius: 24px;
+  padding: 2.2rem 1.8rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06), 0 0 35px rgba(22, 163, 74, 0.08);
+  position: relative;
+  z-index: 2;
+  animation: adm-modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.adm-login__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.adm-login__logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--a-green), var(--a-green2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 16px var(--a-glow);
+  flex-shrink: 0;
+}
+
+.adm-login__title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--a-text);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.adm-login__sub {
+  font-size: 0.82rem;
+  color: var(--a-muted);
+  margin-bottom: 1.5rem;
+}
+
+.adm-login__error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  padding: 0.7rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--a-danger);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: adm-shake 0.3s ease;
+}
+
+@keyframes adm-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.adm-login .adm-input {
+  min-height: 46px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.86rem;
+  border-radius: 10px;
+}
+
+.adm-login__btn {
+  width: 100%;
+  min-height: 48px;
+  font-size: 0.92rem;
+  border-radius: 12px;
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.adm-login__hint {
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--a-dim);
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
 /* ── Sidebar (Desktop default) ── */
 .adm-sidebar {
   width: var(--a-sidebar-w);
@@ -984,6 +1120,20 @@
   .adm {
     width: 100vw;
     overflow-x: hidden;
+  }
+
+  /* ── Mobile Login Card Tuning ── */
+  .adm-login {
+    padding: 1rem 0.85rem;
+  }
+
+  .adm-login__card {
+    padding: 1.75rem 1.35rem;
+    border-radius: 20px;
+  }
+
+  .adm-login__title {
+    font-size: 1.3rem;
   }
 
   /* ── Sidebar Mobile Drawer ── */

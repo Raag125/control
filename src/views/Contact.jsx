@@ -57,9 +57,8 @@ export default function Contact() {
           <div className="container page-hero__content">
             <div className="eyebrow">📞 Get In Touch</div>
             <h1 className="display-xl">Contact <span className="gradient-text">Us</span></h1>
-            <p className="body-lg text-muted" style={{ maxWidth: 520, margin: '1rem auto 0' }}>
-              Have a pest problem? We're ready to help — 24/7, 365 days a year.
-              Call, WhatsApp, or fill in the form below for a FREE inspection.
+            <p className="body-lg text-muted" style={{ maxWidth: 540, margin: '1rem auto 0' }}>
+              <strong>Contact us</strong> today for expert pest control across Bangalore. We're ready to help 24/7. Call, WhatsApp, or fill in the form below for a FREE inspection.
             </p>
           </div>
         </section>

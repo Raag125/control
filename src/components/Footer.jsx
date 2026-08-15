@@ -29,9 +29,9 @@ const quickLinks = [
 
 export default function Footer() {
   const pathname = usePathname()
-  if (pathname?.startsWith('/admin')) return null
-
   const [openSection, setOpenSection] = useState(null)
+
+  if (pathname?.startsWith('/admin')) return null
 
   const toggleSection = (section) => {
     setOpenSection(openSection === section ? null : section)

@@ -50,8 +50,6 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname()
-  if (pathname?.startsWith('/admin')) return null
-
   const [scrolled,        setScrolled]        = useState(false)
   const [menuOpen,        setMenuOpen]        = useState(false)
   const [dropOpen,        setDropOpen]        = useState(false)
@@ -119,6 +117,8 @@ export default function Navbar() {
     }
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
+
+  if (pathname?.startsWith('/admin')) return null
 
   return (
     <header ref={headerRef} className={`unique-header-wrap ${scrolled ? 'wrap--scrolled' : ''}`}>

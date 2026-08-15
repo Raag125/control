@@ -51,8 +51,7 @@ export default function Franchise() {
             <div className="eyebrow">🤝 Franchise Opportunity</div>
             <h1 className="display-xl">Own a <span className="gradient-text">Pest Control</span> Business</h1>
             <p className="body-lg text-muted" style={{ maxWidth: 580, margin: '1rem auto 0' }}>
-              Partner with Bangalore's most trusted pest control brand since 1993.
-              Start your own profitable pest control franchise with full training and support.
+              Partner with Bangalore's most trusted brand since 1993 to <strong>own a pest control business</strong> and launch your own high-growth franchise with complete operational training and field support.
             </p>
             <a href="tel:+919845559710" className="btn btn-primary" style={{ marginTop: '2rem' }} aria-label="Call to discuss franchise">
               <Phone size={16} aria-hidden="true" /> Discuss Franchise: 9845559710

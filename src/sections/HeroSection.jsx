@@ -184,13 +184,12 @@ export default function HeroSection() {
           {/* Bold Modern Headline */}
           <h1 className="hero-modern-title">
             Smart, Reliable <br className="hero-title-break" />
-            <span className="hero-text-gradient">Pest Protection</span> For Your Home.
+            <span className="hero-text-gradient">Pest Control &amp; Protection</span> For Your Home.
           </h1>
 
           {/* Subtitle */}
           <p className="hero-modern-subtitle">
-            Protect your property from termites, bed bugs, cockroaches, and rodents. PCAI-certified technicians deploying 
-            <strong> CIB & WHOPES-approved, child and pet-safe </strong> methodologies with rapid 60-minute dispatch.
+            Get <strong>smart, reliable pest protection and expert pest control for your home</strong> and commercial premises across Bangalore. Our PCAI-certified specialists deploy <strong>CIB &amp; WHOPES-approved, child and pet-safe</strong> treatments for termites, bed bugs, cockroaches, and rodents with rapid 60-minute dispatch.
           </p>
 
           {/* Action Buttons */}

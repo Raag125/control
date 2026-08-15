@@ -189,8 +189,8 @@ export default function FAQ() {
           <div className="container page-hero__content">
             <div className="eyebrow">❓ FAQ</div>
             <h1 className="display-xl">Frequently Asked <span className="gradient-text">Questions</span></h1>
-            <p className="body-lg text-muted" style={{ maxWidth: 560, margin: '1rem auto 0' }}>
-              Everything you need to know about our pest control services, pricing, safety, and process.
+            <p className="body-lg text-muted" style={{ maxWidth: 580, margin: '1rem auto 0' }}>
+              Find clear answers to <strong>frequently asked questions</strong> about our pest control services, pricing, safety standards, and service warranties in Bangalore.
             </p>
           </div>
         </section>

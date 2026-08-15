@@ -38,8 +38,8 @@ export default function About() {
             <h1 className="display-xl">
               Bangalore's Most <span className="gradient-text">Trusted</span> Pest Experts
             </h1>
-            <p className="body-lg text-muted" style={{ maxWidth: 600, margin: '1rem auto 0' }}>
-              Since 1993, A to Z Pest Solutions has been protecting homes and businesses across
+            <p className="body-lg text-muted" style={{ maxWidth: 620, margin: '1rem auto 0' }}>
+              Since 1993, A to Z Pest Solutions has been <strong>Bangalore's most trusted pest experts</strong>, protecting homes and businesses across
               Bengaluru with science-backed, eco-friendly, and completely safe pest control.
             </p>
           </div>

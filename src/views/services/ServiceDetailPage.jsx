@@ -201,7 +201,7 @@ const OTHER_SERVICES = [
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function ServiceDetailPage({ meta, image, bgImage, title, tagline, intro, signs, benefits, process, faqs }) {
+export default function ServiceDetailPage({ _meta, image, bgImage, title, tagline, intro, signs, benefits, process, faqs }) {
   const slugId = title.replace(/\s/g, '-').toLowerCase()
   const containerRef = useRef(null)
 
@@ -302,7 +302,9 @@ export default function ServiceDetailPage({ meta, image, bgImage, title, tagline
             </div>
           )}
           <h1 className="display-xl">{title}</h1>
-          <p className="body-lg text-muted" style={{ maxWidth: 580, margin: '1rem auto 0' }}>{tagline}</p>
+          <p className="body-lg text-muted" style={{ maxWidth: 640, margin: '1rem auto 0' }}>
+            Get expert <strong>{title}</strong> in Bangalore. {tagline}
+          </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
             <a
               href="tel:+919845559710"

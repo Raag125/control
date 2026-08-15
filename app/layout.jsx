@@ -73,6 +73,14 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 }
 
 const localBusinessSchema = {
@@ -119,6 +127,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
