@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { 
   Phone, 
   MessageCircle, 
@@ -159,10 +160,13 @@ export default function HeroSection() {
     <section className="hero-modern-section" aria-label="A to Z Pest Solutions Bangalore">
       {/* Background with modern interior & subtle defense grid */}
       <div className="hero-modern-bg" aria-hidden="true">
-        <img 
+        <Image 
           src="/images/hero-banner.jpg" 
           alt="Modern pest defense interior background" 
+          fill
+          style={{ objectFit: 'cover' }}
           className="hero-modern-bg-img" 
+          priority
         />
         <div className="hero-modern-gradient-overlay" />
         <div className="hero-modern-grid-overlay" />
@@ -299,11 +303,13 @@ export default function HeroSection() {
               >
                 {/* Realistic Image Viewport */}
                 <div className="pest-image-box">
-                  <img 
+                  <Image 
                     src={currentPest.image} 
                     alt={`Realistic inspection view of ${currentPest.name}`}
                     className="pest-real-img"
-                    loading="eager"
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    priority
                   />
                   <div className="pest-img-gradient" />
                   

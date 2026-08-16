@@ -3,7 +3,7 @@
    ============================================================ */
 
 /* ── Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap');
+
 
 /* ── CSS Custom Properties ── */
 :root {
@@ -32,8 +32,8 @@
   --clr-text-light:  #9ca3af;
 
   /* Typography */
-  --font-body:    'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
+  --font-body:    var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-jakarta), sans-serif;
 
   /* Spacing */
   --section-py:    clamp(4rem, 8vw, 7rem);

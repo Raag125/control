@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, MessageCircle } from 'lucide-react'
 import './ServicesGrid.css'
 
@@ -119,11 +120,13 @@ export default function ServicesGrid() {
             >
               {/* Realistic Pest Image Thumbnail */}
               <div className="service-card__media">
-                <img 
+                <Image 
                   src={s.image} 
                   alt={s.title} 
                   className="service-card__img" 
-                  loading="lazy" 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 {s.tag && (
                   <span className="service-card__badge">{s.tag}</span>

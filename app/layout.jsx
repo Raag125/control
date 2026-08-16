@@ -1,5 +1,19 @@
 import '../src/index.css'
 import '../src/App.css'
+import { Plus_Jakarta_Sans, Bricolage_Grotesque } from 'next/font/google'
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap',
+})
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage',
+  display: 'swap',
+})
+
 import Navbar from '../src/components/Navbar'
 import Footer from '../src/components/Footer'
 import ScrollToTop from '../src/components/ScrollToTop'
@@ -125,7 +139,7 @@ const localBusinessSchema = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${jakarta.variable} ${bricolage.variable}`}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />

@@ -10,7 +10,10 @@ const read  = k => {
     if (k === KEYS.services) return SERVICES_DATA || []
     return []
   }
-  try { return JSON.parse(localStorage.getItem(k)) || [] } catch { return [] } 
+  try { 
+    const parsed = JSON.parse(localStorage.getItem(k))
+    return Array.isArray(parsed) ? parsed : []
+  } catch { return [] } 
 }
 const readObj = k => { 
   if (typeof window === 'undefined') return {}
@@ -307,7 +310,7 @@ export function getStats() {
     todayVisits:visitors.filter(v=>new Date(v.timestamp).toDateString()===today).length,
     pending:orders.filter(o=>o.status==='pending').length,
     totalVisitors:visitors.length,
-    activeServices:getServices().filter(s=>s.isActive).length,
+    activeServices: (read(KEYS.services) || []).filter(s=>s.isActive).length,
     recentOrders:orders.slice(0,5)
   }
 }
