@@ -16,9 +16,9 @@ const CATEGORIES = [
     title: 'Core & Packages',
     icon: <Building2 className="text-primary" size={24} />,
     services: [
-      { image: '/images/pests/residential.png', title: 'Residential Pest Control', sub: 'Complete Home Protection', to: '/residential-pest-control' },
-      { image: '/images/pests/commercial.png', title: 'Commercial Pest Control', sub: 'Protect Your Business', to: '/commercial-pest-control' },
-      { image: '/images/pests/general.png', title: 'General Pest Control', sub: 'Comprehensive Defense', to: '/general-pest-control' },
+      { image: '/images/pests/residential.webp', title: 'Residential Pest Control', sub: 'Complete Home Protection', to: '/residential-pest-control' },
+      { image: '/images/pests/commercial.webp', title: 'Commercial Pest Control', sub: 'Protect Your Business', to: '/commercial-pest-control' },
+      { image: '/images/pests/general.webp', title: 'General Pest Control', sub: 'Comprehensive Defense', to: '/general-pest-control' },
     ]
   },
   {
@@ -26,9 +26,9 @@ const CATEGORIES = [
     title: 'Termite Specialists',
     icon: <ShieldCheck className="text-primary" size={24} />,
     services: [
-      { image: '/images/pests/termite.png', title: 'Termite Pest Control', sub: 'Stop Structural Damage', to: '/termite-treatment' },
-      { image: '/images/pests/pre_construction.png', title: 'Pre-Construction Termite', sub: 'Preventive Soil Barrier', to: '/pre-construction-termite-treatment' },
-      { image: '/images/pests/post_construction.png', title: 'Post-Construction Termite', sub: 'Drill-Fill-Seal Eradication', to: '/post-construction-termite-treatment' },
+      { image: '/images/pests/termite.webp', title: 'Termite Pest Control', sub: 'Stop Structural Damage', to: '/termite-treatment' },
+      { image: '/images/pests/pre_construction.webp', title: 'Pre-Construction Termite', sub: 'Preventive Soil Barrier', to: '/pre-construction-termite-treatment' },
+      { image: '/images/pests/post_construction.webp', title: 'Post-Construction Termite', sub: 'Drill-Fill-Seal Eradication', to: '/post-construction-termite-treatment' },
     ]
   },
   {
@@ -36,15 +36,15 @@ const CATEGORIES = [
     title: 'Targeted Pest Solutions',
     icon: <Bug className="text-primary" size={24} />,
     services: [
-      { image: '/images/pests/bed_bug.png', title: 'Bed Bug Pest Control', sub: 'Sleep Peacefully Again', to: '/bed-bugs-treatment' },
-      { image: '/images/pests/cockroach.png', title: 'Cockroach Pest Control', sub: 'Enjoy a Roach-Free Home', to: '/cockroach-treatment' },
-      { image: '/images/pests/ant.png', title: 'Ant Pest Control', sub: 'Eliminate the Colony', to: '/ant-pest-control' },
-      { image: '/images/pests/tick.png', title: 'Tick Pest Control', sub: 'Protect Pets & Family', to: '/tick-pest-control' },
-      { image: '/images/pests/flea.png', title: 'Flea Pest Control', sub: 'Stop Itchy Bites', to: '/flea-pest-control' },
-      { image: '/images/pests/mosquito.png', title: 'Mosquito Pest Control', sub: 'Bite-Free Outdoors', to: '/mosquito-treatment' },
-      { image: '/images/pests/rodent.png', title: 'Rodent Pest Control', sub: 'Safe Rodent Removal', to: '/rodent-treatment' },
-      { image: '/images/pests/wood_borer.png', title: 'Wood Borer Pest Control', sub: 'Save Wooden Assets', to: '/wood-borer-treatment' },
-      { image: '/images/pests/honey_bee.png', title: 'Honey Bee Pest Control', sub: 'Safe Relocation Services', to: '/honey-bee-treatment' },
+      { image: '/images/pests/bed_bug.webp', title: 'Bed Bug Pest Control', sub: 'Sleep Peacefully Again', to: '/bed-bugs-treatment' },
+      { image: '/images/pests/cockroach.webp', title: 'Cockroach Pest Control', sub: 'Enjoy a Roach-Free Home', to: '/cockroach-treatment' },
+      { image: '/images/pests/ant.webp', title: 'Ant Pest Control', sub: 'Eliminate the Colony', to: '/ant-pest-control' },
+      { image: '/images/pests/tick.webp', title: 'Tick Pest Control', sub: 'Protect Pets & Family', to: '/tick-pest-control' },
+      { image: '/images/pests/flea.webp', title: 'Flea Pest Control', sub: 'Stop Itchy Bites', to: '/flea-pest-control' },
+      { image: '/images/pests/mosquito.webp', title: 'Mosquito Pest Control', sub: 'Bite-Free Outdoors', to: '/mosquito-treatment' },
+      { image: '/images/pests/rodent.webp', title: 'Rodent Pest Control', sub: 'Safe Rodent Removal', to: '/rodent-treatment' },
+      { image: '/images/pests/wood_borer.webp', title: 'Wood Borer Pest Control', sub: 'Save Wooden Assets', to: '/wood-borer-treatment' },
+      { image: '/images/pests/honey_bee.webp', title: 'Honey Bee Pest Control', sub: 'Safe Relocation Services', to: '/honey-bee-treatment' },
     ]
   }
 ]

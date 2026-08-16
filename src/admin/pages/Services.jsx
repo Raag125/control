@@ -24,9 +24,9 @@ const EMPTY_SERVICE = {
     tagline: '',
     intro: '',
     eyebrow: '🛡️ Expert Treatment',
-    image: '/images/pests/general.png',
+    image: '/images/pests/general.webp',
     imageAlt: '',
-    bgImage: '/images/services/bg/residential.png',
+    bgImage: '/images/services/bg/residential.webp',
     bgImageAlt: '',
     startingPrice: '₹1,500',
     duration: '2-3 Hours',
@@ -505,7 +505,7 @@ export default function Services() {
                           className="adm-input"
                           value={editForm.hero?.image || ''}
                           onChange={(e) => setEditForm({ ...editForm, hero: { ...editForm.hero, image: e.target.value } })}
-                          placeholder="/images/pests/termite.png"
+                          placeholder="/images/pests/termite.webp"
                           style={{ flex: 1 }}
                         />
                         <label className="adm-btn adm-btn--outline adm-btn--sm" style={{ cursor: 'pointer', whiteSpace: 'nowrap', margin: 0, padding: '.45rem .8rem' }}>
@@ -544,7 +544,7 @@ export default function Services() {
                           className="adm-input"
                           value={editForm.hero?.bgImage || ''}
                           onChange={(e) => setEditForm({ ...editForm, hero: { ...editForm.hero, bgImage: e.target.value } })}
-                          placeholder="/images/services/bg/termite.png"
+                          placeholder="/images/services/bg/termite.webp"
                           style={{ flex: 1 }}
                         />
                         <label className="adm-btn adm-btn--outline adm-btn--sm" style={{ cursor: 'pointer', whiteSpace: 'nowrap', margin: 0, padding: '.45rem .8rem' }}>

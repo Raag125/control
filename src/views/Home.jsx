@@ -1,13 +1,14 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import HeroSection from '../sections/HeroSection'
-import ServicesGrid from '../sections/ServicesGrid'
-import WhyChooseUs from '../sections/WhyChooseUs'
-import HowItWorks from '../sections/HowItWorks'
-import StatsSection from '../sections/StatsSection'
-import Testimonials from '../sections/Testimonials'
-import ResidentialCommercial from '../sections/ResidentialCommercial'
-import CTABanner from '../sections/CTABanner'
+const ServicesGrid = dynamic(() => import('../sections/ServicesGrid'), { ssr: true })
+const WhyChooseUs = dynamic(() => import('../sections/WhyChooseUs'), { ssr: true })
+const HowItWorks = dynamic(() => import('../sections/HowItWorks'), { ssr: true })
+const StatsSection = dynamic(() => import('../sections/StatsSection'), { ssr: true })
+const Testimonials = dynamic(() => import('../sections/Testimonials'), { ssr: true })
+const ResidentialCommercial = dynamic(() => import('../sections/ResidentialCommercial'), { ssr: true })
+const CTABanner = dynamic(() => import('../sections/CTABanner'), { ssr: true })
 import ScrollReveal from '../components/ScrollReveal'
 
 export default function Home() {

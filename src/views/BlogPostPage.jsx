@@ -52,7 +52,7 @@ export default function BlogPostPage({ slug: propSlug }) {
       name: 'A to Z Pest Solutions',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://pestcontrolbengaluru.in/images/logo.png',
+        url: 'https://pestcontrolbengaluru.in/images/logo.webp',
       },
     },
     mainEntityOfPage: `https://pestcontrolbengaluru.in/${blog.slug}`,

@@ -7,33 +7,33 @@ import { Phone, MessageCircle, CheckCircle2, AlertCircle, ChevronDown, Camera, S
 import '../../views/PageStyles.css'
 
 const PRESET_ICONS = [
-  { label: 'Termite', path: '/images/pests/termite.png' },
-  { label: 'Bed Bug', path: '/images/pests/bed_bug.png' },
-  { label: 'Cockroach', path: '/images/pests/cockroach.png' },
-  { label: 'Rodents', path: '/images/pests/rodent.png' },
-  { label: 'Mosquito', path: '/images/pests/mosquito.png' },
-  { label: 'Honey Bee', path: '/images/pests/honey_bee.png' },
-  { label: 'Ticks & Fleas', path: '/images/pests/flea.png' },
-  { label: 'Tick', path: '/images/pests/tick.png' },
-  { label: 'Wood Borer', path: '/images/pests/wood_borer.png' },
-  { label: 'Ants', path: '/images/pests/ant.png' },
-  { label: 'Residential', path: '/images/pests/residential.png' },
-  { label: 'Commercial', path: '/images/pests/commercial.png' },
-  { label: 'General', path: '/images/pests/general.png' },
-  { label: 'Pre-Construction', path: '/images/pests/pre_construction.png' },
-  { label: 'Post-Construction', path: '/images/pests/post_construction.png' },
+  { label: 'Termite', path: '/images/pests/termite.webp' },
+  { label: 'Bed Bug', path: '/images/pests/bed_bug.webp' },
+  { label: 'Cockroach', path: '/images/pests/cockroach.webp' },
+  { label: 'Rodents', path: '/images/pests/rodent.webp' },
+  { label: 'Mosquito', path: '/images/pests/mosquito.webp' },
+  { label: 'Honey Bee', path: '/images/pests/honey_bee.webp' },
+  { label: 'Ticks & Fleas', path: '/images/pests/flea.webp' },
+  { label: 'Tick', path: '/images/pests/tick.webp' },
+  { label: 'Wood Borer', path: '/images/pests/wood_borer.webp' },
+  { label: 'Ants', path: '/images/pests/ant.webp' },
+  { label: 'Residential', path: '/images/pests/residential.webp' },
+  { label: 'Commercial', path: '/images/pests/commercial.webp' },
+  { label: 'General', path: '/images/pests/general.webp' },
+  { label: 'Pre-Construction', path: '/images/pests/pre_construction.webp' },
+  { label: 'Post-Construction', path: '/images/pests/post_construction.webp' },
 ]
 
 const PRESET_BACKGROUNDS = [
-  { label: 'Termite Background', path: '/images/services/bg/termite.png' },
-  { label: 'Bed Bug Background', path: '/images/services/bg/bedbug.png' },
-  { label: 'Cockroach Background', path: '/images/services/bg/cockroach.png' },
-  { label: 'Rodent Background', path: '/images/services/bg/rodent.png' },
-  { label: 'Mosquito Background', path: '/images/services/bg/mosquito.png' },
-  { label: 'Honey Bee Background', path: '/images/services/bg/honeybee.png' },
-  { label: 'Ticks & Fleas Background', path: '/images/services/bg/ticks_fleas.png' },
-  { label: 'Wood Borer Background', path: '/images/services/bg/wood_borer.png' },
-  { label: 'Residential Background', path: '/images/services/bg/residential.png' },
+  { label: 'Termite Background', path: '/images/services/bg/termite.webp' },
+  { label: 'Bed Bug Background', path: '/images/services/bg/bedbug.webp' },
+  { label: 'Cockroach Background', path: '/images/services/bg/cockroach.webp' },
+  { label: 'Rodent Background', path: '/images/services/bg/rodent.webp' },
+  { label: 'Mosquito Background', path: '/images/services/bg/mosquito.webp' },
+  { label: 'Honey Bee Background', path: '/images/services/bg/honeybee.webp' },
+  { label: 'Ticks & Fleas Background', path: '/images/services/bg/ticks_fleas.webp' },
+  { label: 'Wood Borer Background', path: '/images/services/bg/wood_borer.webp' },
+  { label: 'Residential Background', path: '/images/services/bg/residential.webp' },
 ]
 
 export default function ServicePageLiveEditor() {
@@ -82,9 +82,9 @@ export default function ServicePageLiveEditor() {
         tagline: svc.hero?.tagline || svc.description || 'Professional pest management solutions in Bangalore.',
         intro: svc.hero?.intro || svc.intro || 'Comprehensive pest control services using certified and eco-friendly formulations.',
         eyebrow: svc.hero?.eyebrow || '🛡️ Expert Treatment',
-        image: svc.hero?.image || svc.image || '/images/pests/termite.png',
+        image: svc.hero?.image || svc.image || '/images/pests/termite.webp',
         imageAlt: svc.hero?.imageAlt || svc.imageAlt || 'Pest Treatment Inspection View',
-        bgImage: svc.hero?.bgImage || svc.bgImage || '/images/services/bg/termite.png',
+        bgImage: svc.hero?.bgImage || svc.bgImage || '/images/services/bg/termite.webp',
         bgImageAlt: svc.hero?.bgImageAlt || svc.bgImageAlt || 'Professional Service Background Banner',
         startingPrice: svc.hero?.startingPrice || `₹${svc.specs?.startingPrice || svc.startingPrice || 2500}`,
         duration: svc.hero?.duration || svc.specs?.duration || svc.duration || '3-4 Hours',
@@ -900,7 +900,7 @@ export default function ServicePageLiveEditor() {
                       className="adm-input"
                       value={imageModal.currentUrl}
                       onChange={(e) => setImageModal({ ...imageModal, currentUrl: e.target.value })}
-                      placeholder="/images/pests/termite.png"
+                      placeholder="/images/pests/termite.webp"
                       style={{ flex: 1 }}
                     />
                     <label className="adm-btn adm-btn--outline adm-btn--sm" style={{ cursor: 'pointer', whiteSpace: 'nowrap', margin: 0, padding: '.45rem .8rem' }}>

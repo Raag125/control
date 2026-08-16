@@ -11,26 +11,26 @@ const dropdownColumns = [
   {
     title: 'Our Services',
     items: [
-      { to: '/cockroach-treatment',              label: 'Cockroach Pest Control',          image: '/images/pests/cockroach.png' },
-      { to: '/bed-bugs-treatment',               label: 'Bed Bug Pest Control',             image: '/images/pests/bed_bug.png' },
-      { to: '/termite-treatment',                label: 'Termite Pest Control',             image: '/images/pests/termite.png' },
-      { to: '/rodent-treatment',                 label: 'Rodent Pest Control',              image: '/images/pests/rodent.png' },
-      { to: '/mosquito-treatment',               label: 'Mosquito Pest Control',            image: '/images/pests/mosquito.png' },
-      { to: '/honey-bee-treatment',                 label: 'Honey Bee Pest Control',     image: '/images/pests/honey_bee.png' },
-      { to: '/ant-pest-control',                 label: 'Ant Pest Control',                 image: '/images/pests/ant.png' },
-      { to: '/flea-pest-control',                label: 'Flea Pest Control',                image: '/images/pests/flea.png' },
-      { to: '/tick-pest-control',                label: 'Tick Pest Control',                image: '/images/pests/tick.png' },
-      { to: '/wood-borer-treatment',             label: 'Wood Borer Pest Control',          image: '/images/pests/wood_borer.png' },
-      { to: '/general-pest-control',             label: 'General Pest Control',             image: '/images/pests/general.png' },
+      { to: '/cockroach-treatment',              label: 'Cockroach Pest Control',          image: '/images/pests/cockroach.webp' },
+      { to: '/bed-bugs-treatment',               label: 'Bed Bug Pest Control',             image: '/images/pests/bed_bug.webp' },
+      { to: '/termite-treatment',                label: 'Termite Pest Control',             image: '/images/pests/termite.webp' },
+      { to: '/rodent-treatment',                 label: 'Rodent Pest Control',              image: '/images/pests/rodent.webp' },
+      { to: '/mosquito-treatment',               label: 'Mosquito Pest Control',            image: '/images/pests/mosquito.webp' },
+      { to: '/honey-bee-treatment',                 label: 'Honey Bee Pest Control',     image: '/images/pests/honey_bee.webp' },
+      { to: '/ant-pest-control',                 label: 'Ant Pest Control',                 image: '/images/pests/ant.webp' },
+      { to: '/flea-pest-control',                label: 'Flea Pest Control',                image: '/images/pests/flea.webp' },
+      { to: '/tick-pest-control',                label: 'Tick Pest Control',                image: '/images/pests/tick.webp' },
+      { to: '/wood-borer-treatment',             label: 'Wood Borer Pest Control',          image: '/images/pests/wood_borer.webp' },
+      { to: '/general-pest-control',             label: 'General Pest Control',             image: '/images/pests/general.webp' },
     ],
   },
   {
     title: 'Specialized Services',
     items: [
-      { to: '/pre-construction-termite-treatment',  label: 'Pre-Construction Termite',   image: '/images/pests/pre_construction.png' },
-      { to: '/post-construction-termite-treatment', label: 'Post-Construction Termite',  image: '/images/pests/post_construction.png' },
-      { to: '/residential-pest-control',            label: 'Residential Pest Control',   image: '/images/pests/residential.png' },
-      { to: '/commercial-pest-control',             label: 'Commercial Pest Control',    image: '/images/pests/commercial.png' },
+      { to: '/pre-construction-termite-treatment',  label: 'Pre-Construction Termite',   image: '/images/pests/pre_construction.webp' },
+      { to: '/post-construction-termite-treatment', label: 'Post-Construction Termite',  image: '/images/pests/post_construction.webp' },
+      { to: '/residential-pest-control',            label: 'Residential Pest Control',   image: '/images/pests/residential.webp' },
+      { to: '/commercial-pest-control',             label: 'Commercial Pest Control',    image: '/images/pests/commercial.webp' },
     ],
   },
 ]
@@ -128,7 +128,7 @@ export default function Navbar() {
           {/* LOGO */}
           <Link href="/" className="unique-logo" aria-label="A to Z Pest Solutions — Home">
             <div className="unique-logo-shield">
-              <img src="/images/logo.png" alt="A to Z Pest Solutions Emblem" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+              <img src="/images/logo.webp" alt="A to Z Pest Solutions Emblem" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
             </div>
             <div className="unique-logo-text">
               <span className="unique-logo-main">A to Z</span>

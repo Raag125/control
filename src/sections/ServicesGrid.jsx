@@ -9,7 +9,7 @@ import './ServicesGrid.css'
 const SERVICES = [
   {
     emoji: '🪵',
-    image: '/images/pests/termite.png',
+    image: '/images/pests/termite.webp',
     title: 'Termite Pest Control',
     tagline: 'Drill-Fill-Seal Subterranean Protection',
     desc: 'Advanced termiticide barrier treatments using the industry-standard Drill-Fill-Seal method. Protects foundations and wood for up to 5 years.',
@@ -18,7 +18,7 @@ const SERVICES = [
   },
   {
     emoji: '🛏️',
-    image: '/images/pests/bedbug.png',
+    image: '/images/pests/bedbug.webp',
     title: 'Bed Bugs Pest Control',
     tagline: 'Dual Odorless Mist & Residual Defense',
     desc: 'Certified odorless knockdown spray combined with targeted residual insecticide. Kills eggs, nymphs, and adult bed bugs — no strong odors, same-day re-entry.',
@@ -27,7 +27,7 @@ const SERVICES = [
   },
   {
     emoji: '🪳',
-    image: '/images/pests/cockroach.png',
+    image: '/images/pests/cockroach.webp',
     title: 'Cockroach Pest Control',
     tagline: 'Fipronil Gel Baiting Cascade',
     desc: 'Integrated Pest Management (IPM) using Bayer Maxforce gel baits and residual sprays. Odorless elimination of colonies within 24-72 hours.',
@@ -36,7 +36,7 @@ const SERVICES = [
   },
   {
     emoji: '🐀',
-    image: '/images/pests/rodent.png',
+    image: '/images/pests/rodent.webp',
     title: 'Rodent Pest Control',
     tagline: 'Integrated Rodent Management (IRM)',
     desc: 'Humane trapping, tamper-resistant bait stations, and physical exclusion (gap sealing) to permanently eliminate rat and mouse intrusions.',
@@ -45,7 +45,7 @@ const SERVICES = [
   },
   {
     emoji: '🦟',
-    image: '/images/pests/mosquito.png',
+    image: '/images/pests/mosquito.webp',
     title: 'Mosquito Pest Control',
     tagline: 'Dengue & Malaria Vector Control',
     desc: 'Proven dual approach: Bti larvicidal treatment for breeding sites and ULV cold fogging for adult mosquito population control.',
@@ -54,7 +54,7 @@ const SERVICES = [
   },
   {
     emoji: '🐝',
-    image: '/images/pests/honey_bee.png',
+    image: '/images/pests/honey_bee.webp',
     title: 'Honey Bee Relocation',
     tagline: 'Safe & Ethical Hive Removal',
     desc: 'Professional beekeeper-grade removal of hives from walls, trees, and rooftops. We prioritize safe relocation of these essential pollinators.',
@@ -63,7 +63,7 @@ const SERVICES = [
   },
   {
     emoji: '🦗',
-    image: '/images/pests/tick.png',
+    image: '/images/pests/tick.webp',
     title: 'Ticks & Fleas Pest Control',
     tagline: '3-Stage Lifecycle Disruption',
     desc: 'Targeted application of Insect Growth Regulators (IGRs) and adulticides to break the breeding cycle. Safe for indoor pet environments.',
@@ -72,7 +72,7 @@ const SERVICES = [
   },
   {
     emoji: '🪲',
-    image: '/images/pests/wood_borer.png',
+    image: '/images/pests/wood_borer.webp',
     title: 'Wood Borer Pest Control',
     tagline: 'Deep Injection & Borate Preservation',
     desc: 'Precision insecticide injection directly into flight holes combined with borate surface treatments. Preserves antique and structural timber.',
