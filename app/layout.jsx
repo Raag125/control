@@ -16,12 +16,15 @@ const bricolage = Bricolage_Grotesque({
 
 import Navbar from '../src/components/Navbar'
 import Footer from '../src/components/Footer'
-import ScrollToTop from '../src/components/ScrollToTop'
 import SmoothScroll from '../src/components/SmoothScroll'
-import WhatsAppFloat from '../src/components/WhatsAppFloat'
-import AnimatedBackground from '../src/components/AnimatedBackground'
 import { Toaster } from 'react-hot-toast'
-import LeadPopup from '../src/components/LeadPopup'
+import dynamic from 'next/dynamic'
+
+// Dynamically import non-critical components so they don't block LCP
+const ScrollToTop = dynamic(() => import('../src/components/ScrollToTop'))
+const WhatsAppFloat = dynamic(() => import('../src/components/WhatsAppFloat'))
+const AnimatedBackground = dynamic(() => import('../src/components/AnimatedBackground'))
+const LeadPopup = dynamic(() => import('../src/components/LeadPopup'))
 
 export const viewport = {
   width: 'device-width',
