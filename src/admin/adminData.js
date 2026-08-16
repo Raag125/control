@@ -131,6 +131,7 @@ export const saveService = async (s) => {
     try {
       window.dispatchEvent(new CustomEvent('azt_service_updated', { detail: serviceToSave }))
       
+      // 1. Save to MongoDB
       const res = await fetch('/api/services', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -140,8 +141,25 @@ export const saveService = async (s) => {
         const data = await res.json()
         if (data.services) {
           write(KEYS.services, data.services)
-          return data.services
         }
+
+        // 2. Trigger instant revalidation so changes are live for EVERYONE immediately
+        const slug = serviceToSave.slug || serviceToSave.id
+        try {
+          await fetch('/api/revalidate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              secret: 'azt-revalidate-2024',
+              slug,
+              paths: [`/${slug}`, '/services'],
+            })
+          })
+        } catch (revErr) {
+          console.warn('Revalidation call failed (non-critical):', revErr)
+        }
+
+        return data.services || all
       }
     } catch (e) {
       console.warn('Backend API unreachable', e)

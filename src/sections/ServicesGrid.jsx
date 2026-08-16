@@ -120,13 +120,12 @@ export default function ServicesGrid() {
             >
               {/* Realistic Pest Image Thumbnail */}
               <div className="service-card__media">
-                <Image 
+                <img 
                   src={s.image} 
                   alt={s.title} 
                   className="service-card__img" 
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  loading="lazy"
+                  decoding="async"
                 />
                 {s.tag && (
                   <span className="service-card__badge">{s.tag}</span>

@@ -5,6 +5,9 @@ import { notFound } from 'next/navigation'
 import { MongoClient } from 'mongodb'
 import { getServiceBySlug } from '../../src/data/servicesData'
 
+// ISR: revalidate pages every 30 seconds so admin changes appear quickly
+export const revalidate = 30
+
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://navneetnamdev191_db_user:mZMtHM1NNvQdfos9@cluster0.5s6gngc.mongodb.net/pest_control?retryWrites=true&w=majority'
 
 async function getServiceFromDB(slug) {
@@ -26,13 +29,17 @@ async function getServiceFromDB(slug) {
   }
 }
 
+// Allow slugs not in generateStaticParams to be rendered on-demand (needed for blogs)
+export const dynamicParams = true
+
 export async function generateStaticParams() {
-  // We cannot statically generate all services from DB here safely without breaking build 
-  // if DB is down. Better to let ISR handle it or just use SSR.
+  // Only pre-render service pages from static data — no DB needed at build time.
+  // Blog slugs are served dynamically (dynamicParams = true above).
   try {
-    const { getBlogs } = await import('../../src/admin/adminData')
-    const blogs = getBlogs ? getBlogs() : []
-    return blogs.filter(b => b.status === 'published' && b.slug).map(b => ({ slug: b.slug }))
+    const { SERVICES_DATA } = await import('../../src/data/servicesData')
+    return SERVICES_DATA
+      .filter(s => s.slug)
+      .map(s => ({ slug: s.slug }))
   } catch {
     return []
   }

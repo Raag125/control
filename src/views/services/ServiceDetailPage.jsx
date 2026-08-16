@@ -314,7 +314,7 @@ export default function ServiceDetailPage(props) {
       <section className={`page-hero ${bgImgSrc ? 'page-hero--dark' : ''}`} aria-label={`${title} page header`}>
         <div className="page-hero__bg-wrapper">
           {bgImgSrc && (
-            <Image src={bgImgSrc} alt={bgImageAlt} fill className="page-hero__bg-img" style={{ objectFit: "cover" }} priority />
+            <img src={bgImgSrc} alt={bgImageAlt} className="page-hero__bg-img" loading="eager" decoding="async" />
           )}
           <div className="page-hero__bg-overlay" />
         </div>
@@ -326,7 +326,7 @@ export default function ServiceDetailPage(props) {
           <div className="eyebrow">🛡️ Expert Treatment</div>
           {imgSrc && (
             <div style={{ position: 'relative', width: '120px', height: '120px', margin: '0 auto 1.5rem', borderRadius: '50%', overflow: 'hidden', border: '4px solid var(--clr-bg)', boxShadow: 'var(--shadow-lg)' }}>
-              <Image src={imgSrc} alt={imageAlt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 50vw" />
+              <img src={imgSrc} alt={imageAlt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" decoding="async" />
             </div>
           )}
           <h1 className="display-xl">{title}</h1>
