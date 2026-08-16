@@ -142,6 +142,7 @@ export default function ServicePageLiveEditor() {
       const keys = path.split('.')
       let curr = copy
       for (let i = 0; i < keys.length - 1; i++) {
+        if (!curr[keys[i]]) curr[keys[i]] = {}
         curr = curr[keys[i]]
       }
       curr[keys[keys.length - 1]] = value
