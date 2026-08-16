@@ -52,14 +52,15 @@ export default function ServicePageLiveEditor() {
 
   // Load services list and active service
   useEffect(() => {
-    const loaded = getServices()
-    const list = (loaded && loaded.length > 0) ? loaded : SERVICES_DATA
-    setServices(list)
-    
-    const initial = list.find(s => s.slug === 'termite-treatment' || s.id === 'termite-treatment') || list[0]
-    if (initial) {
-      loadService(initial)
-    }
+    getServices().then(loaded => {
+      const list = (loaded && loaded.length > 0) ? loaded : SERVICES_DATA
+      setServices(list)
+      
+      const initial = list.find(s => s.slug === 'termite-treatment' || s.id === 'termite-treatment') || list[0]
+      if (initial) {
+        loadService(initial)
+      }
+    })
   }, [])
 
   function loadService(svc) {
@@ -216,7 +217,7 @@ export default function ServicePageLiveEditor() {
     setImageModal({ ...imageModal, open: false })
   }
 
-  function handleSaveAll() {
+  async function handleSaveAll() {
     if (!svcData) return
     const toSave = {
       ...svcData,
@@ -225,7 +226,7 @@ export default function ServicePageLiveEditor() {
       startingPrice: Number(svcData.specs?.startingPrice) || 2500,
       path: svcData.path || `/${svcData.slug}`,
     }
-    const updated = saveService(toSave)
+    const updated = await saveService(toSave)
     setServices(updated)
     setIsDirty(false)
     setSavedToast(true)

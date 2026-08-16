@@ -96,33 +96,77 @@ export const getPayments   = ()  => read(KEYS.payments)
 export const savePayment   = p   => { const all=read(KEYS.payments); const i=all.findIndex(x=>x.id===p.id); if(i>-1)all[i]=p; else all.unshift({...p,id:'PAY-'+uid(),date:new Date().toISOString()}); write(KEYS.payments,all); return all }
 export const deletePayment = id  => { const all=read(KEYS.payments).filter(p=>p.id!==id); write(KEYS.payments,all); return all }
 
-export const getServices   = ()  => {
+export const getServices = async () => {
+  if (typeof window === 'undefined') return read(KEYS.services)
+  try {
+    const res = await fetch('/api/services')
+    if (res.ok) {
+      const data = await res.json()
+      write(KEYS.services, data)
+      return data
+    }
+  } catch (e) {
+    console.warn('Backend API unreachable, falling back to localStorage', e)
+  }
   const svcs = read(KEYS.services)
   return (svcs && svcs.length > 0) ? svcs : SERVICES_DATA
 }
-export const saveService   = s   => { 
+export const saveService = async (s) => { 
   const all = read(KEYS.services) || []
   const i = all.findIndex(x => x.id === s.id || (s.slug && (x.slug === s.slug || x.path === s.path)))
+  let serviceToSave = s;
   if (i > -1) {
-    all[i] = { ...all[i], ...s }
+    serviceToSave = { ...all[i], ...s }
+    all[i] = serviceToSave
   } else {
-    all.unshift({ ...s, id: s.id || 'SVC-' + uid(), createdAt: new Date().toISOString() })
+    serviceToSave = { ...s, id: s.id || 'SVC-' + uid(), createdAt: new Date().toISOString() }
+    all.unshift(serviceToSave)
   }
   write(KEYS.services, all)
+  
   if (typeof window !== 'undefined') {
     try {
-      window.dispatchEvent(new CustomEvent('azt_service_updated', { detail: s }))
-    } catch {}
+      window.dispatchEvent(new CustomEvent('azt_service_updated', { detail: serviceToSave }))
+      
+      const res = await fetch('/api/services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'save', service: serviceToSave })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.services) {
+          write(KEYS.services, data.services)
+          return data.services
+        }
+      }
+    } catch (e) {
+      console.warn('Backend API unreachable', e)
+    }
   }
   return all 
 }
-export const deleteService = id  => { 
+export const deleteService = async (id) => { 
   const all = read(KEYS.services).filter(s => s.id !== id && s.slug !== id)
   write(KEYS.services, all)
   if (typeof window !== 'undefined') {
     try {
       window.dispatchEvent(new CustomEvent('azt_service_updated', { detail: { id, deleted: true } }))
-    } catch {}
+      const res = await fetch('/api/services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', id })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.services) {
+          write(KEYS.services, data.services)
+          return data.services
+        }
+      }
+    } catch (e) {
+      console.warn('Backend API unreachable', e)
+    }
   }
   return all 
 }

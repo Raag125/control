@@ -204,40 +204,19 @@ import { getServiceBySlug } from '../../data/servicesData'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function ServiceDetailPage(props) {
-  const [resolved, setResolved] = useState(() => {
-    return props.service || (props.slug ? getServiceBySlug(props.slug) : (props.id ? getServiceBySlug(props.id) : null))
-  })
-
-  useEffect(() => {
-    const update = () => {
-      const slugToLookup = props.slug || props.service?.slug || props.service?.path?.replace('/', '') || props.id
-      const up = slugToLookup ? getServiceBySlug(slugToLookup) : null
-      if (up) {
-        setResolved(up)
-      } else if (props.service) {
-        setResolved(props.service)
-      }
-    }
-    update()
-    window.addEventListener('storage', update)
-    window.addEventListener('azt_service_updated', update)
-    return () => {
-      window.removeEventListener('storage', update)
-      window.removeEventListener('azt_service_updated', update)
-    }
-  }, [props.service, props.slug, props.id])
   
-  const title = props.title || resolved?.hero?.title || resolved?.title || 'Pest Control Service'
-  const tagline = props.tagline || resolved?.hero?.tagline || resolved?.description || ''
-  const intro = props.intro || resolved?.hero?.intro || resolved?.intro || ''
-  const image = props.image || resolved?.hero?.image || resolved?.image || null
-  const imageAlt = props.imageAlt || resolved?.hero?.imageAlt || resolved?.imageAlt || `${title} in Bangalore`
-  const bgImage = props.bgImage || resolved?.hero?.bgImage || resolved?.bgImage || null
-  const bgImageAlt = props.bgImageAlt || resolved?.hero?.bgImageAlt || resolved?.bgImageAlt || `${title} Professional Service Background`
-  const signs = props.signs || resolved?.signs || []
-  const benefits = props.benefits || resolved?.benefits || []
-  const process = props.process || resolved?.process || []
-  const faqs = props.faqs || resolved?.faqs || []
+  
+  const title = props.title || props.service?.hero?.title || props.service?.title || 'Pest Control Service'
+  const tagline = props.tagline || props.service?.hero?.tagline || props.service?.description || ''
+  const intro = props.intro || props.service?.hero?.intro || props.service?.intro || ''
+  const image = props.image || props.service?.hero?.image || props.service?.image || null
+  const imageAlt = props.imageAlt || props.service?.hero?.imageAlt || props.service?.imageAlt || `${title} in Bangalore`
+  const bgImage = props.bgImage || props.service?.hero?.bgImage || props.service?.bgImage || null
+  const bgImageAlt = props.bgImageAlt || props.service?.hero?.bgImageAlt || props.service?.bgImageAlt || `${title} Professional Service Background`
+  const signs = props.signs || props.service?.signs || []
+  const benefits = props.benefits || props.service?.benefits || []
+  const process = props.process || props.service?.process || []
+  const faqs = props.faqs || props.service?.faqs || []
 
   const slugId = title.replace(/\s/g, '-').toLowerCase()
   const containerRef = useRef(null)
@@ -368,7 +347,7 @@ export default function ServiceDetailPage(props) {
               className="btn btn-outline"
               aria-label={`WhatsApp us about ${title}`}
             >
-              <MessageCircle size={16} aria-hidden="true" /> {resolved?.hero?.secondaryCtaText || `WhatsApp for ${title}`}
+              <MessageCircle size={16} aria-hidden="true" /> {props.service?.hero?.secondaryCtaText || `WhatsApp for ${title}`}
             </a>
           </div>
         </div>
@@ -385,7 +364,7 @@ export default function ServiceDetailPage(props) {
             {/* Main */}
             <div>
               <h2 id={`${slugId}-detail`} className="heading-md" style={{ marginBottom: '1rem' }}>
-                {resolved?.sectionTitles?.about || `About Our ${title}`}
+                {props.service?.sectionTitles?.about || `About Our ${title}`}
               </h2>
               <p className="body-md text-muted">{intro}</p>
 
@@ -393,7 +372,7 @@ export default function ServiceDetailPage(props) {
               <div style={{ marginTop: '2rem' }}>
                 <h3 className="signs-title" style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} aria-hidden="true" />
-                  {resolved?.sectionTitles?.signs || 'Signs You Need This Treatment'}
+                  {props.service?.sectionTitles?.signs || 'Signs You Need This Treatment'}
                 </h3>
                 <ul
                   className="signs-list"
@@ -412,7 +391,7 @@ export default function ServiceDetailPage(props) {
               {/* Process */}
               <div style={{ marginTop: '2rem' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
-                  {resolved?.sectionTitles?.process || 'Our Treatment Process'}
+                  {props.service?.sectionTitles?.process || 'Our Treatment Process'}
                 </h3>
                 <div className="service-detail__process">
                   {process.map((step, i) => (
@@ -452,7 +431,7 @@ export default function ServiceDetailPage(props) {
                   style={{ width: '100%', justifyContent: 'center', marginBottom: '0.75rem' }}
                   aria-label="Call our pest control team at 9845559710"
                 >
-                  <Phone size={15} aria-hidden="true" /> {resolved?.hero?.primaryCtaText || 'Call Specialist: 9845559710'}
+                  <Phone size={15} aria-hidden="true" /> {props.service?.hero?.primaryCtaText || 'Call Specialist: 9845559710'}
                 </a>
                 <a
                   href={`https://wa.me/919845559710?text=Hi%2C%20I%20need%20${encodeURIComponent(title)}%20in%20Bangalore.`}
@@ -462,7 +441,7 @@ export default function ServiceDetailPage(props) {
                   style={{ width: '100%', justifyContent: 'center' }}
                   aria-label="Chat on WhatsApp to book pest treatment"
                 >
-                  💬 {resolved?.hero?.secondaryCtaText || 'Chat on WhatsApp'}
+                  💬 {props.service?.hero?.secondaryCtaText || 'Chat on WhatsApp'}
                 </a>
               </div>
 

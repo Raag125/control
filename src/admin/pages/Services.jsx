@@ -78,13 +78,13 @@ export default function Services() {
   })
 
   useEffect(() => {
-    const loaded = getServices()
-    if (loaded && loaded.length > 0) {
-      // Merge with master data if needed
-      setServices(loaded)
-    } else {
-      setServices(SERVICES_DATA)
-    }
+    getServices().then(loaded => {
+      if (loaded && loaded.length > 0) {
+        setServices(loaded)
+      } else {
+        setServices(SERVICES_DATA)
+      }
+    })
   }, [])
 
   const filtered = services.filter((s) => {
@@ -126,7 +126,7 @@ export default function Services() {
     setModal(true)
   }
 
-  function handleSave() {
+  async function handleSave() {
     if (!editForm.hero?.title && !editForm.name) return
     const updatedService = {
       ...editForm,
@@ -135,15 +135,15 @@ export default function Services() {
       startingPrice: Number(editForm.specs?.startingPrice) || Number(editForm.startingPrice) || 0,
       path: editForm.path || `/${editForm.slug || editForm.id}`,
     }
-    const updatedList = saveService(updatedService)
+    const updatedList = await saveService(updatedService)
     setServices(updatedList)
     setModal(false)
     setSavedToast(true)
     setTimeout(() => setSavedToast(false), 3000)
   }
 
-  function toggleActive(svc) {
-    const updated = saveService({ ...svc, isActive: svc.isActive === false ? true : false })
+  async function toggleActive(svc) {
+    const updated = await saveService({ ...svc, isActive: svc.isActive === false ? true : false })
     setServices(updated)
   }
 
@@ -885,7 +885,7 @@ export default function Services() {
               <p style={{ fontSize: '.82rem', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>Are you sure? This cannot be undone.</p>
               <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'flex-end' }}>
                 <button className="adm-btn adm-btn--ghost" onClick={() => setDel(null)}>Cancel</button>
-                <button className="adm-btn adm-btn--danger" onClick={() => { setServices(deleteService(del)); setDel(null) }}>Delete</button>
+                <button className="adm-btn adm-btn--danger" onClick={async () => { setServices(await deleteService(del)); setDel(null) }}>Delete</button>
               </div>
             </div>
           </div>
