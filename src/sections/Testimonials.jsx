@@ -23,7 +23,7 @@ const REVIEWS = [
     name: 'Sunitha Gopal',
     location: 'Koramangala, Bangalore',
     rating: 5,
-    text: 'Running a cloud kitchen, cockroach control is non-negotiable for our FSSAI license. A to Z set up a quarterly AMC contract for us. The gel bait treatment is completely odorless and we don\'t need to shut down during treatment. In 18 months of the contract, we have had zero cockroach activity and our last three FSSAI inspections passed without any pest control observations. Extremely reliable service.',
+    text: 'Running a cloud kitchen, cockroach control is non-negotiable for our business hygiene standards. A to Z set up a quarterly AMC contract for us. The gel bait treatment is completely odorless and we don\'t need to shut down during treatment. In 18 months of the contract, we have had zero cockroach activity and our health and hygiene audits passed without any pest control observations. Extremely reliable service.',
     service: 'Commercial Cockroach Control (Quarterly AMC)',
   },
   {

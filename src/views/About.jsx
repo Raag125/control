@@ -10,13 +10,13 @@ const MILESTONES = [
   { year: '1993', event: 'Founded in Bangalore with a mission for eco-safe pest control' },
   { year: '2000', event: 'Expanded services to commercial properties across Bengaluru' },
   { year: '2008', event: 'Achieved 5,000+ satisfied residential clients milestone' },
-  { year: '2015', event: 'ISO certification and introduction of advanced treatment methods' },
+  { year: '2015', event: 'Modernization and introduction of advanced eco-friendly treatment methods' },
   { year: '2020', event: 'Surpassed 12,000 clients — launched same-day service standard' },
   { year: '2024', event: '15,000+ happy clients — Bangalore\'s most trusted pest experts' },
 ]
 
 const VALUES = [
-  { icon: Shield,          title: 'Safety First',    desc: 'Every product we use is WHO-approved, child-safe, and pet-friendly.' },
+  { icon: Shield,          title: 'Safety First',    desc: 'Every product we use is certified-safe, odorless, child-safe, and pet-friendly.' },
   { icon: Leaf,            title: 'Eco-Friendly',     desc: 'Committed to sustainable pest control that protects the environment.' },
   { icon: Award,           title: 'Excellence',       desc: 'We never cut corners — every job is done to the highest standard.' },
   { icon: HeartHandshake,  title: 'Integrity',        desc: 'Transparent pricing, honest advice, and zero hidden charges — always.' },
@@ -113,7 +113,7 @@ export default function About() {
                     for over three decades, we know what it takes to keep your space pest-free.
                   </p>
                   <div className="about-visual-card__tags">
-                    <span className="badge">ISO Certified</span>
+                    <span className="badge">Certified Safe</span>
                     <span className="badge">Licensed Team</span>
                     <span className="badge">Eco-Friendly</span>
                     <span className="badge">Since 1993</span>

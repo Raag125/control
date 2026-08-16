@@ -15,13 +15,13 @@ const STEPS = [
     icon: CheckSquare,
     step: '02',
     title: 'Detailed Inspection',
-    desc: 'Our PCAI-trained expert conducts a thorough site survey to identify the pest species, locate breeding sources, and assess infestation severity. We provide a transparent, fixed quote.',
+    desc: 'Our certified expert conducts a thorough site survey to identify the pest species, locate breeding sources, and assess infestation severity. We provide a transparent, fixed quote.',
   },
   {
     icon: CalendarCheck,
     step: '03',
     title: 'Targeted Treatment',
-    desc: 'We execute the treatment using CIB & WHO-approved formulations. Whether it\'s Drill-Fill-Seal for termites or Gel Baiting for cockroaches, we use the precise scientific method required.',
+    desc: 'We execute the treatment using scientifically tested, child and pet-safe formulations. Whether it\'s Drill-Fill-Seal for termites or Gel Baiting for cockroaches, we use the precise scientific method required.',
   },
   {
     icon: Sparkles,

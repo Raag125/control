@@ -9,7 +9,7 @@ const STATS = [
   { value: '12',    label: 'Specialized Services',      desc: 'Covering every common pest found in Bangalore' },
   { value: '4.9★',  label: 'Average Rating',            desc: 'Verified by Google & JustDial customer reviews' },
   { value: '60 Min', label: 'Emergency Response',       desc: 'Same-day dispatch across all Bangalore zones' },
-  { value: '100%',  label: 'WHO-Approved Chemicals',    desc: 'CIB-registered, child-safe & pet-friendly formulas only' },
+  { value: '100%',  label: 'Safe & Certified Chemicals', desc: 'Eco-friendly, child-safe & pet-friendly formulas only' },
 ]
 
 export default function StatsSection() {

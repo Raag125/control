@@ -57,7 +57,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="footer__desc">
-              Bangalore's most trusted pest control company since 1993. CIB & WHOPES approved, child & pet safe treatments across Bengaluru.
+              Bangalore's most trusted pest control company since 1993. Eco-friendly, child & pet safe treatments across Bengaluru.
             </p>
 
             <div className="footer__mobile-actions" aria-label="Quick mobile contact options">
@@ -73,7 +73,7 @@ export default function Footer() {
                 aria-label="WhatsApp Us"
               >
                 <MessageCircle size={15} aria-hidden="true" />
-                WhatsApp
+                Chat on WhatsApp
               </a>
             </div>
 
@@ -151,7 +151,7 @@ export default function Footer() {
               <span className="badge">🏆 Since 1993</span>
               <span className="badge">🌿 Eco-Friendly</span>
               <span className="badge">⚡ 60-Min Response</span>
-              <span className="badge">🛡️ PCAI Certified</span>
+              <span className="badge">🛡️ 100% Safe</span>
             </div>
           </div>
 

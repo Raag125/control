@@ -152,9 +152,9 @@ export default function Services() {
                         <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
                       <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1, gap: '0.5rem' }}>
-                        <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--clr-text)' }}>
+                        <strong style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--clr-text)' }}>
                           {s.title}
-                        </h3>
+                        </strong>
                         <p style={{ fontSize: '0.85rem', color: 'var(--clr-primary)', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
                           {s.sub}
                         </p>
@@ -162,7 +162,7 @@ export default function Services() {
                           href={s.to}
                           className="btn btn-outline"
                           style={{ marginTop: 'auto', justifyContent: 'center', fontSize: '0.85rem', padding: '0.75rem 1rem', width: '100%', borderWidth: '1.5px' }}
-                          aria-label={`Learn more about ${s.title}`}
+                          aria-label={`Learn more about ${s.title} in Bangalore`}
                         >
                           Learn More <ArrowRight size={16} aria-hidden="true" />
                         </Link>

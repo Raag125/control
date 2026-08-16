@@ -6,21 +6,21 @@ import Link from 'next/link'
 import './ResidentialCommercial.css'
 
 const RESIDENTIAL = [
-  'WHO-approved & CIB-registered safe chemical formulations',
+  'Eco-friendly, odorless & child/pet-safe formulations',
   'Specialized treatments for termites, bed bugs & cockroaches',
   'Child, pet & elderly-safe protocols (odorless options)',
   'Flexible scheduling including weekends and holidays',
-  'PCAI-certified, background-verified technicians',
+  'Certified, background-verified expert technicians',
   'Long-term warranties with free follow-up inspections',
 ]
 
 const COMMERCIAL = [
-  'FSSAI & HACCP compliant pest management protocols',
+  'Audit-ready commercial pest management protocols',
   'Tailored for hotels, restaurants, hospitals & IT parks',
   'Zero-disruption treatments (gel baiting & after-hours)',
   'Quarterly & Annual Maintenance Contracts (AMC)',
   'Dedicated account managers and priority emergency response',
-  'Digital service reports and audit-ready compliance documentation',
+  'Digital service reports and full quality documentation',
 ]
 
 export default function ResidentialCommercial() {

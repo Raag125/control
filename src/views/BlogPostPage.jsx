@@ -116,13 +116,14 @@ export default function BlogPostPage({ slug: propSlug }) {
           <div className="blog-sidebar__card cta-card">
             <h3>Need Expert Pest Control?</h3>
             <p>Get a free property inspection and personalized treatment plan.</p>
-            <a href="tel:+919845559710" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '0.75rem' }}>
-              <Phone size={15} /> 9845559710
+            <a href="tel:+919845559710" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '0.75rem' }} aria-label="Call our pest control team at 9845559710">
+              <Phone size={15} /> Call 9845559710
             </a>
             <a href={`https://wa.me/919845559710?text=Hi%2C%20I%20am%20reading%20the%20blog%20${encodeURIComponent(blog.title)}%20and%20need%20help.`} 
                target="_blank" rel="noopener noreferrer" 
-               className="btn btn-outline" style={{ width: '100%', justifyContent: 'center' }}>
-              <MessageCircle size={15} /> WhatsApp Us
+               className="btn btn-outline" style={{ width: '100%', justifyContent: 'center' }}
+               aria-label="Chat with pest specialist on WhatsApp">
+              <MessageCircle size={15} /> Chat on WhatsApp
             </a>
           </div>
 

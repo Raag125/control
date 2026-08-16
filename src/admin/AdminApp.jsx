@@ -10,6 +10,7 @@ import Orders      from './pages/Orders'
 import Payments    from './pages/Payments'
 import Visitors    from './pages/Visitors'
 import Services    from './pages/Services'
+import ServicePageLiveEditor from './pages/ServicePageLiveEditor'
 import Blogs       from './pages/Blogs'
 import Reviews     from './pages/Reviews'
 import Images      from './pages/Images'
@@ -41,6 +42,7 @@ export default function AdminApp() {
     if (pathname.includes('/orders')) return <Orders onStatsChange={refreshPending} />
     if (pathname.includes('/payments')) return <Payments />
     if (pathname.includes('/visitors')) return <Visitors />
+    if (pathname.includes('/services-content')) return <ServicePageLiveEditor />
     if (pathname.includes('/services')) return <Services />
     if (pathname.includes('/blogs')) return <Blogs />
     if (pathname.includes('/reviews')) return <Reviews />

@@ -26,7 +26,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Drill-Fill-Seal Barrier & Timber Protection',
     path: '/termite-treatment',
-    assurance: 'CIB Certified',
+    assurance: 'Certified Safe',
     emoji: '🪵'
   },
   {
@@ -132,9 +132,9 @@ const PEST_SHOWCASE = [
     image: '/images/pests/pre_construction.png',
     threat: 'Future Structural Termite Damage',
     threatLevel: 'High Risk',
-    solution: '5-Stage IS 6313 Soil Treatment Barrier',
+    solution: '5-Stage Comprehensive Soil Barrier',
     path: '/pre-construction-termite-treatment',
-    assurance: 'Long-Term Protection',
+    assurance: '10-Yr Warranty',
     emoji: '🏗️'
   },
   {
@@ -146,7 +146,7 @@ const PEST_SHOWCASE = [
     threatLevel: 'High Risk',
     solution: 'Drill-Fill-Seal Barrier Method',
     path: '/post-construction-termite-treatment',
-    assurance: 'CIB Certified',
+    assurance: '5-Yr Warranty',
     emoji: '🏠'
   }
 ]
@@ -189,7 +189,7 @@ export default function HeroSection() {
 
           {/* Subtitle */}
           <p className="hero-modern-subtitle">
-            Get <strong>smart, reliable pest protection and expert pest control for your home</strong> and commercial premises across Bangalore. Our PCAI-certified specialists deploy <strong>CIB &amp; WHOPES-approved, child and pet-safe</strong> treatments for termites, bed bugs, cockroaches, and rodents with rapid 60-minute dispatch.
+            Get <strong>smart, reliable pest protection and expert pest control for your home</strong> and commercial premises across Bangalore. Our certified specialists deploy <strong>eco-friendly, odorless, child and pet-safe</strong> treatments for termites, bed bugs, cockroaches, and rodents with rapid 60-minute dispatch.
           </p>
 
           {/* Action Buttons */}
@@ -207,20 +207,20 @@ export default function HeroSection() {
               <a 
                 href="tel:+919845559710" 
                 className="btn btn-outline hero-btn-call"
-                aria-label="Call Us"
+                aria-label="Direct Phone Call 9845559710"
               >
                 <Phone size={17} className="btn-icon" aria-hidden="true" />
-                <span>Call Us</span>
+                <span>Direct Call</span>
               </a>
               <a 
                 href="https://wa.me/919845559710?text=Hi%2C%20I%20need%20a%20free%20pest%20control%20inspection%20in%20Bangalore."
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn btn-outline hero-btn-whatsapp"
-                aria-label="Chat on WhatsApp"
+                aria-label="Chat on WhatsApp with pest control specialist"
               >
                 <MessageCircle size={17} className="btn-icon" aria-hidden="true" />
-                <span>WhatsApp</span>
+                <span>WhatsApp Booking</span>
               </a>
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function HeroSection() {
           <div className="hero-modern-assurances">
             <div className="assurance-item">
               <ShieldCheck size={15} className="assurance-icon" aria-hidden="true" />
-              <span>WHOPES & CIB Approved Chemicals</span>
+              <span>Eco-Friendly &amp; Safe Chemicals</span>
             </div>
             <div className="assurance-item">
               <Clock size={15} className="assurance-icon" aria-hidden="true" />

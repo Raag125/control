@@ -28,12 +28,6 @@ export default function AdminLogin({ onSuccess }) {
     }
   }
 
-  function fillDemo() {
-    setEmail('admin@example.com')
-    setPass('pest@21')
-    setErr('')
-  }
-
   return (
     <div className="adm-login">
       <div className="adm-login__card">
@@ -143,17 +137,6 @@ export default function AdminLogin({ onSuccess }) {
             )}
           </button>
         </form>
-
-        <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}>
-          <button
-            type="button"
-            onClick={fillDemo}
-            className="adm-btn adm-btn--ghost adm-btn--sm"
-            style={{ fontSize: '.72rem', color: 'var(--a-green2)', borderColor: 'var(--a-border2)', background: 'rgba(22,163,74,0.06)' }}
-          >
-            ⚡ Auto-fill Default Admin Login
-          </button>
-        </div>
 
         <div className="adm-login__hint">
           <span>🔒 Protected with encrypted JWT authentication</span>

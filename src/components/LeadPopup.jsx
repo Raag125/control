@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Phone, MessageCircle, CheckCircle2 } from 'lucide-react'
+import { X, Phone, MessageCircle, CheckCircle2, FileText } from 'lucide-react'
 import { addClient } from '../admin/clientsData'
 import './LeadPopup.css'
 
@@ -69,10 +69,11 @@ export default function LeadPopup() {
 
   return (
     <AnimatePresence>
-      {visible && (
+      {visible ? (
         <>
           {/* Mobile: bottom sheet backdrop */}
           <motion.div
+            key="lead-backdrop"
             className="lead-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -81,6 +82,7 @@ export default function LeadPopup() {
           />
 
           <motion.div
+            key="lead-popup-card"
             className="lead-popup"
             role="dialog"
             aria-modal="true"
@@ -91,7 +93,7 @@ export default function LeadPopup() {
             transition={{ type: 'spring', stiffness: 320, damping: 28 }}
           >
             {/* Close button */}
-            <button className="lead-close" onClick={close} aria-label="Close">
+            <button className="lead-close" onClick={close} aria-label="Close form">
               <X size={16} />
             </button>
 
@@ -156,16 +158,17 @@ export default function LeadPopup() {
 
                   {/* Alternative CTAs */}
                   <div className="lead-alts">
-                    <a href="tel:+919845559710" className="lead-alt-btn lead-call">
-                      <Phone size={14} /> Call Now
+                    <a href="tel:+919845559710" className="lead-alt-btn lead-call" aria-label="Call our pest control team directly">
+                      <Phone size={14} /> Call Specialist
                     </a>
                     <a
                       href="https://wa.me/919845559710?text=Hi%2C%20I%20need%20a%20free%20pest%20control%20inspection."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="lead-alt-btn lead-wa"
+                      aria-label="Chat on WhatsApp for free inspection booking"
                     >
-                      <MessageCircle size={14} /> WhatsApp
+                      <MessageCircle size={14} /> WhatsApp Chat
                     </a>
                   </div>
 
@@ -175,6 +178,40 @@ export default function LeadPopup() {
             </AnimatePresence>
           </motion.div>
         </>
+      ) : (
+        /* Minimal Floating Contact Form Button on Bottom-Left */
+        <motion.button
+          key="lead-trigger-btn"
+          className="lead-trigger-btn"
+          onClick={() => setVisible(true)}
+          aria-label="Open Free Inspection Booking Form"
+          title="Book Free Inspection"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 220, damping: 18 }}
+          whileHover={{ scale: 1.12 }}
+          whileTap={{ scale: 0.93 }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="none"
+            stroke="white"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+            <path d="m9 14 2 2 4-4" />
+          </svg>
+          <span className="lead-trigger-pulse" aria-hidden="true" />
+          <span className="lead-trigger-tooltip">Free Inspection</span>
+        </motion.button>
       )}
     </AnimatePresence>
   )

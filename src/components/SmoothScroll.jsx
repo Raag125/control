@@ -6,11 +6,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+import { usePathname } from 'next/navigation'
+
 export default function SmoothScroll() {
+  const pathname = usePathname()
+
   useEffect(() => {
-    // Disable virtual smooth scrolling on mobile / touch devices for lightning fast native touch performance
-    if (typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0)) {
-      return
+    // Disable virtual smooth scrolling on admin pages and mobile / touch devices
+    if (typeof window !== 'undefined') {
+      if ((pathname && pathname.startsWith('/admin')) || window.innerWidth < 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        return
+      }
     }
 
     const lenis = new Lenis({
@@ -40,7 +46,7 @@ export default function SmoothScroll() {
       lenis.destroy()
       window.lenis = null
     }
-  }, [])
+  }, [pathname])
 
   return null
 }

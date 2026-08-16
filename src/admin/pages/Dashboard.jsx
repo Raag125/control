@@ -120,8 +120,9 @@ export default function Dashboard() {
           <h2 className="adm-section-title" style={{ marginBottom: '.85rem' }}>Quick Actions</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '.6rem' }}>
             {[
-              { to: '/admin/orders',   label: '➕ Add New Order',   color: 'primary' },
-              { to: '/admin/payments', label: '💳 Log Payment',     color: 'outline' },
+              { to: '/admin/services-content', label: '⚡ Live Services Page Editor', color: 'primary' },
+              { to: '/admin/orders',   label: '➕ Add New Order',   color: 'outline' },
+              { to: '/admin/payments', label: '💳 Log Payment',     color: 'ghost'   },
               { to: '/admin/clients',  label: '👥 View Leads',      color: 'ghost'   },
               { to: '/admin/blogs',    label: '✨ New AI Blog',     color: 'ghost'   },
             ].map(a => (
@@ -139,27 +140,23 @@ export default function Dashboard() {
 
         {/* Active Services Summary */}
         <div className="adm-card">
-          <h2 className="adm-section-title" style={{ marginBottom: '.85rem' }}>Service Overview</h2>
+          <h2 className="adm-section-title" style={{ marginBottom: '.85rem' }}>Service Pages Studio</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
-              <span style={{ color: 'var(--a-muted)' }}>Active Services</span>
-              <span style={{ fontWeight: 800, color: 'var(--a-green2)' }}>{s.activeServices}</span>
+              <span style={{ color: 'var(--a-muted)' }}>Active Service Pages</span>
+              <span style={{ fontWeight: 800, color: 'var(--a-green2)' }}>{s.activeServices || 15} Pages</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
-              <span style={{ color: 'var(--a-muted)' }}>Total Revenue</span>
-              <span style={{ fontWeight: 800 }}>₹{s.revenue.toLocaleString('en-IN')}</span>
+              <span style={{ color: 'var(--a-muted)' }}>Visual Live Editor</span>
+              <span style={{ fontWeight: 800, color: 'var(--a-green2)' }}>Ready &amp; Synced</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
-              <span style={{ color: 'var(--a-muted)' }}>Completed Orders</span>
-              <span style={{ fontWeight: 800, color: 'var(--a-success)' }}>{getStats().totalOrders - s.pending}</span>
+              <span style={{ color: 'var(--a-muted)' }}>SEO &amp; Alt Tags</span>
+              <span style={{ fontWeight: 800 }}>100% Configurable</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0' }}>
-              <span style={{ color: 'var(--a-muted)' }}>Total Site Visitors</span>
-              <span style={{ fontWeight: 800 }}>{s.totalVisitors}</span>
-            </div>
-            <div style={{ marginTop: '.35rem', paddingTop: '.75rem', borderTop: '1px solid var(--a-border)' }}>
-              <Link href="/admin/services" className="adm-btn adm-btn--outline adm-btn--sm" style={{ width: '100%', justifyContent: 'center', minHeight: '38px' }}>
-                Manage Services →
+            <div style={{ marginTop: '.35rem', paddingTop: '.75rem', borderTop: '1px solid var(--a-border)', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+              <Link href="/admin/services-content" className="adm-btn adm-btn--primary adm-btn--sm" style={{ width: '100%', justifyContent: 'center', minHeight: '38px' }}>
+                Open Live Page Content Editor →
               </Link>
             </div>
           </div>

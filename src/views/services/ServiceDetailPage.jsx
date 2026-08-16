@@ -199,9 +199,46 @@ const OTHER_SERVICES = [
   { to: '/ant-pest-control', label: '🐜 Ant Pest Control' },
 ]
 
+import { getServiceBySlug } from '../../data/servicesData'
+
 gsap.registerPlugin(ScrollTrigger)
 
-export default function ServiceDetailPage({ _meta, image, bgImage, title, tagline, intro, signs, benefits, process, faqs }) {
+export default function ServiceDetailPage(props) {
+  const [resolved, setResolved] = useState(() => {
+    return props.service || (props.slug ? getServiceBySlug(props.slug) : (props.id ? getServiceBySlug(props.id) : null))
+  })
+
+  useEffect(() => {
+    const update = () => {
+      const slugToLookup = props.slug || props.service?.slug || props.service?.path?.replace('/', '') || props.id
+      const up = slugToLookup ? getServiceBySlug(slugToLookup) : null
+      if (up) {
+        setResolved(up)
+      } else if (props.service) {
+        setResolved(props.service)
+      }
+    }
+    update()
+    window.addEventListener('storage', update)
+    window.addEventListener('azt_service_updated', update)
+    return () => {
+      window.removeEventListener('storage', update)
+      window.removeEventListener('azt_service_updated', update)
+    }
+  }, [props.service, props.slug, props.id])
+  
+  const title = props.title || resolved?.hero?.title || resolved?.title || 'Pest Control Service'
+  const tagline = props.tagline || resolved?.hero?.tagline || resolved?.description || ''
+  const intro = props.intro || resolved?.hero?.intro || resolved?.intro || ''
+  const image = props.image || resolved?.hero?.image || resolved?.image || null
+  const imageAlt = props.imageAlt || resolved?.hero?.imageAlt || resolved?.imageAlt || `${title} in Bangalore`
+  const bgImage = props.bgImage || resolved?.hero?.bgImage || resolved?.bgImage || null
+  const bgImageAlt = props.bgImageAlt || resolved?.hero?.bgImageAlt || resolved?.bgImageAlt || `${title} Professional Service Background`
+  const signs = props.signs || resolved?.signs || []
+  const benefits = props.benefits || resolved?.benefits || []
+  const process = props.process || resolved?.process || []
+  const faqs = props.faqs || resolved?.faqs || []
+
   const slugId = title.replace(/\s/g, '-').toLowerCase()
   const containerRef = useRef(null)
 
@@ -249,7 +286,14 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
       }
     }, containerRef)
 
-    return () => ctx.revert()
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 150)
+
+    return () => {
+      clearTimeout(timer)
+      ctx.revert()
+    }
   }, [])
 
   const serviceSchema = {
@@ -276,6 +320,10 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
     },
   }
 
+  // Get image src whether string or Next.js imported object
+  const imgSrc = image?.src || image
+  const bgImgSrc = bgImage?.src || bgImage
+
   return (
     <article className="page-enter" ref={containerRef}>
       <script
@@ -283,10 +331,10 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       {/* Hero */}
-      <section className={`page-hero ${bgImage ? 'page-hero--dark' : ''}`} aria-label={`${title} page header`}>
+      <section className={`page-hero ${bgImgSrc ? 'page-hero--dark' : ''}`} aria-label={`${title} page header`}>
         <div className="page-hero__bg-wrapper">
-          {bgImage && (
-            <img src={bgImage} alt={`${title} Professional Service Background`} className="page-hero__bg-img" />
+          {bgImgSrc && (
+            <img src={bgImgSrc} alt={bgImageAlt} className="page-hero__bg-img" />
           )}
           <div className="page-hero__bg-overlay" />
         </div>
@@ -296,9 +344,9 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
         <div className="orb orb--3" aria-hidden="true" />
         <div className="container page-hero__content">
           <div className="eyebrow">🛡️ Expert Treatment</div>
-          {image && (
+          {imgSrc && (
             <div style={{ width: '120px', height: '120px', margin: '0 auto 1.5rem', borderRadius: '50%', overflow: 'hidden', border: '4px solid var(--clr-bg)', boxShadow: 'var(--shadow-lg)' }}>
-              <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={imgSrc} alt={imageAlt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           )}
           <h1 className="display-xl">{title}</h1>
@@ -320,7 +368,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
               className="btn btn-outline"
               aria-label={`WhatsApp us about ${title}`}
             >
-              <MessageCircle size={16} aria-hidden="true" /> WhatsApp Us
+              <MessageCircle size={16} aria-hidden="true" /> {resolved?.hero?.secondaryCtaText || `WhatsApp for ${title}`}
             </a>
           </div>
         </div>
@@ -337,7 +385,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
             {/* Main */}
             <div>
               <h2 id={`${slugId}-detail`} className="heading-md" style={{ marginBottom: '1rem' }}>
-                About Our {title}
+                {resolved?.sectionTitles?.about || `About Our ${title}`}
               </h2>
               <p className="body-md text-muted">{intro}</p>
 
@@ -345,7 +393,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
               <div style={{ marginTop: '2rem' }}>
                 <h3 className="signs-title" style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} aria-hidden="true" />
-                  Signs You Need This Treatment
+                  {resolved?.sectionTitles?.signs || 'Signs You Need This Treatment'}
                 </h3>
                 <ul
                   className="signs-list"
@@ -364,7 +412,7 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
               {/* Process */}
               <div style={{ marginTop: '2rem' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
-                  Our Treatment Process
+                  {resolved?.sectionTitles?.process || 'Our Treatment Process'}
                 </h3>
                 <div className="service-detail__process">
                   {process.map((step, i) => (
@@ -402,9 +450,9 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
                   href="tel:+919845559710"
                   className="btn btn-primary"
                   style={{ width: '100%', justifyContent: 'center', marginBottom: '0.75rem' }}
-                  aria-label="Call to book pest control treatment"
+                  aria-label="Call our pest control team at 9845559710"
                 >
-                  <Phone size={15} aria-hidden="true" /> 9845559710
+                  <Phone size={15} aria-hidden="true" /> {resolved?.hero?.primaryCtaText || 'Call Specialist: 9845559710'}
                 </a>
                 <a
                   href={`https://wa.me/919845559710?text=Hi%2C%20I%20need%20${encodeURIComponent(title)}%20in%20Bangalore.`}
@@ -412,9 +460,9 @@ export default function ServiceDetailPage({ _meta, image, bgImage, title, taglin
                   rel="noopener noreferrer"
                   className="btn btn-outline"
                   style={{ width: '100%', justifyContent: 'center' }}
-                  aria-label="WhatsApp to book treatment"
+                  aria-label="Chat on WhatsApp to book pest treatment"
                 >
-                  💬 WhatsApp Us
+                  💬 {resolved?.hero?.secondaryCtaText || 'Chat on WhatsApp'}
                 </a>
               </div>
 

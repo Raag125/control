@@ -23,13 +23,14 @@
     0 8px 24px rgba(22, 163, 74, 0.1);
   border: 1px solid rgba(22, 163, 74, 0.15);
 
-  /* Desktop: bottom-right, ~25% width */
+  /* Desktop: bottom-left, ~25% width */
   bottom: 1.5rem;
-  right: 1.5rem;
-  width: min(380px, 26vw);
-  min-width: 320px;
+  left: 1.5rem;
+  right: auto;
+  width: min(370px, 26vw);
+  min-width: 310px;
   border-radius: 20px;
-  padding: 1.5rem;
+  padding: 1.4rem;
 }
 
 /* Mobile: full-width bottom sheet */
@@ -283,4 +284,93 @@
 .lead-success p {
   font-size: 0.84rem;
   color: #6b7280;
+}
+
+/* ── Minimal Floating Contact Form Button (Bottom-Left) ── */
+.lead-trigger-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 8990;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16a34a, #065f46);
+  box-shadow: 0 6px 22px rgba(22, 163, 74, 0.42);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.lead-trigger-btn:hover {
+  box-shadow: 0 10px 32px rgba(22, 163, 74, 0.58);
+}
+
+/* Form pulse ring */
+.lead-trigger-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.32);
+  animation: form-pulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes form-pulse {
+  0%   { transform: scale(1);   opacity: 0.85; }
+  100% { transform: scale(2.3); opacity: 0; }
+}
+
+/* Minimal Tooltip on hover */
+.lead-trigger-tooltip {
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-8px);
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.lead-trigger-tooltip::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-right-color: #111827;
+}
+
+.lead-trigger-btn:hover .lead-trigger-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .lead-trigger-btn {
+    bottom: 1rem;
+    left: 1rem;
+    width: 46px;
+    height: 46px;
+  }
+
+  .lead-trigger-tooltip {
+    display: none;
+  }
 }

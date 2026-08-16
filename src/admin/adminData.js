@@ -1,4 +1,5 @@
 import initialBlogs from './blogsData.json'
+import { SERVICES_DATA } from '../data/servicesData'
 
 // ── Admin Data Layer — localStorage persistence + seed (Server-Safe for Next.js) ──
 
@@ -6,6 +7,7 @@ const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_servi
 const read  = k => { 
   if (typeof window === 'undefined') {
     if (k === KEYS.blogs) return initialBlogs || []
+    if (k === KEYS.services) return SERVICES_DATA || []
     return []
   }
   try { return JSON.parse(localStorage.getItem(k)) || [] } catch { return [] } 
@@ -33,6 +35,31 @@ export function seedIfEmpty() {
     write(KEYS.blogs, initialBlogs);
   }
 
+  // Seed services from master servicesData
+  const currentServices = read(KEYS.services);
+  if (!currentServices || currentServices.length < 15) {
+    const formattedServices = SERVICES_DATA.map((s, i) => ({
+      id: s.id || `SVC-00${i + 1}`,
+      name: s.hero?.title || s.id,
+      category: s.category || 'General',
+      startingPrice: s.specs?.startingPrice || 1500,
+      duration: s.specs?.duration || '2-3 hrs',
+      warranty: s.specs?.warranty || '60 Days',
+      isActive: true,
+      emoji: s.emoji || '🐛',
+      path: s.path || `/${s.slug}`,
+      description: s.hero?.tagline || '',
+      intro: s.hero?.intro || '',
+      metaTitle: s.meta?.title || '',
+      metaDesc: s.meta?.desc || '',
+      image: s.hero?.image || '',
+      imageAlt: s.hero?.imageAlt || '',
+      bgImage: s.hero?.bgImage || '',
+      bgImageAlt: s.hero?.bgImageAlt || '',
+    }))
+    write(KEYS.services, formattedServices);
+  }
+
   if (read(KEYS.orders).length > 0) return
   const orders = [
     { id:'AZ-001', customer:'Rajesh Kumar',   phone:'9876543210', service:'Termite Treatment',   area:'Koramangala',  date:'2026-08-08', time:'10:00 AM', status:'completed',   amount:3500, notes:'',               createdAt:'2026-08-08T05:00:00Z' },
@@ -53,20 +80,6 @@ export function seedIfEmpty() {
     date:o.createdAt, notes:''
   }))
   write(KEYS.payments, payments)
-  write(KEYS.services, [
-    { id:'SVC-001', name:'Termite Treatment',         category:'Termite',  startingPrice:2500, duration:'3-4 hrs', warranty:'5 Years',  isActive:true, emoji:'🪵', path:'/termite-treatment',            description:'Drill-fill-seal barrier with WHO-approved chemicals.' },
-    { id:'SVC-002', name:'Bed Bug Treatment',         category:'Bugs',     startingPrice:2000, duration:'2-3 hrs', warranty:'90 Days',  isActive:true, emoji:'🛏️', path:'/bed-bugs-treatment',           description:'Thermal steam and dual odorless mist for full eradication.' },
-    { id:'SVC-003', name:'Cockroach Treatment',       category:'Insects',  startingPrice:1200, duration:'1-2 hrs', warranty:'60 Days',  isActive:true, emoji:'🪳', path:'/cockroach-treatment',          description:'Advanced gel baiting with 100% eradication guarantee.' },
-    { id:'SVC-004', name:'Rodent Treatment',          category:'Rodents',  startingPrice:1800, duration:'2-3 hrs', warranty:'Complete', isActive:true, emoji:'🐀', path:'/rodent-treatment',             description:'Multi-catch trapping and bait stations for rats and mice.' },
-    { id:'SVC-005', name:'Mosquito Treatment',        category:'Insects',  startingPrice:1500, duration:'1-2 hrs', warranty:'30 Days',  isActive:true, emoji:'🦟', path:'/mosquito-treatment',           description:'Thermal fogging and larvicidal surface mist.' },
-    { id:'SVC-006', name:'General Pest Control',      category:'General',  startingPrice:1000, duration:'1-2 hrs', warranty:'45 Days',  isActive:true, emoji:'🐛', path:'/general-pest-control',         description:'Comprehensive treatment for all common household pests.' },
-    { id:'SVC-007', name:'Wood Borer Treatment',      category:'Wood',     startingPrice:2200, duration:'2-3 hrs', warranty:'1 Year',   isActive:true, emoji:'🪲', path:'/wood-borer-treatment',         description:'Injection and surface spray for wood-boring beetles.' },
-    { id:'SVC-008', name:'Honey Bee Treatment',       category:'Insects',  startingPrice:1500, duration:'1-2 hrs', warranty:'One-time', isActive:true, emoji:'🐝', path:'/honey-bee-treatment',          description:'Safe colony removal and relocation.' },
-    { id:'SVC-009', name:'Residential Pest Control',  category:'General',  startingPrice:1200, duration:'2-3 hrs', warranty:'60 Days',  isActive:true, emoji:'🏠', path:'/residential-pest-control',     description:'Full home pest protection package.' },
-    { id:'SVC-010', name:'Commercial Pest Control',   category:'General',  startingPrice:3000, duration:'3-5 hrs', warranty:'90 Days',  isActive:true, emoji:'🏢', path:'/commercial-pest-control',      description:'Tailored pest management for offices and restaurants.' },
-    { id:'SVC-011', name:'Pre-Construction Termite',  category:'Termite',  startingPrice:8000, duration:'4-6 hrs', warranty:'10 Years', isActive:true, emoji:'🏗️', path:'/pre-construction-termite-treatment', description:'Soil treatment before construction.' },
-    { id:'SVC-012', name:'Post-Construction Termite', category:'Termite',  startingPrice:3500, duration:'3-5 hrs', warranty:'5 Years',  isActive:true, emoji:'🏚️', path:'/post-construction-termite-treatment', description:'Drill-fill-seal for existing structures.' },
-  ])
   write(KEYS.reviews, [
     { id:'REV-001', service:'Termite Treatment', name:'Rajesh Kumar', rating:5, text:'Excellent termite treatment. Highly recommend!', status:'approved', date:'2026-08-01T10:00:00Z' },
     { id:'REV-002', service:'Bed Bugs Treatment', name:'Priya Sharma', rating:4, text:'Very effective bed bug removal. Team was professional.', status:'approved', date:'2026-08-02T10:00:00Z' },
@@ -83,9 +96,36 @@ export const getPayments   = ()  => read(KEYS.payments)
 export const savePayment   = p   => { const all=read(KEYS.payments); const i=all.findIndex(x=>x.id===p.id); if(i>-1)all[i]=p; else all.unshift({...p,id:'PAY-'+uid(),date:new Date().toISOString()}); write(KEYS.payments,all); return all }
 export const deletePayment = id  => { const all=read(KEYS.payments).filter(p=>p.id!==id); write(KEYS.payments,all); return all }
 
-export const getServices   = ()  => read(KEYS.services)
-export const saveService   = s   => { const all=read(KEYS.services); const i=all.findIndex(x=>x.id===s.id); if(i>-1)all[i]=s; else all.unshift({...s,id:'SVC-'+uid(),createdAt:new Date().toISOString()}); write(KEYS.services,all); return all }
-export const deleteService = id  => { const all=read(KEYS.services).filter(s=>s.id!==id); write(KEYS.services,all); return all }
+export const getServices   = ()  => {
+  const svcs = read(KEYS.services)
+  return (svcs && svcs.length > 0) ? svcs : SERVICES_DATA
+}
+export const saveService   = s   => { 
+  const all = read(KEYS.services) || []
+  const i = all.findIndex(x => x.id === s.id || (s.slug && (x.slug === s.slug || x.path === s.path)))
+  if (i > -1) {
+    all[i] = { ...all[i], ...s }
+  } else {
+    all.unshift({ ...s, id: s.id || 'SVC-' + uid(), createdAt: new Date().toISOString() })
+  }
+  write(KEYS.services, all)
+  if (typeof window !== 'undefined') {
+    try {
+      window.dispatchEvent(new CustomEvent('azt_service_updated', { detail: s }))
+    } catch {}
+  }
+  return all 
+}
+export const deleteService = id  => { 
+  const all = read(KEYS.services).filter(s => s.id !== id && s.slug !== id)
+  write(KEYS.services, all)
+  if (typeof window !== 'undefined') {
+    try {
+      window.dispatchEvent(new CustomEvent('azt_service_updated', { detail: { id, deleted: true } }))
+    } catch {}
+  }
+  return all 
+}
 
 export const getBlogs      = ()  => {
   const blogs = read(KEYS.blogs)
