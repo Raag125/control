@@ -564,6 +564,60 @@ export default function ServicePageLiveEditor() {
                   />
 
                   {/* Detailed Intro Paragraph (Click to Edit) */}
+                  <style>{`
+                    .rich-text-editor h1, .rich-text-editor h2, .rich-text-editor h3, .rich-text-editor h4, .rich-text-editor p {
+                      position: relative;
+                    }
+                    /* Desktop Hover */
+                    @media (hover: hover) {
+                      .rich-text-editor h1:hover::before,
+                      .rich-text-editor h2:hover::before,
+                      .rich-text-editor h3:hover::before,
+                      .rich-text-editor h4:hover::before,
+                      .rich-text-editor p:hover::before {
+                        position: absolute;
+                        top: -12px;
+                        left: -5px;
+                        font-size: 0.65rem;
+                        background: #334155;
+                        color: #f8fafc;
+                        padding: 2px 6px;
+                        border-radius: 4px;
+                        pointer-events: none;
+                        font-family: monospace;
+                        z-index: 10;
+                      }
+                      .rich-text-editor h1:hover::before { content: 'H1'; }
+                      .rich-text-editor h2:hover::before { content: 'H2'; }
+                      .rich-text-editor h3:hover::before { content: 'H3'; }
+                      .rich-text-editor h4:hover::before { content: 'H4'; }
+                      .rich-text-editor p:hover::before { content: 'Paragraph'; }
+                    }
+                    /* Touch Devices (Persistent subtle label) */
+                    @media (hover: none) {
+                      .rich-text-editor h1::before,
+                      .rich-text-editor h2::before,
+                      .rich-text-editor h3::before,
+                      .rich-text-editor h4::before,
+                      .rich-text-editor p::before {
+                        position: absolute;
+                        top: -10px;
+                        left: -2px;
+                        font-size: 0.55rem;
+                        background: rgba(241, 245, 249, 0.9);
+                        color: #64748b;
+                        padding: 1px 4px;
+                        border-radius: 3px;
+                        pointer-events: none;
+                        font-family: monospace;
+                      }
+                      .rich-text-editor h1::before { content: 'H1'; }
+                      .rich-text-editor h2::before { content: 'H2'; }
+                      .rich-text-editor h3::before { content: 'H3'; }
+                      .rich-text-editor h4::before { content: 'H4'; }
+                      .rich-text-editor p::before { content: 'Paragraph'; }
+                    }
+                  `}</style>
                   <div style={{ marginBottom: '1rem' }}>
                     <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', background: '#f1f5f9', padding: '0.5rem', borderRadius: '8px', border: '1px solid #cbd5e1', flexWrap: 'wrap', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', marginRight: '0.5rem' }}>Format:</span>
@@ -588,7 +642,7 @@ export default function ServicePageLiveEditor() {
                       contentEditable={true}
                       suppressContentEditableWarning
                       onBlur={(e) => updateText('hero.intro', e.currentTarget.innerHTML)}
-                      className="body-md text-muted"
+                      className="body-md text-muted rich-text-editor"
                       style={{
                         outline: '1.5px dashed rgba(22,163,74,0.4)',
                         cursor: 'text',
