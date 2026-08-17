@@ -365,6 +365,12 @@ export default function ServiceDetailPage(props) {
             .rich-text-content h2 { font-size: 1.75rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.8rem; line-height: 1.3; color: var(--clr-text); display: block; }
             .rich-text-content h3 { font-size: 1.4rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.6rem; line-height: 1.4; color: var(--clr-text); display: block; }
             .rich-text-content p { font-size: 1.1rem; margin-top: 0; margin-bottom: 1rem; line-height: 1.6; display: block; }
+            
+            .rich-text-content h1 *, .rich-text-content h2 *, .rich-text-content h3 * {
+              font-size: inherit !important;
+              line-height: inherit !important;
+              font-weight: inherit !important;
+            }
           `}</style>
           <div className="service-detail">
             {/* Main */}
