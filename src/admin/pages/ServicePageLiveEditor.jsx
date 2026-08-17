@@ -310,6 +310,26 @@ export default function ServicePageLiveEditor() {
           >
             <Globe size={14} /> SEO &amp; Meta ({svcData.meta?.title ? 'Configured' : 'Empty'})
           </button>
+
+          {/* Formatting Toolbar - Dark Theme for Top Bar */}
+          <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'center', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>B</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>I</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>U</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H1'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H1</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H2'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H3'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>P</button>
+            <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; }} style={{ padding: '0.1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', background: '#111a14', color: '#fff', fontSize: '0.7rem', cursor: 'pointer', marginLeft: '0.2rem' }}>
+              <option value="">Size</option>
+              <option value="1">Small</option>
+              <option value="3">Normal</option>
+              <option value="5">Large</option>
+              <option value="7">Huge</option>
+            </select>
+            <input type="color" onChange={(e) => { e.preventDefault(); document.execCommand('foreColor', false, e.target.value); }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '20px', height: '20px', marginLeft: '0.2rem' }} title="Text Color" />
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '4px', fontSize: '0.7rem', marginLeft: '0.2rem' }}>Clear</button>
+          </div>
         </div>
 
         {/* Right: Actions */}
@@ -340,26 +360,6 @@ export default function ServicePageLiveEditor() {
         </div>
       </div>
 
-      {/* ──────── UNIVERSAL RICH TEXT TOOLBAR ──────── */}
-      <div style={{ padding: '0.6rem 1.25rem', background: '#f8fafc', borderBottom: '1.5px solid rgba(22,163,74,0.15)', zIndex: 99, flexShrink: 0, display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
-        <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', marginRight: '0.5rem' }}>Format Text:</span>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>B</button>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>I</button>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>U</button>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H1'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H1</button>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H2'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H2</button>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H3'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H3</button>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>Paragraph</button>
-        <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; }} style={{ padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', cursor: 'pointer' }}>
-          <option value="">Size</option>
-          <option value="1">Small</option>
-          <option value="3">Normal</option>
-          <option value="5">Large</option>
-          <option value="7">Huge</option>
-        </select>
-        <input type="color" onChange={(e) => { e.preventDefault(); document.execCommand('foreColor', false, e.target.value); }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '24px', height: '24px' }} title="Text Color" />
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fee2e2', border: '1px solid #fca5a5', color: '#ef4444', borderRadius: '4px', fontSize: '0.8rem' }}>Clear Format</button>
-      </div>
 
       <style>{`
         .rich-text-editor h1, .rich-text-editor h2, .rich-text-editor h3, .rich-text-editor h4, .rich-text-editor p {
