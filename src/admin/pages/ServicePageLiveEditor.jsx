@@ -49,6 +49,7 @@ export default function ServicePageLiveEditor() {
   
   // SEO Meta modal state
   const [seoModal, setSeoModal] = useState(false)
+  const savedSelectionRef = useRef(null)
 
   // Load services list and active service
   useEffect(() => {
@@ -327,9 +328,27 @@ export default function ServicePageLiveEditor() {
               <option value="5">Large</option>
               <option value="7">Huge</option>
             </select>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.1rem 0.3rem', fontSize: '0.7rem' }} title="Text Color">
+            <label 
+              style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.1rem 0.3rem', fontSize: '0.7rem' }} 
+              title="Text Color"
+              onMouseDown={(e) => {
+                const sel = window.getSelection();
+                if (sel && sel.rangeCount > 0) {
+                  savedSelectionRef.current = sel.getRangeAt(0);
+                }
+              }}
+            >
               🎨 Color
-              <input type="color" onChange={(e) => { e.preventDefault(); document.execCommand('styleWithCSS', false, true); document.execCommand('foreColor', false, e.target.value); }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '16px', height: '16px' }} />
+              <input type="color" onInput={(e) => { 
+                e.preventDefault(); 
+                if (savedSelectionRef.current) {
+                  const sel = window.getSelection();
+                  sel.removeAllRanges();
+                  sel.addRange(savedSelectionRef.current);
+                }
+                document.execCommand('styleWithCSS', false, true); 
+                document.execCommand('foreColor', false, e.target.value); 
+              }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '16px', height: '16px' }} />
             </label>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '4px', fontSize: '0.7rem', marginLeft: '0.2rem' }}>Clear</button>
           </div>
