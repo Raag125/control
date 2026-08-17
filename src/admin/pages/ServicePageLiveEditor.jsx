@@ -340,6 +340,82 @@ export default function ServicePageLiveEditor() {
         </div>
       </div>
 
+      {/* ──────── UNIVERSAL RICH TEXT TOOLBAR ──────── */}
+      <div style={{ padding: '0.6rem 1.25rem', background: '#f8fafc', borderBottom: '1.5px solid rgba(22,163,74,0.15)', zIndex: 99, flexShrink: 0, display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', marginRight: '0.5rem' }}>Format Text:</span>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>B</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>I</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>U</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H1'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H1</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H2'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H2</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H3'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H3</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>Paragraph</button>
+        <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; }} style={{ padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', cursor: 'pointer' }}>
+          <option value="">Size</option>
+          <option value="1">Small</option>
+          <option value="3">Normal</option>
+          <option value="5">Large</option>
+          <option value="7">Huge</option>
+        </select>
+        <input type="color" onChange={(e) => { e.preventDefault(); document.execCommand('foreColor', false, e.target.value); }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '24px', height: '24px' }} title="Text Color" />
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fee2e2', border: '1px solid #fca5a5', color: '#ef4444', borderRadius: '4px', fontSize: '0.8rem' }}>Clear Format</button>
+      </div>
+
+      <style>{`
+        .rich-text-editor h1, .rich-text-editor h2, .rich-text-editor h3, .rich-text-editor h4, .rich-text-editor p {
+          position: relative;
+        }
+        /* Desktop Hover */
+        @media (hover: hover) {
+          .rich-text-editor h1:hover::before,
+          .rich-text-editor h2:hover::before,
+          .rich-text-editor h3:hover::before,
+          .rich-text-editor h4:hover::before,
+          .rich-text-editor p:hover::before {
+            position: absolute;
+            top: -12px;
+            left: -5px;
+            font-size: 0.65rem;
+            background: #334155;
+            color: #f8fafc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+            font-family: monospace;
+            z-index: 10;
+          }
+          .rich-text-editor h1:hover::before { content: 'H1'; }
+          .rich-text-editor h2:hover::before { content: 'H2'; }
+          .rich-text-editor h3:hover::before { content: 'H3'; }
+          .rich-text-editor h4:hover::before { content: 'H4'; }
+          .rich-text-editor p:hover::before { content: 'Paragraph'; }
+        }
+        /* Touch Devices (Persistent subtle label) */
+        @media (hover: none) {
+          .rich-text-editor h1::before,
+          .rich-text-editor h2::before,
+          .rich-text-editor h3::before,
+          .rich-text-editor h4::before,
+          .rich-text-editor p::before {
+            position: absolute;
+            top: -10px;
+            left: -2px;
+            font-size: 0.55rem;
+            background: rgba(241, 245, 249, 0.9);
+            color: #64748b;
+            padding: 1px 4px;
+            border-radius: 3px;
+            pointer-events: none;
+            font-family: monospace;
+          }
+          .rich-text-editor h1::before { content: 'H1'; }
+          .rich-text-editor h2::before { content: 'H2'; }
+          .rich-text-editor h3::before { content: 'H3'; }
+          .rich-text-editor h4::before { content: 'H4'; }
+          .rich-text-editor p::before { content: 'Paragraph'; }
+        }
+      `}</style>
+
       {/* ──────── LIVE VISUAL IN-PLACE CANVAS ──────── */}
       <div 
         style={{ 
@@ -564,80 +640,7 @@ export default function ServicePageLiveEditor() {
                   />
 
                   {/* Detailed Intro Paragraph (Click to Edit) */}
-                  <style>{`
-                    .rich-text-editor h1, .rich-text-editor h2, .rich-text-editor h3, .rich-text-editor h4, .rich-text-editor p {
-                      position: relative;
-                    }
-                    /* Desktop Hover */
-                    @media (hover: hover) {
-                      .rich-text-editor h1:hover::before,
-                      .rich-text-editor h2:hover::before,
-                      .rich-text-editor h3:hover::before,
-                      .rich-text-editor h4:hover::before,
-                      .rich-text-editor p:hover::before {
-                        position: absolute;
-                        top: -12px;
-                        left: -5px;
-                        font-size: 0.65rem;
-                        background: #334155;
-                        color: #f8fafc;
-                        padding: 2px 6px;
-                        border-radius: 4px;
-                        pointer-events: none;
-                        font-family: monospace;
-                        z-index: 10;
-                      }
-                      .rich-text-editor h1:hover::before { content: 'H1'; }
-                      .rich-text-editor h2:hover::before { content: 'H2'; }
-                      .rich-text-editor h3:hover::before { content: 'H3'; }
-                      .rich-text-editor h4:hover::before { content: 'H4'; }
-                      .rich-text-editor p:hover::before { content: 'Paragraph'; }
-                    }
-                    /* Touch Devices (Persistent subtle label) */
-                    @media (hover: none) {
-                      .rich-text-editor h1::before,
-                      .rich-text-editor h2::before,
-                      .rich-text-editor h3::before,
-                      .rich-text-editor h4::before,
-                      .rich-text-editor p::before {
-                        position: absolute;
-                        top: -10px;
-                        left: -2px;
-                        font-size: 0.55rem;
-                        background: rgba(241, 245, 249, 0.9);
-                        color: #64748b;
-                        padding: 1px 4px;
-                        border-radius: 3px;
-                        pointer-events: none;
-                        font-family: monospace;
-                      }
-                      .rich-text-editor h1::before { content: 'H1'; }
-                      .rich-text-editor h2::before { content: 'H2'; }
-                      .rich-text-editor h3::before { content: 'H3'; }
-                      .rich-text-editor h4::before { content: 'H4'; }
-                      .rich-text-editor p::before { content: 'Paragraph'; }
-                    }
-                  `}</style>
                   <div style={{ marginBottom: '1rem' }}>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', background: '#f1f5f9', padding: '0.5rem', borderRadius: '8px', border: '1px solid #cbd5e1', flexWrap: 'wrap', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', marginRight: '0.5rem' }}>Format:</span>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>B</button>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>I</button>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>U</button>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H1'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H1</button>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H2'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H2</button>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H3'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>H3</button>
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>Paragraph</button>
-                      <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; }} style={{ padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', cursor: 'pointer' }}>
-                        <option value="">Size</option>
-                        <option value="1">Small</option>
-                        <option value="3">Normal</option>
-                        <option value="5">Large</option>
-                        <option value="7">Huge</option>
-                      </select>
-                      <input type="color" onChange={(e) => { e.preventDefault(); document.execCommand('foreColor', false, e.target.value); }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '24px', height: '24px' }} title="Text Color" />
-                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fee2e2', border: '1px solid #fca5a5', color: '#ef4444', borderRadius: '4px', fontSize: '0.8rem' }}>Clear Format</button>
-                    </div>
                     <div
                       contentEditable={true}
                       suppressContentEditableWarning
