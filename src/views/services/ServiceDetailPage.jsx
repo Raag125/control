@@ -411,6 +411,35 @@ export default function ServiceDetailPage(props) {
 
             {/* Sidebar */}
             <aside className="service-sidebar" aria-label="Booking and additional information">
+              {/* Pricing & Specs */}
+              <div className="service-sidebar__card" style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}>
+                <div style={{ fontSize: '.75rem', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
+                  Pricing &amp; Specs
+                </div>
+                
+                <div style={{ marginTop: '.75rem', display: 'flex', alignItems: 'baseline', gap: '.4rem' }}>
+                  <span style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--clr-text)' }}>
+                    ₹{props.service?.specs?.startingPrice || props.service?.startingPrice || 2500}
+                  </span>
+                  <span style={{ fontSize: '.85rem', color: 'var(--clr-text-muted)' }}>starting price</span>
+                </div>
+
+                <div style={{ marginTop: '1.25rem', display: 'grid', gap: '.75rem', borderTop: '1px solid #f1f5f9', paddingTop: '1.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.9rem' }}>
+                    <span style={{ color: 'var(--clr-text-muted)' }} dangerouslySetInnerHTML={{ __html: props.service?.specLabels?.duration || 'Duration:' }} />
+                    <strong style={{ color: 'var(--clr-text)' }} dangerouslySetInnerHTML={{ __html: props.service?.specs?.duration || props.service?.duration || '3-4 Hours' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.9rem' }}>
+                    <span style={{ color: 'var(--clr-text-muted)' }} dangerouslySetInnerHTML={{ __html: props.service?.specLabels?.warranty || 'Warranty:' }} />
+                    <strong style={{ color: 'var(--clr-text)' }} dangerouslySetInnerHTML={{ __html: props.service?.specs?.warranty || props.service?.warranty || '5 Years' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.9rem' }}>
+                    <span style={{ color: 'var(--clr-text-muted)' }}>Safety:</span>
+                    <span style={{ color: '#16a34a', fontWeight: 700 }}>100% Eco-Safe</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Book Now */}
               <div
                 className="service-sidebar__card"
