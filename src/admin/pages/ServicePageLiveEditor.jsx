@@ -282,7 +282,7 @@ export default function ServicePageLiveEditor() {
         </div>
 
         {/* Center: Device Switcher & SEO Drawer */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', background: 'rgba(255,255,255,0.05)', padding: '.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <button
               type="button"
@@ -312,14 +312,14 @@ export default function ServicePageLiveEditor() {
           </button>
 
           {/* Formatting Toolbar - Dark Theme for Top Bar */}
-          <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'center', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'center', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid rgba(255,255,255,0.1)', flexWrap: 'wrap' }}>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>B</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>I</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>U</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H1'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H1</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H2'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H3'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>P</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, '<h1>'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H1</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, '<h2>'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, '<h3>'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, '<p>'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>P</button>
             <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; }} style={{ padding: '0.1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', background: '#111a14', color: '#fff', fontSize: '0.7rem', cursor: 'pointer', marginLeft: '0.2rem' }}>
               <option value="">Size</option>
               <option value="1">Small</option>
@@ -362,6 +362,12 @@ export default function ServicePageLiveEditor() {
 
 
       <style>{`
+        /* Make headers actually look like headers inside the editor */
+        .rich-text-editor h1 { font-size: 2.25rem !important; font-weight: 800 !important; margin-top: 1.5rem !important; margin-bottom: 1rem !important; line-height: 1.2 !important; display: block; }
+        .rich-text-editor h2 { font-size: 1.75rem !important; font-weight: 700 !important; margin-top: 1.25rem !important; margin-bottom: 0.8rem !important; line-height: 1.3 !important; display: block; }
+        .rich-text-editor h3 { font-size: 1.4rem !important; font-weight: 600 !important; margin-top: 1rem !important; margin-bottom: 0.6rem !important; line-height: 1.4 !important; display: block; }
+        .rich-text-editor p { font-size: 1.1rem !important; margin-top: 0 !important; margin-bottom: 1rem !important; line-height: 1.6 !important; display: block; }
+
         .rich-text-editor h1, .rich-text-editor h2, .rich-text-editor h3, .rich-text-editor h4, .rich-text-editor p {
           position: relative;
         }

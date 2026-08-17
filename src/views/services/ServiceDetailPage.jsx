@@ -360,11 +360,17 @@ export default function ServiceDetailPage(props) {
         <div className="orb orb--2" style={{ top: '45%', right: '-5%', opacity: 0.2 }} aria-hidden="true" />
         <div className="orb orb--3" style={{ bottom: '10%', left: '10%', opacity: 0.25 }} aria-hidden="true" />
         <div className="container">
+          <style>{`
+            .rich-text-content h1 { font-size: 2.25rem; font-weight: 800; margin-top: 1.5rem; margin-bottom: 1rem; line-height: 1.2; color: var(--clr-text); display: block; }
+            .rich-text-content h2 { font-size: 1.75rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.8rem; line-height: 1.3; color: var(--clr-text); display: block; }
+            .rich-text-content h3 { font-size: 1.4rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.6rem; line-height: 1.4; color: var(--clr-text); display: block; }
+            .rich-text-content p { font-size: 1.1rem; margin-top: 0; margin-bottom: 1rem; line-height: 1.6; display: block; }
+          `}</style>
           <div className="service-detail">
             {/* Main */}
             <div>
               <h2 id={`${slugId}-detail`} className="heading-md" style={{ marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.about || `About Our ${title}` }} />
-              <div className="body-md text-muted" dangerouslySetInnerHTML={{ __html: intro }} />
+              <div className="body-md text-muted rich-text-content" dangerouslySetInnerHTML={{ __html: intro }} />
 
               {/* Signs */}
               <div style={{ marginTop: '2rem' }}>
