@@ -409,29 +409,29 @@ export default function ServicePageLiveEditor() {
 
 
       <style>{`
-        /* Make headers actually look like headers inside the editor */
-        .rich-text-editor h1 { font-size: 2.25rem !important; font-weight: 800 !important; margin-top: 1.5rem !important; margin-bottom: 1rem !important; line-height: 1.2 !important; display: block; }
-        .rich-text-editor h2 { font-size: 1.75rem !important; font-weight: 700 !important; margin-top: 1.25rem !important; margin-bottom: 0.8rem !important; line-height: 1.3 !important; display: block; }
-        .rich-text-editor h3 { font-size: 1.4rem !important; font-weight: 600 !important; margin-top: 1rem !important; margin-bottom: 0.6rem !important; line-height: 1.4 !important; display: block; }
-        .rich-text-editor p { font-size: 1.1rem !important; margin-top: 0 !important; margin-bottom: 1rem !important; line-height: 1.6 !important; display: block; }
+        /* Make headers actually look like headers inside any editable area */
+        [contenteditable="true"] h1 { font-size: 2.25rem !important; font-weight: 800 !important; margin: 0.2rem 0 !important; line-height: 1.2 !important; display: block; }
+        [contenteditable="true"] h2 { font-size: 1.75rem !important; font-weight: 700 !important; margin: 0.2rem 0 !important; line-height: 1.3 !important; display: block; }
+        [contenteditable="true"] h3 { font-size: 1.4rem !important; font-weight: 600 !important; margin: 0.2rem 0 !important; line-height: 1.4 !important; display: block; }
+        [contenteditable="true"] p { font-size: 1.1rem !important; margin: 0.2rem 0 !important; line-height: 1.6 !important; display: block; }
 
         /* Force any nested elements (like font or span) to inherit the header size to prevent them from staying small */
-        .rich-text-editor h1 *, .rich-text-editor h2 *, .rich-text-editor h3 * {
+        [contenteditable="true"] h1 *, [contenteditable="true"] h2 *, [contenteditable="true"] h3 * {
           font-size: inherit !important;
           line-height: inherit !important;
           font-weight: inherit !important;
         }
 
-        .rich-text-editor h1, .rich-text-editor h2, .rich-text-editor h3, .rich-text-editor h4, .rich-text-editor p {
+        [contenteditable="true"] h1, [contenteditable="true"] h2, [contenteditable="true"] h3, [contenteditable="true"] h4, [contenteditable="true"] p {
           position: relative;
         }
         /* Desktop Hover */
         @media (hover: hover) {
-          .rich-text-editor h1:hover::before,
-          .rich-text-editor h2:hover::before,
-          .rich-text-editor h3:hover::before,
-          .rich-text-editor h4:hover::before,
-          .rich-text-editor p:hover::before {
+          [contenteditable="true"] h1:hover::before,
+          [contenteditable="true"] h2:hover::before,
+          [contenteditable="true"] h3:hover::before,
+          [contenteditable="true"] h4:hover::before,
+          [contenteditable="true"] p:hover::before {
             position: absolute;
             top: -12px;
             left: -5px;
@@ -440,23 +440,25 @@ export default function ServicePageLiveEditor() {
             color: #f8fafc;
             padding: 2px 6px;
             border-radius: 4px;
+            font-weight: 600;
+            opacity: 0.9;
             pointer-events: none;
-            font-family: monospace;
             z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
           }
-          .rich-text-editor h1:hover::before { content: 'H1'; }
-          .rich-text-editor h2:hover::before { content: 'H2'; }
-          .rich-text-editor h3:hover::before { content: 'H3'; }
-          .rich-text-editor h4:hover::before { content: 'H4'; }
-          .rich-text-editor p:hover::before { content: 'Paragraph'; }
+          [contenteditable="true"] h1:hover::before { content: 'H1'; }
+          [contenteditable="true"] h2:hover::before { content: 'H2'; }
+          [contenteditable="true"] h3:hover::before { content: 'H3'; }
+          [contenteditable="true"] h4:hover::before { content: 'H4'; }
+          [contenteditable="true"] p:hover::before { content: 'Paragraph'; }
         }
         /* Touch Devices (Persistent subtle label) */
         @media (hover: none) {
-          .rich-text-editor h1::before,
-          .rich-text-editor h2::before,
-          .rich-text-editor h3::before,
-          .rich-text-editor h4::before,
-          .rich-text-editor p::before {
+          [contenteditable="true"] h1::before,
+          [contenteditable="true"] h2::before,
+          [contenteditable="true"] h3::before,
+          [contenteditable="true"] h4::before,
+          [contenteditable="true"] p::before {
             position: absolute;
             top: -10px;
             left: -2px;
@@ -465,14 +467,14 @@ export default function ServicePageLiveEditor() {
             color: #64748b;
             padding: 1px 4px;
             border-radius: 3px;
+            font-weight: 600;
             pointer-events: none;
-            font-family: monospace;
           }
-          .rich-text-editor h1::before { content: 'H1'; }
-          .rich-text-editor h2::before { content: 'H2'; }
-          .rich-text-editor h3::before { content: 'H3'; }
-          .rich-text-editor h4::before { content: 'H4'; }
-          .rich-text-editor p::before { content: 'Paragraph'; }
+          [contenteditable="true"] h1::before { content: 'H1'; }
+          [contenteditable="true"] h2::before { content: 'H2'; }
+          [contenteditable="true"] h3::before { content: 'H3'; }
+          [contenteditable="true"] h4::before { content: 'H4'; }
+          [contenteditable="true"] p::before { content: 'Paragraph'; }
         }
       `}</style>
 
