@@ -64,26 +64,31 @@ export default function ServicePageLiveEditor() {
   const checkFormats = () => {
     const activeEl = document.activeElement;
     if (activeEl && activeEl.isContentEditable) {
-      const formatBlock = document.queryCommandValue('formatBlock') || '';
-      const block = formatBlock.toLowerCase();
+      const formatBlock = (document.queryCommandValue('formatBlock') || '').toLowerCase();
       
-      let h1 = block === 'h1', h2 = block === 'h2', h3 = block === 'h3';
+      let activeHeading = null;
       let node = window.getSelection().anchorNode;
       while (node && node.isContentEditable) {
-        if (node.nodeType === 1) {
-          if (node.classList.contains('inline-h1')) h1 = true;
-          if (node.classList.contains('inline-h2')) h2 = true;
-          if (node.classList.contains('inline-h3')) h3 = true;
+        if (node.nodeType === 1 && node.classList) {
+          if (node.classList.contains('inline-h1') || node.tagName === 'H1') { activeHeading = 'h1'; break; }
+          if (node.classList.contains('inline-h2') || node.tagName === 'H2') { activeHeading = 'h2'; break; }
+          if (node.classList.contains('inline-h3') || node.tagName === 'H3') { activeHeading = 'h3'; break; }
         }
         node = node.parentNode;
+      }
+
+      if (!activeHeading && (formatBlock === 'h1' || formatBlock === 'h2' || formatBlock === 'h3')) {
+        activeHeading = formatBlock;
       }
 
       setActiveFormats({
         bold: document.queryCommandState('bold'),
         italic: document.queryCommandState('italic'),
         underline: document.queryCommandState('underline'),
-        h1, h2, h3,
-        p: block === 'p' || block === 'div'
+        h1: activeHeading === 'h1',
+        h2: activeHeading === 'h2',
+        h3: activeHeading === 'h3',
+        p: !activeHeading && (formatBlock === 'p' || formatBlock === 'div' || formatBlock === '')
       });
     }
   };
@@ -92,40 +97,70 @@ export default function ServicePageLiveEditor() {
     const sel = window.getSelection();
     if (!sel.rangeCount) return;
     
-    // First, revert any old formatBlock headings if user is clicking to toggle
-    const formatBlock = document.queryCommandValue('formatBlock') || '';
-    if (formatBlock.toLowerCase() === level.toLowerCase()) {
+    // First, revert any old formatBlock headings
+    const formatBlock = (document.queryCommandValue('formatBlock') || '').toLowerCase();
+    if (['h1', 'h2', 'h3'].includes(formatBlock)) {
       document.execCommand('formatBlock', false, 'P');
-      setTimeout(checkFormats, 10);
-      return;
+      if (formatBlock === level.toLowerCase()) {
+        setTimeout(checkFormats, 10);
+        return;
+      }
     }
     
     if (sel.isCollapsed) return; // Need a selection for inline wrap
     
-    const className = `inline-${level.toLowerCase()}`;
+    const targetClass = `inline-${level.toLowerCase()}`;
+    const allHeadingClasses = ['inline-h1', 'inline-h2', 'inline-h3'];
+    
     let node = sel.anchorNode;
     let parentSpan = null;
+    let existingHeadingClass = null;
+    
     while (node && node.isContentEditable) {
-      if (node.nodeType === 1 && node.classList && node.classList.contains(className)) {
-        parentSpan = node;
-        break;
+      if (node.nodeType === 1 && node.classList) {
+        const found = allHeadingClasses.find(c => node.classList.contains(c));
+        if (found) {
+          parentSpan = node;
+          existingHeadingClass = found;
+          break;
+        }
       }
       node = node.parentNode;
     }
 
     if (parentSpan) {
-      // Unwrap
-      const parent = parentSpan.parentNode;
-      while (parentSpan.firstChild) {
-        parent.insertBefore(parentSpan.firstChild, parentSpan);
+      if (existingHeadingClass === targetClass) {
+        // Same heading clicked -> Toggle OFF (unwrap)
+        const parent = parentSpan.parentNode;
+        while (parentSpan.firstChild) {
+          parent.insertBefore(parentSpan.firstChild, parentSpan);
+        }
+        parent.removeChild(parentSpan);
+      } else {
+        // Different heading clicked -> Switch class directly (e.g. inline-h1 -> inline-h2)
+        allHeadingClasses.forEach(c => parentSpan.classList.remove(c));
+        parentSpan.classList.add(targetClass);
       }
-      parent.removeChild(parentSpan);
     } else {
-      // Wrap
+      // Wrap selected content
       const range = sel.getRangeAt(0);
       const content = range.extractContents();
+      
+      // Clean any existing inner heading spans inside extracted content to prevent nesting
+      if (content.querySelectorAll) {
+        const innerHeadings = content.querySelectorAll('.inline-h1, .inline-h2, .inline-h3');
+        innerHeadings.forEach(h => {
+          allHeadingClasses.forEach(c => h.classList.remove(c));
+          if (h.classList.length === 0 && !h.getAttribute('style')) {
+            const parent = h.parentNode;
+            while (h.firstChild) parent.insertBefore(h.firstChild, h);
+            parent.removeChild(h);
+          }
+        });
+      }
+      
       const span = document.createElement('span');
-      span.className = className;
+      span.className = targetClass;
       span.appendChild(content);
       range.insertNode(span);
       sel.removeAllRanges();
