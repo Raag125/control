@@ -20,7 +20,7 @@ function FAQItem({ q, a }) {
         aria-expanded={open}
         aria-controls={id}
       >
-        {q}
+        <span dangerouslySetInnerHTML={{ __html: q }} />
         <ChevronDown size={18} className="faq-item__icon" aria-hidden="true" />
       </button>
       {open && (
@@ -30,9 +30,8 @@ function FAQItem({ q, a }) {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           transition={{ duration: 0.25 }}
-        >
-          {a}
-        </motion.div>
+          dangerouslySetInnerHTML={{ __html: a }}
+        />
       )}
     </div>
   )
@@ -329,9 +328,9 @@ export default function ServiceDetailPage(props) {
               <img src={imgSrc} alt={imageAlt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" decoding="async" />
             </div>
           )}
-          <h1 className="display-xl">{title}</h1>
+          <h1 className="display-xl" dangerouslySetInnerHTML={{ __html: title }} />
           <p className="body-lg text-muted" style={{ maxWidth: 640, margin: '1rem auto 0' }}>
-            Get expert <strong>{title}</strong> in Bangalore. {tagline}
+            Get expert <strong><span dangerouslySetInnerHTML={{ __html: title }} /></strong> in Bangalore. <span dangerouslySetInnerHTML={{ __html: tagline }} />
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
             <a
@@ -364,16 +363,14 @@ export default function ServiceDetailPage(props) {
           <div className="service-detail">
             {/* Main */}
             <div>
-              <h2 id={`${slugId}-detail`} className="heading-md" style={{ marginBottom: '1rem' }}>
-                {props.service?.sectionTitles?.about || `About Our ${title}`}
-              </h2>
-              <p className="body-md text-muted">{intro}</p>
+              <h2 id={`${slugId}-detail`} className="heading-md" style={{ marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.about || `About Our ${title}` }} />
+              <div className="body-md text-muted" dangerouslySetInnerHTML={{ __html: intro }} />
 
               {/* Signs */}
               <div style={{ marginTop: '2rem' }}>
                 <h3 className="signs-title" style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} aria-hidden="true" />
-                  {props.service?.sectionTitles?.signs || 'Signs You Need This Treatment'}
+                  <span dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.signs || 'Signs You Need This Treatment' }} />
                 </h3>
                 <ul
                   className="signs-list"
@@ -383,7 +380,7 @@ export default function ServiceDetailPage(props) {
                   {signs.map((s) => (
                     <li key={s} className="signs-item" style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--clr-text-muted)' }}>
                       <CheckCircle2 size={15} style={{ color: 'var(--clr-primary)', flexShrink: 0, marginTop: 2 }} aria-hidden="true" />
-                      <span>{s}</span>
+                      <span dangerouslySetInnerHTML={{ __html: s }} />
                     </li>
                   ))}
                 </ul>
@@ -392,7 +389,7 @@ export default function ServiceDetailPage(props) {
               {/* Process */}
               <div style={{ marginTop: '2rem' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
-                  {props.service?.sectionTitles?.process || 'Our Treatment Process'}
+                  <span dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.process || 'Our Treatment Process' }} />
                 </h3>
                 <div className="service-detail__process">
                   {process.map((step, i) => (
@@ -403,8 +400,8 @@ export default function ServiceDetailPage(props) {
                     >
                       <div className="service-detail__process-num" aria-hidden="true">{i + 1}</div>
                       <div className="service-detail__process-content">
-                        <strong style={{ display: 'block', fontSize: '1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }}>{step.title}</strong>
-                        <p>{step.desc}</p>
+                        <strong style={{ display: 'block', fontSize: '1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }} dangerouslySetInnerHTML={{ __html: step.title }} />
+                        <div dangerouslySetInnerHTML={{ __html: step.desc }} />
                       </div>
                     </div>
                   ))}
@@ -453,7 +450,7 @@ export default function ServiceDetailPage(props) {
                   {benefits.map((b) => (
                     <li key={b}>
                       <CheckCircle2 size={14} aria-hidden="true" />
-                      <span>{b}</span>
+                      <span dangerouslySetInnerHTML={{ __html: b }} />
                     </li>
                   ))}
                 </ul>

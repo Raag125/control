@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   compress: true,
-  allowedDevOrigins: ['localhost:3000', '127.0.0.1:3000', '10.170.130.189:3000', 'localhost', '127.0.0.1'],
+  allowedDevOrigins: ['localhost:3000', '127.0.0.1:3000', '10.170.130.189:3000', 'localhost', '127.0.0.1', '192.168.29.7'],
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200],
@@ -27,12 +27,7 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+
       {
         source: '/(.*)',
         headers: [

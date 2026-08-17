@@ -106,12 +106,11 @@ export default function ServicesGrid() {
           </p>
         </div>
 
-        <div className="services-grid" role="list">
+        <ul className="services-grid" aria-label="Our pest control services">
           {SERVICES.map((s, i) => (
-            <motion.article
+            <motion.li
               key={s.to}
               className="service-card"
-              role="listitem"
               custom={i}
               variants={cardVariants}
               initial="hidden"
@@ -166,9 +165,9 @@ export default function ServicesGrid() {
                   </a>
                 </div>
               </div>
-            </motion.article>
+            </motion.li>
           ))}
-        </div>
+        </ul>
 
         <motion.div
           className="services-section__footer"

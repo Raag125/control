@@ -430,7 +430,7 @@ export default function ServicePageLiveEditor() {
               <div
                 contentEditable={true}
                 suppressContentEditableWarning
-                onBlur={(e) => updateText('hero.eyebrow', e.currentTarget.textContent)}
+                onBlur={(e) => updateText('hero.eyebrow', e.currentTarget.innerHTML)}
                 className="eyebrow"
                 style={{
                   outline: '1.5px dashed rgba(255,255,255,0.4)',
@@ -489,7 +489,7 @@ export default function ServicePageLiveEditor() {
               <h1
                 contentEditable={true}
                 suppressContentEditableWarning
-                onBlur={(e) => updateText('hero.title', e.currentTarget.textContent)}
+                onBlur={(e) => updateText('hero.title', e.currentTarget.innerHTML)}
                 className="display-xl"
                 style={{
                   outline: '1.5px dashed rgba(255,255,255,0.4)',
@@ -505,7 +505,7 @@ export default function ServicePageLiveEditor() {
               <p
                 contentEditable={true}
                 suppressContentEditableWarning
-                onBlur={(e) => updateText('hero.tagline', e.currentTarget.textContent)}
+                onBlur={(e) => updateText('hero.tagline', e.currentTarget.innerHTML)}
                 className="body-lg text-muted"
                 style={{
                   maxWidth: 640,
@@ -524,7 +524,7 @@ export default function ServicePageLiveEditor() {
                   className="btn btn-primary"
                   contentEditable={true}
                   suppressContentEditableWarning
-                  onBlur={(e) => updateText('hero.primaryCtaText', e.currentTarget.textContent)}
+                  onBlur={(e) => updateText('hero.primaryCtaText', e.currentTarget.innerHTML)}
                   style={{ outline: 'none', cursor: 'text', border: '1.5px dashed rgba(255,255,255,0.5)' }}
                   title="Click to edit Button Text"
                 >
@@ -534,7 +534,7 @@ export default function ServicePageLiveEditor() {
                   className="btn btn-outline"
                   contentEditable={true}
                   suppressContentEditableWarning
-                  onBlur={(e) => updateText('hero.secondaryCtaText', e.currentTarget.textContent)}
+                  onBlur={(e) => updateText('hero.secondaryCtaText', e.currentTarget.innerHTML)}
                   style={{ outline: 'none', cursor: 'text', border: '1.5px dashed rgba(255,255,255,0.5)' }}
                   title="Click to edit Button Text"
                 >
@@ -557,28 +557,49 @@ export default function ServicePageLiveEditor() {
                     className="heading-md"
                     contentEditable={true}
                     suppressContentEditableWarning
-                    onBlur={(e) => updateText('sectionTitles.about', e.currentTarget.textContent)}
+                    onBlur={(e) => updateText('sectionTitles.about', e.currentTarget.innerHTML)}
                     style={{ marginBottom: '1rem', color: 'var(--clr-text)', outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                     title="Click to edit About Title"
                     dangerouslySetInnerHTML={{ __html: svcData.sectionTitles?.about || `About Our ${svcData.hero?.title || 'Service'}` }}
                   />
 
                   {/* Detailed Intro Paragraph (Click to Edit) */}
-                  <p
-                    contentEditable={true}
-                    suppressContentEditableWarning
-                    onBlur={(e) => updateText('hero.intro', e.currentTarget.textContent)}
-                    className="body-md text-muted"
-                    style={{
-                      outline: '1.5px dashed rgba(22,163,74,0.4)',
-                      cursor: 'text',
-                      padding: '.75rem',
-                      borderRadius: '8px',
-                      background: 'rgba(255,255,255,0.8)',
-                      lineHeight: 1.7,
-                    }}
-                    title="Click to edit full Introduction text"
-                   dangerouslySetInnerHTML={{ __html: svcData.hero?.intro || "" }} />
+                  <div style={{ marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', background: '#f1f5f9', padding: '0.5rem', borderRadius: '8px', border: '1px solid #cbd5e1', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', marginRight: '0.5rem' }}>Format:</span>
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>B</button>
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>I</button>
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>U</button>
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H3'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>H3</button>
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'H4'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem' }}>H4</button>
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}>¶</button>
+                      <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; }} style={{ padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', cursor: 'pointer' }}>
+                        <option value="">Size</option>
+                        <option value="1">Small</option>
+                        <option value="3">Normal</option>
+                        <option value="5">Large</option>
+                        <option value="7">Huge</option>
+                      </select>
+                      <input type="color" onChange={(e) => { e.preventDefault(); document.execCommand('foreColor', false, e.target.value); }} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '24px', height: '24px' }} title="Text Color" />
+                      <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', background: '#fee2e2', border: '1px solid #fca5a5', color: '#ef4444', borderRadius: '4px', fontSize: '0.8rem' }}>Clear Format</button>
+                    </div>
+                    <div
+                      contentEditable={true}
+                      suppressContentEditableWarning
+                      onBlur={(e) => updateText('hero.intro', e.currentTarget.innerHTML)}
+                      className="body-md text-muted"
+                      style={{
+                        outline: '1.5px dashed rgba(22,163,74,0.4)',
+                        cursor: 'text',
+                        padding: '.75rem',
+                        borderRadius: '8px',
+                        background: 'rgba(255,255,255,0.8)',
+                        lineHeight: 1.7,
+                        minHeight: '100px',
+                      }}
+                      title="Click to edit full Introduction text"
+                      dangerouslySetInnerHTML={{ __html: svcData.hero?.intro || "" }} />
+                  </div>
 
                   {/* ── WARNING SIGNS (INLINE EDITABLE LIST) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
@@ -588,7 +609,7 @@ export default function ServicePageLiveEditor() {
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('sectionTitles.signs', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('sectionTitles.signs', e.currentTarget.innerHTML)}
                           style={{ outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Signs Title"
                           dangerouslySetInnerHTML={{ __html: svcData.sectionTitles?.signs || 'Signs You Need This Treatment' }}
@@ -611,7 +632,7 @@ export default function ServicePageLiveEditor() {
                           <span
                             contentEditable={true}
                             suppressContentEditableWarning
-                            onBlur={(e) => updateArrayItem('signs', i, null, e.currentTarget.textContent)}
+                            onBlur={(e) => updateArrayItem('signs', i, null, e.currentTarget.innerHTML)}
                             style={{ flex: 1, outline: 'none', cursor: 'text', fontSize: '.88rem', color: 'var(--clr-text)' }}
                             title="Click to edit sign text"
                            dangerouslySetInnerHTML={{ __html: s }} />
@@ -635,7 +656,7 @@ export default function ServicePageLiveEditor() {
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('sectionTitles.process', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('sectionTitles.process', e.currentTarget.innerHTML)}
                           style={{ outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Process Title"
                           dangerouslySetInnerHTML={{ __html: svcData.sectionTitles?.process || 'Our Treatment Process' }}
@@ -661,14 +682,14 @@ export default function ServicePageLiveEditor() {
                             <strong
                               contentEditable={true}
                               suppressContentEditableWarning
-                              onBlur={(e) => updateArrayItem('process', i, 'title', e.currentTarget.textContent)}
+                              onBlur={(e) => updateArrayItem('process', i, 'title', e.currentTarget.innerHTML)}
                               style={{ display: 'block', fontSize: '1rem', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', marginBottom: '.25rem' }}
                               title="Click to edit step title"
                              dangerouslySetInnerHTML={{ __html: step.title }} />
                             <p
                               contentEditable={true}
                               suppressContentEditableWarning
-                              onBlur={(e) => updateArrayItem('process', i, 'desc', e.currentTarget.textContent)}
+                              onBlur={(e) => updateArrayItem('process', i, 'desc', e.currentTarget.innerHTML)}
                               style={{ fontSize: '.88rem', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
                               title="Click to edit step description"
                              dangerouslySetInnerHTML={{ __html: step.desc }} />
@@ -693,7 +714,7 @@ export default function ServicePageLiveEditor() {
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('sectionTitles.faq', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('sectionTitles.faq', e.currentTarget.innerHTML)}
                           style={{ outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit FAQ Title"
                           dangerouslySetInnerHTML={{ __html: svcData.sectionTitles?.faq || 'Frequently Asked Questions' }}
@@ -716,7 +737,7 @@ export default function ServicePageLiveEditor() {
                             <strong
                               contentEditable={true}
                               suppressContentEditableWarning
-                              onBlur={(e) => updateArrayItem('faqs', i, 'q', e.currentTarget.textContent)}
+                              onBlur={(e) => updateArrayItem('faqs', i, 'q', e.currentTarget.innerHTML)}
                               style={{ fontSize: '.92rem', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', flex: 1 }}
                               title="Click to edit Question"
                              dangerouslySetInnerHTML={{ __html: faq.q }} />
@@ -732,7 +753,7 @@ export default function ServicePageLiveEditor() {
                           <p
                             contentEditable={true}
                             suppressContentEditableWarning
-                            onBlur={(e) => updateArrayItem('faqs', i, 'a', e.currentTarget.textContent)}
+                            onBlur={(e) => updateArrayItem('faqs', i, 'a', e.currentTarget.innerHTML)}
                             style={{ fontSize: '.85rem', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
                             title="Click to edit Answer"
                            dangerouslySetInnerHTML={{ __html: faq.a }} />
@@ -773,7 +794,7 @@ export default function ServicePageLiveEditor() {
                         <span 
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('specLabels.duration', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('specLabels.duration', e.currentTarget.innerHTML)}
                           style={{ color: 'var(--clr-text-muted)', outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Label"
                           dangerouslySetInnerHTML={{ __html: svcData.specLabels?.duration || 'Duration:' }}
@@ -781,7 +802,7 @@ export default function ServicePageLiveEditor() {
                         <strong
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('specs.duration', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('specs.duration', e.currentTarget.innerHTML)}
                           style={{ outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Duration"
                         >
@@ -792,7 +813,7 @@ export default function ServicePageLiveEditor() {
                         <span 
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('specLabels.warranty', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('specLabels.warranty', e.currentTarget.innerHTML)}
                           style={{ color: 'var(--clr-text-muted)', outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Label"
                           dangerouslySetInnerHTML={{ __html: svcData.specLabels?.warranty || 'Warranty:' }}
@@ -800,7 +821,7 @@ export default function ServicePageLiveEditor() {
                         <strong
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('specs.warranty', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('specs.warranty', e.currentTarget.innerHTML)}
                           style={{ outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Warranty"
                         >
@@ -821,7 +842,7 @@ export default function ServicePageLiveEditor() {
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
-                          onBlur={(e) => updateText('sectionTitles.benefits', e.currentTarget.textContent)}
+                          onBlur={(e) => updateText('sectionTitles.benefits', e.currentTarget.innerHTML)}
                           style={{ outline: 'none', cursor: 'text', borderBottom: '1px dashed #16a34a' }}
                           title="Click to edit Benefits Title"
                           dangerouslySetInnerHTML={{ __html: svcData.sectionTitles?.benefits || '✨ Service Benefits' }}
@@ -844,7 +865,7 @@ export default function ServicePageLiveEditor() {
                           <span
                             contentEditable={true}
                             suppressContentEditableWarning
-                            onBlur={(e) => updateArrayItem('benefits', idx, null, e.currentTarget.textContent)}
+                            onBlur={(e) => updateArrayItem('benefits', idx, null, e.currentTarget.innerHTML)}
                             style={{ flex: 1, outline: 'none', cursor: 'text', color: 'var(--clr-text)' }}
                             title="Click to edit benefit"
                            dangerouslySetInnerHTML={{ __html: b }} />
