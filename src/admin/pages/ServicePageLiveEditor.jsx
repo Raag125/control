@@ -55,6 +55,9 @@ export default function ServicePageLiveEditor() {
   const [newColor, setNewColor] = useState('#22c55e')
   const savedSelectionRef = useRef(null)
 
+  // Custom Size Panel state
+  const [sizePanel, setSizePanel] = useState(false)
+
   // Formatting toolbar state
   const [activeFormats, setActiveFormats] = useState({ bold: false, italic: false, underline: false, h1: false, h2: false, h3: false, p: false })
 
@@ -350,13 +353,53 @@ export default function ServicePageLiveEditor() {
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, activeFormats.h2 ? 'P' : 'H2'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h2 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, activeFormats.h3 ? 'P' : 'H3'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h3 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.p ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>P</button>
-            <select onChange={(e) => { e.preventDefault(); document.execCommand('fontSize', false, e.target.value); e.target.value=''; setTimeout(checkFormats, 10); }} style={{ padding: '0.1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', background: '#111a14', color: '#fff', fontSize: '0.7rem', cursor: 'pointer', marginLeft: '0.2rem' }}>
-              <option value="">Size</option>
-              <option value="1">Small</option>
-              <option value="3">Normal</option>
-              <option value="5">Large</option>
-              <option value="7">Huge</option>
-            </select>
+            <div style={{ position: 'relative' }}>
+              <button 
+                type="button" 
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  const sel = window.getSelection();
+                  if (sel.rangeCount > 0) savedSelectionRef.current = sel.getRangeAt(0);
+                  setSizePanel(!sizePanel);
+                  setColorPanel(false);
+                }}
+                style={{ padding: '0.2rem 0.4rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', background: sizePanel ? 'rgba(255,255,255,0.1)' : '#111a14', color: '#fff', fontSize: '0.75rem', cursor: 'pointer', marginLeft: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                Size ▼
+              </button>
+              {sizePanel && (
+                <div style={{ position: 'absolute', top: '120%', left: 0, background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', zIndex: 50, width: '100px', boxShadow: '0 4px 15px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                  {[
+                    { label: 'Small', value: '1' },
+                    { label: 'Normal', value: '3' },
+                    { label: 'Large', value: '5' },
+                    { label: 'Huge', value: '7' }
+                  ].map(sz => (
+                    <button
+                      key={sz.value}
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        if (savedSelectionRef.current) {
+                          const sel = window.getSelection();
+                          sel.removeAllRanges();
+                          sel.addRange(savedSelectionRef.current);
+                        }
+                        document.execCommand('styleWithCSS', false, true);
+                        document.execCommand('fontSize', false, sz.value);
+                        setSizePanel(false);
+                        setTimeout(checkFormats, 10);
+                      }}
+                      style={{ padding: '0.5rem', background: 'transparent', color: '#fff', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.75rem', textAlign: 'left', cursor: 'pointer' }}
+                      onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                      onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                    >
+                      {sz.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div style={{ position: 'relative' }}>
               <button 
                 type="button" 
@@ -368,6 +411,7 @@ export default function ServicePageLiveEditor() {
                     savedSelectionRef.current = sel.getRangeAt(0);
                   }
                   setColorPanel(!colorPanel);
+                  setSizePanel(false);
                 }}
                 style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', cursor: 'pointer', background: colorPanel ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.2rem 0.4rem', fontSize: '0.75rem', fontWeight: 'bold' }} title="Text Color">
                 🎨 Color
