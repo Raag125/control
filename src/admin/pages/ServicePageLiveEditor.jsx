@@ -66,16 +66,74 @@ export default function ServicePageLiveEditor() {
     if (activeEl && activeEl.isContentEditable) {
       const formatBlock = document.queryCommandValue('formatBlock') || '';
       const block = formatBlock.toLowerCase();
+      
+      let h1 = block === 'h1', h2 = block === 'h2', h3 = block === 'h3';
+      let node = window.getSelection().anchorNode;
+      while (node && node.isContentEditable) {
+        if (node.nodeType === 1) {
+          if (node.classList.contains('inline-h1')) h1 = true;
+          if (node.classList.contains('inline-h2')) h2 = true;
+          if (node.classList.contains('inline-h3')) h3 = true;
+        }
+        node = node.parentNode;
+      }
+
       setActiveFormats({
         bold: document.queryCommandState('bold'),
         italic: document.queryCommandState('italic'),
         underline: document.queryCommandState('underline'),
-        h1: block === 'h1',
-        h2: block === 'h2',
-        h3: block === 'h3',
+        h1, h2, h3,
         p: block === 'p' || block === 'div'
       });
     }
+  };
+
+  const toggleHeading = (level) => {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
+    
+    // First, revert any old formatBlock headings if user is clicking to toggle
+    const formatBlock = document.queryCommandValue('formatBlock') || '';
+    if (formatBlock.toLowerCase() === level.toLowerCase()) {
+      document.execCommand('formatBlock', false, 'P');
+      setTimeout(checkFormats, 10);
+      return;
+    }
+    
+    if (sel.isCollapsed) return; // Need a selection for inline wrap
+    
+    const className = `inline-${level.toLowerCase()}`;
+    let node = sel.anchorNode;
+    let parentSpan = null;
+    while (node && node.isContentEditable) {
+      if (node.nodeType === 1 && node.classList && node.classList.contains(className)) {
+        parentSpan = node;
+        break;
+      }
+      node = node.parentNode;
+    }
+
+    if (parentSpan) {
+      // Unwrap
+      const parent = parentSpan.parentNode;
+      while (parentSpan.firstChild) {
+        parent.insertBefore(parentSpan.firstChild, parentSpan);
+      }
+      parent.removeChild(parentSpan);
+    } else {
+      // Wrap
+      const range = sel.getRangeAt(0);
+      const content = range.extractContents();
+      const span = document.createElement('span');
+      span.className = className;
+      span.appendChild(content);
+      range.insertNode(span);
+      sel.removeAllRanges();
+      const newRange = document.createRange();
+      newRange.selectNodeContents(span);
+      sel.addRange(newRange);
+    }
+    setTimeout(checkFormats, 10);
   };
 
   useEffect(() => {
@@ -349,9 +407,9 @@ export default function ServicePageLiveEditor() {
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); setTimeout(checkFormats, 10); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.bold ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>B</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); setTimeout(checkFormats, 10); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.italic ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>I</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); setTimeout(checkFormats, 10); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.underline ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>U</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, activeFormats.h1 ? 'P' : 'H1'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h1 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H1</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, activeFormats.h2 ? 'P' : 'H2'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h2 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, activeFormats.h3 ? 'P' : 'H3'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h3 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); toggleHeading('H1'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h1 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H1</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); toggleHeading('H2'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h2 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); toggleHeading('H3'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h3 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.p ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>P</button>
             <div style={{ position: 'relative' }}>
               <button 
@@ -484,8 +542,13 @@ export default function ServicePageLiveEditor() {
         [contenteditable="true"] h3 { font-size: 1.4rem !important; font-weight: 600 !important; margin: 0.2rem 0 !important; line-height: 1.4 !important; display: block; }
         [contenteditable="true"] p { font-size: 1.1rem !important; margin: 0.2rem 0 !important; line-height: 1.6 !important; display: block; }
 
+        /* Inline variants of headers that ONLY apply to selected text without breaking paragraphs */
+        .inline-h1 { font-size: 2.25rem !important; font-weight: 800 !important; line-height: 1.2 !important; }
+        .inline-h2 { font-size: 1.75rem !important; font-weight: 700 !important; line-height: 1.3 !important; }
+        .inline-h3 { font-size: 1.4rem !important; font-weight: 600 !important; line-height: 1.4 !important; }
+
         /* Force any nested elements (like font or span) to inherit the header size to prevent them from staying small */
-        [contenteditable="true"] h1 *, [contenteditable="true"] h2 *, [contenteditable="true"] h3 * {
+        [contenteditable="true"] h1 *, [contenteditable="true"] h2 *, [contenteditable="true"] h3 *, .inline-h1 *, .inline-h2 *, .inline-h3 * {
           font-size: inherit !important;
           line-height: inherit !important;
           font-weight: inherit !important;
