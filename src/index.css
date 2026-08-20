@@ -36,7 +36,7 @@
   --font-display: var(--font-bricolage), var(--font-jakarta), sans-serif;
 
   /* Spacing */
-  --section-py:    clamp(4rem, 8vw, 7rem);
+  --section-py:    clamp(2.5rem, 5vw, 4rem);
   --container-px:  clamp(1.25rem, 5vw, 5rem);
   --radius-sm:     8px;
   --radius-md:     14px;
@@ -222,7 +222,7 @@ input, textarea, select { font: inherit; }
 }
 
 /* ── Section Header ── */
-.section-header { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.section-header { text-align: center; margin-bottom: clamp(1.5rem, 4vw, 2.75rem); }
 .section-header p { color: var(--clr-text-muted); font-size: clamp(0.95rem, 1.3vw, 1.08rem); max-width: 580px; margin-inline: auto; margin-top: 1rem; line-height: 1.75; }
 
 /* ── Grid ── */

@@ -47,7 +47,7 @@ export default function Reviews() {
 
   const renderStars = (rating) => {
     return Array(5).fill(0).map((_, i) => (
-      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: '1rem' }}>★</span>
+      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: 'var(--font-size-h3)' }}>★</span>
     ))
   }
 
@@ -58,8 +58,8 @@ export default function Reviews() {
       {/* Header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: '1.2rem' }}>⭐ Customer Reviews &amp; Testimonials</h1>
-          <p style={{ fontSize: '.75rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>⭐ Customer Reviews &amp; Testimonials</h1>
+          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Moderate and approve customer ratings for the website homepage.
           </p>
         </div>
@@ -76,7 +76,7 @@ export default function Reviews() {
               onClick={() => setFilter(st)}
             >
               <span style={{ textTransform: 'capitalize' }}>{st}</span>
-              <span style={{ opacity: 0.8, fontSize: '.65rem' }}>({count})</span>
+              <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({count})</span>
             </button>
           )
         })}
@@ -89,7 +89,6 @@ export default function Reviews() {
             <table className="adm-table">
               <thead>
                 <tr>
-                  <th>Date</th>
                   <th>Service</th>
                   <th>Customer</th>
                   <th>Rating</th>
@@ -103,12 +102,11 @@ export default function Reviews() {
                   <tr><td colSpan="7"><div className="adm-empty"><div className="adm-empty__icon">⭐</div><div className="adm-empty__text">No reviews found</div></div></td></tr>
                 ) : filtered.map(r => (
                   <tr key={r.id}>
-                    <td style={{ whiteSpace: 'nowrap', fontSize: '.74rem', color: 'var(--a-muted)' }}>{new Date(r.date).toLocaleDateString('en-IN')}</td>
-                    <td style={{ fontSize: '.8rem' }}>{r.service}</td>
+                    <td style={{ fontSize: 'var(--font-size-h3)' }}>{r.service}</td>
                     <td><strong>{r.name}</strong></td>
                     <td style={{ whiteSpace: 'nowrap' }}>{renderStars(r.rating)}</td>
                     <td style={{ maxWidth: '280px' }}>
-                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', fontSize: '.78rem' }} title={r.text}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', fontSize: 'var(--font-size-h3)' }} title={r.text}>
                         {r.text}
                       </div>
                     </td>
@@ -156,7 +154,7 @@ export default function Reviews() {
                 <div className="adm-mobile-card__header">
                   <div>
                     <div className="adm-mobile-card__title">{r.name}</div>
-                    <div className="adm-mobile-card__subtitle">{r.service} · {new Date(r.date).toLocaleDateString('en-IN')}</div>
+                    <div className="adm-mobile-card__subtitle">{r.service}</div>
                   </div>
                   <span className={`adm-badge ${r.status === 'approved' ? 'adm-badge--green' : r.status === 'pending' ? 'adm-badge--yellow' : 'adm-badge--red'}`}>
                     {r.status}
@@ -165,10 +163,10 @@ export default function Reviews() {
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '.3rem' }}>
                   {renderStars(r.rating)}
-                  <span style={{ fontSize: '.75rem', fontWeight: 700, color: 'var(--a-muted)', marginLeft: '.3rem' }}>{r.rating}.0 / 5.0</span>
+                  <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--a-muted)', marginLeft: '.3rem' }}>{r.rating}.0 / 5.0</span>
                 </div>
 
-                <p style={{ fontSize: '.78rem', color: 'var(--a-text)', lineHeight: 1.5, background: 'var(--a-card2)', padding: '.5rem .65rem', borderRadius: '8px', border: '1px solid var(--a-border)' }}>
+                <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-text)', lineHeight: 1.5, background: 'var(--a-card2)', padding: '.5rem .65rem', borderRadius: '8px', border: '1px solid var(--a-border)' }}>
                   "{r.text}"
                 </p>
 

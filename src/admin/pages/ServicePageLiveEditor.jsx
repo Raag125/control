@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { getServices, saveService } from '../adminData'
 import { SERVICES_DATA } from '../../data/servicesData'
 import ModalPortal from '../ModalPortal'
-import { Phone, MessageCircle, CheckCircle2, AlertCircle, ChevronDown, Camera, Sparkles, Search, Check, Globe } from 'lucide-react'
+import { CheckCircle2, AlertCircle, ChevronDown, Camera, Sparkles, Check, Globe, ExternalLink, Monitor, Smartphone } from 'lucide-react'
 import '../../views/PageStyles.css'
 
 const PRESET_ICONS = [
@@ -54,9 +54,11 @@ export default function ServicePageLiveEditor() {
   const [colorPanel, setColorPanel] = useState(false)
   const [newColor, setNewColor] = useState('#22c55e')
   const savedSelectionRef = useRef(null)
+  const colorPanelRef = useRef(null)
 
   // Custom Size Panel state
   const [sizePanel, setSizePanel] = useState(false)
+  const sizePanelRef = useRef(null)
 
   // Formatting toolbar state
   const [activeFormats, setActiveFormats] = useState({ bold: false, italic: false, underline: false, h1: false, h2: false, h3: false, p: false })
@@ -173,7 +175,19 @@ export default function ServicePageLiveEditor() {
 
   useEffect(() => {
     document.addEventListener('selectionchange', checkFormats);
-    return () => document.removeEventListener('selectionchange', checkFormats);
+    function handleClickOutside(e) {
+      if (sizePanelRef.current && !sizePanelRef.current.contains(e.target)) {
+        setSizePanel(false);
+      }
+      if (colorPanelRef.current && !colorPanelRef.current.contains(e.target)) {
+        setColorPanel(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('selectionchange', checkFormats);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   // Load services list and active service
@@ -362,21 +376,33 @@ export default function ServicePageLiveEditor() {
   if (!svcData) return <div style={{ padding: '3rem', textAlign: 'center' }}>Loading Live Visual Canvas…</div>
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 125px)', minHeight: '600px', background: '#0a0f0d', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.25)', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 105px)', minHeight: '600px', background: '#0a0f0d', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.25)', overflow: 'hidden' }}>
       
       {/* Toast Notification */}
       {savedToast && (
-        <div style={{ position: 'fixed', top: '1.25rem', right: '1.25rem', zIndex: 999999, background: 'linear-gradient(135deg, #16a34a, #065f46)', color: '#fff', padding: '.85rem 1.5rem', borderRadius: '12px', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', fontWeight: 800, fontSize: '.9rem', display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+        <div style={{ position: 'fixed', top: '1.25rem', right: '1.25rem', zIndex: 999999, background: 'linear-gradient(135deg, #16a34a, #065f46)', color: '#fff', padding: '.85rem 1.5rem', borderRadius: '12px', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', fontWeight: 800, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '.6rem' }}>
           <Check size={18} /> All Changes Published to Live Website!
         </div>
       )}
 
-      {/* ──────── TOP LIVE CONTROL BAR ──────── */}
-      <div style={{ background: '#111a14', borderBottom: '1.5px solid rgba(22,163,74,0.2)', padding: '.7rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '.75rem', zIndex: 100, flexShrink: 0 }}>
-        {/* Left: Service Switcher */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', background: 'rgba(22,163,74,0.15)', padding: '.3rem .6rem', borderRadius: '8px', border: '1px solid rgba(22,163,74,0.3)' }}>
-            <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{svcData.emoji}</span>
+      {/* ──────── TOP LIVE CONTROL BAR (Compact & Aligned) ──────── */}
+      <div style={{
+        background: '#0d1511',
+        borderBottom: '1px solid rgba(34, 197, 94, 0.22)',
+        padding: '0.35rem 0.75rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '0.5rem',
+        zIndex: 100,
+        flexShrink: 0,
+        minHeight: '44px'
+      }}>
+        {/* Left: Service Switcher & Unsaved Indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'rgba(22,163,74,0.12)', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid rgba(34,197,94,0.3)', height: '30px' }}>
+            <span style={{ fontSize: '14px', lineHeight: 1 }}>{svcData.emoji}</span>
             <select
               value={selectedSlug}
               onChange={(e) => handleSwitchService(e.target.value)}
@@ -384,10 +410,12 @@ export default function ServicePageLiveEditor() {
                 background: 'transparent',
                 color: '#ffffff',
                 border: 'none',
-                fontSize: '.9rem',
-                fontWeight: 800,
+                fontSize: '12px',
+                fontWeight: 700,
                 cursor: 'pointer',
                 outline: 'none',
+                maxWidth: '190px',
+                textOverflow: 'ellipsis',
               }}
             >
               {services.map(s => {
@@ -401,170 +429,541 @@ export default function ServicePageLiveEditor() {
             </select>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: '.75rem', color: '#86efac', fontWeight: 600 }}>
-            <Sparkles size={14} className="text-primary" />
-            <span>Click any text to edit inline • Click images to change</span>
-          </div>
+          {isDirty && (
+            <span style={{ fontSize: '11px', fontWeight: 700, color: '#fbbf24', background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', padding: '2px 6px', borderRadius: '4px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '3px' }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24' }} />
+              Unsaved
+            </span>
+          )}
         </div>
 
-        {/* Center: Device Switcher & SEO Drawer */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', background: 'rgba(255,255,255,0.05)', padding: '.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+        {/* Center: Clean Formatting & Device Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
+          {/* Device Switcher */}
+          <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', padding: '2px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.08)' }}>
             <button
               type="button"
-              className={`adm-chip ${previewDevice === 'desktop' ? 'active' : ''}`}
-              style={{ margin: 0, fontSize: '.72rem', padding: '.25rem .7rem' }}
+              title="Desktop Preview (Full Width)"
+              style={{
+                height: '24px',
+                padding: '0 6px',
+                fontSize: '11px',
+                fontWeight: 700,
+                borderRadius: '4px',
+                border: 'none',
+                cursor: 'pointer',
+                background: previewDevice === 'desktop' ? '#16a34a' : 'transparent',
+                color: previewDevice === 'desktop' ? '#fff' : '#94a3b8',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                transition: 'all 0.15s ease',
+              }}
               onClick={() => setPreviewDevice('desktop')}
             >
-              🖥️ Desktop
+              <Monitor size={12} />
+              <span>Desk</span>
             </button>
             <button
               type="button"
-              className={`adm-chip ${previewDevice === 'mobile' ? 'active' : ''}`}
-              style={{ margin: 0, fontSize: '.72rem', padding: '.25rem .7rem' }}
+              title="Mobile Preview (Phone Frame)"
+              style={{
+                height: '24px',
+                padding: '0 6px',
+                fontSize: '11px',
+                fontWeight: 700,
+                borderRadius: '4px',
+                border: 'none',
+                cursor: 'pointer',
+                background: previewDevice === 'mobile' ? '#16a34a' : 'transparent',
+                color: previewDevice === 'mobile' ? '#fff' : '#94a3b8',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                transition: 'all 0.15s ease',
+              }}
               onClick={() => setPreviewDevice('mobile')}
             >
-              📱 Mobile
+              <Smartphone size={12} />
+              <span>Mob</span>
             </button>
           </div>
 
-          <button
-            type="button"
-            className="adm-btn adm-btn--outline adm-btn--sm"
-            style={{ fontSize: '.78rem', background: 'rgba(22,163,74,0.1)', borderColor: 'rgba(22,163,74,0.4)', color: '#86efac' }}
-            onClick={() => setSeoModal(true)}
-          >
-            <Globe size={14} /> SEO &amp; Meta ({svcData.meta?.title ? 'Configured' : 'Empty'})
-          </button>
+          <div style={{ width: '1px', height: '18px', background: 'rgba(255,255,255,0.12)', margin: '0 2px' }} />
 
-          {/* Formatting Toolbar - Dark Theme for Top Bar */}
-          <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'center', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid rgba(255,255,255,0.1)', flexWrap: 'wrap' }}>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); setTimeout(checkFormats, 10); }} style={{ fontWeight: 'bold', padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.bold ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>B</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); setTimeout(checkFormats, 10); }} style={{ fontStyle: 'italic', padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.italic ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>I</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); setTimeout(checkFormats, 10); }} style={{ textDecoration: 'underline', padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.underline ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem' }}>U</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); toggleHeading('H1'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h1 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H1</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); toggleHeading('H2'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h2 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H2</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); toggleHeading('H3'); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.h3 ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>H3</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); setTimeout(checkFormats, 10); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: activeFormats.p ? '#22c55e' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>P</button>
-            <div style={{ position: 'relative' }}>
-              <button 
-                type="button" 
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  const sel = window.getSelection();
-                  if (sel.rangeCount > 0) savedSelectionRef.current = sel.getRangeAt(0);
-                  setSizePanel(!sizePanel);
-                  setColorPanel(false);
-                }}
-                style={{ padding: '0.2rem 0.4rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', background: sizePanel ? 'rgba(255,255,255,0.1)' : '#111a14', color: '#fff', fontSize: '0.75rem', cursor: 'pointer', marginLeft: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                Size ▼
-              </button>
-              {sizePanel && (
-                <div style={{ position: 'absolute', top: '120%', left: 0, background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', zIndex: 50, width: '100px', boxShadow: '0 4px 15px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                  {[
-                    { label: 'Small', value: '1' },
-                    { label: 'Normal', value: '3' },
-                    { label: 'Large', value: '5' },
-                    { label: 'Huge', value: '7' }
-                  ].map(sz => (
-                    <button
-                      key={sz.value}
-                      type="button"
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        if (savedSelectionRef.current) {
-                          const sel = window.getSelection();
-                          sel.removeAllRanges();
-                          sel.addRange(savedSelectionRef.current);
-                        }
-                        document.execCommand('styleWithCSS', false, true);
-                        document.execCommand('fontSize', false, sz.value);
-                        setSizePanel(false);
-                        setTimeout(checkFormats, 10);
-                      }}
-                      style={{ padding: '0.5rem', background: 'transparent', color: '#fff', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.75rem', textAlign: 'left', cursor: 'pointer' }}
-                      onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                      onMouseOut={e => e.currentTarget.style.background = 'transparent'}
-                    >
-                      {sz.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+          {/* Text Style: Bold / Italic / Underline */}
+          <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', padding: '2px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.08)', gap: '1px' }}>
+            <button
+              type="button"
+              title="Bold (Ctrl+B)"
+              onMouseDown={(e) => { e.preventDefault(); document.execCommand('bold', false, null); setTimeout(checkFormats, 10); }}
+              style={{
+                width: '24px',
+                height: '24px',
+                fontWeight: 'bold',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeFormats.bold ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                transition: 'background 0.15s ease',
+              }}
+            >
+              B
+            </button>
+            <button
+              type="button"
+              title="Italic (Ctrl+I)"
+              onMouseDown={(e) => { e.preventDefault(); document.execCommand('italic', false, null); setTimeout(checkFormats, 10); }}
+              style={{
+                width: '24px',
+                height: '24px',
+                fontStyle: 'italic',
+                fontFamily: 'serif',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeFormats.italic ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                transition: 'background 0.15s ease',
+              }}
+            >
+              I
+            </button>
+            <button
+              type="button"
+              title="Underline (Ctrl+U)"
+              onMouseDown={(e) => { e.preventDefault(); document.execCommand('underline', false, null); setTimeout(checkFormats, 10); }}
+              style={{
+                width: '24px',
+                height: '24px',
+                textDecoration: 'underline',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeFormats.underline ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                transition: 'background 0.15s ease',
+              }}
+            >
+              U
+            </button>
+          </div>
 
-            <div style={{ position: 'relative' }}>
-              <button 
-                type="button" 
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  // Save selection before opening panel
-                  const sel = window.getSelection();
-                  if (sel.rangeCount > 0) {
-                    savedSelectionRef.current = sel.getRangeAt(0);
-                  }
-                  setColorPanel(!colorPanel);
-                  setSizePanel(false);
-                }}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', cursor: 'pointer', background: colorPanel ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.2rem 0.4rem', fontSize: '0.75rem', fontWeight: 'bold' }} title="Text Color">
-                🎨 Color
-              </button>
+          {/* Headings: H1, H2, H3, P */}
+          <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', padding: '2px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.08)', gap: '1px' }}>
+            <button
+              type="button"
+              title="Heading 1"
+              onMouseDown={(e) => { e.preventDefault(); toggleHeading('H1'); }}
+              style={{
+                width: '26px',
+                height: '24px',
+                cursor: 'pointer',
+                background: activeFormats.h1 ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '10px',
+                fontWeight: 800,
+                transition: 'background 0.15s ease',
+              }}
+            >
+              H1
+            </button>
+            <button
+              type="button"
+              title="Heading 2"
+              onMouseDown={(e) => { e.preventDefault(); toggleHeading('H2'); }}
+              style={{
+                width: '26px',
+                height: '24px',
+                cursor: 'pointer',
+                background: activeFormats.h2 ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '10px',
+                fontWeight: 800,
+                transition: 'background 0.15s ease',
+              }}
+            >
+              H2
+            </button>
+            <button
+              type="button"
+              title="Heading 3"
+              onMouseDown={(e) => { e.preventDefault(); toggleHeading('H3'); }}
+              style={{
+                width: '26px',
+                height: '24px',
+                cursor: 'pointer',
+                background: activeFormats.h3 ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '10px',
+                fontWeight: 800,
+                transition: 'background 0.15s ease',
+              }}
+            >
+              H3
+            </button>
+            <button
+              type="button"
+              title="Paragraph Normal Text"
+              onMouseDown={(e) => { e.preventDefault(); document.execCommand('formatBlock', false, 'P'); setTimeout(checkFormats, 10); }}
+              style={{
+                width: '22px',
+                height: '24px',
+                cursor: 'pointer',
+                background: activeFormats.p ? '#16a34a' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '10px',
+                fontWeight: 800,
+                transition: 'background 0.15s ease',
+              }}
+            >
+              P
+            </button>
+          </div>
 
-              {colorPanel && (
-                <div style={{ position: 'absolute', top: '120%', left: 0, background: '#1e293b', padding: '0.75rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', zIndex: 50, width: '150px', boxShadow: '0 4px 15px rgba(0,0,0,0.5)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                    <div style={{ fontSize: '0.75rem', color: '#cbd5e1', fontWeight: 600 }}>New Color:</div>
-                    <input type="color" value={newColor} onChange={(e) => setNewColor(e.target.value)} style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '28px', height: '28px' }} />
-                  </div>
-                  <button 
+          {/* Font Size Popover */}
+          <div style={{ position: 'relative' }} ref={sizePanelRef}>
+            <button
+              type="button"
+              title="Font Size"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                const sel = window.getSelection();
+                if (sel.rangeCount > 0) savedSelectionRef.current = sel.getRangeAt(0);
+                setSizePanel(!sizePanel);
+                setColorPanel(false);
+              }}
+              style={{
+                height: '28px',
+                padding: '0 6px',
+                borderRadius: '5px',
+                border: '1px solid rgba(255,255,255,0.12)',
+                background: sizePanel ? 'rgba(34,197,94,0.25)' : 'rgba(255,255,255,0.06)',
+                color: '#fff',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '3px',
+              }}
+            >
+              <span>Size</span>
+              <ChevronDown size={11} />
+            </button>
+
+            {sizePanel && (
+              <div style={{
+                position: 'absolute',
+                top: 'calc(100% + 6px)',
+                left: 0,
+                background: '#152019',
+                border: '1px solid rgba(34,197,94,0.3)',
+                borderRadius: '8px',
+                zIndex: 9999,
+                width: '110px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.6)',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+                padding: '4px',
+              }}>
+                {[
+                  { label: 'Small', value: '1' },
+                  { label: 'Normal', value: '3' },
+                  { label: 'Large', value: '5' },
+                  { label: 'Huge', value: '7' }
+                ].map(sz => (
+                  <button
+                    key={sz.value}
                     type="button"
                     onMouseDown={(e) => {
                       e.preventDefault();
-                      // Restore selection and apply color
                       if (savedSelectionRef.current) {
                         const sel = window.getSelection();
                         sel.removeAllRanges();
                         sel.addRange(savedSelectionRef.current);
                       }
                       document.execCommand('styleWithCSS', false, true);
-                      document.execCommand('foreColor', false, newColor);
-                      setColorPanel(false);
+                      document.execCommand('fontSize', false, sz.value);
+                      setSizePanel(false);
+                      setTimeout(checkFormats, 10);
                     }}
-                    style={{ width: '100%', padding: '0.4rem', background: '#22c55e', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                    style={{
+                      padding: '0.35rem 0.6rem',
+                      background: 'transparent',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                    onMouseOver={e => e.currentTarget.style.background = 'rgba(34,197,94,0.18)'}
+                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
                   >
-                    Apply Color
+                    {sz.label}
                   </button>
-                </div>
-              )}
-            </div>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); document.execCommand('removeFormat', false, null); }} style={{ padding: '0.2rem 0.4rem', cursor: 'pointer', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '4px', fontSize: '0.7rem', marginLeft: '0.2rem' }}>Clear</button>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* Color Picker Popover */}
+          <div style={{ position: 'relative' }} ref={colorPanelRef}>
+            <button
+              type="button"
+              title="Text Color"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                const sel = window.getSelection();
+                if (sel.rangeCount > 0) savedSelectionRef.current = sel.getRangeAt(0);
+                setColorPanel(!colorPanel);
+                setSizePanel(false);
+              }}
+              style={{
+                height: '28px',
+                padding: '0 6px',
+                borderRadius: '5px',
+                border: '1px solid rgba(255,255,255,0.12)',
+                background: colorPanel ? 'rgba(34,197,94,0.25)' : 'rgba(255,255,255,0.06)',
+                color: '#fff',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+              }}
+            >
+              <span style={{ width: 10, height: 10, borderRadius: '50%', background: newColor, border: '1px solid rgba(255,255,255,0.4)', display: 'inline-block' }} />
+              <span>Color</span>
+            </button>
+
+            {colorPanel && (
+              <div style={{
+                position: 'absolute',
+                top: 'calc(100% + 6px)',
+                left: 0,
+                background: '#152019',
+                padding: '0.65rem',
+                border: '1px solid rgba(34,197,94,0.3)',
+                borderRadius: '8px',
+                zIndex: 9999,
+                width: '160px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.6)',
+              }}>
+                <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.4rem', letterSpacing: '0.04em' }}>Quick Colors</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px', marginBottom: '0.6rem' }}>
+                  {['#22c55e', '#10b981', '#3b82f6', '#eab308', '#ef4444', '#ec4899', '#ffffff', '#0f172a'].map(c => (
+                    <button
+                      key={c}
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setNewColor(c);
+                        if (savedSelectionRef.current) {
+                          const sel = window.getSelection();
+                          sel.removeAllRanges();
+                          sel.addRange(savedSelectionRef.current);
+                        }
+                        document.execCommand('styleWithCSS', false, true);
+                        document.execCommand('foreColor', false, c);
+                        setColorPanel(false);
+                      }}
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '4px',
+                        background: c,
+                        border: newColor === c ? '2px solid #fff' : '1px solid rgba(255,255,255,0.2)',
+                        cursor: 'pointer',
+                      }}
+                      title={c}
+                    />
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '3px 6px', borderRadius: '4px' }}>
+                  <span style={{ fontSize: '11px', color: '#cbd5e1', fontWeight: 600 }}>Custom:</span>
+                  <input
+                    type="color"
+                    value={newColor}
+                    onChange={(e) => setNewColor(e.target.value)}
+                    style={{ cursor: 'pointer', padding: '0', border: 'none', background: 'transparent', width: '22px', height: '22px' }}
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    if (savedSelectionRef.current) {
+                      const sel = window.getSelection();
+                      sel.removeAllRanges();
+                      sel.addRange(savedSelectionRef.current);
+                    }
+                    document.execCommand('styleWithCSS', false, true);
+                    document.execCommand('foreColor', false, newColor);
+                    setColorPanel(false);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '0.35rem',
+                    background: '#16a34a',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Apply Color
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Clear Format */}
+          <button
+            type="button"
+            title="Clear text formatting"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              document.execCommand('removeFormat', false, null);
+              setTimeout(checkFormats, 10);
+            }}
+            style={{
+              height: '28px',
+              padding: '0 6px',
+              cursor: 'pointer',
+              background: 'rgba(239, 68, 68, 0.12)',
+              color: '#fca5a5',
+              border: '1px solid rgba(239, 68, 68, 0.25)',
+              borderRadius: '5px',
+              fontSize: '11px',
+              fontWeight: 600,
+            }}
+          >
+            Clear
+          </button>
+
+          <div style={{ width: '1px', height: '18px', background: 'rgba(255,255,255,0.12)', margin: '0 2px' }} />
+
+          {/* SEO & Meta Button */}
+          <button
+            type="button"
+            title="Configure SEO & Metadata"
+            style={{
+              height: '28px',
+              padding: '0 8px',
+              fontSize: '11px',
+              fontWeight: 700,
+              background: 'rgba(22,163,74,0.12)',
+              border: '1px solid rgba(22,163,74,0.3)',
+              color: '#86efac',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+            onClick={() => setSeoModal(true)}
+          >
+            <Globe size={12} />
+            <span>SEO</span>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: svcData.meta?.title ? '#22c55e' : '#f59e0b' }} />
+          </button>
         </div>
 
-        {/* Right: Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+        {/* Right: Inline Edit Hint, Live Link & Save Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
+          {/* Compact Inline Edit Hint */}
+          <div
+            title="Click any text on the page below to edit inline. Click images to replace them."
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              background: 'rgba(34,197,94,0.08)',
+              border: '1px solid rgba(34,197,94,0.2)',
+              color: '#86efac',
+              padding: '2px 7px',
+              borderRadius: '12px',
+              fontSize: '11px',
+              fontWeight: 600,
+              cursor: 'help',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Sparkles size={11} />
+            <span>Inline Edit</span>
+          </div>
+
+          {/* View Live URL */}
           <a
             href={svcData.path || `/${svcData.slug}`}
             target="_blank"
             rel="noreferrer"
-            className="adm-btn adm-btn--ghost adm-btn--sm"
-            style={{ color: '#94a3b8', fontSize: '.78rem' }}
+            title="Open live service page in new tab"
+            style={{
+              height: '28px',
+              padding: '0 8px',
+              fontSize: '11px',
+              fontWeight: 600,
+              color: '#94a3b8',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+            }}
           >
-            View Live URL ↗
+            <span>Live</span>
+            <ExternalLink size={11} />
           </a>
+
+          {/* Save & Publish Live Button */}
           <button
             type="button"
-            className="adm-btn adm-btn--primary"
             style={{
-              padding: '.45rem 1.3rem',
+              height: '30px',
+              padding: '0 12px',
               fontWeight: 800,
-              fontSize: '.85rem',
-              boxShadow: isDirty ? '0 0 20px rgba(22, 163, 74, 0.6)' : 'none',
+              fontSize: '12px',
+              background: isDirty ? 'linear-gradient(135deg, #22c55e, #15803d)' : 'linear-gradient(135deg, #16a34a, #15803d)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              boxShadow: isDirty ? '0 0 14px rgba(34, 197, 94, 0.55)' : '0 2px 6px rgba(0,0,0,0.3)',
               animation: isDirty ? 'pulse 2s infinite' : 'none',
+              whiteSpace: 'nowrap',
             }}
             onClick={handleSaveAll}
           >
-            💾 Save &amp; Publish Live {isDirty && '● (Unsaved)'}
+            <Check size={13} strokeWidth={3} />
+            <span>{isDirty ? 'Publish ●' : 'Saved'}</span>
           </button>
         </div>
       </div>
@@ -673,7 +1072,7 @@ export default function ServicePageLiveEditor() {
         >
           {/* Simulated Browser URL bar on mobile view */}
           {previewDevice === 'mobile' && (
-            <div style={{ background: '#0f172a', padding: '.6rem 1rem', display: 'flex', alignItems: 'center', gap: '.5rem', color: '#94a3b8', fontSize: '.7rem', fontFamily: 'monospace' }}>
+            <div style={{ background: '#0f172a', padding: '.6rem 1rem', display: 'flex', alignItems: 'center', gap: '.5rem', color: '#94a3b8', fontSize: 'var(--font-size-h3)', fontFamily: 'monospace' }}>
               <span>🔒 https://atozpestcontrol.in{svcData.path || `/${svcData.slug}`}</span>
             </div>
           )}
@@ -710,7 +1109,7 @@ export default function ServicePageLiveEditor() {
                   border: '1px solid rgba(255, 255, 255, 0.3)',
                   borderRadius: '20px',
                   padding: '.4rem .85rem',
-                  fontSize: '.75rem',
+                  fontSize: 'var(--font-size-h3)',
                   fontWeight: 700,
                   display: 'flex',
                   alignItems: 'center',
@@ -779,7 +1178,7 @@ export default function ServicePageLiveEditor() {
                       justifyContent: 'center',
                       color: '#fff',
                       opacity: 0.9,
-                      fontSize: '.65rem',
+                      fontSize: 'var(--font-size-h3)',
                       fontWeight: 700,
                       gap: '.2rem',
                     }}
@@ -891,7 +1290,7 @@ export default function ServicePageLiveEditor() {
                   {/* ── WARNING SIGNS (INLINE EDITABLE LIST) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                      <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
                         <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} />
                         <span
                           contentEditable={true}
@@ -906,7 +1305,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('signs', 'New warning sign observed in property...')}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: '.72rem', padding: '.25rem .65rem' }}
+                        style={{ fontSize: 'var(--font-size-h2)', padding: '.25rem .65rem' }}
                       >
                         + Add Sign
                       </button>
@@ -920,13 +1319,13 @@ export default function ServicePageLiveEditor() {
                             contentEditable={true}
                             suppressContentEditableWarning
                             onBlur={(e) => updateArrayItem('signs', i, null, e.currentTarget.innerHTML)}
-                            style={{ flex: 1, outline: 'none', cursor: 'text', fontSize: '.88rem', color: 'var(--clr-text)' }}
+                            style={{ flex: 1, outline: 'none', cursor: 'text', fontSize: 'var(--font-size-h3)', color: 'var(--clr-text)' }}
                             title="Click to edit sign text"
                            dangerouslySetInnerHTML={{ __html: s }} />
                           <button
                             type="button"
                             onClick={() => removeArrayItem('signs', i)}
-                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '.8rem', fontWeight: 800, opacity: 0.7 }}
+                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.7 }}
                             title="Delete this sign"
                           >
                             ✕
@@ -939,7 +1338,7 @@ export default function ServicePageLiveEditor() {
                   {/* ── 5-STEP PROCESS (INLINE EDITABLE) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--clr-text)' }}>
+                      <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -953,7 +1352,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('process', { step: (svcData.process?.length || 0) + 1, title: 'New Process Phase', desc: 'Detailed description of this treatment step.' })}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: '.72rem', padding: '.25rem .65rem' }}
+                        style={{ fontSize: 'var(--font-size-h2)', padding: '.25rem .65rem' }}
                       >
                         + Add Step
                       </button>
@@ -970,21 +1369,21 @@ export default function ServicePageLiveEditor() {
                               contentEditable={true}
                               suppressContentEditableWarning
                               onBlur={(e) => updateArrayItem('process', i, 'title', e.currentTarget.innerHTML)}
-                              style={{ display: 'block', fontSize: '1rem', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', marginBottom: '.25rem' }}
+                              style={{ display: 'block', fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', marginBottom: '.25rem' }}
                               title="Click to edit step title"
                              dangerouslySetInnerHTML={{ __html: step.title }} />
                             <p
                               contentEditable={true}
                               suppressContentEditableWarning
                               onBlur={(e) => updateArrayItem('process', i, 'desc', e.currentTarget.innerHTML)}
-                              style={{ fontSize: '.88rem', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
+                              style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
                               title="Click to edit step description"
                              dangerouslySetInnerHTML={{ __html: step.desc }} />
                           </div>
                           <button
                             type="button"
                             onClick={() => removeArrayItem('process', i)}
-                            style={{ position: 'absolute', top: '.6rem', right: '.6rem', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '.8rem', fontWeight: 800, opacity: 0.6 }}
+                            style={{ position: 'absolute', top: '.6rem', right: '.6rem', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.6 }}
                             title="Delete this step"
                           >
                             ✕
@@ -997,7 +1396,7 @@ export default function ServicePageLiveEditor() {
                   {/* ── FREQUENTLY ASKED QUESTIONS (FAQS) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--clr-text)' }}>
+                      <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1011,7 +1410,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('faqs', { q: 'New Customer Question?', a: 'Detailed informative answer for clients.' })}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: '.72rem', padding: '.25rem .65rem' }}
+                        style={{ fontSize: 'var(--font-size-h2)', padding: '.25rem .65rem' }}
                       >
                         + Add FAQ
                       </button>
@@ -1025,13 +1424,13 @@ export default function ServicePageLiveEditor() {
                               contentEditable={true}
                               suppressContentEditableWarning
                               onBlur={(e) => updateArrayItem('faqs', i, 'q', e.currentTarget.innerHTML)}
-                              style={{ fontSize: '.92rem', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', flex: 1 }}
+                              style={{ fontSize: 'var(--font-size-h2)', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', flex: 1 }}
                               title="Click to edit Question"
                              dangerouslySetInnerHTML={{ __html: faq.q }} />
                             <button
                               type="button"
                               onClick={() => removeArrayItem('faqs', i)}
-                              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '.8rem', fontWeight: 800, opacity: 0.6 }}
+                              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.6 }}
                               title="Delete this FAQ"
                             >
                               ✕
@@ -1041,7 +1440,7 @@ export default function ServicePageLiveEditor() {
                             contentEditable={true}
                             suppressContentEditableWarning
                             onBlur={(e) => updateArrayItem('faqs', i, 'a', e.currentTarget.innerHTML)}
-                            style={{ fontSize: '.85rem', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
+                            style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
                             title="Click to edit Answer"
                            dangerouslySetInnerHTML={{ __html: faq.a }} />
                         </div>
@@ -1056,12 +1455,12 @@ export default function ServicePageLiveEditor() {
                   
                   {/* Quick Booking & Pricing Card */}
                   <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}>
-                    <div style={{ fontSize: '.75rem', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
+                    <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
                       Pricing &amp; Specs
                     </div>
                     
                     <div style={{ marginTop: '.75rem', display: 'flex', alignItems: 'baseline', gap: '.4rem' }}>
-                      <span style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--clr-text)' }}>
+                      <span style={{ fontSize: 'var(--font-size-h2)', fontWeight: 900, color: 'var(--clr-text)' }}>
                         ₹
                         <span
                           contentEditable={true}
@@ -1073,11 +1472,11 @@ export default function ServicePageLiveEditor() {
                           {svcData.specs?.startingPrice || 2500}
                         </span>
                       </span>
-                      <span style={{ fontSize: '.78rem', color: 'var(--clr-text-muted)' }}>starting price</span>
+                      <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>starting price</span>
                     </div>
 
                     <div style={{ marginTop: '1rem', display: 'grid', gap: '.6rem', borderTop: '1px solid #f1f5f9', paddingTop: '1rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)' }}>
                         <span 
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1096,7 +1495,7 @@ export default function ServicePageLiveEditor() {
                           {svcData.specs?.duration || '3-4 Hours'}
                         </strong>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)' }}>
                         <span 
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1115,7 +1514,7 @@ export default function ServicePageLiveEditor() {
                           {svcData.specs?.warranty || '5 Years'}
                         </strong>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)' }}>
                         <span style={{ color: 'var(--clr-text-muted)' }}>Safety:</span>
                         <span style={{ color: '#16a34a', fontWeight: 700 }}>100% Eco-Safe</span>
                       </div>
@@ -1125,7 +1524,7 @@ export default function ServicePageLiveEditor() {
                   {/* Benefits Card (Inline Editable) */}
                   <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(22,163,74,0.15)', boxShadow: '0 4px 16px rgba(0,0,0,0.04)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h4 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--clr-text)' }}>
+                      <h4 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1139,7 +1538,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('benefits', 'New proven benefit...')}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: '.7rem', padding: '.2rem .55rem' }}
+                        style={{ fontSize: 'var(--font-size-h3)', padding: '.2rem .55rem' }}
                       >
                         + Add
                       </button>
@@ -1147,7 +1546,7 @@ export default function ServicePageLiveEditor() {
 
                     <div style={{ display: 'grid', gap: '.65rem' }}>
                       {(svcData.benefits || []).map((b, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', fontSize: '.85rem' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', fontSize: 'var(--font-size-h3)' }}>
                           <CheckCircle2 size={14} style={{ color: 'var(--clr-primary)', flexShrink: 0 }} />
                           <span
                             contentEditable={true}
@@ -1159,7 +1558,7 @@ export default function ServicePageLiveEditor() {
                           <button
                             type="button"
                             onClick={() => removeArrayItem('benefits', idx)}
-                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '.75rem', fontWeight: 800, opacity: 0.6 }}
+                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.6 }}
                           >
                             ✕
                           </button>
@@ -1251,7 +1650,7 @@ export default function ServicePageLiveEditor() {
                         key={p.path}
                         type="button"
                         className={`adm-chip ${imageModal.currentUrl === p.path ? 'active' : ''}`}
-                        style={{ fontSize: '.7rem', padding: '.25rem .6rem' }}
+                        style={{ fontSize: 'var(--font-size-h3)', padding: '.25rem .6rem' }}
                         onClick={() => setImageModal({ ...imageModal, currentUrl: p.path, currentAlt: `${p.label} in Bangalore` })}
                       >
                         {p.label}
@@ -1291,7 +1690,7 @@ export default function ServicePageLiveEditor() {
                     onChange={(e) => updateText('meta.title', e.target.value)}
                     placeholder="e.g. Termite Treatment in Bangalore | A to Z Pest Solutions"
                   />
-                  <span style={{ fontSize: '.68rem', color: 'var(--a-muted)', marginTop: '.2rem' }}>
+                  <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem' }}>
                     {svcData.meta?.title?.length || 0} / 60 recommended characters
                   </span>
                 </div>
@@ -1305,7 +1704,7 @@ export default function ServicePageLiveEditor() {
                     onChange={(e) => updateText('meta.desc', e.target.value)}
                     placeholder="Search engine snippet description (150–160 characters)..."
                   />
-                  <span style={{ fontSize: '.68rem', color: 'var(--a-muted)', marginTop: '.2rem' }}>
+                  <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem' }}>
                     {svcData.meta?.desc?.length || 0} / 160 recommended characters
                   </span>
                 </div>

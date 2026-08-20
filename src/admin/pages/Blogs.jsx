@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { getBlogs, saveBlog, deleteBlog, getSettings, saveSettings } from '../adminData'
 import ModalPortal from '../ModalPortal'
-import ReactMarkdown from 'react-markdown'
 import toast from 'react-hot-toast'
+import BlogWYSIWYG from './BlogWYSIWYG'
 
 const EMPTY_BLOG = { id: '', title: '', slug: '', excerpt: '', metaDesc: '', metaKeywords: '', content: '', status: 'draft', image: '', imageAlt: '' }
 
@@ -15,17 +15,14 @@ export default function Blogs() {
   const [settingsModal, setSettingsModal] = useState(false)
   const [apiKey, setApiKey] = useState(getSettings().groqApiKey || '')
   
-  const [aiConfig, setAiConfig] = useState({ keywords: '', instructions: '' })
-  const [generating, setGenerating] = useState(false)
-  const [previewExpanded, setPreviewExpanded] = useState(false)
-  const [activeTab, setActiveTab] = useState('editor') // 'ai', 'editor', 'seo', 'preview'
+
 
   const filtered = blogs.filter(b => {
     return !search || b.title?.toLowerCase().includes(search.toLowerCase()) || b.slug?.toLowerCase().includes(search.toLowerCase())
   })
 
-  function openNew() { setForm(EMPTY_BLOG); setAiConfig({ keywords: '', instructions: '' }); setActiveTab('editor'); setModal(true) }
-  function openEdit(b) { setForm({ ...b }); setActiveTab('editor'); setModal(true) }
+  function openNew() { setForm(EMPTY_BLOG); setModal(true) }
+  function openEdit(b) { setForm({ ...b }); setModal(true) }
   function closeModal() { setModal(false) }
 
   function handleSave(status = 'published') {
@@ -42,95 +39,33 @@ export default function Blogs() {
     setSettingsModal(false)
   }
 
-  async function generateAIBlog() {
-    const fallback = 'gsk_' + '6fAagdkfvEAttJwP4iEo' + 'WGdyb3FYthGCrFqeW01M' + 'AcvasapNEYiO'
-    const key = getSettings().groqApiKey || fallback
-    if (!key) {
-      toast.error("Please configure your Groq API Key in Settings first.")
-      return
-    }
-    if (!aiConfig.keywords) {
-      toast.error("Please enter some keywords or a topic.")
-      return
-    }
-
-    setGenerating(true)
-    const prompt = `Write a comprehensive, professional, and SEO-optimized blog post for a pest control company in Bangalore. 
-    The blog should be between 1200 to 1800 words. 
-    Topic/Keywords: ${aiConfig.keywords}. 
-    Additional Instructions: ${aiConfig.instructions || 'Keep it informative, engaging, and professional.'}
-    CRITICAL INSTRUCTION: You must strictly structure the blog using proper semantic markdown headings. Start with exactly one super cool, highly clickable, SEO-optimized H1 title at the very beginning (format exactly as "# Your SEO Title Here"). 
-    Throughout the body, use proper H2 (##) and H3 (###) headings to break up sections logically.
-    Whenever appropriate, include markdown image placeholders with highly descriptive SEO alt text, like: ![Descriptive Alt Text About Pest Control](https://placehold.co/800x400/15803d/ffffff?text=Image+Placeholder). 
-    Use bullet points and a strong conclusion. Do not include any conversational filler like "Here is your blog post", output ONLY the markdown content.`
-
-    try {
-      const res = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${key}`
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [{ role: 'user', content: prompt }],
-          temperature: 0.7,
-          max_tokens: 8192
-        })
-      })
-
-      const data = await res.json()
-      if (data.error) throw new Error(data.error.message)
-      
-      const text = data.choices[0].message.content
-      
-      const lines = text.split('\n')
-      let extractedTitle = ''
-      let cleanContent = text
-
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].startsWith('# ')) {
-          extractedTitle = lines[i].replace('# ', '').trim()
-          cleanContent = lines.slice(i + 1).join('\n').trim()
-          break
-        }
-      }
-
-      const excerpt = cleanContent.substring(0, 150).replace(/[#*]/g, '') + '...'
-
-      setForm(prev => ({
-        ...prev,
-        title: extractedTitle || prev.title || 'AI Generated Blog',
-        content: cleanContent,
-        excerpt: prev.excerpt || excerpt
-      }))
-      
-      setActiveTab('editor')
-      toast.success("Blog generated successfully!")
-    } catch (err) {
-      toast.error("Generation failed: " + err.message)
-    } finally {
-      setGenerating(false)
-    }
-  }
-
-  const extractImages = (content) => {
+  const extractHtmlImages = (content) => {
     if (!content) return []
-    const regex = /!\[([^\]]*)\]\(([^)]+)\)/g
+    const regex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi
     const images = []
     let match
     while ((match = regex.exec(content)) !== null) {
-      images.push({ full: match[0], alt: match[1], url: match[2] })
+      const fullTag = match[0]
+      const url = match[1]
+      let alt = ''
+      const altMatch = fullTag.match(/alt=["']([^"']*)["']/)
+      if (altMatch) alt = altMatch[1]
+      images.push({ full: fullTag, alt, url })
     }
     return images
   }
 
-  const handleAltChange = (oldFull, newAlt, url) => {
-    const newFull = `![${newAlt}](${url})`
+  const handleHtmlAltChange = (oldFull, newAlt, url) => {
+    let newFull = oldFull
+    if (oldFull.match(/alt=["'][^"']*["']/)) {
+      newFull = oldFull.replace(/alt=["'][^"']*["']/, `alt="${newAlt}"`)
+    } else {
+      newFull = oldFull.replace('<img', `<img alt="${newAlt}"`)
+    }
     setForm(f => ({ ...f, content: f.content.replace(oldFull, newFull) }))
   }
-  
-  const contentImages = extractImages(form.content)
+
+  const contentImages = extractHtmlImages(form.content)
 
   return (
     <div>
@@ -252,162 +187,68 @@ export default function Blogs() {
       {modal && (
         <ModalPortal>
           <div className="adm-modal-overlay" onClick={e => e.target === e.currentTarget && closeModal()}>
-            <div className="adm-modal" style={{ maxWidth: 880 }}>
-              <div className="adm-modal__header">
-                <span className="adm-modal__title">{form.id ? 'Edit Blog Article' : 'AI Blog Generator & Editor'}</span>
+            <div className="adm-modal" style={{ maxWidth: 1200, width: '95vw', maxHeight: '92vh', display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden' }}>
+              <div className="adm-modal__header" style={{ padding: '1rem 1.5rem', borderBottom: '1px solid var(--a-border)' }}>
+                <span className="adm-modal__title">{form.id ? 'Edit Blog Article' : 'Write Blog Article'}</span>
                 <button className="adm-modal__close" onClick={closeModal} aria-label="Close modal">✕</button>
               </div>
 
-              {/* Tabs for easy switching on Mobile and Desktop */}
-              <div className="adm-filter-chips" style={{ marginBottom: '.85rem' }}>
-                <button className={`adm-chip ${activeTab === 'editor' ? 'active' : ''}`} onClick={() => setActiveTab('editor')}>
-                  📝 Content &amp; Details
-                </button>
-                <button className={`adm-chip ${activeTab === 'ai' ? 'active' : ''}`} onClick={() => setActiveTab('ai')}>
-                  ✨ AI Generator
-                </button>
-                <button className={`adm-chip ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>
-                  🔍 SEO &amp; Images
-                </button>
-                <button className={`adm-chip ${activeTab === 'preview' ? 'active' : ''}`} onClick={() => setActiveTab('preview')}>
-                  👁️ Live Preview
-                </button>
+              <div className="adm-modal__body" style={{ padding: '1.25rem 1.5rem', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                
+                {/* 1. Core Details & SEO */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="adm-form-group">
+                    <label className="adm-label">Blog Title *</label>
+                    <input className="adm-input" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="e.g. 5 Warning Signs of Bed Bug Infestation" />
+                  </div>
+                  <div className="adm-form-group">
+                    <label className="adm-label">URL Slug</label>
+                    <input className="adm-input" value={form.slug || ''} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} placeholder="5-warning-signs-bed-bug-infestation" />
+                  </div>
+                  <div className="adm-form-group" style={{ gridColumn: '1 / -1' }}>
+                    <label className="adm-label">Excerpt / Summary</label>
+                    <input className="adm-input" value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} placeholder="Brief summary of the article for blog list..." />
+                  </div>
+                </div>
+
+                {/* Image Previews */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', padding: '1rem', background: 'var(--a-card2)', borderRadius: '10px', border: '1px solid var(--a-border)' }}>
+                  <div style={{ padding: '0.75rem', background: 'var(--a-card)', borderRadius: '10px', border: '1px solid var(--a-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '12px', color: 'var(--a-green2)', fontWeight: 600, display: 'block' }}>Cover Image</span>
+                    {form.image && <img src={form.image} alt="Cover" style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '6px' }} />}
+                    <input className="adm-input" style={{ fontSize: '12px', padding: '0.35rem 0.5rem' }} value={form.image || ''} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} placeholder="Cover Image URL..." />
+                    <textarea className="adm-input" style={{ fontSize: '12px', padding: '0.35rem 0.5rem', resize: 'vertical', minHeight: '60px' }} value={form.imageAlt || ''} onChange={e => setForm(f => ({ ...f, imageAlt: e.target.value }))} placeholder="Cover Alt Text..." />
+                  </div>
+                  {contentImages.map((img, idx) => (
+                    <div key={idx} style={{ padding: '0.75rem', background: 'var(--a-card)', borderRadius: '10px', border: '1px solid var(--a-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <span style={{ fontSize: '12px', color: 'var(--a-muted)', fontWeight: 600, display: 'block' }}>In-Content Image {idx + 1}</span>
+                      <img src={img.url} alt="Content" style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '6px' }} />
+                      <textarea className="adm-input" style={{ fontSize: '12px', padding: '0.35rem 0.5rem', resize: 'vertical', minHeight: '60px' }} value={img.alt} onChange={e => handleHtmlAltChange(img.full, e.target.value, img.url)} placeholder="Image Alt Text..." />
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1, minHeight: '500px' }}>
+                  <label className="adm-label" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0' }}>
+                    <span>Rich Text Editor</span>
+                    <span style={{ textTransform: 'none', fontWeight: 500, color: 'var(--a-muted)' }}>
+                      {form.content?.replace(/<[^>]*>?/gm, '').split(/\s+/).filter(w => w.length > 0).length || 0} words
+                    </span>
+                  </label>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <BlogWYSIWYG 
+                      initialContent={form.content} 
+                      onChange={(html) => setForm(f => ({ ...f, content: html }))} 
+                    />
+                  </div>
+                </div>
+
               </div>
 
-              <div className="adm-modal__body">
-                {activeTab === 'ai' && (
-                  <div style={{ background: 'var(--a-card2)', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(22,163,74,0.2)' }}>
-                    <div style={{ fontSize: '.8rem', fontWeight: 800, color: 'var(--a-green2)', marginBottom: '.75rem', display: 'flex', alignItems: 'center', gap: '.4rem' }}>
-                      ✨ AI Writer Assistant (Groq LLM)
-                    </div>
-                    <div className="adm-form-group" style={{ marginBottom: '.65rem' }}>
-                      <label className="adm-label">Keywords / Topic *</label>
-                      <input className="adm-input" value={aiConfig.keywords} onChange={e => setAiConfig(p => ({ ...p, keywords: e.target.value }))} placeholder="e.g. Signs of termite infestation in Bangalore apartments" />
-                    </div>
-                    <div className="adm-form-group" style={{ marginBottom: '1rem' }}>
-                      <label className="adm-label">Extra Instructions (Optional)</label>
-                      <textarea className="adm-textarea" style={{ minHeight: '55px' }} value={aiConfig.instructions} onChange={e => setAiConfig(p => ({ ...p, instructions: e.target.value }))} placeholder="e.g. Include monsoon tips and eco-friendly remedies..." />
-                    </div>
-                    <button 
-                      className="adm-btn adm-btn--primary" 
-                      style={{ width: '100%', minHeight: '44px' }} 
-                      onClick={generateAIBlog}
-                      disabled={generating}
-                    >
-                      {generating ? '✨ Generating Blog Content...' : form.content ? 'Regenerate Content' : 'Generate Blog Post'}
-                    </button>
-                  </div>
-                )}
-
-                {activeTab === 'editor' && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
-                    <div className="adm-form-group">
-                      <label className="adm-label">Blog Title *</label>
-                      <input className="adm-input" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="e.g. 5 Warning Signs of Bed Bug Infestation" />
-                    </div>
-                    <div className="adm-form-group">
-                      <label className="adm-label">URL Slug</label>
-                      <input className="adm-input" value={form.slug || ''} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} placeholder="5-warning-signs-bed-bug-infestation" />
-                    </div>
-                    <div className="adm-form-group">
-                      <label className="adm-label">Excerpt / Summary</label>
-                      <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} placeholder="Brief summary of the article for blog list..." />
-                    </div>
-                    <div className="adm-form-group">
-                      <label className="adm-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span>Markdown Content</span>
-                        <span style={{ textTransform: 'none', fontWeight: 500, color: 'var(--a-muted)' }}>{form.content?.split(' ').length || 0} words</span>
-                      </label>
-                      <textarea 
-                        className="adm-textarea" 
-                        style={{ minHeight: '220px', fontFamily: 'monospace', fontSize: '.8rem' }} 
-                        value={form.content} 
-                        onChange={e => setForm(f => ({ ...f, content: e.target.value }))} 
-                        placeholder="# Heading&#10;&#10;Write markdown blog content here..."
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'seo' && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
-                    <div className="adm-form-group">
-                      <label className="adm-label">Cover Image URL</label>
-                      <input className="adm-input" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} placeholder="https://..." />
-                    </div>
-                    <div className="adm-form-group">
-                      <label className="adm-label">Cover Image Alt Text (SEO)</label>
-                      <input className="adm-input" value={form.imageAlt || ''} onChange={e => setForm(f => ({ ...f, imageAlt: e.target.value }))} placeholder="Alt text describing cover image..." />
-                    </div>
-                    <div className="adm-form-group">
-                      <label className="adm-label">Meta Description (Google Snippet)</label>
-                      <textarea className="adm-textarea" style={{ minHeight: '50px' }} value={form.metaDesc || ''} onChange={e => setForm(f => ({ ...f, metaDesc: e.target.value }))} placeholder="150-160 character description..." />
-                    </div>
-                    <div className="adm-form-group">
-                      <label className="adm-label">Meta Keywords</label>
-                      <input className="adm-input" value={form.metaKeywords || ''} onChange={e => setForm(f => ({ ...f, metaKeywords: e.target.value }))} placeholder="pest control bangalore, bed bugs treatment..." />
-                    </div>
-
-                    {contentImages.length > 0 && (
-                      <div style={{ marginTop: '.5rem', borderTop: '1px solid var(--a-border)', paddingTop: '.75rem' }}>
-                        <div className="adm-label" style={{ marginBottom: '.5rem' }}>In-Content Image Alt Tags</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-                          {contentImages.map((img, idx) => (
-                            <div key={idx} style={{ padding: '.5rem', background: 'var(--a-card2)', borderRadius: '8px', border: '1px solid var(--a-border)' }}>
-                              <span style={{ fontSize: '.68rem', color: 'var(--a-muted)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{img.url}</span>
-                              <input 
-                                className="adm-input" 
-                                style={{ marginTop: '.25rem' }}
-                                value={img.alt} 
-                                onChange={e => handleAltChange(img.full, e.target.value, img.url)} 
-                                placeholder="Alt text..." 
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {activeTab === 'preview' && (
-                  <div style={{ background: 'var(--a-card2)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--a-border)', minHeight: '220px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '.75rem' }}>
-                      <span className="adm-label">Markdown Live Render</span>
-                      <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => setPreviewExpanded(true)}>⛶ Fullscreen</button>
-                    </div>
-                    {form.content ? (
-                      <div className="blog-preview-content" style={{ fontSize: '.84rem', lineHeight: 1.6, color: 'var(--a-text)' }}>
-                        <ReactMarkdown>{form.content}</ReactMarkdown>
-                      </div>
-                    ) : (
-                      <div className="adm-empty"><div className="adm-empty__text">No content written yet</div></div>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              <div className="adm-modal__footer">
+              <div className="adm-modal__footer" style={{ padding: '1rem 1.5rem', borderTop: '1px solid var(--a-border)', background: 'var(--a-card)', display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: 0 }}>
                 <button className="adm-btn adm-btn--ghost" onClick={closeModal}>Cancel</button>
                 <button className="adm-btn adm-btn--outline" onClick={() => handleSave('draft')}>Save Draft</button>
                 <button className="adm-btn adm-btn--primary" onClick={() => handleSave('published')}>Publish</button>
-              </div>
-            </div>
-          </div>
-        </ModalPortal>
-      )}
-
-      {/* Expanded Preview Modal */}
-      {previewExpanded && (
-        <ModalPortal>
-          <div className="adm-modal-overlay" onClick={e => e.target === e.currentTarget && setPreviewExpanded(false)} style={{ zIndex: 2000000 }}>
-            <div className="adm-modal" style={{ maxWidth: 900, width: '95%', height: '88vh', maxHeight: '88vh', display: 'flex', flexDirection: 'column', padding: 0 }}>
-              <div className="adm-modal__header" style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--a-border)' }}>
-                <span className="adm-modal__title">Full Screen Article Preview</span>
-                <button className="adm-modal__close" onClick={() => setPreviewExpanded(false)}>✕</button>
-              </div>
-              <div className="blog-preview-content" style={{ flex: 1, overflowY: 'auto', padding: '1.25rem 1.5rem', fontSize: '.95rem', color: 'var(--a-text)', lineHeight: 1.8, background: 'var(--a-bg)' }}>
-                <ReactMarkdown>{form.content}</ReactMarkdown>
               </div>
             </div>
           </div>

@@ -35,10 +35,10 @@ export default function AdminLogin({ onSuccess }) {
         <div className="adm-login__logo">
           <div className="adm-login__logo-icon">🐛</div>
           <div>
-            <div style={{ fontSize: '.68rem', fontWeight: 800, color: 'var(--a-green2)', letterSpacing: '.12em', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-green2)', letterSpacing: '.12em', textTransform: 'uppercase' }}>
               A to Z Pest Solutions
             </div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--a-text)', letterSpacing: '-0.01em' }}>
+            <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-text)', letterSpacing: '-0.01em' }}>
               Admin Portal
             </div>
           </div>

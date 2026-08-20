@@ -45,8 +45,8 @@ export default function Orders({ onStatsChange }) {
       {/* Header & New Order Action */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: '1.2rem' }}>📋 Customer Orders</h1>
-          <p style={{ fontSize: '.75rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>📋 Customer Orders</h1>
+          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Manage bookings, schedule dates, and payment status.
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function Orders({ onStatsChange }) {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--a-muted)" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input placeholder="Search by name, phone, ID, area…" value={search} onChange={e => setSearch(e.target.value)} />
           {search && (
-            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: '.9rem' }}>✕</button>
+            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: 'var(--font-size-h3)' }}>✕</button>
           )}
         </div>
 
@@ -82,7 +82,7 @@ export default function Orders({ onStatsChange }) {
                 onClick={() => setFilter(s)}
               >
                 <span style={{ textTransform: 'capitalize' }}>{s}</span>
-                {count > 0 && <span style={{ opacity: 0.8, fontSize: '.65rem' }}>({count})</span>}
+                {count > 0 && <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({count})</span>}
               </button>
             )
           })}
@@ -102,14 +102,14 @@ export default function Orders({ onStatsChange }) {
                   ? <tr><td colSpan={8}><div className="adm-empty"><div className="adm-empty__icon">📋</div><div className="adm-empty__text">No orders found</div></div></td></tr>
                   : filtered.map(o => (
                     <tr key={o.id}>
-                      <td style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace', fontSize: '.76rem' }}>{o.id}</td>
+                      <td style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace', fontSize: 'var(--font-size-h3)' }}>{o.id}</td>
                       <td>
-                        <div style={{ fontWeight: 600, fontSize: '.84rem' }}>{o.customer}</div>
-                        <div style={{ fontSize: '.7rem', color: 'var(--a-muted)' }}>{o.phone}</div>
+                        <div style={{ fontWeight: 600, fontSize: 'var(--font-size-h3)' }}>{o.customer}</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)' }}>{o.phone}</div>
                       </td>
-                      <td style={{ fontSize: '.8rem' }}>{o.service}</td>
-                      <td style={{ fontSize: '.8rem' }}>{o.area || '—'}</td>
-                      <td style={{ fontSize: '.74rem', color: 'var(--a-muted)' }}>{o.date}<br/>{o.time}</td>
+                      <td style={{ fontSize: 'var(--font-size-h3)' }}>{o.service}</td>
+                      <td style={{ fontSize: 'var(--font-size-h3)' }}>{o.area || '—'}</td>
+                      <td style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)' }}>{o.date}<br/>{o.time}</td>
                       <td style={{ fontWeight: 700 }}>₹{Number(o.amount).toLocaleString('en-IN')}</td>
                       <td><span className={`adm-badge adm-badge--${STATUS_COLOR[o.status] || 'gray'}`}>{o.status}</span></td>
                       <td>
@@ -140,7 +140,7 @@ export default function Orders({ onStatsChange }) {
               <div key={o.id} className="adm-mobile-card">
                 <div className="adm-mobile-card__header">
                   <div>
-                    <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: '.8rem' }}>{o.id}</span>
+                    <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: 'var(--font-size-h3)' }}>{o.id}</span>
                     <div className="adm-mobile-card__title" style={{ marginTop: '.2rem' }}>{o.customer}</div>
                   </div>
                   <span className={`adm-badge adm-badge--${STATUS_COLOR[o.status] || 'gray'}`}>{o.status}</span>
@@ -166,7 +166,7 @@ export default function Orders({ onStatsChange }) {
                 </div>
 
                 {o.address && (
-                  <div style={{ fontSize: '.72rem', color: 'var(--a-muted)', background: 'var(--a-card2)', padding: '.35rem .6rem', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
+                  <div style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)', background: 'var(--a-card2)', padding: '.35rem .6rem', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
                     📍 {o.address}
                   </div>
                 )}
@@ -235,7 +235,7 @@ export default function Orders({ onStatsChange }) {
           <div className="adm-modal-overlay">
             <div className="adm-modal" style={{ maxWidth: 360 }}>
               <div className="adm-modal__title" style={{ marginBottom: '.75rem' }}>Delete Order?</div>
-              <p style={{ fontSize: '.82rem', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>This action cannot be undone.</p>
+              <p style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>This action cannot be undone.</p>
               <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'flex-end' }}>
                 <button className="adm-btn adm-btn--ghost" onClick={() => setDel(null)}>Cancel</button>
                 <button className="adm-btn adm-btn--danger" onClick={() => handleDelete(del)}>Delete</button>

@@ -1,6 +1,6 @@
 .stats-section {
   position: relative;
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  padding-block: var(--section-py);
   overflow: clip;
   background: var(--clr-bg);
 }
@@ -19,30 +19,51 @@
 
 .stat-card {
   background: #fff;
-  padding: 2rem 1.25rem;
-  display: flex; flex-direction: column;
-  align-items: center; text-align: center; gap: 0.3rem;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem) 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.35rem;
   border-right: 1px solid var(--clr-border);
   border-bottom: 1px solid var(--clr-border);
-  transition: background var(--transition);
+  transition: background var(--transition), transform var(--transition);
   cursor: default;
+  height: 100%;
+  box-sizing: border-box;
 }
 .stat-card:hover { background: var(--clr-surface-2); }
 
 .stat-card__value {
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-size: var(--font-size-h3);
   font-weight: 800;
   background: linear-gradient(135deg, var(--clr-primary), #22c55e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1;
+  line-height: 1.1;
+  text-align: center;
+  margin: 0 auto;
 }
+
 .stat-card__label {
-  font-size: 0.82rem; font-weight: 700;
-  color: var(--clr-text); margin-top: 0.2rem;
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: var(--clr-text);
+  margin-top: 0.2rem;
+  text-align: center;
+  line-height: 1.35;
+  margin-inline: auto;
+  max-width: 200px;
 }
+
 .stat-card__desc {
-  font-size: 0.72rem; color: var(--clr-text-dim); line-height: 1.4;
+  font-size: var(--font-size-h3);
+  color: var(--clr-text-dim);
+  line-height: 1.4;
+  text-align: center;
+  margin-inline: auto;
+  max-width: 190px;
 }

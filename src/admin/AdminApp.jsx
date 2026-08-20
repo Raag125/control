@@ -12,6 +12,7 @@ import Visitors    from './pages/Visitors'
 import Services    from './pages/Services'
 import ServicePageLiveEditor from './pages/ServicePageLiveEditor'
 import Blogs       from './pages/Blogs'
+import BlogGenerator from './pages/BlogGenerator'
 import Reviews     from './pages/Reviews'
 import Images      from './pages/Images'
 import Clients     from './pages/Clients'
@@ -44,6 +45,7 @@ export default function AdminApp() {
     if (pathname.includes('/visitors')) return <Visitors />
     if (pathname.includes('/services-content')) return <ServicePageLiveEditor />
     if (pathname.includes('/services')) return <Services />
+    if (pathname.includes('/blogs-generator')) return <BlogGenerator />
     if (pathname.includes('/blogs')) return <Blogs />
     if (pathname.includes('/reviews')) return <Reviews />
     if (pathname.includes('/images')) return <Images />

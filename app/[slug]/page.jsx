@@ -8,7 +8,7 @@ import { getServiceBySlug } from '../../src/data/servicesData'
 // ISR: revalidate pages every 30 seconds so admin changes appear quickly
 export const revalidate = 30
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://navneetnamdev191_db_user:mZMtHM1NNvQdfos9@cluster0.5s6gngc.mongodb.net/pest_control?retryWrites=true&w=majority'
+const MONGODB_URI = process.env.MONGODB_URI
 
 async function getServiceFromDB(slug) {
   try {

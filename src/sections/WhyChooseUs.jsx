@@ -33,10 +33,10 @@ export default function WhyChooseUs() {
         <div className="section-header">
           <div className="eyebrow" aria-hidden="true">🏆 Why Choose Us</div>
           <h2 id="why-heading" className="display-lg">
-            Why 18,000+ Bangalore Families Choose <span className="gradient-text">A to Z</span>
+            Why 50,000+ Bengaluru Families Choose <span className="gradient-text">A to Z pest Solutions</span>
           </h2>
           <p>
-            Not all pest control is equal. Our combination of 30+ years of expertise, certified-safe chemicals, highly trained technicians, and industry-leading warranties makes us Bangalore's most trusted pest management company.
+            Effective pest control requires experience, the right approach, and reliable service. With 30+ years of experience, trained professionals, customer-focused treatments, and warranty-backed support, A to Z Pest Solutions provides dependable pest protection across Bengaluru.
           </p>
         </div>
 

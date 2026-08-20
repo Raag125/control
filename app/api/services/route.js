@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { MongoClient } from 'mongodb'
 import { SERVICES_DATA } from '../../../src/data/servicesData'
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://navneetnamdev191_db_user:mZMtHM1NNvQdfos9@cluster0.5s6gngc.mongodb.net/pest_control?retryWrites=true&w=majority'
+const MONGODB_URI = process.env.MONGODB_URI
 
 let cachedClient = null
 let cachedDb = null

@@ -65,9 +65,14 @@ export default function ResidentialCommercial() {
                 </li>
               ))}
             </ul>
-            <Link href="/contact" className="btn btn-primary rc-card__cta" aria-label="Book residential pest control">
-              Book Home Inspection
-            </Link>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', paddingTop: '1.25rem', flexWrap: 'wrap' }}>
+              <Link href="/residential-pest-control" className="btn btn-primary rc-card__cta" style={{ flex: '1 1 140px', justifyContent: 'center' }} aria-label="Learn more about residential pest control">
+                Learn More
+              </Link>
+              <Link href="/contact" className="btn btn-outline rc-card__cta" style={{ flex: '1 1 140px', justifyContent: 'center' }} aria-label="Book residential pest control">
+                Book Inspection
+              </Link>
+            </div>
           </motion.div>
 
           {/* Commercial */}
@@ -97,9 +102,14 @@ export default function ResidentialCommercial() {
                 </li>
               ))}
             </ul>
-            <Link href="/contact" className="btn btn-primary rc-card__cta" aria-label="Book commercial pest control">
-              Book Business Inspection
-            </Link>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', paddingTop: '1.25rem', flexWrap: 'wrap' }}>
+              <Link href="/commercial-pest-control" className="btn btn-primary rc-card__cta" style={{ flex: '1 1 140px', justifyContent: 'center' }} aria-label="Learn more about commercial pest control">
+                Learn More
+              </Link>
+              <Link href="/contact" className="btn btn-outline rc-card__cta" style={{ flex: '1 1 140px', justifyContent: 'center' }} aria-label="Book commercial pest control">
+                Book Inspection
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>

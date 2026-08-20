@@ -35,7 +35,7 @@ export default function Dashboard() {
           <div className="adm-section-header">
             <div>
               <h2 className="adm-section-title">Recent Orders</h2>
-              <p style={{ fontSize: '.72rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>Latest booking activity</p>
+              <p style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)', marginTop: '.15rem' }}>Latest booking activity</p>
             </div>
             <Link href="/admin/orders" className="adm-btn adm-btn--outline adm-btn--sm">View All Orders →</Link>
           </div>
@@ -57,7 +57,7 @@ export default function Dashboard() {
                         <td style={{ fontWeight: 700, color: 'var(--a-green2)', fontFamily: 'monospace' }}>{o.id}</td>
                         <td>
                           <div style={{ fontWeight: 600 }}>{o.customer}</div>
-                          <div style={{ fontSize: '.68rem', color: 'var(--a-muted)' }}>{o.phone}</div>
+                          <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)' }}>{o.phone}</div>
                         </td>
                         <td>{o.service}</td>
                         <td>{o.area}</td>
@@ -84,7 +84,7 @@ export default function Dashboard() {
                   <div key={o.id} className="adm-mobile-card">
                     <div className="adm-mobile-card__header">
                       <div>
-                        <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: '.78rem' }}>{o.id}</span>
+                        <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: 'var(--font-size-h3)' }}>{o.id}</span>
                         <div className="adm-mobile-card__title" style={{ marginTop: '.2rem' }}>{o.customer}</div>
                       </div>
                       <span className={`adm-badge adm-badge--${STATUS_BADGE[o.status] || 'gray'}`}>{o.status}</span>
@@ -142,15 +142,15 @@ export default function Dashboard() {
         <div className="adm-card">
           <h2 className="adm-section-title" style={{ marginBottom: '.85rem' }}>Service Pages Studio</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
               <span style={{ color: 'var(--a-muted)' }}>Active Service Pages</span>
               <span style={{ fontWeight: 800, color: 'var(--a-green2)' }}>{s.activeServices || 15} Pages</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
               <span style={{ color: 'var(--a-muted)' }}>Visual Live Editor</span>
               <span style={{ fontWeight: 800, color: 'var(--a-green2)' }}>Ready &amp; Synced</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.82rem', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)', padding: '.25rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)' }}>
               <span style={{ color: 'var(--a-muted)' }}>SEO &amp; Alt Tags</span>
               <span style={{ fontWeight: 800 }}>100% Configurable</span>
             </div>

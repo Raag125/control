@@ -3,18 +3,28 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Phone, Mail, MapPin, Shield, ChevronDown, Clock, MessageCircle, Sparkles } from 'lucide-react'
+import { Phone, Mail, MapPin, Shield, ChevronDown, Clock, MessageCircle } from 'lucide-react'
 import './Footer.css'
 
-const services = [
-  { to: '/termite-treatment',    label: 'Termite Control' },
-  { to: '/bed-bugs-treatment',   label: 'Bed Bugs Treatment' },
-  { to: '/cockroach-treatment',  label: 'Cockroach Eradication' },
-  { to: '/rodent-treatment',     label: 'Rodent Management' },
-  { to: '/mosquito-treatment',   label: 'Mosquito Control' },
-  { to: '/honey-bee-treatment',  label: 'Honey Bee Relocation' },
-  { to: '/wood-borer-treatment', label: 'Wood Borer Treatment' },
-  { to: '/general-pest-control', label: 'General Pest Control' },
+const ourServices = [
+  { to: '/cockroach-treatment',              label: 'Cockroach Pest Control' },
+  { to: '/bed-bugs-treatment',               label: 'Bed Bug Pest Control' },
+  { to: '/termite-treatment',                label: 'Termite Pest Control' },
+  { to: '/rodent-treatment',                 label: 'Rodent Pest Control' },
+  { to: '/mosquito-treatment',               label: 'Mosquito Pest Control' },
+  { to: '/honey-bee-treatment',              label: 'Honey Bee Pest Control' },
+  { to: '/ant-pest-control',                 label: 'Ant Pest Control' },
+  { to: '/flea-pest-control',                label: 'Flea Pest Control' },
+  { to: '/tick-pest-control',                label: 'Tick Pest Control' },
+  { to: '/wood-borer-treatment',             label: 'Wood Borer Pest Control' },
+  { to: '/general-pest-control',             label: 'General Pest Control' },
+]
+
+const specializedServices = [
+  { to: '/pre-construction-termite-treatment',  label: 'Pre-Construction Termite' },
+  { to: '/post-construction-termite-treatment', label: 'Post-Construction Termite' },
+  { to: '/residential-pest-control',            label: 'Residential Pest Control' },
+  { to: '/commercial-pest-control',             label: 'Commercial Pest Control' },
 ]
 
 const quickLinks = [
@@ -120,18 +130,39 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Services Column (Accordion on mobile) */}
-          <nav className={`footer__col ${openSection === 'services' ? 'is-open' : ''}`} aria-label="Pest control services">
+          {/* Our Services Column (Accordion on mobile) */}
+          <nav className={`footer__col ${openSection === 'our-services' ? 'is-open' : ''}`} aria-label="Our Services">
             <button 
-              className="footer__col-title-btn" 
-              onClick={() => toggleSection('services')}
-              aria-expanded={openSection === 'services'}
+              className="footer__col-title-btn footer__col-title-btn--center" 
+              onClick={() => toggleSection('our-services')}
+              aria-expanded={openSection === 'our-services'}
             >
               <span>Our Services</span>
               <ChevronDown size={16} className="footer__accordion-icon" aria-hidden="true" />
             </button>
+            <ul role="list" className="footer__link-list footer__link-list--2cols">
+              {ourServices.map((s) => (
+                <li key={s.to}>
+                  <Link href={s.to} className="footer__link">
+                    {s.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Specialized Services Column (Accordion on mobile) */}
+          <nav className={`footer__col ${openSection === 'specialized-services' ? 'is-open' : ''}`} aria-label="Specialized Services">
+            <button 
+              className="footer__col-title-btn" 
+              onClick={() => toggleSection('specialized-services')}
+              aria-expanded={openSection === 'specialized-services'}
+            >
+              <span>Specialized</span>
+              <ChevronDown size={16} className="footer__accordion-icon" aria-hidden="true" />
+            </button>
             <ul role="list" className="footer__link-list">
-              {services.map((s) => (
+              {specializedServices.map((s) => (
                 <li key={s.to}>
                   <Link href={s.to} className="footer__link">
                     {s.label}

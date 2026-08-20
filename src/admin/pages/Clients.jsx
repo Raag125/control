@@ -62,8 +62,8 @@ export default function Clients() {
       {/* Page header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: '1.2rem' }}>👥 Customer Leads &amp; Inquiries</h1>
-          <p style={{ fontSize: '.75rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>👥 Customer Leads &amp; Inquiries</h1>
+          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Lead submissions captured from website popups and contact forms.
           </p>
         </div>
@@ -79,8 +79,8 @@ export default function Clients() {
           { label: 'Closed',       value: counts.closed,    color: 'var(--a-muted)' },
         ].map(s => (
           <div key={s.label} className="adm-card" style={{ padding: '.75rem .85rem', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.value}</div>
-            <div style={{ fontSize: '.68rem', color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>{s.label}</div>
+            <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.value}</div>
+            <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -98,7 +98,7 @@ export default function Clients() {
             onChange={e => setSearch(e.target.value)}
           />
           {search && (
-            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: '.9rem' }}>✕</button>
+            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: 'var(--font-size-h3)' }}>✕</button>
           )}
         </div>
 
@@ -111,7 +111,7 @@ export default function Clients() {
               onClick={() => setFilter(s)}
             >
               <span style={{ textTransform: 'capitalize' }}>{s}</span>
-              <span style={{ opacity: 0.8, fontSize: '.65rem' }}>({counts[s]})</span>
+              <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({counts[s]})</span>
             </button>
           ))}
         </div>
@@ -137,14 +137,14 @@ export default function Clients() {
                   {/* Top info header */}
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '.5rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '.65rem' }}>
-                      <div className="adm-avatar" style={{ width: '38px', height: '38px', fontSize: '.85rem', flexShrink: 0 }}>
+                      <div className="adm-avatar" style={{ width: '38px', height: '38px', fontSize: 'var(--font-size-h3)', flexShrink: 0 }}>
                         {client.name?.[0]?.toUpperCase() || '?'}
                       </div>
                       <div>
-                        <div style={{ fontWeight: 800, fontSize: '.92rem', color: 'var(--a-text)', lineHeight: 1.2 }}>
+                        <div style={{ fontWeight: 800, fontSize: 'var(--font-size-h2)', color: 'var(--a-text)', lineHeight: 1.2 }}>
                           {client.name || 'Anonymous Lead'}
                         </div>
-                        <div style={{ fontSize: '.68rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+                        <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
                           🕐 {formatTime(client.createdAt)}
                         </div>
                       </div>
@@ -152,7 +152,7 @@ export default function Clients() {
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '.35rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                       <span className={`adm-badge ${badge.cls}`}>{badge.label}</span>
-                      <span className="adm-badge adm-badge--gray" style={{ fontSize: '.62rem' }}>{srcLabel}</span>
+                      <span className="adm-badge adm-badge--gray" style={{ fontSize: 'var(--font-size-h2)' }}>{srcLabel}</span>
                     </div>
                   </div>
 
@@ -180,7 +180,7 @@ export default function Clients() {
 
                   {/* Message Quote */}
                   {client.message && (
-                    <p style={{ fontSize: '.76rem', color: 'var(--a-muted)', fontStyle: 'italic', lineHeight: 1.4, padding: '.35rem .5rem', background: 'rgba(22,163,74,0.04)', borderRadius: '6px', borderLeft: '3px solid var(--a-green2)' }}>
+                    <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', fontStyle: 'italic', lineHeight: 1.4, padding: '.35rem .5rem', background: 'rgba(22,163,74,0.04)', borderRadius: '6px', borderLeft: '3px solid var(--a-green2)' }}>
                       "{client.message}"
                     </p>
                   )}
@@ -211,7 +211,7 @@ export default function Clients() {
                       className="adm-select"
                       value={client.status}
                       onChange={e => handleStatus(client.id, e.target.value)}
-                      style={{ flex: 1.2, minHeight: '38px', padding: '.2rem .5rem', fontSize: '.75rem' }}
+                      style={{ flex: 1.2, minHeight: '38px', padding: '.2rem .5rem', fontSize: 'var(--font-size-h3)' }}
                       aria-label="Change lead status"
                     >
                       <option value="new">New Lead</option>

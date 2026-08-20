@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
 import { 
   Phone, 
   MessageCircle, 
@@ -13,148 +12,209 @@ import {
   Star, 
   ArrowRight,
   AlertTriangle,
-  Zap
+  Zap,
+  Bug,
+  User
 } from 'lucide-react'
 import './HeroSection.css'
 
-const PEST_SHOWCASE = [
-  {
-    id: 'termite',
-    name: 'Subterranean Termites',
-    shortName: 'Termite',
-    image: '/images/pests/termite.webp',
-    threat: 'Severe Structural & Furniture Damage',
-    threatLevel: 'High Risk',
-    solution: 'Drill-Fill-Seal Barrier & Timber Protection',
-    path: '/termite-treatment',
-    assurance: 'Certified Safe',
-    emoji: '🪵'
-  },
-  {
-    id: 'bedbug',
-    name: 'Bed Bug Infestation',
-    shortName: 'Bed Bug',
-    image: '/images/pests/bedbug.webp',
-    threat: 'Bites, Skin Allergies & Insomnia',
-    threatLevel: 'High Risk',
-    solution: 'Dual Odorless Mist & Residual Insecticide Defense',
-    path: '/bed-bugs-treatment',
-    assurance: '90-Day Follow-up',
-    emoji: '🛏️'
-  },
-  {
-    id: 'cockroach',
-    name: 'German Cockroaches',
-    shortName: 'Cockroach',
-    image: '/images/pests/cockroach.webp',
-    threat: 'Food Contamination & Asthma',
-    threatLevel: 'Medium Risk',
-    solution: 'Advanced Odorless Gel Baiting & Flushing',
-    path: '/cockroach-treatment',
-    assurance: '100% Eradication',
-    emoji: '🪳'
-  },
-  {
-    id: 'rodent',
-    name: 'Rats & House Mice',
-    shortName: 'Rodents',
-    image: '/images/pests/rodent.webp',
-    threat: 'Wire Chewing & Bacterial Spread',
-    threatLevel: 'High Risk',
-    solution: 'Multi-Catch Trapping & Bait Stations',
-    path: '/rodent-treatment',
-    assurance: 'Complete Removal',
-    emoji: '🐀'
-  },
-  {
-    id: 'mosquito',
-    name: 'Dengue Mosquitoes',
-    shortName: 'Mosquito',
-    image: '/images/pests/mosquito.webp',
-    threat: 'Dengue, Malaria & Chikungunya',
-    threatLevel: 'Seasonal Alert',
-    solution: 'Thermal Fogging & Larvicidal Surface Mist',
-    path: '/mosquito-treatment',
-    assurance: 'Rapid Knockdown',
-    emoji: '🦟'
-  },
-  {
-    id: 'honeybee',
-    name: 'Honey Bee Hives',
-    shortName: 'Honey Bee',
-    image: '/images/pests/honeybee.webp',
-    threat: 'Stings & Wall Cavity Damage',
-    threatLevel: 'High Risk',
-    solution: 'Safe Hive Removal & Ethical Relocation',
-    path: '/honey-bee-treatment',
-    assurance: 'Safe & Ethical',
-    emoji: '🐝'
-  },
-  {
-    id: 'ticks-fleas',
-    name: 'Ticks & Fleas',
-    shortName: 'Ticks/Fleas',
-    image: '/images/pests/tick.webp',
-    threat: 'Lyme Disease, Typhus & Pet Anemia',
-    threatLevel: 'High Risk',
-    solution: '3-Stage IGR & Adulticide Lifecycle Treatment',
-    path: '/ticks-fleas-treatment',
-    assurance: 'Pet & Child Safe',
-    emoji: '🦗'
-  },
-  {
-    id: 'woodborer',
-    name: 'Wood Borer Beetles',
-    shortName: 'Wood Borer',
-    image: '/images/pests/woodborer.webp',
-    threat: 'Destruction of Wooden Furniture & Beams',
-    threatLevel: 'High Risk',
-    solution: 'Precision Injection & Borate Preservation',
-    path: '/wood-borer-treatment',
-    assurance: 'Long-Lasting Defense',
-    emoji: '🪲'
-  },
-  {
-    id: 'ant',
-    name: 'Ant Infestations',
-    shortName: 'Ants',
-    image: '/images/pests/ant.webp',
-    threat: 'Food Contamination & Wood Damage',
-    threatLevel: 'Medium Risk',
-    solution: 'Colony-Targeting Gel Bait System',
-    path: '/ant-pest-control',
-    assurance: 'Total Eradication',
-    emoji: '🐜'
-  },
-  {
-    id: 'pre-construction',
-    name: 'Pre-Construction Termite',
-    shortName: 'Pre-Const Termite',
-    image: '/images/pests/pre_construction.webp',
-    threat: 'Future Structural Termite Damage',
-    threatLevel: 'High Risk',
-    solution: '5-Stage Comprehensive Soil Barrier',
-    path: '/pre-construction-termite-treatment',
-    assurance: '10-Yr Warranty',
-    emoji: '🏗️'
-  },
-  {
-    id: 'post-construction',
-    name: 'Post-Construction Termite',
-    shortName: 'Post-Const Termite',
-    image: '/images/pests/post_construction.webp',
-    threat: 'Active Termite Infestation',
-    threatLevel: 'High Risk',
-    solution: 'Drill-Fill-Seal Barrier Method',
-    path: '/post-construction-termite-treatment',
-    assurance: '5-Yr Warranty',
-    emoji: '🏠'
-  }
+const CATEGORIZED_PESTS = {
+  'our-services': [
+    {
+      id: 'cockroach',
+      name: 'Cockroach Pest Control',
+      shortName: 'Cockroach',
+      image: '/images/pests/cockroach.webp',
+      threat: 'A targeted combination of professional spray and gel application to control cockroaches and reach common hiding and breeding areas.',
+      threatLevel: 'Medium Risk',
+      solution: 'TARGETED COCKROACH CONTROL',
+      path: '/cockroach-treatment',
+      assurance: 'SPRAY & GEL TREATMENT',
+      emoji: '🪳'
+    },
+    {
+      id: 'bedbug',
+      name: 'Bed Bug Pest Control',
+      shortName: 'Bed Bug',
+      image: '/images/pests/bed_bug.webp',
+      threat: 'Our odorless bed bug spray service targets bed bugs in mattresses, furniture, and hiding areas for fast and effective treatment.',
+      threatLevel: 'High Risk',
+      solution: 'ODORLESS BED BUG SPRAY TREATMENT',
+      path: '/bed-bugs-treatment',
+      assurance: 'KILL BED BUGS IN 30 MINUTES',
+      emoji: '🛏️'
+    },
+    {
+      id: 'termite',
+      name: 'Termite Pest Control',
+      shortName: 'Termite',
+      image: '/images/pests/termite.webp',
+      threat: 'Professional Drill-Fill-Seal termite treatment designed to protect foundations, walls, and wooden structures from subterranean termites.',
+      threatLevel: 'High Risk',
+      solution: 'DRILL-FILL-SEAL SUBTERRANEAN TERMITE PROTECTION',
+      path: '/termite-treatment',
+      assurance: '5-YEAR WARRANTY',
+      emoji: '🪵'
+    },
+    {
+      id: 'rodent',
+      name: 'Rodent Pest Control',
+      shortName: 'Rodents',
+      image: '/images/pests/rodent.webp',
+      threat: 'Professional rodent treatment designed to control rats and mice, address active infestations, and help prevent their return around your property.',
+      threatLevel: 'High Risk',
+      solution: 'RODENT CONTROL & PREVENTION',
+      path: '/rodent-treatment',
+      assurance: 'TARGETED RODENT CONTROL',
+      emoji: '🐀'
+    },
+    {
+      id: 'mosquito',
+      name: 'Mosquito Pest Control',
+      shortName: 'Mosquito',
+      image: '/images/pests/mosquito.webp',
+      threat: 'Targeted mosquito treatment for homes and commercial spaces, helping reduce mosquito activity and protect your property from recurring infestations.',
+      threatLevel: 'Seasonal Alert',
+      solution: 'MOSQUITO CONTROL & PREVENTION',
+      path: '/mosquito-treatment',
+      assurance: 'FAST MOSQUITO CONTROL',
+      emoji: '🦟'
+    },
+    {
+      id: 'honeybee',
+      name: 'Honey Bee Service',
+      shortName: 'Honey Bee',
+      image: '/images/pests/honey_bee.webp',
+      threat: 'We do not kill honey bees. Our eco-friendly approach focuses on safely relocating colonies while protecting the bees and your property.',
+      threatLevel: 'High Risk',
+      solution: 'HONEY BEE RESCUE & RELOCATION',
+      path: '/honey-bee-treatment',
+      assurance: 'ECO-FRIENDLY BEE RELOCATION',
+      emoji: '🐝'
+    },
+    {
+      id: 'ant',
+      name: 'Ant Pest Control',
+      shortName: 'Ants',
+      image: '/images/pests/ant.webp',
+      threat: 'Professional ant treatment designed to target active infestations, reach common nesting areas, and help prevent ants from returning to your property.',
+      threatLevel: 'Medium Risk',
+      solution: 'ANT CONTROL & PREVENTION',
+      path: '/ant-pest-control',
+      assurance: 'TARGETED ANT CONTROL',
+      emoji: '🐜'
+    },
+    {
+      id: 'flea',
+      name: 'Flea Pest Control',
+      shortName: 'Fleas',
+      image: '/images/pests/flea.webp',
+      threat: 'Our odorless flea treatment targets flea infestations in homes and surrounding areas, helping eliminate active fleas and reduce recurring problems.',
+      threatLevel: 'High Risk',
+      solution: 'ODORLESS FLEA CONTROL',
+      path: '/flea-pest-control',
+      assurance: 'ODORLESS FLEA TREATMENT',
+      emoji: '🦗'
+    },
+    {
+      id: 'tick',
+      name: 'Tick Pest Control',
+      shortName: 'Ticks',
+      image: '/images/pests/tick.webp',
+      threat: 'Our odorless tick treatment targets ticks in indoor and outdoor areas, helping reduce infestations and provide longer-lasting protection for your property.',
+      threatLevel: 'High Risk',
+      solution: 'ODORLESS TICK CONTROL',
+      path: '/tick-pest-control',
+      assurance: 'ODORLESS TICK TREATMENT',
+      emoji: '🕷️'
+    },
+    {
+      id: 'woodborer',
+      name: 'Wood Borer Pest Control',
+      shortName: 'Wood Borer',
+      image: '/images/pests/wood_borer.webp',
+      threat: 'Targeted wood borer treatment to control active infestations and protect wooden furniture, doors, frames, and other structures from further damage.',
+      threatLevel: 'High Risk',
+      solution: 'WOOD BORER CONTROL & PROTECTION',
+      path: '/wood-borer-treatment',
+      assurance: 'WOOD PROTECTION TREATMENT',
+      emoji: '🪲'
+    },
+    {
+      id: 'general',
+      name: 'General Pest Control',
+      shortName: 'General',
+      image: '/images/pests/general.webp',
+      threat: 'Odorless pest treatment for common household and property pests, providing targeted protection for homes, offices, and other spaces.',
+      threatLevel: 'Multi-Pest',
+      solution: 'GENERAL PEST CONTROL',
+      path: '/general-pest-control',
+      assurance: 'ODORLESS PEST PROTECTION',
+      emoji: '🛡️'
+    }
+  ],
+  'specialized': [
+    {
+      id: 'pre-construction',
+      name: 'Pre-Construction Termite',
+      shortName: 'Pre-Const',
+      image: '/images/pests/pre_construction.webp',
+      threat: 'Preventive termite protection planned during construction to create a protective barrier before the building is completed and occupied.',
+      threatLevel: 'High Risk',
+      solution: 'PRE-CONSTRUCTION TERMITE CONTROL',
+      path: '/pre-construction-termite-treatment',
+      assurance: 'BUILT-IN TERMITE PROTECTION',
+      emoji: '🏗️'
+    },
+    {
+      id: 'post-construction',
+      name: 'Post-Construction Termite',
+      shortName: 'Post-Const',
+      image: '/images/pests/post_construction.webp',
+      threat: 'Professional termite treatment for existing buildings, designed to address active infestations and protect foundations, walls, and wooden structures.',
+      threatLevel: 'High Risk',
+      solution: 'POST-CONSTRUCTION TERMITE CONTROL',
+      path: '/post-construction-termite-treatment',
+      assurance: 'EXISTING PROPERTY PROTECTION',
+      emoji: '🏠'
+    },
+    {
+      id: 'residential',
+      name: 'Residential Pest Control',
+      shortName: 'Residential',
+      image: '/images/pests/residential.webp',
+      threat: 'Odorless pest treatment for homes, targeting common household pests while helping keep your living spaces protected, comfortable, and pest-free.',
+      threatLevel: 'Family Safe',
+      solution: 'RESIDENTIAL PEST CONTROL',
+      path: '/residential-pest-control',
+      assurance: 'ODORLESS HOME PROTECTION',
+      emoji: '🏡'
+    },
+    {
+      id: 'commercial',
+      name: 'Commercial Pest Control',
+      shortName: 'Commercial',
+      image: '/images/pests/commercial.webp',
+      threat: 'Odorless pest treatment for offices, shops, restaurants, and commercial properties, designed to control infestations with minimal disruption.',
+      threatLevel: 'Compliance',
+      solution: 'COMMERCIAL PEST CONTROL',
+      path: '/commercial-pest-control',
+      assurance: 'ODORLESS BUSINESS PROTECTION',
+      emoji: '🏢'
+    }
+  ]
+}
+
+
+const ALL_PESTS = [
+  ...CATEGORIZED_PESTS['our-services'],
+  ...CATEGORIZED_PESTS['specialized']
 ]
 
 export default function HeroSection() {
-  const [activePestIndex, setActivePestIndex] = useState(0)
-  const currentPest = PEST_SHOWCASE[activePestIndex]
+  const [activePestId, setActivePestId] = useState(ALL_PESTS[0].id)
+
+  const currentPest = ALL_PESTS.find(p => p.id === activePestId) || ALL_PESTS[0]
 
   return (
     <section className="hero-modern-section" aria-label="A to Z Pest Solutions Bangalore">
@@ -178,21 +238,21 @@ export default function HeroSection() {
         <div className="hero-modern-left hero-fade-in-up">
           {/* Live Trust Pill */}
           <div className="hero-live-pill">
-            <span className="live-pulse-dot" aria-hidden="true" />
+            <Zap size={14} className="live-pulse-dot" style={{ background: 'transparent', color: '#eab308', boxShadow: 'none' }} aria-hidden="true" />
             <span className="live-pill-label">
-              Bangalore's Trusted Pest Defense &bull; <strong>Est. 1993</strong>
+              <strong>PROFESSIONAL PEST SOLUTIONS</strong>
             </span>
           </div>
 
           {/* Bold Modern Headline */}
           <h1 className="hero-modern-title">
             Smart, Reliable <br className="hero-title-break" />
-            <span className="hero-text-gradient">Pest Control &amp; Protection</span> For Your Home.
+            <span className="hero-text-gradient">Pest Control & Protection</span> For Your Home.
           </h1>
 
           {/* Subtitle */}
           <p className="hero-modern-subtitle">
-            Get <strong>smart, reliable pest protection and expert pest control for your home</strong> and commercial premises across Bangalore. Our certified specialists deploy <strong>eco-friendly, odorless, child and pet-safe</strong> treatments for termites, bed bugs, cockroaches, and rodents with rapid 60-minute dispatch.
+            Our trained technicians use child- and pet-safe treatment methods with rapid 60-minute emergency pest control service in Bangalore.
           </p>
 
           {/* Action Buttons */}
@@ -232,20 +292,24 @@ export default function HeroSection() {
           <div className="hero-modern-assurances">
             <div className="assurance-item">
               <ShieldCheck size={15} className="assurance-icon" aria-hidden="true" />
-              <span>Eco-Friendly &amp; Safe Chemicals</span>
+              <span>Child & Pet Safe</span>
             </div>
             <div className="assurance-item">
-              <Clock size={15} className="assurance-icon" aria-hidden="true" />
-              <span>60-Min Emergency Dispatch</span>
+              <User size={15} className="assurance-icon" aria-hidden="true" />
+              <span>Trained Professionals</span>
             </div>
             <div className="assurance-item">
               <CheckCircle2 size={15} className="assurance-icon" aria-hidden="true" />
-              <span>Free Follow-Up Retreatment</span>
+              <span>Free Warranty Retreatment</span>
+            </div>
+            <div className="assurance-item">
+              <Clock size={15} className="assurance-icon" aria-hidden="true" />
+              <span>60-Minute Emergency Service</span>
             </div>
           </div>
         </div>
 
-        {/* ── RIGHT: Interactive Realistic Pest Showcase ── */}
+        {/* ── RIGHT: Interactive Realistic Pest & Service Showcase ── */}
         <motion.div 
           className="hero-modern-right"
           initial={{ opacity: 0, scale: 0.96 }}
@@ -254,40 +318,85 @@ export default function HeroSection() {
         >
           <div className="pest-showcase-card">
             
-            {/* Card Header & Indicator */}
+            {/* Card Header: Live Scanner Tag */}
             <div className="pest-showcase-header">
               <div className="pest-badge-live">
                 <Zap size={12} aria-hidden="true" />
                 <span>Pest Threat Scanner</span>
               </div>
-              <span className="pest-count-label">Tap to inspect:</span>
+              <span className="pest-count-label">Select to inspect:</span>
             </div>
 
-            {/* Quick Pest Tabs */}
-            <div className="pest-tabs-row" role="tablist" aria-label="Pest Selection">
-              {PEST_SHOWCASE.map((pest, idx) => {
-                const isActive = activePestIndex === idx
-                return (
-                  <button
-                    key={pest.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    className={`pest-tab-btn ${isActive ? 'tab-active' : ''}`}
-                    onClick={() => setActivePestIndex(idx)}
-                  >
-                    <span className="tab-emoji">{pest.emoji}</span>
-                    <span className="tab-name">{pest.shortName}</span>
-                    {isActive && (
-                      <motion.div 
-                        layoutId="activeTabIndicator"
-                        className="tab-active-indicator"
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                      />
-                    )}
-                  </button>
-                )
-              })}
+            {/* ── Side-by-Side Dual Categories ── */}
+            <div className="hero-dual-categories">
+              
+              {/* Left: Our Services */}
+              <div className="hero-cat-column our-services-col">
+                <div className="hero-cat-column-title">
+                  <Bug size={12} aria-hidden="true" />
+                  <span>Our Services</span>
+                </div>
+                <div className="hero-cat-grid our-services-grid">
+                  {CATEGORIZED_PESTS['our-services'].map((pest) => {
+                    const isActive = activePestId === pest.id
+                    return (
+                      <button
+                        key={pest.id}
+                        type="button"
+                        aria-selected={isActive}
+                        className={`pest-tab-btn pest-tab-${pest.id} ${isActive ? 'tab-active' : ''}`}
+                        onClick={() => setActivePestId(pest.id)}
+                      >
+                        <span className="tab-emoji">{pest.emoji}</span>
+                        <span className="tab-name">{pest.shortName}</span>
+                        {isActive && (
+                          <motion.div 
+                            layoutId="activeTabIndicator"
+                            className="tab-active-indicator"
+                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                          />
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="hero-cat-divider" aria-hidden="true"></div>
+
+              {/* Right: Specialized Services */}
+              <div className="hero-cat-column specialized-col">
+                <div className="hero-cat-column-title">
+                  <ShieldCheck size={12} aria-hidden="true" />
+                  <span>Specialized</span>
+                </div>
+                <div className="hero-cat-grid specialized-grid">
+                  {CATEGORIZED_PESTS['specialized'].map((pest) => {
+                    const isActive = activePestId === pest.id
+                    return (
+                      <button
+                        key={pest.id}
+                        type="button"
+                        aria-selected={isActive}
+                        className={`pest-tab-btn ${isActive ? 'tab-active' : ''}`}
+                        onClick={() => setActivePestId(pest.id)}
+                      >
+                        <span className="tab-emoji">{pest.emoji}</span>
+                        <span className="tab-name">{pest.shortName}</span>
+                        {isActive && (
+                          <motion.div 
+                            layoutId="activeTabIndicator"
+                            className="tab-active-indicator"
+                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                          />
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
             </div>
 
             {/* Animated Pest Detail View */}
@@ -342,7 +451,7 @@ export default function HeroSection() {
                     className="btn btn-primary pest-book-link"
                     aria-label={`Book pest control for ${currentPest.name}`}
                   >
-                    <span>Book {currentPest.shortName} Pest Control</span>
+                    <span>Book {currentPest.shortName} Treatment</span>
                     <ArrowRight size={14} aria-hidden="true" />
                   </Link>
                 </div>

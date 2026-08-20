@@ -83,14 +83,14 @@
 
 .unique-logo-main {
   font-family: var(--font-display);
-  font-size: 0.98rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--clr-text);
   letter-spacing: -0.01em;
 }
 
 .unique-logo-sub {
-  font-size: 0.58rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--clr-primary-dim);
   text-transform: uppercase;
@@ -116,7 +116,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.55rem 0.95rem;
-  font-size: 0.85rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   color: var(--clr-text-muted);
   border-radius: var(--radius-full);
@@ -178,7 +178,7 @@
 }
 
 .nav-col-header {
-  font-size: 0.7rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -204,7 +204,7 @@
   gap: 0.5rem;
   padding: 0.5rem 0.5rem;
   border-radius: 8px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   color: var(--clr-text-muted);
   transition: all 0.18s ease;
@@ -256,7 +256,7 @@
 
 .unique-cta-btn {
   padding: 0.55rem 1.25rem;
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   border-radius: var(--radius-full);
 }
@@ -332,7 +332,7 @@
   align-items: center;
   width: 100%;
   padding: 0.8rem 1rem;
-  font-size: 0.92rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   color: var(--clr-text-muted);
   border-radius: var(--radius-md);
@@ -384,7 +384,7 @@
 }
 
 .mobile-cat-header {
-  font-size: 0.65rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -409,7 +409,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.4rem 0.25rem;
-  font-size: 0.72rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   color: var(--clr-text-muted);
   border-radius: var(--radius-sm);
@@ -455,14 +455,14 @@
   width: 100%;
   justify-content: center;
   padding: 0.85rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-h3);
 }
 
 .unique-mobile-action-btn-wa {
   width: 100%;
   justify-content: center;
   padding: 0.85rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-h3);
   border-color: #22c55e;
   color: #15803d;
   background: #ffffff;

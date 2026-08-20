@@ -3,7 +3,7 @@ import { SERVICES_DATA } from '../data/servicesData'
 
 // ── Admin Data Layer — localStorage persistence + seed (Server-Safe for Next.js) ──
 
-const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_services', visitors:'azt_visitors', blogs:'azt_blogs', settings:'azt_settings', reviews:'azt_reviews' }
+const KEYS = { orders:'azt_orders', payments:'azt_payments', services:'azt_services', visitors:'azt_visitors', blogs:'azt_blogs', settings:'azt_settings', reviews:'azt_reviews', calendar:'azt_calendar' }
 const read  = k => { 
   if (typeof window === 'undefined') {
     if (k === KEYS.blogs) return initialBlogs || []
@@ -33,8 +33,9 @@ export function seedIfEmpty() {
   const hasEmptyContent = currentBlogs.length > 0 && currentBlogs.some(b => !b.content || b.content.trim() === '');
   const hasPlaceholderImages = currentBlogs.length > 0 && currentBlogs.some(b => b.image && b.image.includes('/images/pests/'));
   const needsYoutubeRefresh = currentBlogs.length > 0 && !JSON.stringify(currentBlogs).includes('youtube.com/embed');
+  const hasPngImages = currentBlogs.length > 0 && JSON.stringify(currentBlogs).includes('.png');
   
-  if ((currentBlogs.length < 50 || hasEmptyContent || hasPlaceholderImages || needsYoutubeRefresh) && initialBlogs && initialBlogs.length > 0) {
+  if ((currentBlogs.length < 50 || hasEmptyContent || hasPlaceholderImages || needsYoutubeRefresh || hasPngImages) && initialBlogs && initialBlogs.length > 0) {
     write(KEYS.blogs, initialBlogs);
   }
 
@@ -336,4 +337,39 @@ export function getStats() {
 // Auto-seed on load in browser
 if (typeof window !== 'undefined') {
   seedIfEmpty();
+}
+
+// ── Content Calendar ─────────────────────────────────────────────────────────
+// Calendar shape: { [YYYY-MM]: { autoPublish: bool, days: { [YYYY-MM-DD]: { keyword, instructions, status, generatedBlogId } } } }
+export const getCalendar  = ()  => read(KEYS.calendar) || {}
+export const saveCalendar = cal => { write(KEYS.calendar, cal); return cal }
+export const getMonthPlan = (yearMonth) => (read(KEYS.calendar) || {})[yearMonth] || null
+export function saveMonthPlan(month, planData) {
+  const current = readObj(KEYS.calendar)
+  current[month] = planData
+  write(KEYS.calendar, current)
+
+  if (typeof window !== 'undefined') {
+    fetch('/api/calendar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ month, planData })
+    }).catch(console.error)
+  }
+}
+
+export async function hydrateCalendar() {
+  if (typeof window === 'undefined') return
+  try {
+    const res = await fetch('/api/calendar')
+    if (res.ok) {
+      const data = await res.json()
+      // Only write if there's actual data so we don't overwrite local with empty
+      if (Object.keys(data).length > 0) {
+        write(KEYS.calendar, data)
+      }
+    }
+  } catch (e) {
+    console.error('Failed to hydrate calendar from MongoDB', e)
+  }
 }

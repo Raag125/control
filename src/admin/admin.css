@@ -30,6 +30,7 @@
 
 .adm {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 14px; /* Scaled down base size */
   background: var(--a-bg);
   color: var(--a-text);
   min-height: 100vh;
@@ -110,13 +111,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: var(--font-size-h3);
   box-shadow: 0 4px 16px var(--a-glow);
   flex-shrink: 0;
 }
 
 .adm-login__title {
-  font-size: 1.45rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--a-text);
   margin-bottom: 0.25rem;
@@ -124,7 +125,7 @@
 }
 
 .adm-login__sub {
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   color: var(--a-muted);
   margin-bottom: 1.5rem;
 }
@@ -134,7 +135,7 @@
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 10px;
   padding: 0.7rem 0.95rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   color: var(--a-danger);
   margin-bottom: 1.25rem;
@@ -153,14 +154,14 @@
 .adm-login .adm-input {
   min-height: 46px;
   padding: 0.65rem 0.9rem;
-  font-size: 0.86rem;
+  font-size: var(--font-size-h3);
   border-radius: 10px;
 }
 
 .adm-login__btn {
   width: 100%;
   min-height: 48px;
-  font-size: 0.92rem;
+  font-size: var(--font-size-h3);
   border-radius: 12px;
   margin-top: 0.75rem;
   display: flex;
@@ -171,7 +172,7 @@
 
 .adm-login__hint {
   text-align: center;
-  font-size: 0.74rem;
+  font-size: var(--font-size-h3);
   color: var(--a-dim);
   margin-top: 1.25rem;
   display: flex;
@@ -213,12 +214,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: var(--font-size-h3);
   box-shadow: 0 4px 14px var(--a-glow);
 }
 
 .adm-sidebar__logo-text {
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--a-text);
   letter-spacing: 0.02em;
@@ -226,7 +227,7 @@
 }
 
 .adm-sidebar__logo-sub {
-  font-size: 0.65rem;
+  font-size: var(--font-size-h3);
   color: var(--a-muted);
   font-weight: 500;
 }
@@ -237,7 +238,7 @@
 }
 
 .adm-sidebar__label {
-  font-size: 0.6rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -252,7 +253,7 @@
   padding: 0.65rem 0.85rem;
   border-radius: 10px;
   color: var(--a-muted);
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -289,7 +290,7 @@
   margin-left: auto;
   background: var(--a-green);
   color: #fff;
-  font-size: 0.62rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
@@ -311,7 +312,7 @@
   background: rgba(239, 68, 68, 0.08);
   border: 1px solid rgba(239, 68, 68, 0.2);
   color: var(--a-danger);
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -352,7 +353,7 @@
 }
 
 .adm-topbar__title {
-  font-size: 1.05rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--a-text);
   letter-spacing: -0.01em;
@@ -365,7 +366,7 @@
 }
 
 .adm-topbar-badge {
-  font-size: 0.62rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -384,7 +385,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: #fff;
   box-shadow: 0 2px 8px var(--a-glow);
@@ -435,7 +436,7 @@
   color: var(--a-muted);
   width: 32px;
   height: 32px;
-  font-size: 0.95rem;
+  font-size: var(--font-size-h3);
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -509,7 +510,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: var(--font-size-h3);
   flex-shrink: 0;
 }
 
@@ -519,7 +520,7 @@
 .adm-stat__icon--red   { background: rgba(239, 68, 68, 0.15); }
 
 .adm-stat__val {
-  font-size: 1.6rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--a-text);
   line-height: 1;
@@ -527,13 +528,13 @@
 }
 
 .adm-stat__label {
-  font-size: 0.72rem;
+  font-size: var(--font-size-h3);
   color: var(--a-muted);
   font-weight: 600;
 }
 
 .adm-stat__sub {
-  font-size: 0.68rem;
+  font-size: var(--font-size-h3);
   color: var(--a-dim);
 }
 
@@ -548,7 +549,7 @@
 }
 
 .adm-section-title {
-  font-size: 1rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   color: var(--a-text);
 }
@@ -561,7 +562,7 @@
   gap: 0.4rem;
   padding: 0.55rem 1.1rem;
   border-radius: 10px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
@@ -614,7 +615,7 @@
 
 .adm-btn--sm {
   padding: 0.4rem 0.8rem;
-  font-size: 0.74rem;
+  font-size: var(--font-size-h3);
   border-radius: 8px;
 }
 
@@ -642,13 +643,13 @@
   width: 100%;
   min-width: 620px;
   border-collapse: collapse;
-  font-size: 0.78rem;
+  font-size: var(--font-size-h3);
 }
 
 .adm-table th {
   padding: 0.7rem 1rem;
   text-align: left;
-  font-size: 0.65rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -685,7 +686,7 @@
   gap: 0.25rem;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.65rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -722,7 +723,7 @@
   border: none;
   outline: none;
   color: var(--a-text);
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   width: 100%;
   font-family: inherit;
 }
@@ -737,7 +738,7 @@
   border-radius: 10px;
   padding: 0.5rem 0.85rem;
   color: var(--a-text);
-  font-size: 0.78rem;
+  font-size: var(--font-size-h3);
   cursor: pointer;
   outline: none;
   font-family: inherit;
@@ -768,7 +769,7 @@
   gap: 0.35rem;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -830,7 +831,7 @@
 }
 
 .adm-modal__title {
-  font-size: 0.95rem;
+  font-size: var(--font-size-h3);
   font-weight: 800;
   color: var(--a-text);
   letter-spacing: 0.01em;
@@ -847,7 +848,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-size: var(--font-size-h3);
   transition: all 0.2s;
 }
 
@@ -875,7 +876,7 @@
 }
 
 .adm-label {
-  font-size: 0.65rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -891,7 +892,7 @@
   border-radius: 8px;
   padding: 0.52rem 0.75rem;
   color: var(--a-text);
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   outline: none;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -961,7 +962,7 @@
 }
 
 .adm-toggle__label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-h3);
   color: var(--a-text);
 }
 
@@ -976,13 +977,13 @@
 }
 
 .adm-empty__icon {
-  font-size: 2.2rem;
+  font-size: var(--font-size-h3);
   margin-bottom: 0.5rem;
   opacity: 0.8;
 }
 
 .adm-empty__text {
-  font-size: 0.82rem;
+  font-size: var(--font-size-h3);
   color: var(--a-muted);
 }
 
@@ -1043,14 +1044,14 @@
 }
 
 .adm-mobile-card__title {
-  font-size: 0.9rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   color: var(--a-text);
   line-height: 1.3;
 }
 
 .adm-mobile-card__subtitle {
-  font-size: 0.72rem;
+  font-size: var(--font-size-h3);
   color: var(--a-muted);
   margin-top: 0.15rem;
 }
@@ -1065,12 +1066,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.78rem;
+  font-size: var(--font-size-h3);
   padding: 0.2rem 0;
 }
 
 .adm-mobile-card__label {
-  font-size: 0.68rem;
+  font-size: var(--font-size-h3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1080,7 +1081,7 @@
 }
 
 .adm-mobile-card__val {
-  font-size: 0.78rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   color: var(--a-text);
   text-align: right;
@@ -1107,7 +1108,7 @@
 .adm-mobile-card__actions .adm-btn {
   flex: 1;
   min-height: 36px;
-  font-size: 0.75rem;
+  font-size: var(--font-size-h3);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1133,7 +1134,7 @@
   }
 
   .adm-login__title {
-    font-size: 1.3rem;
+    font-size: var(--font-size-h3);
   }
 
   /* ── Sidebar Mobile Drawer ── */
@@ -1174,7 +1175,7 @@
   }
 
   .adm-topbar__title {
-    font-size: 0.95rem;
+    font-size: var(--font-size-h3);
   }
 
   .adm-content {
@@ -1198,19 +1199,19 @@
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: var(--font-size-h3);
   }
 
   .adm-stat__val {
-    font-size: 1.25rem;
+    font-size: var(--font-size-h3);
   }
 
   .adm-stat__label {
-    font-size: 0.68rem;
+    font-size: var(--font-size-h3);
   }
 
   .adm-stat__sub {
-    font-size: 0.62rem;
+    font-size: var(--font-size-h3);
   }
 
   /* ── Layout Grids on Mobile ── */
@@ -1290,7 +1291,7 @@
   .adm-modal__footer .adm-btn {
     flex: 1;
     min-height: 44px;
-    font-size: 0.82rem;
+    font-size: var(--font-size-h3);
   }
 
   /* ── Streamlined 5-Tab Bottom Navigation Bar ── */
@@ -1321,7 +1322,7 @@
     padding: 0.4rem 0.2rem;
     border-radius: 10px;
     color: var(--a-muted);
-    font-size: 0.64rem;
+    font-size: var(--font-size-h3);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.18s ease;
@@ -1354,7 +1355,7 @@
     right: calc(50% - 16px);
     background: var(--a-danger);
     color: #fff;
-    font-size: 0.58rem;
+    font-size: var(--font-size-h3);
     font-weight: 800;
     min-width: 16px;
     height: 16px;
@@ -1386,6 +1387,14 @@
 .adm ::-webkit-scrollbar-thumb {
   background: var(--a-dim);
   border-radius: 2px;
+}
+
+.adm-hide-scroll::-webkit-scrollbar {
+  display: none !important;
+}
+.adm-hide-scroll {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 /* ── Animations ── */

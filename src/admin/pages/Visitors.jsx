@@ -33,8 +33,8 @@ export default function Visitors() {
       {/* Header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: '1.2rem' }}>👁️ Web Traffic & Analytics</h1>
-          <p style={{ fontSize: '.75rem', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>👁️ Web Traffic & Analytics</h1>
+          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Real-time tracking of visitor devices, page routes, and browsers.
           </p>
         </div>
@@ -51,12 +51,12 @@ export default function Visitors() {
       {/* Top pages + browsers */}
       <div className="adm-grid-2col" style={{ marginBottom: '1rem' }}>
         <div className="adm-card">
-          <h2 className="adm-section-title" style={{ fontSize: '.9rem', marginBottom: '.75rem' }}>Top Pages Visited</h2>
+          <h2 className="adm-section-title" style={{ fontSize: 'var(--font-size-h3)', marginBottom: '.75rem' }}>Top Pages Visited</h2>
           {topPages.length === 0 ? (
             <div className="adm-empty" style={{ padding: '1rem' }}><div className="adm-empty__icon">📄</div><div className="adm-empty__text">No page data yet</div></div>
           ) : (
             topPages.map(([p, count]) => (
-              <div key={p} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '.45rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)', fontSize: '.78rem' }}>
+              <div key={p} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '.45rem 0', borderBottom: '1px solid rgba(22,163,74,0.08)', fontSize: 'var(--font-size-h3)' }}>
                 <span style={{ color: 'var(--a-text)', fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '75%' }}>{p}</span>
                 <span style={{ color: 'var(--a-green2)', fontWeight: 800 }}>{count}</span>
               </div>
@@ -65,12 +65,12 @@ export default function Visitors() {
         </div>
 
         <div className="adm-card">
-          <h2 className="adm-section-title" style={{ fontSize: '.9rem', marginBottom: '.75rem' }}>Browsers</h2>
+          <h2 className="adm-section-title" style={{ fontSize: 'var(--font-size-h3)', marginBottom: '.75rem' }}>Browsers</h2>
           {topBrowsers.map(([br, count]) => {
             const pct = all.length ? Math.round((count / all.length) * 100) : 0
             return (
               <div key={br} style={{ marginBottom: '.65rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.76rem', marginBottom: '.25rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)', marginBottom: '.25rem' }}>
                   <span style={{ color: 'var(--a-text)', fontWeight: 600 }}>{br}</span>
                   <span style={{ color: 'var(--a-muted)', fontWeight: 700 }}>{pct}% ({count})</span>
                 </div>
@@ -119,16 +119,16 @@ export default function Visitors() {
                 ) : (
                   visible.map((v, i) => (
                     <tr key={v.id}>
-                      <td style={{ color: 'var(--a-dim)', fontSize: '.7rem' }}>{(page - 1) * PER_PAGE + i + 1}</td>
-                      <td style={{ fontSize: '.72rem', color: 'var(--a-muted)', whiteSpace: 'nowrap' }}>
+                      <td style={{ color: 'var(--a-dim)', fontSize: 'var(--font-size-h3)' }}>{(page - 1) * PER_PAGE + i + 1}</td>
+                      <td style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)', whiteSpace: 'nowrap' }}>
                         {new Date(v.timestamp).toLocaleDateString('en-IN')}<br/>
                         <span style={{ color: 'var(--a-dim)' }}>{new Date(v.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
                       </td>
-                      <td style={{ fontFamily: 'monospace', fontSize: '.74rem', color: 'var(--a-green2)', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.page}</td>
-                      <td style={{ fontFamily: 'monospace', fontSize: '.72rem' }}>{v.ip}</td>
+                      <td style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-h3)', color: 'var(--a-green2)', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.page}</td>
+                      <td style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-h2)' }}>{v.ip}</td>
                       <td><span className={`adm-badge adm-badge--${TYPE_COLOR[v.type] || 'gray'}`}>{TYPE_ICON[v.type]} {v.type}</span></td>
-                      <td style={{ fontSize: '.8rem' }}>{v.browser}</td>
-                      <td style={{ fontSize: '.8rem', color: 'var(--a-muted)' }}>{v.os}</td>
+                      <td style={{ fontSize: 'var(--font-size-h3)' }}>{v.browser}</td>
+                      <td style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)' }}>{v.os}</td>
                     </tr>
                   ))
                 )}
@@ -151,10 +151,10 @@ export default function Visitors() {
               <div key={v.id} className="adm-mobile-card">
                 <div className="adm-mobile-card__header">
                   <div>
-                    <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: '.74rem' }}>
+                    <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: 'var(--font-size-h3)' }}>
                       #{(page - 1) * PER_PAGE + i + 1} · {new Date(v.timestamp).toLocaleDateString('en-IN')} {new Date(v.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                     </span>
-                    <div className="adm-mobile-card__title" style={{ fontFamily: 'monospace', fontSize: '.82rem', marginTop: '.2rem' }}>
+                    <div className="adm-mobile-card__title" style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-h2)', marginTop: '.2rem' }}>
                       {v.page}
                     </div>
                   </div>
@@ -187,7 +187,7 @@ export default function Visitors() {
           <button className="adm-btn adm-btn--ghost adm-btn--sm" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
             ← Prev
           </button>
-          <span style={{ padding: '.4rem .8rem', fontSize: '.78rem', color: 'var(--a-muted)', fontWeight: 600 }}>
+          <span style={{ padding: '.4rem .8rem', fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', fontWeight: 600 }}>
             Page {page} of {pages}
           </span>
           <button className="adm-btn adm-btn--ghost adm-btn--sm" disabled={page === pages} onClick={() => setPage(p => p + 1)}>

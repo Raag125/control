@@ -9,7 +9,7 @@ export const SERVICES_DATA = [
     "id": "termite-treatment",
     "slug": "termite-treatment",
     "path": "/termite-treatment",
-    "category": "Termite Specialists",
+    "category": "Our Services",
     "emoji": "\ud83e\udeb5",
     "badge": "5-Year Warranty",
     "meta": {
@@ -19,10 +19,10 @@ export const SERVICES_DATA = [
       "canonical": "https://atozpestcontrol.in/termite-treatment"
     },
     "hero": {
-      "title": "Termite Treatment",
-      "tagline": "Termites silently destroy lakhs worth of property. Get a science-backed barrier treatment before it's too late.",
-      "intro": "Termites \u2014 particularly subterranean species like Coptotermes gestroi and Odontotermes obesus \u2014 are responsible for over \u20b945,000 crore in property damage annually across India. In Bangalore's humid tropical climate, termite colonies can number in the millions and consume 100 grams of wood per day. At A to Z Pest Solutions, we deploy certified high-efficacy termiticides (Bifenthrin 10% EC / Chlorpyrifos 20% EC) using the industry-standard Drill-Fill-Seal (DFS) method \u2014 creating a continuous chemical barrier around your entire structure, protecting both foundations and wooden elements for up to 5 years.",
-      "eyebrow": "\ud83d\udee1\ufe0f Expert Treatment",
+      "title": "Protect Your Property from Silent Destruction",
+      "tagline": "A guaranteed, scientifically proven Drill-Fill-Seal treatment.",
+      "intro": "Termites cause extensive damage to foundations, walls, and wooden structures before they are even detected. We provide a guaranteed, scientifically proven Drill-Fill-Seal treatment to establish a continuous protective barrier around your property for long-lasting defense against subterranean termites.",
+      "eyebrow": "🛡️ Expert Treatment",
       "image": "/images/pests/termite.webp",
       "imageAlt": "Inspection view of Termite Treatment in Bangalore",
       "bgImage": "/images/services/bg/termite.webp",
@@ -52,13 +52,13 @@ export const SERVICES_DATA = [
       "Weak or crumbling wooden furniture legs and panels"
     ],
     "benefits": [
-      "Certified safe, highly effective termiticide formulations",
-      "Drill-Fill-Seal (DFS) method for 100% barrier coverage",
-      "post-construction Drill-Fill-Seal treatment",
-      "pre-construction soil treatment protection",
+      "Certified safe and eco-friendly termiticide formulations",
+      "Highly trained and background-verified expert technicians",
+      "Fast, reliable service with 60-minute emergency dispatch",
+      "Comprehensive 5-Year Warranty on Drill-Fill-Seal treatment",
+      "Scientifically proven methods for complete termite elimination",
       "Zero disruption \u2014 no need to vacate the property",
       "Odorless, non-staining treatment \u2014 safe for family and pets",
-      "Certified & background-verified expert technicians",
       "Free follow-up inspection visits included"
     ],
     "process": [
@@ -135,7 +135,7 @@ export const SERVICES_DATA = [
     "id": "pre-construction-termite-treatment",
     "slug": "pre-construction-termite-treatment",
     "path": "/pre-construction-termite-treatment",
-    "category": "Termite Specialists",
+    "category": "Specialized Services",
     "emoji": "\ud83c\udfd7\ufe0f",
     "badge": "10-Year Protection",
     "meta": {
@@ -255,7 +255,7 @@ export const SERVICES_DATA = [
     "id": "post-construction-termite-treatment",
     "slug": "post-construction-termite-treatment",
     "path": "/post-construction-termite-treatment",
-    "category": "Termite Specialists",
+    "category": "Specialized Services",
     "emoji": "\ud83c\udfda\ufe0f",
     "badge": "5-Year Barrier",
     "meta": {
@@ -378,7 +378,7 @@ export const SERVICES_DATA = [
     "id": "bed-bugs-treatment",
     "slug": "bed-bugs-treatment",
     "path": "/bed-bugs-treatment",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83d\udecf\ufe0f",
     "badge": "100% Guaranteed",
     "meta": {
@@ -504,7 +504,7 @@ export const SERVICES_DATA = [
     "id": "cockroach-treatment",
     "slug": "cockroach-treatment",
     "path": "/cockroach-treatment",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83e\udeb3",
     "badge": "Most Popular",
     "meta": {
@@ -630,7 +630,7 @@ export const SERVICES_DATA = [
     "id": "rodent-treatment",
     "slug": "rodent-treatment",
     "path": "/rodent-treatment",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83d\udc00",
     "badge": "Safe & Humane",
     "meta": {
@@ -756,7 +756,7 @@ export const SERVICES_DATA = [
     "id": "mosquito-treatment",
     "slug": "mosquito-treatment",
     "path": "/mosquito-treatment",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83e\udd9f",
     "badge": "Outdoor & Indoor",
     "meta": {
@@ -882,7 +882,7 @@ export const SERVICES_DATA = [
     "id": "wood-borer-treatment",
     "slug": "wood-borer-treatment",
     "path": "/wood-borer-treatment",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83e\udeb2",
     "badge": "Preserves Furniture",
     "meta": {
@@ -1008,7 +1008,7 @@ export const SERVICES_DATA = [
     "id": "honey-bee-treatment",
     "slug": "honey-bee-treatment",
     "path": "/honey-bee-treatment",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83d\udc1d",
     "badge": "Eco-Friendly Relocation",
     "meta": {
@@ -1134,7 +1134,7 @@ export const SERVICES_DATA = [
     "id": "ant-pest-control",
     "slug": "ant-pest-control",
     "path": "/ant-pest-control",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83d\udc1c",
     "badge": "Colony Eradication",
     "meta": {
@@ -1252,7 +1252,7 @@ export const SERVICES_DATA = [
     "id": "flea-pest-control",
     "slug": "flea-pest-control",
     "path": "/flea-pest-control",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83e\udd97",
     "badge": "Pet Safe Formula",
     "meta": {
@@ -1378,7 +1378,7 @@ export const SERVICES_DATA = [
     "id": "tick-pest-control",
     "slug": "tick-pest-control",
     "path": "/tick-pest-control",
-    "category": "Targeted Pest Solutions",
+    "category": "Our Services",
     "emoji": "\ud83e\udd97",
     "badge": "Family & Pet Safe",
     "meta": {
@@ -1499,7 +1499,7 @@ export const SERVICES_DATA = [
     "id": "residential-pest-control",
     "slug": "residential-pest-control",
     "path": "/residential-pest-control",
-    "category": "Core & Packages",
+    "category": "Specialized Services",
     "emoji": "\ud83c\udfe0",
     "badge": "Full Home Defense",
     "meta": {
@@ -1592,7 +1592,7 @@ export const SERVICES_DATA = [
     "id": "commercial-pest-control",
     "slug": "commercial-pest-control",
     "path": "/commercial-pest-control",
-    "category": "Core & Packages",
+    "category": "Specialized Services",
     "emoji": "\ud83c\udfe2",
     "badge": "Business Certified",
     "meta": {
@@ -1685,7 +1685,7 @@ export const SERVICES_DATA = [
     "id": "general-pest-control",
     "slug": "general-pest-control",
     "path": "/general-pest-control",
-    "category": "Core & Packages",
+    "category": "Our Services",
     "emoji": "\ud83d\udc1b",
     "badge": "All-in-One Defense",
     "meta": {

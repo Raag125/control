@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Phone, MessageCircle, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import CTABanner from '../../sections/CTABanner'
@@ -71,9 +70,6 @@ function ReviewsSection({ serviceTitle }) {
     }
 
     fetchReviews()
-    const intervalId = setInterval(fetchReviews, 2000)
-
-    return () => clearInterval(intervalId)
   }, [serviceTitle])
 
   const handleSubmit = async (e) => {
@@ -108,7 +104,7 @@ function ReviewsSection({ serviceTitle }) {
 
   const renderStars = (rating) => {
     return Array(5).fill(0).map((_, i) => (
-      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: '1.2rem' }}>★</span>
+      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: 'var(--font-size-h2)' }}>★</span>
     ))
   }
 
@@ -126,11 +122,10 @@ function ReviewsSection({ serviceTitle }) {
               {reviews.map(r => (
                 <div key={r.id} style={{ background: '#fff', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--clr-border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div style={{ fontWeight: 700, color: 'var(--clr-text)', fontSize: '1rem' }}>{r.name}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--clr-text)', fontSize: 'var(--font-size-h3)' }}>{r.name}</div>
                     <div>{renderStars(r.rating)}</div>
                   </div>
-                  <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem', lineHeight: 1.6 }}>{r.text}</p>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--a-muted)', marginTop: '0.75rem' }}>{new Date(r.date).toLocaleDateString()}</div>
+                  <p style={{ color: 'var(--clr-text-muted)', fontSize: 'var(--font-size-h3)', lineHeight: 1.6 }}>{r.text}</p>
                 </div>
               ))}
             </div>
@@ -147,7 +142,7 @@ function ReviewsSection({ serviceTitle }) {
               </div>
             ) : showForm ? (
               <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--clr-border)', textAlign: 'left' }}>
-                <div style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</div>
+                <div style={{ marginBottom: '1.5rem', fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</div>
 
                 <div className="form-group" style={{ marginBottom: '1rem' }}>
                   <label className="form-label">Your Name</label>
@@ -186,20 +181,22 @@ function ReviewsSection({ serviceTitle }) {
 }
 
 const OTHER_SERVICES = [
-  { to: '/termite-treatment', label: '🪵 Termite Treatment' },
+  { to: '/cockroach-treatment', label: '🪳 Cockroach Pest Control' },
+  { to: '/bed-bugs-treatment', label: '🛏️ Bed Bug Pest Control' },
+  { to: '/termite-treatment', label: '🪵 Termite Pest Control' },
+  { to: '/rodent-treatment', label: '🐀 Rodent Pest Control' },
+  { to: '/mosquito-treatment', label: '🦟 Mosquito Pest Control' },
+  { to: '/honey-bee-treatment', label: '🐝 Honey Bee Pest Control' },
+  { to: '/ant-pest-control', label: '🐜 Ant Pest Control' },
+  { to: '/flea-pest-control', label: '🦗 Flea Pest Control' },
+  { to: '/tick-pest-control', label: '🕷️ Tick Pest Control' },
+  { to: '/wood-borer-treatment', label: '🪲 Wood Borer Pest Control' },
+  { to: '/general-pest-control', label: '🛡️ General Pest Control' },
   { to: '/pre-construction-termite-treatment', label: '🏗️ Pre-Construction Termite' },
   { to: '/post-construction-termite-treatment', label: '🏠 Post-Construction Termite' },
-  { to: '/bed-bugs-treatment', label: '🛏️ Bed Bugs Treatment' },
-  { to: '/cockroach-treatment', label: '🪳 Cockroach Treatment' },
-  { to: '/rodent-treatment', label: '🐀 Rodent Treatment' },
-  { to: '/mosquito-treatment', label: '🦟 Mosquito Treatment' },
-  { to: '/honey-bee-treatment', label: '🐝 Honey Bee Treatment' },
-  { to: '/ticks-fleas-treatment', label: '🦗 Ticks & Fleas' },
-  { to: '/wood-borer-treatment', label: '🪲 Wood Borer Treatment' },
-  { to: '/ant-pest-control', label: '🐜 Ant Pest Control' },
+  { to: '/residential-pest-control', label: '🏡 Residential Pest Control' },
+  { to: '/commercial-pest-control', label: '🏢 Commercial Pest Control' },
 ]
-
-import { getServiceBySlug } from '../../data/servicesData'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -380,7 +377,7 @@ export default function ServiceDetailPage(props) {
 
               {/* Signs */}
               <div style={{ marginTop: '2rem' }}>
-                <h3 className="signs-title" style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 className="signs-title" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} aria-hidden="true" />
                   <span dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.signs || 'Signs You Need This Treatment' }} />
                 </h3>
@@ -390,7 +387,7 @@ export default function ServiceDetailPage(props) {
                   aria-label="Signs that indicate you need this pest treatment"
                 >
                   {signs.map((s) => (
-                    <li key={s} className="signs-item" style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--clr-text-muted)' }}>
+                    <li key={s} className="signs-item" style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>
                       <CheckCircle2 size={15} style={{ color: 'var(--clr-primary)', flexShrink: 0, marginTop: 2 }} aria-hidden="true" />
                       <span dangerouslySetInnerHTML={{ __html: s }} />
                     </li>
@@ -400,7 +397,7 @@ export default function ServiceDetailPage(props) {
 
               {/* Process */}
               <div style={{ marginTop: '2rem' }}>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
+                <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
                   <span dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.process || 'Our Treatment Process' }} />
                 </h3>
                 <div className="service-detail__process">
@@ -412,7 +409,7 @@ export default function ServiceDetailPage(props) {
                     >
                       <div className="service-detail__process-num" aria-hidden="true">{i + 1}</div>
                       <div className="service-detail__process-content">
-                        <strong style={{ display: 'block', fontSize: '1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }} dangerouslySetInnerHTML={{ __html: step.title }} />
+                        <strong style={{ display: 'block', fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }} dangerouslySetInnerHTML={{ __html: step.title }} />
                         <div dangerouslySetInnerHTML={{ __html: step.desc }} />
                       </div>
                     </div>
@@ -425,27 +422,27 @@ export default function ServiceDetailPage(props) {
             <aside className="service-sidebar" aria-label="Booking and additional information">
               {/* Pricing & Specs */}
               <div className="service-sidebar__card" style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}>
-                <div style={{ fontSize: '.75rem', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
+                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
                   Pricing &amp; Specs
                 </div>
                 
                 <div style={{ marginTop: '.75rem', display: 'flex', alignItems: 'baseline', gap: '.4rem' }}>
-                  <span style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--clr-text)' }}>
+                  <span style={{ fontSize: 'var(--font-size-h2)', fontWeight: 900, color: 'var(--clr-text)' }}>
                     ₹{props.service?.specs?.startingPrice || props.service?.startingPrice || 2500}
                   </span>
-                  <span style={{ fontSize: '.85rem', color: 'var(--clr-text-muted)' }}>starting price</span>
+                  <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>starting price</span>
                 </div>
 
                 <div style={{ marginTop: '1.25rem', display: 'grid', gap: '.75rem', borderTop: '1px solid #f1f5f9', paddingTop: '1.25rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.9rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)' }}>
                     <span style={{ color: 'var(--clr-text-muted)' }} dangerouslySetInnerHTML={{ __html: props.service?.specLabels?.duration || 'Duration:' }} />
                     <strong style={{ color: 'var(--clr-text)' }} dangerouslySetInnerHTML={{ __html: props.service?.specs?.duration || props.service?.duration || '3-4 Hours' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.9rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)' }}>
                     <span style={{ color: 'var(--clr-text-muted)' }} dangerouslySetInnerHTML={{ __html: props.service?.specLabels?.warranty || 'Warranty:' }} />
                     <strong style={{ color: 'var(--clr-text)' }} dangerouslySetInnerHTML={{ __html: props.service?.specs?.warranty || props.service?.warranty || '5 Years' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.9rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)' }}>
                     <span style={{ color: 'var(--clr-text-muted)' }}>Safety:</span>
                     <span style={{ color: '#16a34a', fontWeight: 700 }}>100% Eco-Safe</span>
                   </div>
@@ -460,8 +457,8 @@ export default function ServiceDetailPage(props) {
                   borderColor: 'var(--clr-border-2)',
                 }}
               >
-                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Book {title}</div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-muted)', marginBottom: '1rem' }}>
+                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Book {title}</div>
+                <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', marginBottom: '1rem' }}>
                   Get expert help today — free inspection, no hidden charges, eco-friendly treatment.
                 </p>
                 <a
@@ -486,7 +483,7 @@ export default function ServiceDetailPage(props) {
 
               {/* Benefits */}
               <div className="service-sidebar__card">
-                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Why Choose A to Z</div>
+                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Why Choose A to Z</div>
                 <ul className="service-sidebar__list" aria-label="Benefits of choosing our treatment">
                   {benefits.map((b) => (
                     <li key={b}>
@@ -499,13 +496,13 @@ export default function ServiceDetailPage(props) {
 
               {/* Other Services */}
               <div className="service-sidebar__card">
-                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Our Other Services</div>
+                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Our Other Services</div>
                 <ul className="service-sidebar__list" aria-label="Other pest control services we offer">
                   {OTHER_SERVICES.filter((s) => !title || !s.label.toLowerCase().includes(title.toLowerCase().split(' ')[0])).map((s) => (
                     <li key={s.to}>
                       <Link
                         href={s.to}
-                        style={{ color: 'var(--clr-text-muted)', fontSize: '0.85rem', transition: 'color 0.2s', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                        style={{ color: 'var(--clr-text-muted)', fontSize: 'var(--font-size-h3)', transition: 'color 0.2s', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
                         aria-label={`View ${s.label} service`}
                       >
                         {s.label}

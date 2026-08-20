@@ -1,4 +1,4 @@
-.cta-banner { padding-block: clamp(2rem, 4vw, 4rem); }
+.cta-banner { padding-block: var(--section-py); }
 
 .cta-banner__inner {
   position: relative;
@@ -31,7 +31,7 @@
 
 .cta-banner__content .display-lg { color: #fff; }
 
-.cta-banner__content p { color: rgba(255,255,255,0.82); font-size: clamp(1rem, 1.3vw, 1.1rem); }
+.cta-banner__content p { color: rgba(255,255,255,0.82); font-size: var(--font-size-h3); }
 .cta-banner__content strong { color: #fff; }
 
 .cta-banner__actions {
@@ -40,7 +40,7 @@
 }
 
 .cta-banner__btn {
-  font-size: clamp(0.88rem, 1.2vw, 1rem);
+  font-size: var(--font-size-h3);
   padding: 0.9rem 2rem;
 }
 .cta-banner__btn.btn-primary {
@@ -64,6 +64,6 @@
 
 .cta-banner__note {
   margin-top: 1.5rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-h3);
   color: rgba(255,255,255,0.6);
 }

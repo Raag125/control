@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, ShieldCheck, Bug, Building2 } from 'lucide-react'
+import { ArrowRight, ShieldCheck, Bug } from 'lucide-react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import CTABanner from '../sections/CTABanner'
@@ -12,39 +12,34 @@ gsap.registerPlugin(ScrollTrigger)
 
 const CATEGORIES = [
   {
-    id: 'core',
-    title: 'Core & Packages',
-    icon: <Building2 className="text-primary" size={24} />,
-    services: [
-      { image: '/images/pests/residential.webp', title: 'Residential Pest Control', sub: 'Complete Home Protection', to: '/residential-pest-control' },
-      { image: '/images/pests/commercial.webp', title: 'Commercial Pest Control', sub: 'Protect Your Business', to: '/commercial-pest-control' },
-      { image: '/images/pests/general.webp', title: 'General Pest Control', sub: 'Comprehensive Defense', to: '/general-pest-control' },
-    ]
-  },
-  {
-    id: 'termite',
-    title: 'Termite Specialists',
-    icon: <ShieldCheck className="text-primary" size={24} />,
-    services: [
-      { image: '/images/pests/termite.webp', title: 'Termite Pest Control', sub: 'Stop Structural Damage', to: '/termite-treatment' },
-      { image: '/images/pests/pre_construction.webp', title: 'Pre-Construction Termite', sub: 'Preventive Soil Barrier', to: '/pre-construction-termite-treatment' },
-      { image: '/images/pests/post_construction.webp', title: 'Post-Construction Termite', sub: 'Drill-Fill-Seal Eradication', to: '/post-construction-termite-treatment' },
-    ]
-  },
-  {
-    id: 'targeted',
-    title: 'Targeted Pest Solutions',
+    id: 'our-services',
+    title: 'Our Services',
+    description: 'Targeted pest elimination and comprehensive defense for common household & outdoor pests.',
     icon: <Bug className="text-primary" size={24} />,
     services: [
-      { image: '/images/pests/bed_bug.webp', title: 'Bed Bug Pest Control', sub: 'Sleep Peacefully Again', to: '/bed-bugs-treatment' },
-      { image: '/images/pests/cockroach.webp', title: 'Cockroach Pest Control', sub: 'Enjoy a Roach-Free Home', to: '/cockroach-treatment' },
-      { image: '/images/pests/ant.webp', title: 'Ant Pest Control', sub: 'Eliminate the Colony', to: '/ant-pest-control' },
-      { image: '/images/pests/tick.webp', title: 'Tick Pest Control', sub: 'Protect Pets & Family', to: '/tick-pest-control' },
-      { image: '/images/pests/flea.webp', title: 'Flea Pest Control', sub: 'Stop Itchy Bites', to: '/flea-pest-control' },
-      { image: '/images/pests/mosquito.webp', title: 'Mosquito Pest Control', sub: 'Bite-Free Outdoors', to: '/mosquito-treatment' },
-      { image: '/images/pests/rodent.webp', title: 'Rodent Pest Control', sub: 'Safe Rodent Removal', to: '/rodent-treatment' },
-      { image: '/images/pests/wood_borer.webp', title: 'Wood Borer Pest Control', sub: 'Save Wooden Assets', to: '/wood-borer-treatment' },
-      { image: '/images/pests/honey_bee.webp', title: 'Honey Bee Pest Control', sub: 'Safe Relocation Services', to: '/honey-bee-treatment' },
+      { image: '/images/pests/cockroach.webp', title: 'Cockroach Pest Control', sub: 'Odorless Gel Baiting & Eradication', to: '/cockroach-treatment' },
+      { image: '/images/pests/bed_bug.webp', title: 'Bed Bug Pest Control', sub: 'Dual Mist & Residual Elimination', to: '/bed-bugs-treatment' },
+      { image: '/images/pests/termite.webp', title: 'Termite Pest Control', sub: 'Drill-Fill-Seal 5-Year Protection', to: '/termite-treatment' },
+      { image: '/images/pests/rodent.webp', title: 'Rodent Pest Control', sub: 'Trapping, Baiting & Total Exclusion', to: '/rodent-treatment' },
+      { image: '/images/pests/mosquito.webp', title: 'Mosquito Pest Control', sub: 'Larvicidal & Cold Fogging Vector Control', to: '/mosquito-treatment' },
+      { image: '/images/pests/honey_bee.webp', title: 'Honey Bee Pest Control', sub: 'Ethical Hive Removal & Relocation', to: '/honey-bee-treatment' },
+      { image: '/images/pests/ant.webp', title: 'Ant Pest Control', sub: 'Colony Elimination & Defense', to: '/ant-pest-control' },
+      { image: '/images/pests/flea.webp', title: 'Flea Pest Control', sub: 'Pet-Safe Lifecycle Disruption', to: '/flea-pest-control' },
+      { image: '/images/pests/tick.webp', title: 'Tick Pest Control', sub: 'Complete Indoor & Garden Treatment', to: '/tick-pest-control' },
+      { image: '/images/pests/wood_borer.webp', title: 'Wood Borer Pest Control', sub: 'Deep Injection & Borate Preservation', to: '/wood-borer-treatment' },
+      { image: '/images/pests/general.webp', title: 'General Pest Control', sub: 'Comprehensive Multi-Pest Protection', to: '/general-pest-control' },
+    ]
+  },
+  {
+    id: 'specialized',
+    title: 'Specialized Services',
+    description: 'Advanced structural protection, pre/post construction barriers, and dedicated premises management.',
+    icon: <ShieldCheck className="text-primary" size={24} />,
+    services: [
+      { image: '/images/pests/pre_construction.webp', title: 'Pre-Construction Termite', sub: 'Preventive Soil Barrier for New Builds', to: '/pre-construction-termite-treatment' },
+      { image: '/images/pests/post_construction.webp', title: 'Post-Construction Termite', sub: 'Drill-Fill-Seal Structural Treatment', to: '/post-construction-termite-treatment' },
+      { image: '/images/pests/residential.webp', title: 'Residential Pest Control', sub: 'Complete Eco-Friendly Home Defense', to: '/residential-pest-control' },
+      { image: '/images/pests/commercial.webp', title: 'Commercial Pest Control', sub: 'Audit-Ready Business Pest Management', to: '/commercial-pest-control' },
     ]
   }
 ]
@@ -126,14 +121,26 @@ export default function Services() {
               <div key={category.id} style={{ marginBottom: '4rem' }}>
                 <div 
                   className="category-header"
-                  style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem', borderBottom: '2px solid var(--clr-border)', paddingBottom: '1rem' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem', borderBottom: '2px solid var(--clr-border)', paddingBottom: '1rem' }}
                 >
-                  <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--clr-accent-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {category.icon}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--clr-accent-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {category.icon}
+                    </div>
+                    <div>
+                      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)', margin: 0 }}>
+                        {category.title}
+                      </h2>
+                      {category.description && (
+                        <p style={{ margin: '0.25rem 0 0 0', fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>
+                          {category.description}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, color: 'var(--clr-text)' }}>
-                    {category.title}
-                  </h2>
+                  <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', background: 'var(--clr-accent-light)', color: 'var(--clr-primary)' }}>
+                    {category.services.length} Services
+                  </span>
                 </div>
 
                 <div className="services-all-grid">
@@ -152,16 +159,16 @@ export default function Services() {
                         <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
                       <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1, gap: '0.5rem' }}>
-                        <strong style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--clr-text)' }}>
+                        <strong style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
                           {s.title}
                         </strong>
-                        <p style={{ fontSize: '0.85rem', color: 'var(--clr-primary)', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
+                        <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-primary)', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
                           {s.sub}
                         </p>
                         <Link
                           href={s.to}
                           className="btn btn-outline"
-                          style={{ marginTop: 'auto', justifyContent: 'center', fontSize: '0.85rem', padding: '0.75rem 1rem', width: '100%', borderWidth: '1.5px' }}
+                          style={{ marginTop: 'auto', justifyContent: 'center', fontSize: 'var(--font-size-h3)', padding: '0.75rem 1rem', width: '100%', borderWidth: '1.5px' }}
                           aria-label={`Learn more about ${s.title} in Bangalore`}
                         >
                           Learn More <ArrowRight size={16} aria-hidden="true" />

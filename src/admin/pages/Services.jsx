@@ -4,13 +4,13 @@ import { getServices, saveService, deleteService } from '../adminData'
 import { SERVICES_DATA } from '../../data/servicesData'
 import ModalPortal from '../ModalPortal'
 
-const CATEGORIES = ['All Categories', 'Termite Specialists', 'Targeted Pest Solutions', 'Core & Packages']
+const CATEGORIES = ['All Categories', 'Our Services', 'Specialized Services']
 
 const EMPTY_SERVICE = {
   id: '',
   slug: '',
   path: '',
-  category: 'Targeted Pest Solutions',
+  category: 'Our Services',
   emoji: '🐛',
   badge: 'Certified Safe',
   meta: {
@@ -151,7 +151,7 @@ export default function Services() {
     <div>
       {/* Toast Notification */}
       {savedToast && (
-        <div style={{ position: 'fixed', top: '1.5rem', right: '1.5rem', zIndex: 9999, background: 'linear-gradient(135deg, #16a34a, #065f46)', color: '#fff', padding: '.75rem 1.25rem', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)', fontWeight: 700, fontSize: '.85rem', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+        <div style={{ position: 'fixed', top: '1.5rem', right: '1.5rem', zIndex: 9999, background: 'linear-gradient(135deg, #16a34a, #065f46)', color: '#fff', padding: '.75rem 1.25rem', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)', fontWeight: 700, fontSize: 'var(--font-size-h3)', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
           ✅ Service Page Changes Saved Successfully!
         </div>
       )}
@@ -159,10 +159,10 @@ export default function Services() {
       {/* Main Section Header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: '1.3rem', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h3)', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
             🛠️ Services Pages &amp; Content Studio
           </h1>
-          <p style={{ fontSize: '.78rem', color: 'var(--a-muted)', marginTop: '.2rem' }}>
+          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem' }}>
             Directly customize and update all texts, images, FAQs, process steps, meta tags, and alt descriptions for every service page.
           </p>
         </div>
@@ -175,14 +175,14 @@ export default function Services() {
       <div style={{ display: 'flex', gap: '.6rem', marginBottom: '1.25rem', borderBottom: '1px solid var(--a-border)', paddingBottom: '.75rem' }}>
         <button
           className={`adm-chip ${activeTab === 'individual' ? 'active' : ''}`}
-          style={{ fontSize: '.82rem', padding: '.45rem 1rem', fontWeight: 700 }}
+          style={{ fontSize: 'var(--font-size-h2)', padding: '.45rem 1rem', fontWeight: 700 }}
           onClick={() => setActiveTab('individual')}
         >
           📄 Individual Service Pages ({services.length})
         </button>
         <button
           className={`adm-chip ${activeTab === 'main_page' ? 'active' : ''}`}
-          style={{ fontSize: '.82rem', padding: '.45rem 1rem', fontWeight: 700 }}
+          style={{ fontSize: 'var(--font-size-h2)', padding: '.45rem 1rem', fontWeight: 700 }}
           onClick={() => setActiveTab('main_page')}
         >
           📑 Main Services Page (/services)
@@ -192,10 +192,10 @@ export default function Services() {
       {activeTab === 'main_page' ? (
         /* ──────── MAIN /services CATALOG PAGE EDITOR ──────── */
         <div className="adm-card" style={{ maxWidth: '800px', padding: '1.5rem' }}>
-          <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--a-text)', marginBottom: '.5rem' }}>
+          <div style={{ fontWeight: 800, fontSize: 'var(--font-size-h3)', color: 'var(--a-text)', marginBottom: '.5rem' }}>
             📑 Main Services Overview Page Settings (`/services`)
           </div>
-          <p style={{ fontSize: '.8rem', color: 'var(--a-muted)', marginBottom: '1.5rem' }}>
+          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginBottom: '1.5rem' }}>
             Controls the main header, badges, and introductory copy for the public <a href="/services" target="_blank" style={{ color: 'var(--a-green2)', fontWeight: 700 }}>/services</a> catalog page.
           </p>
 
@@ -250,13 +250,12 @@ export default function Services() {
             {[
               { label: 'Total Service Pages', val: services.length, color: 'var(--a-text)' },
               { label: 'Live & Active', val: services.filter((s) => s.isActive !== false).length, color: 'var(--a-green2)' },
-              { label: 'Termite Specialists', val: services.filter((s) => (s.category || '').includes('Termite')).length, color: '#f59e0b' },
-              { label: 'Targeted Solutions', val: services.filter((s) => (s.category || '').includes('Targeted')).length, color: '#3b82f6' },
-              { label: 'Core & Packages', val: services.filter((s) => (s.category || '').includes('Core')).length, color: '#8b5cf6' },
+              { label: 'Our Services', val: services.filter((s) => (s.category || '').includes('Our')).length, color: '#3b82f6' },
+              { label: 'Specialized Services', val: services.filter((s) => (s.category || '').includes('Specialized')).length, color: '#f59e0b' },
             ].map((s) => (
               <div key={s.label} className="adm-card" style={{ padding: '.75rem .9rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '1.4rem', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.val}</div>
-                <div style={{ fontSize: '.68rem', color: 'var(--a-muted)', marginTop: '.25rem', fontWeight: 600 }}>{s.label}</div>
+                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.25rem', fontWeight: 600 }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -267,7 +266,7 @@ export default function Services() {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--a-muted)" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
               <input placeholder="Search service page by name or pest…" value={search} onChange={(e) => setSearch(e.target.value)} />
               {search && (
-                <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: '.9rem' }}>✕</button>
+                <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: 'var(--font-size-h3)' }}>✕</button>
               )}
             </div>
 
@@ -278,7 +277,7 @@ export default function Services() {
                 return (
                   <button key={c} className={`adm-chip ${catFilter === c ? 'active' : ''}`} onClick={() => setCat(c)}>
                     <span>{c}</span>
-                    <span style={{ opacity: 0.8, fontSize: '.65rem' }}>({count})</span>
+                    <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({count})</span>
                   </button>
                 )
               })}
@@ -306,10 +305,10 @@ export default function Services() {
                     {/* Top Header & Active Toggle */}
                     <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '.5rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '.65rem' }}>
-                        <span style={{ fontSize: '1.7rem', lineHeight: 1 }}>{svc.emoji || '🐛'}</span>
+                        <span style={{ fontSize: 'var(--font-size-h3)', lineHeight: 1 }}>{svc.emoji || '🐛'}</span>
                         <div>
-                          <div style={{ fontWeight: 800, fontSize: '.95rem', color: 'var(--a-text)' }}>{title}</div>
-                          <span className="adm-badge adm-badge--gray" style={{ fontSize: '.62rem', marginTop: '.2rem' }}>{svc.category || 'General'}</span>
+                          <div style={{ fontWeight: 800, fontSize: 'var(--font-size-h3)', color: 'var(--a-text)' }}>{title}</div>
+                          <span className="adm-badge adm-badge--gray" style={{ fontSize: 'var(--font-size-h2)', marginTop: '.2rem' }}>{svc.category || 'General'}</span>
                         </div>
                       </div>
                       <label className="adm-toggle" title={svc.isActive !== false ? 'Deactivate' : 'Activate'}>
@@ -320,7 +319,7 @@ export default function Services() {
 
                     {/* Tagline */}
                     {tagline && (
-                      <p style={{ fontSize: '.76rem', color: 'var(--a-muted)', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {tagline}
                       </p>
                     )}
@@ -328,21 +327,21 @@ export default function Services() {
                     {/* Quick Specs */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '.4rem' }}>
                       <div style={{ background: 'var(--a-card2)', borderRadius: '8px', padding: '.45rem .6rem', border: '1px solid var(--a-border)' }}>
-                        <div style={{ fontSize: '.58rem', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase' }}>FROM</div>
-                        <div style={{ fontSize: '.8rem', fontWeight: 800, color: 'var(--a-text)', marginTop: '.1rem' }}>₹{Number(price).toLocaleString('en-IN')}</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase' }}>FROM</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-text)', marginTop: '.1rem' }}>₹{Number(price).toLocaleString('en-IN')}</div>
                       </div>
                       <div style={{ background: 'var(--a-card2)', borderRadius: '8px', padding: '.45rem .6rem', border: '1px solid var(--a-border)' }}>
-                        <div style={{ fontSize: '.58rem', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase' }}>DURATION</div>
-                        <div style={{ fontSize: '.8rem', fontWeight: 800, color: 'var(--a-text)', marginTop: '.1rem' }}>{duration}</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase' }}>DURATION</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-text)', marginTop: '.1rem' }}>{duration}</div>
                       </div>
                       <div style={{ background: 'var(--a-card2)', borderRadius: '8px', padding: '.45rem .6rem', border: '1px solid var(--a-border)' }}>
-                        <div style={{ fontSize: '.58rem', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase' }}>WARRANTY</div>
-                        <div style={{ fontSize: '.8rem', fontWeight: 800, color: 'var(--a-text)', marginTop: '.1rem' }}>{warranty}</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase' }}>WARRANTY</div>
+                        <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-text)', marginTop: '.1rem' }}>{warranty}</div>
                       </div>
                     </div>
 
                     {/* URL Link and Live Preview */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '.7rem', color: 'var(--a-muted)', background: 'var(--a-card2)', padding: '.35rem .6rem', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', background: 'var(--a-card2)', padding: '.35rem .6rem', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
                       <span style={{ fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         🔗 {path}
                       </span>
@@ -376,10 +375,10 @@ export default function Services() {
               {/* Modal Header */}
               <div className="adm-modal__header" style={{ padding: '1.1rem 1.5rem', borderBottom: '1px solid var(--a-border)' }}>
                 <div>
-                  <div style={{ fontSize: '.7rem', fontWeight: 800, color: 'var(--a-green2)', textTransform: 'uppercase', letterSpacing: '.08em' }}>
+                  <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-green2)', textTransform: 'uppercase', letterSpacing: '.08em' }}>
                     Service Page Content Editor
                   </div>
-                  <span className="adm-modal__title" style={{ fontSize: '1.2rem' }}>
+                  <span className="adm-modal__title" style={{ fontSize: 'var(--font-size-h2)' }}>
                     {editForm.emoji} {editForm.hero?.title || editForm.name || 'New Service Page'}
                   </span>
                 </div>
@@ -387,7 +386,7 @@ export default function Services() {
               </div>
 
               {/* Modal Frame Tabs */}
-              <div style={{ display: 'flex', overflowX: 'auto', background: 'var(--a-card2)', borderBottom: '1px solid var(--a-border)', padding: '.4rem .8rem', gap: '.35rem' }}>
+              <div className="adm-hide-scroll" style={{ display: 'flex', overflowX: 'auto', background: 'var(--a-card2)', borderBottom: '1px solid var(--a-border)', padding: '.4rem .8rem', gap: '.35rem' }}>
                 {[
                   { id: 'hero', label: '🌟 Hero & Intro' },
                   { id: 'seo', label: '🔍 SEO & Meta' },
@@ -400,7 +399,7 @@ export default function Services() {
                   <button
                     key={t.id}
                     className={`adm-chip ${formTab === t.id ? 'active' : ''}`}
-                    style={{ fontSize: '.75rem', padding: '.35rem .75rem', whiteSpace: 'nowrap' }}
+                    style={{ fontSize: 'var(--font-size-h3)', padding: '.35rem .75rem', whiteSpace: 'nowrap' }}
                     onClick={() => setFormTab(t.id)}
                   >
                     {t.label}
@@ -589,7 +588,7 @@ export default function Services() {
                         <button
                           type="button"
                           className="adm-btn adm-btn--outline adm-btn--sm"
-                          style={{ fontSize: '.7rem' }}
+                          style={{ fontSize: 'var(--font-size-h3)' }}
                           onClick={() => setEditForm({ ...editForm, signs: [...(editForm.signs || []), ''] })}
                         >
                           + Add Sign
@@ -628,7 +627,7 @@ export default function Services() {
                         <button
                           type="button"
                           className="adm-btn adm-btn--outline adm-btn--sm"
-                          style={{ fontSize: '.7rem' }}
+                          style={{ fontSize: 'var(--font-size-h3)' }}
                           onClick={() => setEditForm({ ...editForm, benefits: [...(editForm.benefits || []), ''] })}
                         >
                           + Add Benefit
@@ -681,7 +680,7 @@ export default function Services() {
                     {(editForm.process || []).map((p, idx) => (
                       <div key={idx} style={{ background: 'var(--a-card2)', border: '1px solid var(--a-border)', padding: '1rem', borderRadius: '10px', marginBottom: '.75rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '.5rem' }}>
-                          <span style={{ fontWeight: 800, fontSize: '.85rem', color: 'var(--a-green2)' }}>Step {idx + 1}</span>
+                          <span style={{ fontWeight: 800, fontSize: 'var(--font-size-h3)', color: 'var(--a-green2)' }}>Step {idx + 1}</span>
                           <button
                             type="button"
                             className="adm-btn adm-btn--danger adm-btn--sm"
@@ -739,7 +738,7 @@ export default function Services() {
                     {(editForm.faqs || []).map((faq, idx) => (
                       <div key={idx} style={{ background: 'var(--a-card2)', border: '1px solid var(--a-border)', padding: '1rem', borderRadius: '10px', marginBottom: '.75rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '.5rem' }}>
-                          <span style={{ fontWeight: 800, fontSize: '.85rem', color: 'var(--a-green2)' }}>FAQ #{idx + 1}</span>
+                          <span style={{ fontWeight: 800, fontSize: 'var(--font-size-h3)', color: 'var(--a-green2)' }}>FAQ #{idx + 1}</span>
                           <button
                             type="button"
                             className="adm-btn adm-btn--danger adm-btn--sm"
@@ -794,7 +793,7 @@ export default function Services() {
                       <label className="adm-label">Category</label>
                       <select
                         className="adm-select-full"
-                        value={editForm.category || 'Targeted Pest Solutions'}
+                        value={editForm.category || 'Our Services'}
                         onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
                       >
                         {CATEGORIES.filter((c) => c !== 'All Categories').map((c) => (
@@ -882,7 +881,7 @@ export default function Services() {
           <div className="adm-modal-overlay">
             <div className="adm-modal" style={{ maxWidth: 360 }}>
               <div className="adm-modal__title" style={{ marginBottom: '.75rem' }}>Delete Service Page?</div>
-              <p style={{ fontSize: '.82rem', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>Are you sure? This cannot be undone.</p>
+              <p style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>Are you sure? This cannot be undone.</p>
               <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'flex-end' }}>
                 <button className="adm-btn adm-btn--ghost" onClick={() => setDel(null)}>Cancel</button>
                 <button className="adm-btn adm-btn--danger" onClick={async () => { setServices(await deleteService(del)); setDel(null) }}>Delete</button>

@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://navneetnamdev191_db_user:mZMtHM1NNvQdfos9@cluster0.5s6gngc.mongodb.net/pest_control?retryWrites=true&w=majority'
+const MONGODB_URI = process.env.MONGODB_URI
 const REVIEWS_FILE = path.resolve(process.cwd(), 'data/reviews.json')
 
 let cachedClient = null
