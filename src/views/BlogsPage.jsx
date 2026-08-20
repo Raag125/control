@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { getBlogs } from '../admin/adminData'
@@ -7,11 +7,14 @@ import AnimatedBackground from '../components/AnimatedBackground'
 import './BlogsPage.css'
 
 export default function BlogsPage() {
+  const [blogs, setBlogs] = useState([])
+  
   useEffect(() => {
     window.scrollTo(0, 0)
+    getBlogs().then(data => {
+      setBlogs(data.filter(b => b.status === 'published'))
+    })
   }, [])
-
-  const blogs = getBlogs().filter(b => b.status === 'published')
 
   return (
     <div className="blogs-page">

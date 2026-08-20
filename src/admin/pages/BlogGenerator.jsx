@@ -483,8 +483,7 @@ export default function BlogGenerator() {
                   <div style={{ background:'var(--a-bg)',borderRadius:'10px',padding:'1rem',marginBottom:'1.25rem',border:'1px solid var(--a-border)' }}>
                     <div style={{ fontSize:'0.7rem',fontWeight:700,color:'var(--a-muted)',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:'0.7rem' }}>API Usage</div>
                     <div className="score-row"><span style={{fontSize:'0.85rem',color:'var(--a-text)'}}>Text Tokens</span><span style={{fontWeight:700,color:'var(--a-text)',fontSize:'0.9rem'}}>{usage.tokens?.toLocaleString()}</span></div>
-                    <div className="score-row"><span style={{fontSize:'0.85rem',color:'var(--a-text)'}}>Images</span><span style={{fontWeight:700,color:'var(--a-text)',fontSize:'0.9rem'}}>{usage.images}</span></div>
-                    <div className="score-row" style={{borderBottom:'none'}}><span style={{fontSize:'0.85rem',color:'var(--a-text)'}}>Est. Cost</span><span style={{fontWeight:700,color:'#10b981',fontSize:'0.9rem'}}>${usage.cost}</span></div>
+                    <div className="score-row" style={{borderBottom:'none'}}><span style={{fontSize:'0.85rem',color:'var(--a-text)'}}>Images</span><span style={{fontWeight:700,color:'var(--a-text)',fontSize:'0.9rem'}}>{usage.images}</span></div>
                   </div>
                 )}
                 {seoScores && <>

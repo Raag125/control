@@ -29,6 +29,26 @@ async function getServiceFromDB(slug) {
   }
 }
 
+async function getBlogFromDB(slug) {
+  if (!MONGODB_URI) return null
+  try {
+    const client = await MongoClient.connect(MONGODB_URI, { connectTimeoutMS: 3000 })
+    const db = client.db('pest_control')
+    const blog = await db.collection('blogs').findOne({
+      $or: [{ slug: slug }, { id: slug }]
+    })
+    await client.close()
+    if (blog) {
+      const { _id, ...rest } = blog
+      return rest
+    }
+    return null
+  } catch (err) {
+    console.error('Error fetching blog from DB in server component:', err)
+    return null
+  }
+}
+
 // Allow slugs not in generateStaticParams to be rendered on-demand (needed for blogs)
 export const dynamicParams = true
 
@@ -64,8 +84,12 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  // 2. Fallback to check if it's a blog
-  const blog = getBlogBySlug(resolvedParams.slug)
+  // 2. Fallback to check if it's a blog in MongoDB
+  let blog = await getBlogFromDB(resolvedParams.slug)
+  if (!blog) {
+    // try local as absolute fallback
+    blog = await getBlogBySlug(resolvedParams.slug)
+  }
   if (!blog || blog.status !== 'published') {
     return { title: 'Not Found | A to Z Pest Solutions' }
   }
@@ -92,8 +116,12 @@ export default async function Page({ params }) {
     return <ServiceDetailPage service={service} slug={resolvedParams.slug} />
   }
 
-  // 2. Try Blog
-  const blog = getBlogBySlug(resolvedParams.slug)
+  // 2. Try Blog in MongoDB
+  let blog = await getBlogFromDB(resolvedParams.slug)
+  if (!blog) {
+    // try local as absolute fallback
+    blog = await getBlogBySlug(resolvedParams.slug)
+  }
   if (blog && blog.status === 'published') {
     return <BlogPostPage slug={resolvedParams.slug} />
   }

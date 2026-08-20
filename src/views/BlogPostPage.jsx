@@ -17,12 +17,14 @@ export default function BlogPostPage({ slug: propSlug }) {
   useEffect(() => {
     window.scrollTo(0, 0)
     if (slug) {
-      const b = getBlogBySlug(slug)
-      if (b && b.status === 'published') {
-        setBlog(b)
-      }
-      const all = getBlogs().filter(x => x.status === 'published' && x.slug !== slug).slice(0, 3)
-      setRecentBlogs(all)
+      getBlogs().then(allBlogs => {
+        const b = allBlogs.find(x => x.slug === slug)
+        if (b && b.status === 'published') {
+          setBlog(b)
+        }
+        const recents = allBlogs.filter(x => x.status === 'published' && x.slug !== slug).slice(0, 3)
+        setRecentBlogs(recents)
+      })
     }
   }, [slug])
 

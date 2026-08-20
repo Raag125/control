@@ -495,8 +495,8 @@ Write the complete markdown content for this section only.` }
             send('progress', { step: 4, status: 'running', message: 'Calling gpt-image-2 for Cover and Inline images (this takes ~15s)...' });
 
             try {
-              const coverPromise = callDallE(imgAssets.cover_prompt + '. Photorealistic, cinematic, no text or words in image, ultra HD, suitable for a professional home services blog.');
-              const inlinePromise = callDallE(imgAssets.inline_prompt + '. Photorealistic, educational, no text or words in image, ultra HD, suitable for an article.');
+              const coverPromise = callDallE(imgAssets.cover_alt + '. Photorealistic, cinematic, no text or words in image, ultra HD, suitable for a professional home services blog.');
+              const inlinePromise = callDallE(imgAssets.inline_alt + '. Photorealistic, educational, no text or words in image, ultra HD, suitable for an article.');
               
               const [coverData, inlineData] = await Promise.all([coverPromise, inlinePromise]);
               imageTokenCost = 2; // 2 images
@@ -515,8 +515,8 @@ Write the complete markdown content for this section only.` }
               // Inject inline image into the middle section
               const midIdx = Math.floor(sectionContents.length / 2);
               if (sectionContents[midIdx]) {
-                const imgHtml = `\n\n<figure style="margin:2.5rem 0; text-align:center"><img src="${inlineUrl}" alt="${imgAssets.inline_alt}" style="max-width:100%; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.12);" /></figure>\n\n`;
-                sectionContents[midIdx].content += imgHtml;
+                const imgMarkdown = `\n\n![${imgAssets.inline_alt}](${inlineUrl})\n\n`;
+                sectionContents[midIdx].content += imgMarkdown;
                 // Re-send section update to frontend
                 send('section', { index: midIdx, heading: sectionContents[midIdx].heading, level: sectionContents[midIdx].level, content: markdownToHtml(sectionContents[midIdx].content) });
               }
@@ -558,7 +558,7 @@ Evaluate the article across 4 core pillars and compute a final weighted SEO Scor
    - Strict heading hierarchy (exactly one H1, proper H2/H3 nesting).
    - At least 1 markdown table (| Header |) summarizing core takeaways.
    - At least 2 structured bullet/numbered lists.
-   - Verified presence of descriptive image markdown with alt tags.
+   - Verified presence of descriptive image tags (Markdown or HTML) with alt attributes.
    - FAQ section with 3+ clear questions.
 
 3. Search Intent, E-E-A-T & Information Gain (25 Points):

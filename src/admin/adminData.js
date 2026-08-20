@@ -193,25 +193,85 @@ export const deleteService = async (id) => {
   return all 
 }
 
-export const getBlogs      = ()  => {
+export const getBlogs = async () => {
+  if (typeof window === 'undefined') return read(KEYS.blogs)
+  try {
+    const res = await fetch('/api/blogs')
+    if (res.ok) {
+      const data = await res.json()
+      write(KEYS.blogs, data)
+      return data
+    }
+  } catch (e) {
+    console.warn('Backend API unreachable, falling back to localStorage', e)
+  }
   const blogs = read(KEYS.blogs)
   return (blogs && blogs.length > 0) ? blogs : (initialBlogs || [])
 }
 
-export const getBlogBySlug = slug => {
-  const all = getBlogs()
+export const getBlogBySlug = async (slug) => {
+  const all = await getBlogs()
   return all.find(b => b.slug === slug)
 }
 
-export const saveBlog      = b   => { 
-  const all=read(KEYS.blogs); 
-  const i=all.findIndex(x=>x.id===b.id); 
+export const saveBlog = async (b) => {
+  const all = read(KEYS.blogs); 
+  const i = all.findIndex(x => x.id === b.id); 
   const slug = b.slug || generateSlug(b.title)
-  if(i>-1) { all[i]={...all[i], ...b, slug}; } 
-  else { all.unshift({...b, id:'BLG-'+uid(), slug, date:new Date().toISOString()}); } 
-  write(KEYS.blogs,all); return all 
+  let blogToSave = b;
+  if(i > -1) { 
+    blogToSave = {...all[i], ...b, slug};
+    all[i] = blogToSave; 
+  } else { 
+    blogToSave = {...b, id:'BLG-'+uid(), slug, date:new Date().toISOString()};
+    all.unshift(blogToSave); 
+  } 
+  write(KEYS.blogs, all);
+  
+  if (typeof window !== 'undefined') {
+    try {
+      const res = await fetch('/api/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'save', blog: blogToSave })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.blogs) {
+          write(KEYS.blogs, data.blogs)
+          return data.blogs
+        }
+      }
+    } catch (e) {
+      console.warn('Backend API unreachable', e)
+    }
+  }
+  return all
 }
-export const deleteBlog    = id  => { const all=read(KEYS.blogs).filter(b=>b.id!==id); write(KEYS.blogs,all); return all }
+
+export const deleteBlog = async (id) => { 
+  const all = read(KEYS.blogs).filter(b => b.id !== id); 
+  write(KEYS.blogs, all);
+  if (typeof window !== 'undefined') {
+    try {
+      const res = await fetch('/api/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', id })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.blogs) {
+          write(KEYS.blogs, data.blogs)
+          return data.blogs
+        }
+      }
+    } catch (e) {
+      console.warn('Backend API unreachable', e)
+    }
+  }
+  return all 
+}
 
 export const getReviews = async () => {
   if (typeof window === 'undefined') return read(KEYS.reviews)

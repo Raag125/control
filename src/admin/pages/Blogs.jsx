@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getBlogs, saveBlog, deleteBlog, getSettings, saveSettings } from '../adminData'
 import ModalPortal from '../ModalPortal'
 import toast from 'react-hot-toast'
@@ -7,8 +7,11 @@ import BlogWYSIWYG from './BlogWYSIWYG'
 const EMPTY_BLOG = { id: '', title: '', slug: '', excerpt: '', metaDesc: '', metaKeywords: '', content: '', status: 'draft', image: '', imageAlt: '' }
 
 export default function Blogs() {
-  const [blogs, setBlogs] = useState(getBlogs)
+  const [blogs, setBlogs] = useState([])
   const [search, setSearch] = useState('')
+  useEffect(() => {
+    getBlogs().then(data => setBlogs(data))
+  }, [])
   const [modal, setModal] = useState(false)
   const [form, setForm] = useState(EMPTY_BLOG)
   const [del, setDel] = useState(null)
@@ -25,9 +28,9 @@ export default function Blogs() {
   function openEdit(b) { setForm({ ...b }); setModal(true) }
   function closeModal() { setModal(false) }
 
-  function handleSave(status = 'published') {
+  async function handleSave(status = 'published') {
     if (!form.title) { toast.error("Title is required"); return }
-    const updated = saveBlog({ ...form, status })
+    const updated = await saveBlog({ ...form, status })
     setBlogs(updated)
     toast.success(`Blog ${status}!`)
     closeModal()
@@ -291,7 +294,7 @@ export default function Blogs() {
               <p style={{ fontSize: '.82rem', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>This action cannot be undone.</p>
               <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'flex-end' }}>
                 <button className="adm-btn adm-btn--ghost" onClick={() => setDel(null)}>Cancel</button>
-                <button className="adm-btn adm-btn--danger" onClick={() => { setBlogs(deleteBlog(del)); setDel(null) }}>Delete</button>
+                <button className="adm-btn adm-btn--danger" onClick={async () => { setBlogs(await deleteBlog(del)); setDel(null) }}>Delete</button>
               </div>
             </div>
           </div>
