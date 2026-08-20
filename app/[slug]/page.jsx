@@ -8,10 +8,25 @@ import { getServiceBySlug } from '../../src/data/servicesData'
 // ISR: revalidate pages every 30 seconds so admin changes appear quickly
 export const revalidate = 30
 
-const MONGODB_URI = process.env.MONGODB_URI
+import fs from 'fs'
+import path from 'path'
+
+function getMongoUri() {
+  let uri = process.env.MONGODB_URI
+  try {
+    const envPath = path.join(process.cwd(), '.env')
+    if (fs.existsSync(envPath)) {
+      const content = fs.readFileSync(envPath, 'utf8')
+      const match = content.match(/^MONGODB_URI=["']?([^"'\n]+)["']?/m)
+      if (match) uri = match[1]
+    }
+  } catch(e) {}
+  return uri
+}
 
 async function getServiceFromDB(slug) {
   try {
+    const MONGODB_URI = getMongoUri()
     const client = await MongoClient.connect(MONGODB_URI, { connectTimeoutMS: 3000 })
     const db = client.db('pest_control')
     const service = await db.collection('services').findOne({
@@ -30,6 +45,7 @@ async function getServiceFromDB(slug) {
 }
 
 async function getBlogFromDB(slug) {
+  const MONGODB_URI = getMongoUri()
   if (!MONGODB_URI) return null
   try {
     const client = await MongoClient.connect(MONGODB_URI, { connectTimeoutMS: 3000 })

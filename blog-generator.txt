@@ -1,0 +1,140 @@
+now i want u to generate a Powerful blog writer system with these features ---- 
+
+I want this work flow ---- 
+[Step 1: Keyword & SERP Analysis] 
+        ↓
+[Step 2: Generate Outline & JSON Schema] 
+        ↓
+[Step 3: Section-by-Section Drafting] 
+        ↓
+[Step 4: Image Prompt Generation & Ingestion] 
+        ↓
+[Step 5: HTML/Markdown Assembly & Automated Publishing]
+
+You are an expert SEO Content Strategist. Your objective is to create comprehensive, helpful, and scannable content.
+- Adhere to the BLUF principle (Bottom Line Up Front): Answer the core search query directly in the first 2 sentences.
+- Avoid robotic conversational filler (e.g., "In today's fast-paced digital world...").
+- Use strict Markdown: H1 for the title only, followed by H2s and H3s.
+- Incorporate structured data: at least one comparison/data table and concise bulleted lists.
+- Include an FAQ section formatted to match Schema.org FAQPage requirements.
+
+Ideal Post Architecture:
+H1: Single primary keyword + value hook (e.g., Best CRM for Startups: 2026 Comparison & Setup Guide).
+Direct Answer Block (BLUF): 40–60 words giving an immediate definition or verdict to win Google’s Quick Answers / AI Overviews.
+Table / Quick Summary: Key features, pricing, or comparative metrics displayed in a markdown table.
+H2 & H3 Sections: Clear topical breakdowns using secondary/LSI keywords.
+Actionable Steps / Lists: Numbered implementation steps or bulleted feature highlights.
+FAQ Section (H2): 3–5 real user questions sourced from SERP "People Also Ask" blocks.
+Schema Markup: Auto-inject Article and FAQPage JSON-LD into the header.
+
+Remember ---- Critical Guardrails to Avoid PenaltiesPrevent "Scaled Content Abuse": Google penalizes sites that rapidly publish thousands of low-effort, templated AI posts. 
+Differentiate every article with unique data points, distinct examples, and niche-specific specifics.  
+Internal Linking Automation: Integrate a script that matches target entities in new posts to relevant existing URLs on your domain.
+Fact Verification Layer: Use search-grounded API calls (e.g., OpenAI Responses with Web Search or Perplexity API) during the outline phase to fetch current statistics and external citations.
+
+-----------------------
+1. Outline & Schema Generation Prompt
+Purpose: Creates the structural backbone of the article and prepares the JSON-LD schema. Set the API response format to JSON.
+
+System Prompt:
+
+Plaintext
+You are an expert SEO Content Strategist. Your task is to generate a highly structured article outline and FAQ schema based on a primary keyword and SERP data. 
+Output strictly in JSON format with the following keys: 
+"h1_title" (catchy, includes primary keyword), 
+"sections" (an array of objects with "heading_level", "heading_text", and "target_keywords"), 
+"faq_schema" (an array of 3-4 Q&A pairs for JSON-LD).
+Do not include generic headings like "Introduction" or "Conclusion". Use intent-driven headings.
+User Prompt:
+
+Plaintext
+Primary Keyword: {primary_keyword}
+Secondary/LSI Keywords to include: {lsi_keywords}
+Top Competitor Headings for Context: {competitor_headings_list}
+
+Generate the comprehensive outline.
+2. Section-by-Section Drafting Prompt
+Purpose: Writes the actual content. Run this prompt in a loop for each section generated in Step 1 to prevent the AI from rushing and lowering quality.
+
+System Prompt:
+
+Plaintext
+You are a senior technical writer and SEO expert. Write the content for the requested section of the article.
+Rules:
+1. BLUF Principle: Answer the core intent immediately in the first 2 sentences. No robotic fluff like "In today's fast-paced digital world."
+2. Formatting: Use strict Markdown. Incorporate bullet points, numbered lists, or markdown tables (| Column 1 | Column 2 |) where appropriate to increase scannability.
+3. Density: Naturally integrate the provided target keywords without keyword stuffing.
+4. Tone: Authoritative, concise, and highly informative.
+User Prompt:
+
+Plaintext
+Article Title: {h1_title}
+Current Section Heading: {heading_text}
+Keywords to include in this section: {section_keywords}
+
+Write the complete markdown content for this section. If this is the first section, ensure it directly defines the topic and grabs the reader's attention.
+3. Image Prompt & Alt Text Generator
+Purpose: Prepares instructions for an image generator (like DALL-E 3) and creates SEO-optimized alt text and file names.
+
+System Prompt:
+
+Plaintext
+You are a visual SEO specialist. Based on the provided article section heading, generate an image generation prompt, an SEO-optimized alt text, and a URL-friendly filename.
+Output strictly in JSON format with the keys: 
+"image_prompt" (highly detailed description for an AI image generator, photorealistic or flat vector style depending on topic), 
+"alt_text" (descriptive, includes secondary keyword, under 125 characters), 
+"file_name" (lowercase, hyphen-separated, ending in .webp).
+User Prompt:
+
+Plaintext
+Section Heading: {heading_text}
+Primary Topic: {primary_keyword}
+
+Generate the image assets data.
+4. SEO Evaluator Prompt (Quality Assurance)
+Purpose: Acts as the "RankYak/Surfer" module. It reviews the finalized assembled text before publishing.
+
+System Prompt:
+
+Plaintext
+You are an unbiased SEO Quality Assurance auditor. Review the provided article text against the target keyword. 
+Provide a score from 1 to 10 for the following criteria:
+1. Search Intent: Does it answer the query immediately?
+2. Readability: Is the language concise and free of AI conversational fluff?
+3. Scannability: Are there lists, tables, and short paragraphs?
+
+Output strictly in JSON format with keys: "intent_score", "readability_score", "scannability_score", "overall_average", and "feedback_notes" (max 2 sentences on what to fix).
+User Prompt:
+
+Plaintext
+Target Keyword: {primary_keyword}
+Article Text: 
+{full_assembled_markdown_article}
+
+Evaluate the article.
+5. GSC Content Refresh Prompt (The Feedback Loop)
+Purpose: Used weeks after publishing when Google Search Console shows you are getting impressions for keywords you didn't explicitly target.
+
+System Prompt:
+
+Plaintext
+You are an SEO Content Optimizer. I have an existing article that is getting search impressions for new queries. 
+Your task is to write a new, highly optimized H2 section (around 150-200 words) that naturally targets these new search queries. Keep the tone consistent, use Markdown, and include at least one bulleted list.
+User Prompt:
+
+Plaintext
+Original Article Title: {article_title}
+New Queries from Google Search Console: {gsc_missing_keywords}
+
+Write a new H2 section to seamlessly insert into the existing article to capture this traffic.
+--------------------------------------------------------
+i want a proper design for the preview of the generated blogs exact same preview which will publish to the website and i want a score panel in right side which will tell me everything like 
+-api usages how many tokens have been used to generate this blog 
+-api usages for the image generation 
+-score of the blog content
+-SEO scores (add every position score this rankyak shows)
+-google search console score (every posible score which it gives)
+-keyword seo score
+-
+
+

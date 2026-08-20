@@ -2,7 +2,21 @@ import { NextResponse } from 'next/server'
 import { MongoClient } from 'mongodb'
 import { SERVICES_DATA } from '../../../src/data/servicesData'
 
-const MONGODB_URI = process.env.MONGODB_URI
+import fs from 'fs'
+import path from 'path'
+
+function getMongoUri() {
+  let uri = process.env.MONGODB_URI
+  try {
+    const envPath = path.join(process.cwd(), '.env')
+    if (fs.existsSync(envPath)) {
+      const content = fs.readFileSync(envPath, 'utf8')
+      const match = content.match(/^MONGODB_URI=["']?([^"'\n]+)["']?/m)
+      if (match) uri = match[1]
+    }
+  } catch(e) {}
+  return uri
+}
 
 let cachedClient = null
 let cachedDb = null
@@ -13,6 +27,7 @@ async function connectToDatabase() {
   }
 
   try {
+    const MONGODB_URI = getMongoUri()
     const client = await MongoClient.connect(MONGODB_URI, {
       connectTimeoutMS: 5000,
       serverSelectionTimeoutMS: 5000,
