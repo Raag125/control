@@ -335,7 +335,7 @@ export default function ServiceDetailPage(props) {
               className="btn btn-primary"
               aria-label={`Call now for ${title} in Bangalore`}
             >
-              <Phone size={16} aria-hidden="true" /> Call for Free Inspection
+              <Phone size={16} aria-hidden="true" /> <span dangerouslySetInnerHTML={{ __html: props.service?.hero?.primaryCtaText || 'Call for Free Inspection' }} />
             </a>
             <a
               href={`https://wa.me/919845559710?text=Hi%2C%20I%20need%20${encodeURIComponent(title)}%20in%20Bangalore.`}
@@ -344,7 +344,7 @@ export default function ServiceDetailPage(props) {
               className="btn btn-outline"
               aria-label={`WhatsApp us about ${title}`}
             >
-              <MessageCircle size={16} aria-hidden="true" /> {props.service?.hero?.secondaryCtaText || `WhatsApp for ${title}`}
+              <MessageCircle size={16} aria-hidden="true" /> <span dangerouslySetInnerHTML={{ __html: props.service?.hero?.secondaryCtaText || `WhatsApp for ${title}` }} />
             </a>
           </div>
         </div>
@@ -467,7 +467,7 @@ export default function ServiceDetailPage(props) {
                   style={{ width: '100%', justifyContent: 'center', marginBottom: '0.75rem' }}
                   aria-label="Call our pest control team at 9845559710"
                 >
-                  <Phone size={15} aria-hidden="true" /> {props.service?.hero?.primaryCtaText || 'Call Specialist: 9845559710'}
+                  <Phone size={15} aria-hidden="true" /> <span dangerouslySetInnerHTML={{ __html: props.service?.hero?.primaryCtaText || 'Call Specialist: 9845559710' }} />
                 </a>
                 <a
                   href={`https://wa.me/919845559710?text=Hi%2C%20I%20need%20${encodeURIComponent(title)}%20in%20Bangalore.`}
@@ -477,7 +477,7 @@ export default function ServiceDetailPage(props) {
                   style={{ width: '100%', justifyContent: 'center' }}
                   aria-label="Chat on WhatsApp to book pest treatment"
                 >
-                  💬 {props.service?.hero?.secondaryCtaText || 'Chat on WhatsApp'}
+                  💬 <span dangerouslySetInnerHTML={{ __html: props.service?.hero?.secondaryCtaText || 'Chat on WhatsApp' }} />
                 </a>
               </div>
 

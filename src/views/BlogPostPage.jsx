@@ -78,7 +78,7 @@ export default function BlogPostPage({ slug: propSlug }) {
         <img 
           src={blog.image || 'https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&q=80&w=2000'} 
           alt={blog.imageAlt || blog.title} 
-          style={{ width: '100%', height: 'auto', borderRadius: '16px', objectFit: 'contain', maxHeight: '60vh', backgroundColor: 'var(--clr-bg)' }}
+          style={{ width: '100%', height: 'auto', borderRadius: '20px', objectFit: 'cover', aspectRatio: '16/9', maxHeight: '60vh', backgroundColor: 'var(--clr-bg-alt)', boxShadow: '0 8px 30px rgba(0,0,0,0.15)' }}
         />
       </div>
 
