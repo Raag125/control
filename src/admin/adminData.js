@@ -413,7 +413,8 @@ export function saveMonthPlan(month, planData) {
     fetch('/api/calendar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ month, planData })
+      body: JSON.stringify({ month, planData }),
+      keepalive: true
     }).catch(console.error)
   }
 }

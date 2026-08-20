@@ -30,6 +30,12 @@ function CalendarModal({ open, onClose, onGenerateBlog }) {
       if (stored) { setPlan(stored); setAutoPublish(stored.autoPublish || false) }
       else setPlan(null)
     })
+  }, [])
+
+  useEffect(() => {
+    const stored = getMonthPlan(yearMonth)
+    if (stored) { setPlan(stored); setAutoPublish(stored.autoPublish || false) }
+    else setPlan(null)
   }, [yearMonth])
 
   async function generatePlan() {
