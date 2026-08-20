@@ -30,7 +30,7 @@ async function getMongoClient() {
 export async function GET() {
   try {
     const client = await getMongoClient();
-    const db = client.db();
+    const db = client.db('pest_control');
     
     // Fetch all month plans
     const docs = await db.collection('calendar_plans').find({}).toArray();
@@ -54,7 +54,7 @@ export async function POST(req) {
     if (!month) return NextResponse.json({ error: 'Month required' }, { status: 400 });
 
     const client = await getMongoClient();
-    const db = client.db();
+    const db = client.db('pest_control');
 
     // Upsert the month plan
     await db.collection('calendar_plans').updateOne(

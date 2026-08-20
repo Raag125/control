@@ -419,7 +419,7 @@ export function saveMonthPlan(month, planData) {
 }
 
 export async function hydrateCalendar() {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined') return null
   try {
     const res = await fetch('/api/calendar')
     if (res.ok) {
@@ -428,8 +428,10 @@ export async function hydrateCalendar() {
       if (Object.keys(data).length > 0) {
         write(KEYS.calendar, data)
       }
+      return data
     }
   } catch (e) {
     console.error('Failed to hydrate calendar from MongoDB', e)
   }
+  return null
 }

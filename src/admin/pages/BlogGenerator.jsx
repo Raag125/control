@@ -25,9 +25,11 @@ function CalendarModal({ open, onClose, onGenerateBlog }) {
   const yearMonth = `${viewYear}-${String(viewMonth).padStart(2,'0')}`
 
   useEffect(() => {
-    const stored = getMonthPlan(yearMonth)
-    if (stored) { setPlan(stored); setAutoPublish(stored.autoPublish || false) }
-    else setPlan(null)
+    hydrateCalendar().then(() => {
+      const stored = getMonthPlan(yearMonth)
+      if (stored) { setPlan(stored); setAutoPublish(stored.autoPublish || false) }
+      else setPlan(null)
+    })
   }, [yearMonth])
 
   async function generatePlan() {
@@ -315,12 +317,13 @@ export default function BlogGenerator() {
   const hasContent = sections.filter(Boolean).length > 0 || !!coverImage
 
   useEffect(() => {
-    hydrateCalendar()
-    const today = new Date().toISOString().split('T')[0], [y, m] = today.split('-')
-    const plan = getMonthPlan(`${y}-${m}`)
-    if (!plan?.autoPublish) return
-    const todayEntry = plan?.days?.[today]
-    if (todayEntry && !todayEntry.status) { toast(`🤖 Auto-publishing: "${todayEntry.keyword}"`, { duration: 4000 }); setTimeout(() => launch(todayEntry.keyword), 1500) }
+    hydrateCalendar().then(() => {
+      const today = new Date().toISOString().split('T')[0], [y, m] = today.split('-')
+      const plan = getMonthPlan(`${y}-${m}`)
+      if (!plan?.autoPublish) return
+      const todayEntry = plan?.days?.[today]
+      if (todayEntry && !todayEntry.status) { toast(`🤖 Auto-publishing: "${todayEntry.keyword}"`, { duration: 4000 }); setTimeout(() => launch(todayEntry.keyword), 1500) }
+    })
   }, [])
 
   return (
