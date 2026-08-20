@@ -26,29 +26,18 @@ function getFirebaseAdmin() {
 }
 
 async function uploadToFirebaseStorage(imageUrl, fileName) {
-  const firebaseAdmin = getFirebaseAdmin();
-  const apps = firebaseAdmin.apps || (firebaseAdmin.getApps ? firebaseAdmin.getApps() : []);
-  if (apps.length === 0) return imageUrl;
-
   try {
-    const bucket = getStorage().bucket();
     const res = await fetch(imageUrl);
     const buffer = await res.arrayBuffer();
     
-    const uniqueFileName = `blogs/${Date.now()}-${fileName || 'image.png'}`;
-    const file = bucket.file(uniqueFileName);
+    const safeFileName = (fileName || 'image.png').replace(/[^a-z0-9.-]/gi, '') || 'image.png';
+    const uniqueFileName = `${Date.now()}-${safeFileName}`;
+    const writePath = path.join(process.cwd(), 'public', 'images', 'blogs', uniqueFileName);
     
-    await file.save(Buffer.from(buffer), {
-      metadata: { contentType: 'image/png' },
-    });
-
-    const [url] = await file.getSignedUrl({
-      action: 'read',
-      expires: '01-01-2100'
-    });
-    return url;
+    fs.writeFileSync(writePath, Buffer.from(buffer));
+    return `/images/blogs/${uniqueFileName}`;
   } catch (error) {
-    console.error("Firebase Storage Upload Error:", error);
+    console.error("Local Storage Upload Error:", error);
     return imageUrl; 
   }
 }
@@ -56,39 +45,20 @@ async function uploadToFirebaseStorage(imageUrl, fileName) {
 async function uploadBase64ToFirebaseStorage(b64_json, fileName) {
   // Guard: must be a non-empty string
   if (!b64_json || typeof b64_json !== 'string' || b64_json.length === 0) {
-    console.error('uploadBase64ToFirebaseStorage: b64_json is missing or empty. Type:', typeof b64_json);
+    console.error('uploadBase64ToFirebaseStorage: b64_json is missing or empty.');
     return null;
   }
 
-  const firebaseAdmin = getFirebaseAdmin();
-  const apps = firebaseAdmin.apps || (firebaseAdmin.getApps ? firebaseAdmin.getApps() : []);
-
-  // If Firebase not configured, return a data URL so image still displays
-  if (apps.length === 0) {
-    console.warn('Firebase not configured — returning base64 data URL directly');
-    return `data:image/png;base64,${b64_json}`;
-  }
-
   const safeFileName = (fileName || 'image.png').replace(/[^a-z0-9.-]/gi, '') || 'image.png';
+  const uniqueFileName = `${Date.now()}-${safeFileName}`;
 
   try {
-    const bucket = getStorage().bucket();
     const buffer = Buffer.from(b64_json, 'base64');
-    
-    const uniqueFileName = `blogs/${Date.now()}-${safeFileName}`;
-    const file = bucket.file(uniqueFileName);
-    
-    await file.save(buffer, {
-      metadata: { contentType: 'image/png' },
-    });
-
-    const [url] = await file.getSignedUrl({
-      action: 'read',
-      expires: '01-01-2100'
-    });
-    return url;
+    const writePath = path.join(process.cwd(), 'public', 'images', 'blogs', uniqueFileName);
+    fs.writeFileSync(writePath, buffer);
+    return `/images/blogs/${uniqueFileName}`;
   } catch (error) {
-    console.error('Firebase Storage Upload Error:', error.message);
+    console.error('Local Save Error:', error.message);
     // Fallback: return data URL so image still shows
     return `data:image/png;base64,${b64_json}`;
   }

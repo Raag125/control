@@ -64,12 +64,8 @@ export async function GET() {
     }
     
     // Remove _id from response for cleaner client handling
-    // Also strip out massive base64 images to prevent 15MB payload crashes
     blogs = blogs.map(b => {
       const { _id, ...rest } = b
-      if (rest.image && rest.image.startsWith('data:image/')) {
-        rest.image = '' // Strip massive base64 image from the list endpoint
-      }
       return rest
     })
     
