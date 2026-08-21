@@ -126,7 +126,7 @@ function httpsPost(url, headers, bodyObj) {
 }
 
 async function callDallE(prompt) {
-  console.log('[callDallE] Requesting dall-e-2 for prompt:', prompt.slice(0, 80));
+  console.log('[callDallE] Requesting gpt-image-2 for prompt:', prompt.slice(0, 80));
   let data;
   try {
     data = await httpsPost(
@@ -135,7 +135,7 @@ async function callDallE(prompt) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${key()}`,
       },
-      { model: 'dall-e-2', prompt, n: 1, size: '512x512', response_format: 'b64_json' }
+      { model: 'gpt-image-2', prompt, n: 1, size: '512x512', response_format: 'b64_json' }
     );
   } catch (fetchErr) {
     throw new Error('Image API request failed: ' + fetchErr.message);
