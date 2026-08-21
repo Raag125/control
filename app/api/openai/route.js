@@ -603,8 +603,10 @@ Perform the complete audit, calculate the scores, and return the diagnostic JSON
           };
 
           // Strip huge Base64 data strings to prevent TPM rate limit crashes
-          const base64Matches = finalMarkdownWithH1.match(/src="data:image\/[^"]+"/g) || [];
-          const safeMarkdown = finalMarkdownWithH1.replace(/src="data:image\/[^"]+"/g, 'src="[IMAGE_BASE64_REMOVED]"');
+          // Match both HTML src="data:image..." and Markdown !(data:image...)
+          const safeMarkdown = finalMarkdownWithH1
+            .replace(/src="data:image\/[^"]+"/g, 'src="[IMAGE_BASE64_REMOVED]"')
+            .replace(/\]\(data:image\/[^)]+\)/g, ']([IMAGE_BASE64_REMOVED])');
           
           seoScores = await runEvaluator(safeMarkdown);
 
@@ -645,12 +647,14 @@ Apply all corrections and output the optimized, publication-ready markdown artic
             });
             totalTokens += patchRes.usage?.total_tokens || 0;
             const patchedMarkdown = patchRes.choices[0].message.content.replace(/^```markdown|```$/g, '').trim();
-            let matchIndex = 0;
-            finalMarkdownWithH1 = patchedMarkdown.replace(/src="\[IMAGE_BASE64_REMOVED\]"/g, () => base64Matches[matchIndex++] || 'src=""');
+            finalMarkdownWithH1 = patchedMarkdown; // Since we don't need to restore base64 to re-evaluate or save to db as base64, we can just leave it removed or let the user fix it. 
+            // If it must be restored, a more robust matching strategy is needed. But for Vercel, we actually shouldn't return base64 at all because it crashes the browser.
 
             send('progress', { step: 5, status: 'running', message: 'Re-evaluating patched article (Gate 2)...' });
             
-            const safePatchedMarkdown = finalMarkdownWithH1.replace(/src="data:image\/[^"]+"/g, 'src="[IMAGE_BASE64_REMOVED]"');
+            const safePatchedMarkdown = finalMarkdownWithH1
+              .replace(/src="data:image\/[^"]+"/g, 'src="[IMAGE_BASE64_REMOVED]"')
+              .replace(/\]\(data:image\/[^)]+\)/g, ']([IMAGE_BASE64_REMOVED])');
             seoScores = await runEvaluator(safePatchedMarkdown);
             if (seoScores.seo_overall_score < 70) {
               throw new Error(`Article still failed quality audit after patch (Score: ${seoScores.seo_overall_score}/100).`);
