@@ -227,6 +227,25 @@ export async function POST(req) {
     }
   }
 
+  // ─── Keyword Suggestions ─────────────────────────────────────────
+  if (body.type === 'keyword_suggestions') {
+    try {
+      const data = await callOpenAI({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: `You are an expert SEO strategist for A to Z Pest Control, a professional pest control company in Bangalore, India. Suggest exactly 5 highly effective, unique, high-search-volume primary keywords for a blog post. Consider the current season, local Bangalore intent, and high commercial intent. Output strictly in JSON format: { "keywords": [ { "keyword": "...", "reason": "..." }, ... ] }` },
+          { role: 'user', content: `Suggest 5 keywords for today.` }
+        ],
+        response_format: { type: 'json_object' },
+        temperature: 0.9,
+        max_tokens: 800
+      });
+      return NextResponse.json(JSON.parse(data.choices[0].message.content));
+    } catch (err) {
+      return NextResponse.json({ error: { message: err.message } }, { status: 500 });
+    }
+  }
+
   // ─── Calendar Plan Generation ────────────────────────────────────
   if (body.type === 'calendar_plan') {
     const { year, month } = body; 

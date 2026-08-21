@@ -45,7 +45,7 @@ function CalendarModal({ open, onClose, onGenerateBlog }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error?.message || 'Failed')
       const newPlan = { ...data.plan, autoPublish, frequency: 7, generated: new Date().toISOString() }
-      setPlan(newPlan); saveMonthPlan(yearMonth, newPlan)
+      setPlan(newPlan); await saveMonthPlan(yearMonth, newPlan)
       toast.success(`${MONTHS[viewMonth-1]} plan generated with ${Object.keys(data.plan.days || {}).length} posts!`)
     } catch(e) { toast.error(e.message) } finally { setPlanning(false) }
   }
@@ -231,7 +231,26 @@ export default function BlogGenerator() {
   const [activeTab, setActiveTab] = useState('scores')
   const [gscKeywords, setGscKeywords] = useState('')
   const [calendarOpen, setCalendarOpen] = useState(false)
+  
+  const [suggestingKeywords, setSuggestingKeywords] = useState(false)
+  const [keywordOptions, setKeywordOptions] = useState([])
+  
   const logRef = useRef(null)
+
+  async function suggestKeywords() {
+    setSuggestingKeywords(true)
+    setKeywordOptions([])
+    try {
+      const res = await fetch('/api/openai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'keyword_suggestions' }) })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error?.message || 'Failed')
+      setKeywordOptions(data.keywords || [])
+    } catch (err) {
+      toast.error(err.message)
+    } finally {
+      setSuggestingKeywords(false)
+    }
+  }
 
   function addLog(msg, type = 'info') {
     setLog(l => [...l, { msg, type, ts: new Date().toLocaleTimeString() }])
@@ -411,9 +430,24 @@ export default function BlogGenerator() {
             
             <div style={{ padding: '1.25rem' }}>
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--a-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', display: 'block', marginBottom: '0.5rem' }}>Primary Keyword</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--a-muted)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Primary Keyword</label>
+                  <button onClick={suggestKeywords} disabled={suggestingKeywords} style={{ fontSize: '0.7rem', padding: '0.3rem 0.6rem', borderRadius: '6px', border: 'none', background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', color: 'white', cursor: 'pointer', fontWeight: 700, boxShadow: '0 2px 8px rgba(99,102,241,0.2)' }}>
+                    {suggestingKeywords ? '⏳ Researching...' : '✨ Suggest Options'}
+                  </button>
+                </div>
                 <input className="kw-input" placeholder="Leave empty for AI auto-pick..." value={keyword} onChange={e=>setKeyword(e.target.value)}
                   style={{ width:'100%', padding:'0.7rem 0.9rem', background:'var(--a-bg)', border:'1px solid var(--a-border)', borderRadius:'8px', color:'var(--a-text)', fontSize:'0.88rem', boxSizing:'border-box', transition:'border-color 0.2s, box-shadow 0.2s' }} />
+                
+                {keywordOptions.length > 0 && (
+                  <div style={{ marginTop: '0.75rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {keywordOptions.map((opt, i) => (
+                      <div key={i} onClick={() => { setKeyword(opt.keyword); setKeywordOptions([]) }} style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '100px', cursor: 'pointer', color: '#6366f1', transition: 'all 0.2s', fontWeight: 600 }} title={opt.reason}>
+                        {opt.keyword}
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {selectedKeyword && (
                   <div style={{ marginTop:'0.5rem', padding:'0.5rem 0.75rem', background:'rgba(99,102,241,0.06)', border:'1px dashed #6366f155', borderRadius:'6px', fontSize:'0.75rem', color:'#6366f1', fontWeight:600 }}>
                     🎯 AI picked: <strong>{selectedKeyword}</strong>

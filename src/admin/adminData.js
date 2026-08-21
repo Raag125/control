@@ -404,18 +404,22 @@ if (typeof window !== 'undefined') {
 export const getCalendar  = ()  => read(KEYS.calendar) || {}
 export const saveCalendar = cal => { write(KEYS.calendar, cal); return cal }
 export const getMonthPlan = (yearMonth) => (read(KEYS.calendar) || {})[yearMonth] || null
-export function saveMonthPlan(month, planData) {
+export async function saveMonthPlan(month, planData) {
   const current = readObj(KEYS.calendar)
   current[month] = planData
   write(KEYS.calendar, current)
 
   if (typeof window !== 'undefined') {
-    fetch('/api/calendar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ month, planData }),
-      keepalive: true
-    }).catch(console.error)
+    try {
+      const res = await fetch('/api/calendar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ month, planData })
+      })
+      if (!res.ok) throw new Error('DB Save Failed')
+    } catch (e) {
+      console.error('Failed to save to MongoDB:', e)
+    }
   }
 }
 
