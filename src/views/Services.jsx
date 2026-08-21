@@ -128,17 +128,17 @@ export default function Services() {
                       {category.icon}
                     </div>
                     <div>
-                      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)', margin: 0 }}>
+                      <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, color: 'var(--clr-text)', margin: 0 }}>
                         {category.title}
                       </h2>
                       {category.description && (
-                        <p style={{ margin: '0.25rem 0 0 0', fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>
+                        <p style={{ margin: '0.25rem 0 0 0', color: 'var(--clr-text-muted)' }}>
                           {category.description}
                         </p>
                       )}
                     </div>
                   </div>
-                  <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', background: 'var(--clr-accent-light)', color: 'var(--clr-primary)' }}>
+                  <span style={{ fontWeight: 700, padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', background: 'var(--clr-accent-light)', color: 'var(--clr-primary)' }}>
                     {category.services.length} Services
                   </span>
                 </div>
@@ -159,16 +159,16 @@ export default function Services() {
                         <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
                       <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1, gap: '0.5rem' }}>
-                        <strong style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
+                        <strong style={{ fontWeight: 800, color: 'var(--clr-text)' }}>
                           {s.title}
                         </strong>
-                        <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-primary)', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
+                        <p style={{ color: 'var(--clr-primary)', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
                           {s.sub}
                         </p>
                         <Link
                           href={s.to}
                           className="btn btn-outline"
-                          style={{ marginTop: 'auto', justifyContent: 'center', fontSize: 'var(--font-size-h3)', padding: '0.75rem 1rem', width: '100%', borderWidth: '1.5px' }}
+                          style={{ marginTop: 'auto', justifyContent: 'center', padding: '0.75rem 1rem', width: '100%', borderWidth: '1.5px' }}
                           aria-label={`Learn more about ${s.title} in Bangalore`}
                         >
                           Learn More <ArrowRight size={16} aria-hidden="true" />

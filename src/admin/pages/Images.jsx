@@ -53,8 +53,8 @@ export default function Images() {
       {/* Header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>🖼️ Image Assets &amp; SEO</h1>
-          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title">🖼️ Image Assets &amp; SEO</h1>
+          <p style={{ color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Optimize image alt tags, title attributes, and CDN routes for search engines.
           </p>
         </div>
@@ -63,20 +63,20 @@ export default function Images() {
       {/* Stats Summary Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '.6rem', marginTop: '.75rem', marginBottom: '1rem' }}>
         <div className="adm-card" style={{ padding: '.75rem .85rem', textAlign: 'center' }}>
-          <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-text)', lineHeight: 1 }}>{images.length}</div>
-          <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>Total Images</div>
+          <div style={{ fontWeight: 800, color: 'var(--a-text)', lineHeight: 1 }}>{images.length}</div>
+          <div style={{ color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>Total Images</div>
         </div>
         <div className="adm-card" style={{ padding: '.75rem .85rem', textAlign: 'center' }}>
-          <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-green2)', lineHeight: 1 }}>
+          <div style={{ fontWeight: 800, color: 'var(--a-green2)', lineHeight: 1 }}>
             {images.filter(i => i.storageType.includes('Local')).length}
           </div>
-          <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>Project Files</div>
+          <div style={{ color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>Project Files</div>
         </div>
         <div className="adm-card" style={{ padding: '.75rem .85rem', textAlign: 'center' }}>
-          <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-info)', lineHeight: 1 }}>
+          <div style={{ fontWeight: 800, color: 'var(--a-info)', lineHeight: 1 }}>
             {images.filter(i => i.storageType.includes('Unsplash')).length}
           </div>
-          <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>CDN Linked</div>
+          <div style={{ color: 'var(--a-muted)', marginTop: '.2rem', fontWeight: 600 }}>CDN Linked</div>
         </div>
       </div>
 
@@ -93,7 +93,7 @@ export default function Images() {
             onChange={(e) => setSearch(e.target.value)} 
           />
           {search && (
-            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: 'var(--font-size-h3)' }}>✕</button>
+            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer' }}>✕</button>
           )}
         </div>
 
@@ -108,7 +108,7 @@ export default function Images() {
                 onClick={() => setSelectedCategory(cat)}
               >
                 <span>{cat}</span>
-                <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({count})</span>
+                <span style={{ opacity: 0.8 }}>({count})</span>
               </button>
             )
           })}
@@ -161,8 +161,8 @@ export default function Images() {
                     backdropFilter: 'blur(4px)' 
                   }}
                 >
-                  <span style={{ fontSize: 'var(--font-size-h3)', color: '#fff', fontWeight: 700 }}>{img.dimensions}</span>
-                  <span className={`adm-badge ${img.storageType.includes('Local') ? 'adm-badge--green' : 'adm-badge--yellow'}`} style={{ fontSize: 'var(--font-size-h3)', padding: '.1rem .45rem' }}>
+                  <span style={{ color: '#fff', fontWeight: 700 }}>{img.dimensions}</span>
+                  <span className={`adm-badge ${img.storageType.includes('Local') ? 'adm-badge--green' : 'adm-badge--yellow'}`} style={{ padding: '.1rem .45rem' }}>
                     {img.storageType.includes('Local') ? '📁 Local' : '🌐 CDN'}
                   </span>
                 </div>
@@ -171,17 +171,17 @@ export default function Images() {
               {/* Header Details */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '.5rem' }}>
                 <div>
-                  <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--a-text)', lineHeight: 1.2 }}>{img.name}</h3>
-                  <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-green2)', fontWeight: 700, marginTop: '.2rem' }}>
+                  <h3 style={{ fontWeight: 800, color: 'var(--a-text)', lineHeight: 1.2 }}>{img.name}</h3>
+                  <div style={{ color: 'var(--a-green2)', fontWeight: 700, marginTop: '.2rem' }}>
                     📍 {img.pageLocation}
                   </div>
                 </div>
-                <span className="adm-badge adm-badge--gray" style={{ fontSize: 'var(--font-size-h3)', flexShrink: 0 }}>{img.category}</span>
+                <span className="adm-badge adm-badge--gray" style={{ flexShrink: 0 }}>{img.category}</span>
               </div>
 
               {/* Alt Text & Metadata Pill */}
-              <div style={{ background: 'var(--a-card2)', border: '1px solid var(--a-border)', borderRadius: '8px', padding: '.45rem .65rem', fontSize: 'var(--font-size-h3)' }}>
-                <div style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.15rem' }}>
+              <div style={{ background: 'var(--a-card2)', border: '1px solid var(--a-border)', borderRadius: '8px', padding: '.45rem .65rem' }}>
+                <div style={{ color: 'var(--a-dim)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.15rem' }}>
                   SEO Alt Tag
                 </div>
                 <div style={{ color: 'var(--a-text)', fontStyle: 'italic', lineHeight: 1.35, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
@@ -194,7 +194,7 @@ export default function Images() {
                 <button 
                   className="adm-btn adm-btn--ghost adm-btn--sm" 
                   onClick={() => copyPath(img.path)} 
-                  style={{ flex: 0.8, minHeight: '38px', fontSize: 'var(--font-size-h2)' }}
+                  style={{ flex: 0.8, minHeight: '38px' }}
                   title="Copy file path to clipboard"
                 >
                   📋 Copy Path
@@ -202,7 +202,7 @@ export default function Images() {
                 <button 
                   className="adm-btn adm-btn--outline adm-btn--sm" 
                   onClick={() => startEdit(img)}
-                  style={{ flex: 1.2, minHeight: '38px', fontSize: 'var(--font-size-h2)' }}
+                  style={{ flex: 1.2, minHeight: '38px' }}
                 >
                   ✏️ Edit Alt &amp; SEO
                 </button>
@@ -228,9 +228,9 @@ export default function Images() {
                 <div style={{ display: 'flex', gap: '.75rem', alignItems: 'center', background: 'var(--a-card2)', padding: '.65rem .85rem', borderRadius: '10px', border: '1px solid var(--a-border)', marginBottom: '.85rem' }}>
                   <img src={editModal.path} alt={editModal.alt} style={{ width: '54px', height: '54px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--a-border)', flexShrink: 0 }} />
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontWeight: 800, fontSize: 'var(--font-size-h3)', color: 'var(--a-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{editModal.name}</div>
-                    <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-green2)', fontWeight: 600 }}>📍 {editModal.pageLocation}</div>
-                    <div style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{editModal.dimensions} · {editModal.path}</div>
+                    <div style={{ fontWeight: 800, color: 'var(--a-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{editModal.name}</div>
+                    <div style={{ color: 'var(--a-green2)', fontWeight: 600 }}>📍 {editModal.pageLocation}</div>
+                    <div style={{ color: 'var(--a-muted)', fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{editModal.dimensions} · {editModal.path}</div>
                   </div>
                 </div>
 
@@ -247,7 +247,7 @@ export default function Images() {
                       onChange={e => setForm({ ...form, alt: e.target.value })} 
                       placeholder="Descriptive alt text for search engines and screen readers (e.g. Eco-friendly termite treatment spray in Bangalore home)..."
                     />
-                    <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+                    <span style={{ color: 'var(--a-muted)', marginTop: '.15rem' }}>
                       💡 Tip: Include relevant keywords like pest name and Bangalore location naturally.
                     </span>
                   </div>
@@ -287,7 +287,7 @@ export default function Images() {
                 <div style={{ borderRadius: '12px', overflow: 'hidden', background: '#0f1712', border: '1px solid var(--a-border)', marginBottom: '.85rem' }}>
                   <img src={previewModal.path} alt={previewModal.alt} style={{ width: '100%', maxHeight: '360px', objectFit: 'contain', display: 'block' }} />
                 </div>
-                <div style={{ fontSize: 'var(--font-size-h3)', display: 'flex', flexDirection: 'column', gap: '.4rem', background: 'var(--a-card2)', padding: '.75rem .9rem', borderRadius: '10px', border: '1px solid var(--a-border)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem', background: 'var(--a-card2)', padding: '.75rem .9rem', borderRadius: '10px', border: '1px solid var(--a-border)' }}>
                   <div><strong>Location:</strong> {previewModal.pageLocation}</div>
                   <div><strong>Storage:</strong> <code style={{ fontFamily: 'monospace' }}>{previewModal.path}</code></div>
                   <div><strong>Alt Tag:</strong> <em>"{previewModal.alt}"</em></div>

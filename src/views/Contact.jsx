@@ -133,10 +133,10 @@ export default function Contact() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, marginBottom: '0.5rem' }}>
+                <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>
                   Book a Free Inspection
                 </h2>
-                <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', marginBottom: '1.75rem' }}>
+                <p style={{ color: 'var(--clr-text-muted)', marginBottom: '1.75rem' }}>
                   Fill in the form below and our team will call you within 30 minutes.
                 </p>
 
@@ -208,7 +208,7 @@ export default function Contact() {
                       <><Send size={16} aria-hidden="true" /> Send Request</>
                     )}
                   </button>
-                  <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-dim)', marginTop: '0.75rem', textAlign: 'center' }}>
+                  <p style={{ color: 'var(--clr-text-dim)', marginTop: '0.75rem', textAlign: 'center' }}>
                     🔒 Your information is secure and will never be shared with third parties.
                   </p>
                 </form>

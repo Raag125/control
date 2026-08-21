@@ -107,7 +107,7 @@ export default function LeadPopup() {
                   exit={{ opacity: 0 }}
                 >
                   <CheckCircle2 size={44} className="lead-success-icon" />
-                  <div style={{ fontSize: 'var(--font-size-h2)', fontWeight: 800, color: 'var(--clr-text)', marginBottom: '.5rem' }}>We'll call you shortly!</div>
+                  <div style={{ fontWeight: 800, color: 'var(--clr-text)', marginBottom: '.5rem' }}>We'll call you shortly!</div>
                   <p>Our team will contact you within 30 minutes.</p>
                 </motion.div>
               ) : (

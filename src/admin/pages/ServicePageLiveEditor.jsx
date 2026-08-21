@@ -415,8 +415,7 @@ export default function ServicePageLiveEditor() {
                 cursor: 'pointer',
                 outline: 'none',
                 maxWidth: '190px',
-                textOverflow: 'ellipsis',
-              }}
+                textOverflow: 'ellipsis' }}
             >
               {services.map(s => {
                 const name = s.hero?.title || s.name || s.id
@@ -457,8 +456,7 @@ export default function ServicePageLiveEditor() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
-                transition: 'all 0.15s ease',
-              }}
+                transition: 'all 0.15s ease' }}
               onClick={() => setPreviewDevice('desktop')}
             >
               <Monitor size={12} />
@@ -480,8 +478,7 @@ export default function ServicePageLiveEditor() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
-                transition: 'all 0.15s ease',
-              }}
+                transition: 'all 0.15s ease' }}
               onClick={() => setPreviewDevice('mobile')}
             >
               <Smartphone size={12} />
@@ -507,8 +504,7 @@ export default function ServicePageLiveEditor() {
                 color: '#fff',
                 border: 'none',
                 borderRadius: '4px',
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               B
             </button>
@@ -527,8 +523,7 @@ export default function ServicePageLiveEditor() {
                 color: '#fff',
                 border: 'none',
                 borderRadius: '4px',
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               I
             </button>
@@ -546,8 +541,7 @@ export default function ServicePageLiveEditor() {
                 color: '#fff',
                 border: 'none',
                 borderRadius: '4px',
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               U
             </button>
@@ -569,8 +563,7 @@ export default function ServicePageLiveEditor() {
                 borderRadius: '4px',
                 fontSize: '10px',
                 fontWeight: 800,
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               H1
             </button>
@@ -588,8 +581,7 @@ export default function ServicePageLiveEditor() {
                 borderRadius: '4px',
                 fontSize: '10px',
                 fontWeight: 800,
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               H2
             </button>
@@ -607,8 +599,7 @@ export default function ServicePageLiveEditor() {
                 borderRadius: '4px',
                 fontSize: '10px',
                 fontWeight: 800,
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               H3
             </button>
@@ -626,8 +617,7 @@ export default function ServicePageLiveEditor() {
                 borderRadius: '4px',
                 fontSize: '10px',
                 fontWeight: 800,
-                transition: 'background 0.15s ease',
-              }}
+                transition: 'background 0.15s ease' }}
             >
               P
             </button>
@@ -657,8 +647,7 @@ export default function ServicePageLiveEditor() {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '3px',
-              }}
+                gap: '3px' }}
             >
               <span>Size</span>
               <ChevronDown size={11} />
@@ -678,8 +667,7 @@ export default function ServicePageLiveEditor() {
                 display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden',
-                padding: '4px',
-              }}>
+                padding: '4px' }}>
                 {[
                   { label: 'Small', value: '1' },
                   { label: 'Normal', value: '3' },
@@ -710,8 +698,7 @@ export default function ServicePageLiveEditor() {
                       fontSize: '11px',
                       fontWeight: 600,
                       textAlign: 'left',
-                      cursor: 'pointer',
-                    }}
+                      cursor: 'pointer' }}
                     onMouseOver={e => e.currentTarget.style.background = 'rgba(34,197,94,0.18)'}
                     onMouseOut={e => e.currentTarget.style.background = 'transparent'}
                   >
@@ -746,8 +733,7 @@ export default function ServicePageLiveEditor() {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
-              }}
+                gap: '5px' }}
             >
               <span style={{ width: 10, height: 10, borderRadius: '50%', background: newColor, border: '1px solid rgba(255,255,255,0.4)', display: 'inline-block' }} />
               <span>Color</span>
@@ -764,8 +750,7 @@ export default function ServicePageLiveEditor() {
                 borderRadius: '8px',
                 zIndex: 9999,
                 width: '160px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.6)',
-              }}>
+                boxShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 <div style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.4rem', letterSpacing: '0.04em' }}>Quick Colors</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px', marginBottom: '0.6rem' }}>
                   {['#22c55e', '#10b981', '#3b82f6', '#eab308', '#ef4444', '#ec4899', '#ffffff', '#0f172a'].map(c => (
@@ -790,8 +775,7 @@ export default function ServicePageLiveEditor() {
                         borderRadius: '4px',
                         background: c,
                         border: newColor === c ? '2px solid #fff' : '1px solid rgba(255,255,255,0.2)',
-                        cursor: 'pointer',
-                      }}
+                        cursor: 'pointer' }}
                       title={c}
                     />
                   ))}
@@ -829,8 +813,7 @@ export default function ServicePageLiveEditor() {
                     borderRadius: '4px',
                     fontSize: '11px',
                     fontWeight: 700,
-                    cursor: 'pointer',
-                  }}
+                    cursor: 'pointer' }}
                 >
                   Apply Color
                 </button>
@@ -856,8 +839,7 @@ export default function ServicePageLiveEditor() {
               border: '1px solid rgba(239, 68, 68, 0.25)',
               borderRadius: '5px',
               fontSize: '11px',
-              fontWeight: 600,
-            }}
+              fontWeight: 600 }}
           >
             Clear
           </button>
@@ -880,8 +862,7 @@ export default function ServicePageLiveEditor() {
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px',
-            }}
+              gap: '4px' }}
             onClick={() => setSeoModal(true)}
           >
             <Globe size={12} />
@@ -907,8 +888,7 @@ export default function ServicePageLiveEditor() {
               fontSize: '11px',
               fontWeight: 600,
               cursor: 'help',
-              whiteSpace: 'nowrap',
-            }}
+              whiteSpace: 'nowrap' }}
           >
             <Sparkles size={11} />
             <span>Inline Edit</span>
@@ -933,8 +913,7 @@ export default function ServicePageLiveEditor() {
               alignItems: 'center',
               gap: '4px',
               textDecoration: 'none',
-              whiteSpace: 'nowrap',
-            }}
+              whiteSpace: 'nowrap' }}
           >
             <span>Live</span>
             <ExternalLink size={11} />
@@ -958,8 +937,7 @@ export default function ServicePageLiveEditor() {
               gap: '5px',
               boxShadow: isDirty ? '0 0 14px rgba(34, 197, 94, 0.55)' : '0 2px 6px rgba(0,0,0,0.3)',
               animation: isDirty ? 'pulse 2s infinite' : 'none',
-              whiteSpace: 'nowrap',
-            }}
+              whiteSpace: 'nowrap' }}
             onClick={handleSaveAll}
           >
             <Check size={13} strokeWidth={3} />
@@ -1054,8 +1032,7 @@ export default function ServicePageLiveEditor() {
           justifyContent: 'center', 
           padding: previewDevice === 'mobile' ? '1.5rem 1rem 3rem' : '0', 
           background: '#070b09',
-          scrollBehavior: 'smooth',
-        }}
+          scrollBehavior: 'smooth' }}
       >
         <div
           style={{
@@ -1067,12 +1044,11 @@ export default function ServicePageLiveEditor() {
             borderRadius: previewDevice === 'mobile' ? '36px' : '0',
             boxShadow: previewDevice === 'mobile' ? '0 30px 70px rgba(0,0,0,0.8), 0 0 0 12px #1e293b' : 'none',
             position: 'relative',
-            transition: 'width 0.3s ease',
-          }}
+            transition: 'width 0.3s ease' }}
         >
           {/* Simulated Browser URL bar on mobile view */}
           {previewDevice === 'mobile' && (
-            <div style={{ background: '#0f172a', padding: '.6rem 1rem', display: 'flex', alignItems: 'center', gap: '.5rem', color: '#94a3b8', fontSize: 'var(--font-size-h3)', fontFamily: 'monospace' }}>
+            <div style={{ background: '#0f172a', padding: '.6rem 1rem', display: 'flex', alignItems: 'center', gap: '.5rem', color: '#94a3b8', fontFamily: 'monospace' }}>
               <span>🔒 https://atozpestcontrol.in{svcData.path || `/${svcData.slug}`}</span>
             </div>
           )}
@@ -1109,14 +1085,12 @@ export default function ServicePageLiveEditor() {
                   border: '1px solid rgba(255, 255, 255, 0.3)',
                   borderRadius: '20px',
                   padding: '.4rem .85rem',
-                  fontSize: 'var(--font-size-h3)',
                   fontWeight: 700,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '.4rem',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-                }}
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
               >
                 <Camera size={14} /> Change Banner Image &amp; Alt
               </button>
@@ -1141,8 +1115,7 @@ export default function ServicePageLiveEditor() {
                   cursor: 'text',
                   padding: '.3rem .85rem',
                   marginBottom: '1rem',
-                  display: 'inline-block',
-                }}
+                  display: 'inline-block' }}
                 title="Click to edit eyebrow text"
                dangerouslySetInnerHTML={{ __html: svcData.hero?.eyebrow || "🛡️ Expert Treatment" }} />
 
@@ -1158,8 +1131,7 @@ export default function ServicePageLiveEditor() {
                     border: '4px solid var(--clr-bg)',
                     boxShadow: 'var(--shadow-lg)',
                     cursor: 'pointer',
-                    position: 'relative',
-                  }}
+                    position: 'relative' }}
                   title="Click to change Pest Icon and Alt Text"
                 >
                   <img
@@ -1178,10 +1150,8 @@ export default function ServicePageLiveEditor() {
                       justifyContent: 'center',
                       color: '#fff',
                       opacity: 0.9,
-                      fontSize: 'var(--font-size-h3)',
                       fontWeight: 700,
-                      gap: '.2rem',
-                    }}
+                      gap: '.2rem' }}
                   >
                     <Camera size={18} />
                     <span>Change Icon</span>
@@ -1200,8 +1170,7 @@ export default function ServicePageLiveEditor() {
                   cursor: 'text',
                   padding: '.2rem .5rem',
                   borderRadius: '6px',
-                  display: 'inline-block',
-                }}
+                  display: 'inline-block' }}
                 title="Click to edit H1 Title directly"
                dangerouslySetInnerHTML={{ __html: svcData.hero?.title || "Service Title" }} />
 
@@ -1217,8 +1186,7 @@ export default function ServicePageLiveEditor() {
                   outline: '1.5px dashed rgba(255,255,255,0.4)',
                   cursor: 'text',
                   padding: '.35rem .6rem',
-                  borderRadius: '6px',
-                }}
+                  borderRadius: '6px' }}
                 title="Click to edit Tagline text"
                dangerouslySetInnerHTML={{ __html: svcData.hero?.tagline || "Get expert pest control services in Bangalore." }} />
 
@@ -1281,8 +1249,7 @@ export default function ServicePageLiveEditor() {
                         borderRadius: '8px',
                         background: 'rgba(255,255,255,0.8)',
                         lineHeight: 1.7,
-                        minHeight: '100px',
-                      }}
+                        minHeight: '100px' }}
                       title="Click to edit full Introduction text"
                       dangerouslySetInnerHTML={{ __html: svcData.hero?.intro || "" }} />
                   </div>
@@ -1290,7 +1257,7 @@ export default function ServicePageLiveEditor() {
                   {/* ── WARNING SIGNS (INLINE EDITABLE LIST) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                      <h3 style={{ fontWeight: 800, color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
                         <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} />
                         <span
                           contentEditable={true}
@@ -1305,7 +1272,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('signs', 'New warning sign observed in property...')}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: 'var(--font-size-h2)', padding: '.25rem .65rem' }}
+                        style={{ padding: '.25rem .65rem' }}
                       >
                         + Add Sign
                       </button>
@@ -1319,13 +1286,13 @@ export default function ServicePageLiveEditor() {
                             contentEditable={true}
                             suppressContentEditableWarning
                             onBlur={(e) => updateArrayItem('signs', i, null, e.currentTarget.innerHTML)}
-                            style={{ flex: 1, outline: 'none', cursor: 'text', fontSize: 'var(--font-size-h3)', color: 'var(--clr-text)' }}
+                            style={{ flex: 1, outline: 'none', cursor: 'text', color: 'var(--clr-text)' }}
                             title="Click to edit sign text"
                            dangerouslySetInnerHTML={{ __html: s }} />
                           <button
                             type="button"
                             onClick={() => removeArrayItem('signs', i)}
-                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.7 }}
+                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 800, opacity: 0.7 }}
                             title="Delete this sign"
                           >
                             ✕
@@ -1338,7 +1305,7 @@ export default function ServicePageLiveEditor() {
                   {/* ── 5-STEP PROCESS (INLINE EDITABLE) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
+                      <h3 style={{ fontWeight: 800, color: 'var(--clr-text)' }}>
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1352,7 +1319,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('process', { step: (svcData.process?.length || 0) + 1, title: 'New Process Phase', desc: 'Detailed description of this treatment step.' })}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: 'var(--font-size-h2)', padding: '.25rem .65rem' }}
+                        style={{ padding: '.25rem .65rem' }}
                       >
                         + Add Step
                       </button>
@@ -1369,21 +1336,21 @@ export default function ServicePageLiveEditor() {
                               contentEditable={true}
                               suppressContentEditableWarning
                               onBlur={(e) => updateArrayItem('process', i, 'title', e.currentTarget.innerHTML)}
-                              style={{ display: 'block', fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', marginBottom: '.25rem' }}
+                              style={{ display: 'block', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', marginBottom: '.25rem' }}
                               title="Click to edit step title"
                              dangerouslySetInnerHTML={{ __html: step.title }} />
                             <p
                               contentEditable={true}
                               suppressContentEditableWarning
                               onBlur={(e) => updateArrayItem('process', i, 'desc', e.currentTarget.innerHTML)}
-                              style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
+                              style={{ color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
                               title="Click to edit step description"
                              dangerouslySetInnerHTML={{ __html: step.desc }} />
                           </div>
                           <button
                             type="button"
                             onClick={() => removeArrayItem('process', i)}
-                            style={{ position: 'absolute', top: '.6rem', right: '.6rem', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.6 }}
+                            style={{ position: 'absolute', top: '.6rem', right: '.6rem', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 800, opacity: 0.6 }}
                             title="Delete this step"
                           >
                             ✕
@@ -1396,7 +1363,7 @@ export default function ServicePageLiveEditor() {
                   {/* ── FREQUENTLY ASKED QUESTIONS (FAQS) ── */}
                   <div style={{ marginTop: '2.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
+                      <h3 style={{ fontWeight: 800, color: 'var(--clr-text)' }}>
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1410,7 +1377,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('faqs', { q: 'New Customer Question?', a: 'Detailed informative answer for clients.' })}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: 'var(--font-size-h2)', padding: '.25rem .65rem' }}
+                        style={{ padding: '.25rem .65rem' }}
                       >
                         + Add FAQ
                       </button>
@@ -1424,13 +1391,13 @@ export default function ServicePageLiveEditor() {
                               contentEditable={true}
                               suppressContentEditableWarning
                               onBlur={(e) => updateArrayItem('faqs', i, 'q', e.currentTarget.innerHTML)}
-                              style={{ fontSize: 'var(--font-size-h2)', fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', flex: 1 }}
+                              style={{ fontWeight: 800, color: 'var(--clr-text)', outline: 'none', cursor: 'text', flex: 1 }}
                               title="Click to edit Question"
                              dangerouslySetInnerHTML={{ __html: faq.q }} />
                             <button
                               type="button"
                               onClick={() => removeArrayItem('faqs', i)}
-                              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.6 }}
+                              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 800, opacity: 0.6 }}
                               title="Delete this FAQ"
                             >
                               ✕
@@ -1440,7 +1407,7 @@ export default function ServicePageLiveEditor() {
                             contentEditable={true}
                             suppressContentEditableWarning
                             onBlur={(e) => updateArrayItem('faqs', i, 'a', e.currentTarget.innerHTML)}
-                            style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
+                            style={{ color: 'var(--clr-text-muted)', lineHeight: 1.6, outline: 'none', cursor: 'text' }}
                             title="Click to edit Answer"
                            dangerouslySetInnerHTML={{ __html: faq.a }} />
                         </div>
@@ -1455,12 +1422,12 @@ export default function ServicePageLiveEditor() {
                   
                   {/* Quick Booking & Pricing Card */}
                   <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}>
-                    <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
+                    <div style={{ fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
                       Pricing &amp; Specs
                     </div>
                     
                     <div style={{ marginTop: '.75rem', display: 'flex', alignItems: 'baseline', gap: '.4rem' }}>
-                      <span style={{ fontSize: 'var(--font-size-h2)', fontWeight: 900, color: 'var(--clr-text)' }}>
+                      <span style={{ fontWeight: 900, color: 'var(--clr-text)' }}>
                         ₹
                         <span
                           contentEditable={true}
@@ -1472,11 +1439,11 @@ export default function ServicePageLiveEditor() {
                           {svcData.specs?.startingPrice || 2500}
                         </span>
                       </span>
-                      <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>starting price</span>
+                      <span style={{ color: 'var(--clr-text-muted)' }}>starting price</span>
                     </div>
 
                     <div style={{ marginTop: '1rem', display: 'grid', gap: '.6rem', borderTop: '1px solid #f1f5f9', paddingTop: '1rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span 
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1495,7 +1462,7 @@ export default function ServicePageLiveEditor() {
                           {svcData.specs?.duration || '3-4 Hours'}
                         </strong>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span 
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1514,7 +1481,7 @@ export default function ServicePageLiveEditor() {
                           {svcData.specs?.warranty || '5 Years'}
                         </strong>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h2)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span style={{ color: 'var(--clr-text-muted)' }}>Safety:</span>
                         <span style={{ color: '#16a34a', fontWeight: 700 }}>100% Eco-Safe</span>
                       </div>
@@ -1524,7 +1491,7 @@ export default function ServicePageLiveEditor() {
                   {/* Benefits Card (Inline Editable) */}
                   <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(22,163,74,0.15)', boxShadow: '0 4px 16px rgba(0,0,0,0.04)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <h4 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-text)' }}>
+                      <h4 style={{ fontWeight: 800, color: 'var(--clr-text)' }}>
                         <span
                           contentEditable={true}
                           suppressContentEditableWarning
@@ -1538,7 +1505,7 @@ export default function ServicePageLiveEditor() {
                         type="button"
                         onClick={() => addArrayItem('benefits', 'New proven benefit...')}
                         className="adm-btn adm-btn--primary adm-btn--sm"
-                        style={{ fontSize: 'var(--font-size-h3)', padding: '.2rem .55rem' }}
+                        style={{ padding: '.2rem .55rem' }}
                       >
                         + Add
                       </button>
@@ -1546,7 +1513,7 @@ export default function ServicePageLiveEditor() {
 
                     <div style={{ display: 'grid', gap: '.65rem' }}>
                       {(svcData.benefits || []).map((b, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', fontSize: 'var(--font-size-h3)' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
                           <CheckCircle2 size={14} style={{ color: 'var(--clr-primary)', flexShrink: 0 }} />
                           <span
                             contentEditable={true}
@@ -1558,7 +1525,7 @@ export default function ServicePageLiveEditor() {
                           <button
                             type="button"
                             onClick={() => removeArrayItem('benefits', idx)}
-                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 'var(--font-size-h3)', fontWeight: 800, opacity: 0.6 }}
+                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 800, opacity: 0.6 }}
                           >
                             ✕
                           </button>
@@ -1650,7 +1617,7 @@ export default function ServicePageLiveEditor() {
                         key={p.path}
                         type="button"
                         className={`adm-chip ${imageModal.currentUrl === p.path ? 'active' : ''}`}
-                        style={{ fontSize: 'var(--font-size-h3)', padding: '.25rem .6rem' }}
+                        style={{ padding: '.25rem .6rem' }}
                         onClick={() => setImageModal({ ...imageModal, currentUrl: p.path, currentAlt: `${p.label} in Bangalore` })}
                       >
                         {p.label}
@@ -1690,7 +1657,7 @@ export default function ServicePageLiveEditor() {
                     onChange={(e) => updateText('meta.title', e.target.value)}
                     placeholder="e.g. Termite Treatment in Bangalore | A to Z Pest Solutions"
                   />
-                  <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem' }}>
+                  <span style={{ color: 'var(--a-muted)', marginTop: '.2rem' }}>
                     {svcData.meta?.title?.length || 0} / 60 recommended characters
                   </span>
                 </div>
@@ -1704,7 +1671,7 @@ export default function ServicePageLiveEditor() {
                     onChange={(e) => updateText('meta.desc', e.target.value)}
                     placeholder="Search engine snippet description (150–160 characters)..."
                   />
-                  <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.2rem' }}>
+                  <span style={{ color: 'var(--a-muted)', marginTop: '.2rem' }}>
                     {svcData.meta?.desc?.length || 0} / 160 recommended characters
                   </span>
                 </div>

@@ -50,8 +50,7 @@ export default function AnimatedBackground() {
               width: p.size,
               height: p.size,
               animationDuration: `${p.duration}s`,
-              animationDelay: `${p.delay}s`,
-            }}
+              animationDelay: `${p.delay}s` }}
           />
         ))}
       </div>

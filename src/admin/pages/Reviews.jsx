@@ -47,7 +47,7 @@ export default function Reviews() {
 
   const renderStars = (rating) => {
     return Array(5).fill(0).map((_, i) => (
-      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: 'var(--font-size-h3)' }}>★</span>
+      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB' }}>★</span>
     ))
   }
 
@@ -58,8 +58,8 @@ export default function Reviews() {
       {/* Header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>⭐ Customer Reviews &amp; Testimonials</h1>
-          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title">⭐ Customer Reviews &amp; Testimonials</h1>
+          <p style={{ color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Moderate and approve customer ratings for the website homepage.
           </p>
         </div>
@@ -76,7 +76,7 @@ export default function Reviews() {
               onClick={() => setFilter(st)}
             >
               <span style={{ textTransform: 'capitalize' }}>{st}</span>
-              <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({count})</span>
+              <span style={{ opacity: 0.8 }}>({count})</span>
             </button>
           )
         })}
@@ -102,11 +102,11 @@ export default function Reviews() {
                   <tr><td colSpan="7"><div className="adm-empty"><div className="adm-empty__icon">⭐</div><div className="adm-empty__text">No reviews found</div></div></td></tr>
                 ) : filtered.map(r => (
                   <tr key={r.id}>
-                    <td style={{ fontSize: 'var(--font-size-h3)' }}>{r.service}</td>
+                    <td>{r.service}</td>
                     <td><strong>{r.name}</strong></td>
                     <td style={{ whiteSpace: 'nowrap' }}>{renderStars(r.rating)}</td>
                     <td style={{ maxWidth: '280px' }}>
-                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', fontSize: 'var(--font-size-h3)' }} title={r.text}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }} title={r.text}>
                         {r.text}
                       </div>
                     </td>
@@ -163,10 +163,10 @@ export default function Reviews() {
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '.3rem' }}>
                   {renderStars(r.rating)}
-                  <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--a-muted)', marginLeft: '.3rem' }}>{r.rating}.0 / 5.0</span>
+                  <span style={{ fontWeight: 700, color: 'var(--a-muted)', marginLeft: '.3rem' }}>{r.rating}.0 / 5.0</span>
                 </div>
 
-                <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-text)', lineHeight: 1.5, background: 'var(--a-card2)', padding: '.5rem .65rem', borderRadius: '8px', border: '1px solid var(--a-border)' }}>
+                <p style={{ color: 'var(--a-text)', lineHeight: 1.5, background: 'var(--a-card2)', padding: '.5rem .65rem', borderRadius: '8px', border: '1px solid var(--a-border)' }}>
                   "{r.text}"
                 </p>
 

@@ -104,7 +104,7 @@ function ReviewsSection({ serviceTitle }) {
 
   const renderStars = (rating) => {
     return Array(5).fill(0).map((_, i) => (
-      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB', fontSize: 'var(--font-size-h2)' }}>★</span>
+      <span key={i} style={{ color: i < rating ? '#F59E0B' : '#E5E7EB' }}>★</span>
     ))
   }
 
@@ -122,10 +122,10 @@ function ReviewsSection({ serviceTitle }) {
               {reviews.map(r => (
                 <div key={r.id} style={{ background: '#fff', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--clr-border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div style={{ fontWeight: 700, color: 'var(--clr-text)', fontSize: 'var(--font-size-h3)' }}>{r.name}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--clr-text)' }}>{r.name}</div>
                     <div>{renderStars(r.rating)}</div>
                   </div>
-                  <p style={{ color: 'var(--clr-text-muted)', fontSize: 'var(--font-size-h3)', lineHeight: 1.6 }}>{r.text}</p>
+                  <p style={{ color: 'var(--clr-text-muted)', lineHeight: 1.6 }}>{r.text}</p>
                 </div>
               ))}
             </div>
@@ -142,7 +142,7 @@ function ReviewsSection({ serviceTitle }) {
               </div>
             ) : showForm ? (
               <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--clr-border)', textAlign: 'left' }}>
-                <div style={{ marginBottom: '1.5rem', fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</div>
+                <div style={{ marginBottom: '1.5rem', fontWeight: 700, color: 'var(--clr-text)' }}>Write a Review</div>
 
                 <div className="form-group" style={{ marginBottom: '1rem' }}>
                   <label className="form-label">Your Name</label>
@@ -377,7 +377,7 @@ export default function ServiceDetailPage(props) {
 
               {/* Signs */}
               <div style={{ marginTop: '2rem' }}>
-                <h3 className="signs-title" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 className="signs-title" style={{ fontWeight: 700, marginBottom: '1rem', color: 'var(--clr-text)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <AlertCircle size={18} style={{ color: 'var(--clr-primary)' }} aria-hidden="true" />
                   <span dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.signs || 'Signs You Need This Treatment' }} />
                 </h3>
@@ -387,7 +387,7 @@ export default function ServiceDetailPage(props) {
                   aria-label="Signs that indicate you need this pest treatment"
                 >
                   {signs.map((s) => (
-                    <li key={s} className="signs-item" style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>
+                    <li key={s} className="signs-item" style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', color: 'var(--clr-text-muted)' }}>
                       <CheckCircle2 size={15} style={{ color: 'var(--clr-primary)', flexShrink: 0, marginTop: 2 }} aria-hidden="true" />
                       <span dangerouslySetInnerHTML={{ __html: s }} />
                     </li>
@@ -397,7 +397,7 @@ export default function ServiceDetailPage(props) {
 
               {/* Process */}
               <div style={{ marginTop: '2rem' }}>
-                <h3 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
+                <h3 style={{ fontWeight: 700, marginBottom: '0.75rem', color: 'var(--clr-text)' }}>
                   <span dangerouslySetInnerHTML={{ __html: props.service?.sectionTitles?.process || 'Our Treatment Process' }} />
                 </h3>
                 <div className="service-detail__process">
@@ -409,7 +409,7 @@ export default function ServiceDetailPage(props) {
                     >
                       <div className="service-detail__process-num" aria-hidden="true">{i + 1}</div>
                       <div className="service-detail__process-content">
-                        <strong style={{ display: 'block', fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }} dangerouslySetInnerHTML={{ __html: step.title }} />
+                        <strong style={{ display: 'block', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.25rem' }} dangerouslySetInnerHTML={{ __html: step.title }} />
                         <div dangerouslySetInnerHTML={{ __html: step.desc }} />
                       </div>
                     </div>
@@ -422,27 +422,27 @@ export default function ServiceDetailPage(props) {
             <aside className="service-sidebar" aria-label="Booking and additional information">
               {/* Pricing & Specs */}
               <div className="service-sidebar__card" style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1.5px solid rgba(22,163,74,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}>
-                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
+                <div style={{ fontWeight: 800, color: 'var(--clr-primary)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
                   Pricing &amp; Specs
                 </div>
                 
                 <div style={{ marginTop: '.75rem', display: 'flex', alignItems: 'baseline', gap: '.4rem' }}>
-                  <span style={{ fontSize: 'var(--font-size-h2)', fontWeight: 900, color: 'var(--clr-text)' }}>
+                  <span style={{ fontWeight: 900, color: 'var(--clr-text)' }}>
                     ₹{props.service?.specs?.startingPrice || props.service?.startingPrice || 2500}
                   </span>
-                  <span style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)' }}>starting price</span>
+                  <span style={{ color: 'var(--clr-text-muted)' }}>starting price</span>
                 </div>
 
                 <div style={{ marginTop: '1.25rem', display: 'grid', gap: '.75rem', borderTop: '1px solid #f1f5f9', paddingTop: '1.25rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--clr-text-muted)' }} dangerouslySetInnerHTML={{ __html: props.service?.specLabels?.duration || 'Duration:' }} />
                     <strong style={{ color: 'var(--clr-text)' }} dangerouslySetInnerHTML={{ __html: props.service?.specs?.duration || props.service?.duration || '3-4 Hours' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--clr-text-muted)' }} dangerouslySetInnerHTML={{ __html: props.service?.specLabels?.warranty || 'Warranty:' }} />
                     <strong style={{ color: 'var(--clr-text)' }} dangerouslySetInnerHTML={{ __html: props.service?.specs?.warranty || props.service?.warranty || '5 Years' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-h3)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--clr-text-muted)' }}>Safety:</span>
                     <span style={{ color: '#16a34a', fontWeight: 700 }}>100% Eco-Safe</span>
                   </div>
@@ -454,11 +454,10 @@ export default function ServiceDetailPage(props) {
                 className="service-sidebar__card"
                 style={{
                   background: 'linear-gradient(135deg, rgba(0,210,140,0.1), rgba(0,240,192,0.05))',
-                  borderColor: 'var(--clr-border-2)',
-                }}
+                  borderColor: 'var(--clr-border-2)' }}
               >
-                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Book {title}</div>
-                <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--clr-text-muted)', marginBottom: '1rem' }}>
+                <div style={{ fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Book {title}</div>
+                <p style={{ color: 'var(--clr-text-muted)', marginBottom: '1rem' }}>
                   Get expert help today — free inspection, no hidden charges, eco-friendly treatment.
                 </p>
                 <a
@@ -483,7 +482,7 @@ export default function ServiceDetailPage(props) {
 
               {/* Benefits */}
               <div className="service-sidebar__card">
-                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Why Choose A to Z</div>
+                <div style={{ fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Why Choose A to Z</div>
                 <ul className="service-sidebar__list" aria-label="Benefits of choosing our treatment">
                   {benefits.map((b) => (
                     <li key={b}>
@@ -496,13 +495,13 @@ export default function ServiceDetailPage(props) {
 
               {/* Other Services */}
               <div className="service-sidebar__card">
-                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Our Other Services</div>
+                <div style={{ fontWeight: 700, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>Our Other Services</div>
                 <ul className="service-sidebar__list" aria-label="Other pest control services we offer">
                   {OTHER_SERVICES.filter((s) => !title || !s.label.toLowerCase().includes(title.toLowerCase().split(' ')[0])).map((s) => (
                     <li key={s.to}>
                       <Link
                         href={s.to}
-                        style={{ color: 'var(--clr-text-muted)', fontSize: 'var(--font-size-h3)', transition: 'color 0.2s', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                        style={{ color: 'var(--clr-text-muted)', transition: 'color 0.2s', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
                         aria-label={`View ${s.label} service`}
                       >
                         {s.label}

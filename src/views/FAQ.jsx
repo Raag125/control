@@ -207,7 +207,7 @@ export default function FAQ() {
                 viewport={{ once: true }}
                 transition={{ delay: ci * 0.1 }}
               >
-                <h2 style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--clr-primary)', marginBottom: '1.25rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                <h2 style={{ fontWeight: 700, color: 'var(--clr-primary)', marginBottom: '1.25rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                   {cat.category}
                 </h2>
                 <div className="faq-list">

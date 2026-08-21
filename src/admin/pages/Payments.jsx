@@ -38,8 +38,8 @@ export default function Payments() {
       {/* Header */}
       <div className="adm-section-header">
         <div>
-          <h1 className="adm-section-title" style={{ fontSize: 'var(--font-size-h2)' }}>💳 Payment Records</h1>
-          <p style={{ fontSize: 'var(--font-size-h3)', color: 'var(--a-muted)', marginTop: '.15rem' }}>
+          <h1 className="adm-section-title">💳 Payment Records</h1>
+          <p style={{ color: 'var(--a-muted)', marginTop: '.15rem' }}>
             Track collections, transaction IDs, and settlement status.
           </p>
         </div>
@@ -70,7 +70,7 @@ export default function Payments() {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--a-muted)" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input placeholder="Search by customer, ID, reference…" value={search} onChange={e => setSearch(e.target.value)} />
           {search && (
-            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer', fontSize: 'var(--font-size-h3)' }}>✕</button>
+            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--a-muted)', cursor: 'pointer' }}>✕</button>
           )}
         </div>
 
@@ -84,7 +84,7 @@ export default function Payments() {
             return (
               <button key={s} className={`adm-chip ${filter === s ? 'active' : ''}`} onClick={() => setFilter(s)}>
                 <span style={{ textTransform: 'capitalize' }}>{s}</span>
-                {count > 0 && <span style={{ opacity: 0.8, fontSize: 'var(--font-size-h3)' }}>({count})</span>}
+                {count > 0 && <span style={{ opacity: 0.8 }}>({count})</span>}
               </button>
             )
           })}
@@ -104,14 +104,14 @@ export default function Payments() {
                   ? <tr><td colSpan={9}><div className="adm-empty"><div className="adm-empty__icon">💳</div><div className="adm-empty__text">No payments found</div></div></td></tr>
                   : filtered.map(p => (
                     <tr key={p.id}>
-                      <td style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-h2)', color: 'var(--a-green2)', fontWeight: 700 }}>{p.id}</td>
-                      <td style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-h2)' }}>{p.orderId}</td>
-                      <td style={{ fontWeight: 600, fontSize: 'var(--font-size-h3)' }}>{p.customer}</td>
+                      <td style={{ fontFamily: 'monospace', color: 'var(--a-green2)', fontWeight: 700 }}>{p.id}</td>
+                      <td style={{ fontFamily: 'monospace' }}>{p.orderId}</td>
+                      <td style={{ fontWeight: 600 }}>{p.customer}</td>
                       <td style={{ fontWeight: 700 }}>₹{Number(p.amount).toLocaleString('en-IN')}</td>
                       <td><span className="adm-badge adm-badge--gray" style={{ textTransform: 'uppercase' }}>{p.method}</span></td>
                       <td><span className={`adm-badge adm-badge--${STATUS_COLOR[p.status] || 'gray'}`}>{p.status}</span></td>
-                      <td style={{ fontSize: 'var(--font-size-h2)', fontFamily: 'monospace', color: 'var(--a-muted)' }}>{p.reference || '—'}</td>
-                      <td style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)' }}>{p.date ? new Date(p.date).toLocaleDateString('en-IN') : '—'}</td>
+                      <td style={{ fontFamily: 'monospace', color: 'var(--a-muted)' }}>{p.reference || '—'}</td>
+                      <td style={{ color: 'var(--a-muted)' }}>{p.date ? new Date(p.date).toLocaleDateString('en-IN') : '—'}</td>
                       <td>
                         <div className="adm-table-actions">
                           <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => openEdit(p)}>Edit</button>
@@ -140,7 +140,7 @@ export default function Payments() {
               <div key={p.id} className="adm-mobile-card">
                 <div className="adm-mobile-card__header">
                   <div>
-                    <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)', fontSize: 'var(--font-size-h3)' }}>{p.id}</span>
+                    <span style={{ fontFamily: 'monospace', fontWeight: 800, color: 'var(--a-green2)' }}>{p.id}</span>
                     <div className="adm-mobile-card__title" style={{ marginTop: '.2rem' }}>{p.customer}</div>
                   </div>
                   <span className={`adm-badge adm-badge--${STATUS_COLOR[p.status] || 'gray'}`}>{p.status}</span>
@@ -153,7 +153,7 @@ export default function Payments() {
                   </div>
                   <div className="adm-mobile-card__row">
                     <span className="adm-mobile-card__label">Method</span>
-                    <span className="adm-badge adm-badge--gray" style={{ textTransform: 'uppercase', fontSize: 'var(--font-size-h2)' }}>{p.method}</span>
+                    <span className="adm-badge adm-badge--gray" style={{ textTransform: 'uppercase' }}>{p.method}</span>
                   </div>
                   <div className="adm-mobile-card__row">
                     <span className="adm-mobile-card__label">Order</span>
@@ -166,7 +166,7 @@ export default function Payments() {
                 </div>
 
                 {p.reference && (
-                  <div style={{ fontSize: 'var(--font-size-h3)', fontFamily: 'monospace', color: 'var(--a-muted)', background: 'var(--a-card2)', padding: '.35rem .6rem', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
+                  <div style={{ fontFamily: 'monospace', color: 'var(--a-muted)', background: 'var(--a-card2)', padding: '.35rem .6rem', borderRadius: '6px', border: '1px solid var(--a-border)' }}>
                     Ref: {p.reference}
                   </div>
                 )}
@@ -229,7 +229,7 @@ export default function Payments() {
           <div className="adm-modal-overlay">
             <div className="adm-modal" style={{ maxWidth: 360 }}>
               <div className="adm-modal__title" style={{ marginBottom: '.75rem' }}>Delete Payment?</div>
-              <p style={{ fontSize: 'var(--font-size-h2)', color: 'var(--a-muted)', marginBottom: '1.25rem' }}>This cannot be undone.</p>
+              <p style={{ color: 'var(--a-muted)', marginBottom: '1.25rem' }}>This cannot be undone.</p>
               <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'flex-end' }}>
                 <button className="adm-btn adm-btn--ghost" onClick={() => setDel(null)}>Cancel</button>
                 <button className="adm-btn adm-btn--danger" onClick={() => { setPayments(deletePayment(del)); setDel(null) }}>Delete</button>
