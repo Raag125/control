@@ -9,8 +9,10 @@ const EMPTY_BLOG = { id: '', title: '', slug: '', excerpt: '', metaDesc: '', met
 export default function Blogs() {
   const [blogs, setBlogs] = useState([])
   const [search, setSearch] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
-    getBlogs().then(data => setBlogs(data))
+    getBlogs().then(data => { setBlogs(data); setIsLoading(false) })
   }, [])
   const [modal, setModal] = useState(false)
   const [form, setForm] = useState(EMPTY_BLOG)
@@ -112,7 +114,9 @@ export default function Blogs() {
                 <tr><th>Title &amp; URL</th><th>Status</th><th>Date</th><th>Actions</th></tr>
               </thead>
               <tbody>
-                {filtered.length === 0 ? (
+                {isLoading ? (
+                  <tr><td colSpan={4}><div className="adm-empty" style={{ padding: '3rem' }}><div style={{ width: '40px', height: '40px', border: '3px solid var(--a-border)', borderTopColor: '#6366f1', borderRadius: '50%', animation: 'spin 1s linear infinite' }} /></div></td></tr>
+                ) : filtered.length === 0 ? (
                   <tr><td colSpan={4}><div className="adm-empty"><div className="adm-empty__icon">✍️</div><div className="adm-empty__text">No blogs found</div></div></td></tr>
                 ) : (
                   filtered.map(b => (
@@ -144,7 +148,11 @@ export default function Blogs() {
 
       {/* Dedicated Mobile Cards */}
       <div className="adm-mobile-only">
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="adm-card adm-empty" style={{ padding: '4rem' }}>
+            <div style={{ width: '40px', height: '40px', border: '3px solid var(--a-border)', borderTopColor: '#6366f1', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="adm-card adm-empty">
             <div className="adm-empty__icon">✍️</div>
             <div className="adm-empty__text">No blogs found</div>

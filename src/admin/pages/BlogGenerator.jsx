@@ -222,6 +222,7 @@ export default function BlogGenerator() {
   
   const [steps, setSteps] = useState(Array(5).fill({ status: 'idle' }))
   const [log, setLog] = useState([])
+  const [isPublishing, setIsPublishing] = useState(false)
   const [sections, setSections] = useState([])
   const [coverImage, setCoverImage] = useState(null)
   const [outline, setOutline] = useState(null)
@@ -339,12 +340,44 @@ export default function BlogGenerator() {
     toast.success('Saved to drafts!'); setTimeout(() => { window.location.href = '/admin/blogs' }, 1500)
   }
 
-  function publishBlog() {
-    if (!sections.length) return
+  async function publishBlog() {
+    if (!sections.length || isPublishing) return
+    setIsPublishing(true)
     const title = outline?.h1_title || 'AI Generated Blog'
     const fullHtml = sections.filter(Boolean).map(s => `<${s.level}>${s.heading}</${s.level}>\n${s.html}`).join('\n')
-    saveBlog({ title, content: fullHtml, excerpt: outline?.bluf_answer||'', image: coverImage?.url||'', imageAlt: coverImage?.alt||'', metaDesc: outline?.meta_description||'', status: 'published' })
+    await saveBlog({ title, content: fullHtml, excerpt: outline?.bluf_answer||'', image: coverImage?.url||'', imageAlt: coverImage?.alt||'', metaDesc: outline?.meta_description||'', status: 'published' })
     toast.success('Blog published successfully!'); setTimeout(() => { window.location.href = '/admin/blogs' }, 1500)
+  }
+
+  const extractHtmlImages = (content) => {
+    if (!content) return []
+    const regex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi
+    const images = []
+    let match
+    while ((match = regex.exec(content)) !== null) {
+      const fullTag = match[0]
+      const url = match[1]
+      let alt = ''
+      const altMatch = fullTag.match(/alt=["']([^"']*)["']/)
+      if (altMatch) alt = altMatch[1]
+      images.push({ full: fullTag, alt, url })
+    }
+    return images
+  }
+
+  const handleHtmlAltChange = (sectionIndex, oldFull, newAlt) => {
+    setSections(prev => {
+      const updated = [...prev]
+      const s = updated[sectionIndex]
+      let newFull = oldFull
+      if (oldFull.match(/alt=["'][^"']*["']/)) {
+        newFull = oldFull.replace(/alt=["'][^"']*["']/, `alt="${newAlt}"`)
+      } else {
+        newFull = oldFull.replace('<img', `<img alt="${newAlt}"`)
+      }
+      s.html = s.html.replace(oldFull, newFull)
+      return updated
+    })
   }
 
   const hasContent = sections.filter(Boolean).length > 0 || !!coverImage
@@ -395,9 +428,13 @@ export default function BlogGenerator() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
                 Save Draft
               </button>
-              <button onClick={publishBlog} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', background: 'linear-gradient(135deg,#10b981,#059669)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem', boxShadow: '0 4px 12px rgba(16,185,129,0.3)' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-                Publish Now
+              <button onClick={publishBlog} disabled={isPublishing} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', background: 'linear-gradient(135deg,#10b981,#059669)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem', boxShadow: '0 4px 12px rgba(16,185,129,0.3)', opacity: isPublishing ? 0.8 : 1 }}>
+                {isPublishing ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{animation:'spin 1s linear infinite'}}><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                )}
+                {isPublishing ? 'Publishing...' : 'Publish Now'}
               </button>
             </>
           )}
@@ -705,7 +742,11 @@ export default function BlogGenerator() {
             <div style={{ flex:1, overflowY: 'auto', paddingBottom:'3rem' }}>
               {/* Cover Image */}
               {coverImage?.url && (
-                <div style={{ width:'100%',height:320,backgroundImage:`url(${coverImage.url})`,backgroundSize:'cover',backgroundPosition:'center',position:'relative' }}>
+                <div style={{ width:'100%',minHeight:320,backgroundImage:`url(${coverImage.url})`,backgroundSize:'cover',backgroundPosition:'center',position:'relative',display:'flex',alignItems:'flex-end',justifyContent:'flex-end',padding:'1rem',boxSizing:'border-box' }}>
+                  <div style={{ background:'rgba(0,0,0,0.6)', backdropFilter:'blur(8px)', padding:'0.75rem', borderRadius:'8px', width:'100%', maxWidth:'400px', display:'flex', flexDirection:'column', gap:'0.4rem', border:'1px solid rgba(255,255,255,0.1)' }}>
+                    <label style={{ fontSize:'0.7rem', color:'rgba(255,255,255,0.7)', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.05em' }}>Cover Image Alt Text</label>
+                    <input type="text" value={coverImage.alt} onChange={e => setCoverImage({...coverImage, alt: e.target.value})} style={{ width:'100%', padding:'0.4rem 0.6rem', background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:'4px', color:'white', fontSize:'0.82rem', boxSizing:'border-box', outline:'none' }} />
+                  </div>
                 </div>
               )}
 
@@ -726,11 +767,21 @@ export default function BlogGenerator() {
               <div className="blog-post-page" style={{ padding: '2rem 3rem' }}>
                 {outline?.h1_title && <h1 className="blog-post-page__title" style={{ marginTop: '0', fontSize:'2.2rem' }}>{outline.h1_title}</h1>}
                 <div className="blog-markdown-content" style={{ fontSize:'1.05rem', lineHeight:1.75 }}>
-                  {sections.filter(Boolean).map((s,i)=>(
-                    <div key={i} className="blog-section-card" style={{ marginBottom:'2rem' }}>
-                      <div dangerouslySetInnerHTML={{ __html: (s.level === 'h2' || s.level === 'h3' ? `<${s.level} style="margin-top:2.5rem; margin-bottom:1rem; font-size:${s.level==='h2'?'1.6rem':'1.3rem'}">${s.heading}</${s.level}>` : '') + s.html }}/>
-                    </div>
-                  ))}
+                  {sections.filter(Boolean).map((s,i) => {
+                    const inlineImages = extractHtmlImages(s.html)
+                    return (
+                      <div key={i} className="blog-section-card" style={{ marginBottom:'2rem', position: 'relative' }}>
+                        <div dangerouslySetInnerHTML={{ __html: (s.level === 'h2' || s.level === 'h3' ? `<${s.level} style="margin-top:2.5rem; margin-bottom:1rem; font-size:${s.level==='h2'?'1.6rem':'1.3rem'}">${s.heading}</${s.level}>` : '') + s.html }}/>
+                        
+                        {inlineImages.map((img, imgIdx) => (
+                          <div key={imgIdx} style={{ background:'var(--a-bg)', padding:'0.75rem', borderRadius:'8px', border:'1px solid var(--a-border)', display:'flex', flexDirection:'column', gap:'0.4rem', marginTop:'1rem' }}>
+                            <label style={{ fontSize:'0.7rem', color:'var(--a-muted)', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.05em' }}>Inline Image Alt Text</label>
+                            <input type="text" value={img.alt} onChange={e => handleHtmlAltChange(i, img.full, e.target.value)} style={{ width:'100%', padding:'0.4rem 0.6rem', background:'var(--a-card)', border:'1px solid var(--a-border)', borderRadius:'4px', color:'var(--a-text)', fontSize:'0.82rem', boxSizing:'border-box', outline:'none' }} />
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  })}
                   {running && sections.filter(Boolean).length > 0 && steps[2]?.status === 'running' && (
                     <div style={{ display:'flex',alignItems:'center',gap:'0.6rem',color:'var(--a-muted)',margin:'2.5rem 0',fontSize:'0.95rem', background:'var(--a-bg)', padding:'1rem', borderRadius:'8px', border:'1px dashed var(--a-border)' }}>
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{animation:'spin 1s linear infinite'}}><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
