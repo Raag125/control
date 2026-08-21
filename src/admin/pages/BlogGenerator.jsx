@@ -78,11 +78,11 @@ function CalendarModal({ open, onClose, onGenerateBlog }) {
 
   return createPortal(
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 999999, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)' }}>
-      <div style={{ background: 'var(--a-card)', borderRadius: '18px', border: '1px solid var(--a-border)', width: '92vw', maxWidth: 1100, maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 32px 80px rgba(0,0,0,0.5)' }}>
-        <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--a-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: 'var(--a-card)', zIndex: 10 }}>
+      <div style={{ background: 'var(--a-card)', borderRadius: '14px', border: '1px solid var(--a-border)', width: '92vw', maxWidth: 900, maxHeight: '85vh', overflowY: 'auto', boxShadow: '0 32px 80px rgba(0,0,0,0.5)' }}>
+        <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid var(--a-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: 'var(--a-card)', zIndex: 10 }}>
           <div>
-            <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: 'var(--a-text)' }}>📅 Content Calendar</h2>
-            <p style={{ margin: '0.2rem 0 0', color: 'var(--a-muted)', fontSize: '0.84rem' }}>AI-powered monthly blog planning</p>
+            <h2 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: 'var(--a-text)' }}>📅 Content Calendar</h2>
+            <p style={{ margin: '0.2rem 0 0', color: 'var(--a-muted)', fontSize: '0.75rem' }}>AI-powered monthly blog planning</p>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
             <div onClick={() => toggleAutoPublish(!autoPublish)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
@@ -94,38 +94,38 @@ function CalendarModal({ open, onClose, onGenerateBlog }) {
             <button onClick={() => {
               if (plan && !window.confirm('Are you sure you want to regenerate? This will overwrite the existing plan for this month.')) return;
               generatePlan();
-            }} disabled={planning} style={{ padding: '0.6rem 1.25rem', background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: planning ? 'not-allowed' : 'pointer', opacity: planning ? 0.7 : 1, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            }} disabled={planning} style={{ padding: '0.45rem 1rem', background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: planning ? 'not-allowed' : 'pointer', opacity: planning ? 0.7 : 1, fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
               {planning ? '⏳ Planning...' : (plan ? '🔄 Regenerate Plan' : '✨ Generate Plan')}
             </button>
-            <button onClick={onClose} style={{ width: 36, height: 36, background: 'var(--a-bg)', border: '1px solid var(--a-border)', borderRadius: '8px', cursor: 'pointer', color: 'var(--a-muted)', fontSize: '1.3rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+            <button onClick={onClose} style={{ width: 30, height: 30, background: 'var(--a-bg)', border: '1px solid var(--a-border)', borderRadius: '6px', cursor: 'pointer', color: 'var(--a-muted)', fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
           </div>
         </div>
-        <div style={{ padding: '1.5rem 2rem' }}>
-          {showNextMonthBanner && <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)', borderRadius: '10px', padding: '0.75rem 1rem', marginBottom: '1.25rem', color: '#d97706', fontSize: '0.85rem' }}>⚠️ {daysLeft} days left — <strong>{MONTHS[viewMonth===12?0:viewMonth]} plan not yet generated!</strong></div>}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <button onClick={() => { if(viewMonth===1){setViewMonth(12);setViewYear(y=>y-1)}else setViewMonth(m=>m-1) }} style={{ background: 'var(--a-bg)', border: '1px solid var(--a-border)', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', color: 'var(--a-text)', fontWeight: 600 }}>‹ Prev</button>
-            <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1.2rem', color: 'var(--a-text)' }}>{MONTHS[viewMonth-1]} {viewYear}</h3>
-            <button onClick={() => { if(viewMonth===12){setViewMonth(1);setViewYear(y=>y+1)}else setViewMonth(m=>m+1) }} style={{ background: 'var(--a-bg)', border: '1px solid var(--a-border)', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', color: 'var(--a-text)', fontWeight: 600 }}>Next ›</button>
+        <div style={{ padding: '1rem 1.5rem' }}>
+          {showNextMonthBanner && <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)', borderRadius: '8px', padding: '0.6rem 0.8rem', marginBottom: '1rem', color: '#d97706', fontSize: '0.8rem' }}>⚠️ {daysLeft} days left — <strong>{MONTHS[viewMonth===12?0:viewMonth]} plan not yet generated!</strong></div>}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+            <button onClick={() => { if(viewMonth===1){setViewMonth(12);setViewYear(y=>y-1)}else setViewMonth(m=>m-1) }} style={{ background: 'var(--a-bg)', border: '1px solid var(--a-border)', borderRadius: '6px', padding: '0.4rem 0.8rem', cursor: 'pointer', color: 'var(--a-text)', fontWeight: 600, fontSize: '0.8rem' }}>‹ Prev</button>
+            <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1.05rem', color: 'var(--a-text)' }}>{MONTHS[viewMonth-1]} {viewYear}</h3>
+            <button onClick={() => { if(viewMonth===12){setViewMonth(1);setViewYear(y=>y+1)}else setViewMonth(m=>m+1) }} style={{ background: 'var(--a-bg)', border: '1px solid var(--a-border)', borderRadius: '6px', padding: '0.4rem 0.8rem', cursor: 'pointer', color: 'var(--a-text)', fontWeight: 600, fontSize: '0.8rem' }}>Next ›</button>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.4rem', marginBottom: '0.4rem' }}>
-            {DAYS.map(d => <div key={d} style={{ textAlign: 'center', fontSize: '0.72rem', fontWeight: 700, color: 'var(--a-muted)', padding: '0.35rem 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{d}</div>)}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.3rem', marginBottom: '0.3rem' }}>
+            {DAYS.map(d => <div key={d} style={{ textAlign: 'center', fontSize: '0.65rem', fontWeight: 700, color: 'var(--a-muted)', padding: '0.25rem 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{d}</div>)}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.3rem' }}>
             {Array(firstDay).fill(null).map((_,i)=><div key={`e-${i}`}/>)}
             {Array(daysInMonth).fill(null).map((_,i) => {
               const d=i+1, dateStr=`${viewYear}-${String(viewMonth).padStart(2,'0')}-${String(d).padStart(2,'0')}`, dayData=plan?.days?.[dateStr], isToday=dateStr===new Date().toISOString().split('T')[0], catColor=dayData?CATEGORY_COLORS[dayData.category]||'#6366f1':null
               return (
-                <div key={d} onClick={()=>dayData&&startEdit(dateStr,dayData)} style={{ minHeight: 90, background: isToday?'rgba(99,102,241,0.08)':'var(--a-bg)', border: `1px solid ${isToday?'#6366f1':'var(--a-border)'}`, borderRadius: '8px', padding: '0.5rem', position: 'relative', cursor: dayData?'pointer':'default', transition: 'background 0.2s' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.25rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: isToday?'#6366f1':'var(--a-text)' }}>{d}</div>
+                <div key={d} onClick={()=>dayData&&startEdit(dateStr,dayData)} style={{ minHeight: 70, background: isToday?'rgba(99,102,241,0.08)':'var(--a-bg)', border: `1px solid ${isToday?'#6366f1':'var(--a-border)'}`, borderRadius: '6px', padding: '0.35rem', position: 'relative', cursor: dayData?'pointer':'default', transition: 'background 0.2s' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.2rem' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 800, color: isToday?'#6366f1':'var(--a-text)' }}>{d}</div>
                     {dayData && (
-                      <div onClick={(e)=>{e.stopPropagation(); startEdit(dateStr,dayData)}} style={{ fontSize: '0.65rem', background: 'var(--a-border)', color: 'var(--a-text)', padding: '0.1rem 0.3rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}>✏️ Edit</div>
+                      <div onClick={(e)=>{e.stopPropagation(); startEdit(dateStr,dayData)}} style={{ fontSize: '0.6rem', background: 'var(--a-border)', color: 'var(--a-text)', padding: '0.1rem 0.25rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}>✏️ Edit</div>
                     )}
                   </div>
                   {dayData && <>
-                    <div style={{ fontSize: '0.65rem', color: 'white', background: catColor, borderRadius: '4px', padding: '0.15rem 0.35rem', marginBottom: '0.25rem', fontWeight: 600 }}>{dayData.category}</div>
-                    <div style={{ fontSize: '0.62rem', color: 'var(--a-muted)', lineHeight: 1.4, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{dayData.keyword}</div>
-                    <button onClick={e=>{e.stopPropagation();generateSingleBlog(dateStr,dayData)}} disabled={generating===dateStr} style={{ position: 'absolute', bottom: 4, right: 4, background: '#3b82f6', border: 'none', borderRadius: '4px', color: 'white', fontSize: '0.6rem', padding: '0.15rem 0.4rem', cursor: 'pointer', opacity: generating===dateStr?0.6:1 }}>{generating===dateStr?'...':'▶'}</button>
+                    <div style={{ fontSize: '0.6rem', color: 'white', background: catColor, borderRadius: '3px', padding: '0.1rem 0.3rem', marginBottom: '0.2rem', fontWeight: 600, display: 'inline-block' }}>{dayData.category}</div>
+                    <div style={{ fontSize: '0.58rem', color: 'var(--a-muted)', lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{dayData.keyword}</div>
+                    <button onClick={e=>{e.stopPropagation();generateSingleBlog(dateStr,dayData)}} disabled={generating===dateStr} style={{ position: 'absolute', bottom: 3, right: 3, background: '#3b82f6', border: 'none', borderRadius: '3px', color: 'white', fontSize: '0.55rem', padding: '0.1rem 0.3rem', cursor: 'pointer', opacity: generating===dateStr?0.6:1 }}>{generating===dateStr?'...':'▶'}</button>
                   </>}
                 </div>
               )
