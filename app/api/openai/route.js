@@ -32,12 +32,18 @@ async function uploadToFirebaseStorage(imageUrl, fileName) {
     
     const safeFileName = (fileName || 'image.png').replace(/[^a-z0-9.-]/gi, '') || 'image.png';
     const uniqueFileName = `${Date.now()}-${safeFileName}`;
-    const writePath = path.join(process.cwd(), 'public', 'images', 'blogs', uniqueFileName);
     
-    fs.writeFileSync(writePath, Buffer.from(buffer));
-    return `/images/blogs/${uniqueFileName}`;
+    const bucket = getFirebaseAdmin().storage().bucket();
+    const file = bucket.file(`blogs/${uniqueFileName}`);
+    
+    await file.save(Buffer.from(buffer), {
+      metadata: { contentType: 'image/png' },
+      public: true
+    });
+    
+    return `https://storage.googleapis.com/${bucket.name}/${file.name}`;
   } catch (error) {
-    console.error("Local Storage Upload Error:", error);
+    console.error("Firebase Storage Upload Error:", error);
     return imageUrl; 
   }
 }
@@ -54,11 +60,17 @@ async function uploadBase64ToFirebaseStorage(b64_json, fileName) {
 
   try {
     const buffer = Buffer.from(b64_json, 'base64');
-    const writePath = path.join(process.cwd(), 'public', 'images', 'blogs', uniqueFileName);
-    fs.writeFileSync(writePath, buffer);
-    return `/images/blogs/${uniqueFileName}`;
+    const bucket = getFirebaseAdmin().storage().bucket();
+    const file = bucket.file(`blogs/${uniqueFileName}`);
+    
+    await file.save(buffer, {
+      metadata: { contentType: 'image/png' },
+      public: true
+    });
+    
+    return `https://storage.googleapis.com/${bucket.name}/${file.name}`;
   } catch (error) {
-    console.error('Local Save Error:', error.message);
+    console.error('Firebase Storage Upload Error:', error.message);
     // Fallback: return data URL so image still shows
     return `data:image/png;base64,${b64_json}`;
   }
@@ -114,7 +126,7 @@ function httpsPost(url, headers, bodyObj) {
 }
 
 async function callDallE(prompt) {
-  console.log('[callDallE] Requesting gpt-image-2 for prompt:', prompt.slice(0, 80));
+  console.log('[callDallE] Requesting dall-e-2 for prompt:', prompt.slice(0, 80));
   let data;
   try {
     data = await httpsPost(
@@ -123,7 +135,7 @@ async function callDallE(prompt) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${key()}`,
       },
-      { model: 'gpt-image-2', prompt, n: 1, size: '1024x1024' }
+      { model: 'dall-e-2', prompt, n: 1, size: '512x512', response_format: 'b64_json' }
     );
   } catch (fetchErr) {
     throw new Error('Image API request failed: ' + fetchErr.message);
