@@ -401,9 +401,9 @@ if (typeof window !== 'undefined') {
 
 // ── Content Calendar ─────────────────────────────────────────────────────────
 // Calendar shape: { [YYYY-MM]: { autoPublish: bool, days: { [YYYY-MM-DD]: { keyword, instructions, status, generatedBlogId } } } }
-export const getCalendar  = ()  => read(KEYS.calendar) || {}
+export const getCalendar  = ()  => readObj(KEYS.calendar) || {}
 export const saveCalendar = cal => { write(KEYS.calendar, cal); return cal }
-export const getMonthPlan = (yearMonth) => (read(KEYS.calendar) || {})[yearMonth] || null
+export const getMonthPlan = (yearMonth) => (readObj(KEYS.calendar) || {})[yearMonth] || null
 export async function saveMonthPlan(month, planData) {
   const current = readObj(KEYS.calendar)
   current[month] = planData

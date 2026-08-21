@@ -46,7 +46,7 @@ function CalendarModal({ open, onClose, onGenerateBlog }) {
       if (!res.ok) throw new Error(data.error?.message || 'Failed')
       const newPlan = { ...data.plan, autoPublish, frequency: 7, generated: new Date().toISOString() }
       setPlan(newPlan); await saveMonthPlan(yearMonth, newPlan)
-      toast.success(`${MONTHS[viewMonth-1]} plan generated with ${Object.keys(data.plan.days || {}).length} posts!`)
+      toast.success(`${MONTHS[viewMonth-1]} plan generated and saved to MongoDB securely!`)
     } catch(e) { toast.error(e.message) } finally { setPlanning(false) }
   }
 
