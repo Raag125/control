@@ -261,7 +261,8 @@ Generate high-quality, diverse, SEO-optimized keyword assignments for every sing
           }
         ],
         response_format: { type: 'json_object' },
-        temperature: 0.6
+        temperature: 0.6,
+        max_tokens: 4000
       });
       return NextResponse.json({ plan: JSON.parse(data.choices[0].message.content), usage: data.usage });
     } catch (err) {
@@ -302,7 +303,8 @@ Generate high-quality, diverse, SEO-optimized keyword assignments for every sing
                 { role: 'user', content: `Pick the best keyword for today: ${month} ${today.getDate()}, ${today.getFullYear()}.` }
               ],
               response_format: { type: 'json_object' },
-              temperature: 0.9 // increased temperature for more variety
+              temperature: 0.9, // increased temperature for more variety
+              max_tokens: 500
             });
             totalTokens += kwData.usage?.total_tokens || 0;
             const kwJson = JSON.parse(kwData.choices[0].message.content);
@@ -331,7 +333,8 @@ Output strictly in JSON with keys: "lsi_keywords", "paa_questions", "key_stats",
               { role: 'user', content: `Primary Keyword: ${primary_keyword}\nUser-provided LSI: ${lsi_keywords || 'none'}` }
             ],
             response_format: { type: 'json_object' },
-            temperature: 0.3
+            temperature: 0.3,
+            max_tokens: 1500
           });
 
           totalTokens += serpData.usage?.total_tokens || 0;
@@ -384,7 +387,8 @@ Additional Instructions: ${instructions || 'none'}
 Generate a comprehensive outline.` }
             ],
             response_format: { type: 'json_object' },
-            temperature: 0.4
+            temperature: 0.4,
+            max_tokens: 4000
           });
 
           totalTokens += outlineData.usage?.total_tokens || 0;
@@ -424,11 +428,11 @@ ${internalLinksContext}`;
                 { role: 'system', content: sectionSystemPrompt },
                 { role: 'user', content: `Article Title: ${outline.h1_title}
 Section Heading: ${section.heading_text} (${section.heading_level})
-Keywords to include: ${section.target_keywords?.join(', ')}
+Keywords to include: ${Array.isArray(section.target_keywords) ? section.target_keywords.join(', ') : (section.target_keywords || '')}
 Target word count: ~${section.word_target || 200} words
 ${isTable ? 'IMPORTANT: Include a well-formatted markdown comparison table in this section.' : ''}
 ${isFaq ? `FAQ Questions to answer:\n${outline.faq_schema?.map(f => `- Q: ${f.question}\n  A: ${f.answer}`).join('\n')}` : ''}
-Key stats to weave in if relevant: ${serpJson.key_stats?.join('; ')}
+Key stats to weave in if relevant: ${Array.isArray(serpJson.key_stats) ? serpJson.key_stats.join('; ') : (serpJson.key_stats || '')}
 
 Write the complete markdown content for this section only.` }
               ],
@@ -457,7 +461,8 @@ Write the complete markdown content for this section only.` }
                 { role: 'user', content: `Article Title: ${outline.h1_title}\nPrimary Topic: ${primary_keyword}\nGenerate the image assets data.` }
               ],
               response_format: { type: 'json_object' },
-              temperature: 0.5
+              temperature: 0.5,
+              max_tokens: 1500
             });
 
             totalTokens += imgPromptData.usage?.total_tokens || 0;
@@ -590,7 +595,8 @@ ${markdown}
 Perform the complete audit, calculate the scores, and return the diagnostic JSON.` }
               ],
               response_format: { type: 'json_object' },
-              temperature: 0.2
+              temperature: 0.2,
+              max_tokens: 3000
             });
             totalTokens += res.usage?.total_tokens || 0;
             return JSON.parse(res.choices[0].message.content);
@@ -634,7 +640,8 @@ ${safeMarkdown}
 
 Apply all corrections and output the optimized, publication-ready markdown article.` }
               ],
-              temperature: 0.5
+              temperature: 0.5,
+              max_tokens: 4000
             });
             totalTokens += patchRes.usage?.total_tokens || 0;
             const patchedMarkdown = patchRes.choices[0].message.content.replace(/^```markdown|```$/g, '').trim();
