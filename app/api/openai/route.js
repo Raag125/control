@@ -135,7 +135,7 @@ async function callDallE(prompt) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${key()}`,
       },
-      { model: 'gpt-image-2', prompt, n: 1, size: '512x512' }
+      { model: 'gpt-image-2', prompt, n: 1, size: '1024x1024' }
     );
   } catch (fetchErr) {
     throw new Error('Image API request failed: ' + fetchErr.message);
