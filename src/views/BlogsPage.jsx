@@ -34,7 +34,7 @@ export default function BlogsPage() {
           <div className="blogs-grid">
             {blogs.map((blog, idx) => (
               <motion.div 
-                key={blog.id} 
+                key={blog._id || blog.slug} 
                 className="blog-card"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}

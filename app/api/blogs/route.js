@@ -52,17 +52,6 @@ export async function GET() {
     const { db } = conn
     let blogs = await db.collection('blogs').find({}).sort({ date: -1 }).toArray()
     
-    // Seed database if empty
-    if (blogs.length === 0 && initialBlogs && initialBlogs.length > 0) {
-      console.log('Seeding blogs collection with initialBlogs...')
-      const formattedBlogs = initialBlogs.map(b => ({
-        ...b,
-        date: b.date || new Date().toISOString()
-      }))
-      await db.collection('blogs').insertMany(formattedBlogs)
-      blogs = await db.collection('blogs').find({}).sort({ date: -1 }).toArray()
-    }
-    
     // Remove _id from response for cleaner client handling
     blogs = blogs.map(b => {
       const { _id, ...rest } = b

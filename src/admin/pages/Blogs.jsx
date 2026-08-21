@@ -116,7 +116,7 @@ export default function Blogs() {
                   <tr><td colSpan={4}><div className="adm-empty"><div className="adm-empty__icon">✍️</div><div className="adm-empty__text">No blogs found</div></div></td></tr>
                 ) : (
                   filtered.map(b => (
-                    <tr key={b.id}>
+                    <tr key={b._id || b.slug}>
                       <td>
                         <div style={{ fontWeight: 600, fontSize: '.86rem' }}>{b.title}</div>
                         <div style={{ fontSize: '.7rem', color: 'var(--a-muted)', fontFamily: 'monospace' }}>/{b.slug}</div>
@@ -152,7 +152,7 @@ export default function Blogs() {
         ) : (
           <div className="adm-mobile-list">
             {filtered.map(b => (
-              <div key={b.id} className="adm-mobile-card">
+              <div key={b._id || b.slug} className="adm-mobile-card">
                 <div className="adm-mobile-card__header">
                   <div>
                     <div className="adm-mobile-card__title" style={{ fontSize: '.88rem' }}>{b.title}</div>

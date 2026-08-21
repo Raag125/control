@@ -68,18 +68,24 @@ export default function BlogPostPage({ slug: propSlug }) {
       />
       <AnimatedBackground />
       
-      <div className="container blog-header" style={{ paddingTop: '7rem', paddingBottom: '2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
-        <div className="blog-meta" style={{ marginBottom: '1rem', color: 'var(--clr-primary)' }}>
-          {new Date(blog.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      <div className="container blog-header" style={{ paddingTop: '7rem', paddingBottom: '2rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '3rem', maxWidth: '1200px', margin: '0 auto' }}>
+        
+        <div style={{ flex: '1 1 400px', textAlign: 'left' }}>
+          <div className="blog-meta" style={{ marginBottom: '1rem', color: 'var(--clr-primary)', fontWeight: '600' }}>
+            {new Date(blog.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          </div>
+          <h1 className="blog-title" style={{ color: 'var(--clr-primary-dark)', textShadow: 'none', marginBottom: '1rem', fontSize: 'clamp(2.5rem, 4vw, 4rem)', lineHeight: '1.2' }}>
+            {blog.title}
+          </h1>
         </div>
-        <h1 className="blog-title" style={{ color: 'var(--clr-primary-dark)', textShadow: 'none', marginBottom: '2rem' }}>
-          {blog.title}
-        </h1>
-        <img 
-          src={blog.image || 'https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&q=80&w=2000'} 
-          alt={blog.imageAlt || blog.title} 
-          style={{ width: '100%', height: 'auto', borderRadius: '20px', objectFit: 'cover', aspectRatio: '16/9', maxHeight: '60vh', backgroundColor: 'var(--clr-bg-alt)', boxShadow: '0 8px 30px rgba(0,0,0,0.15)' }}
-        />
+
+        <div style={{ flex: '1 1 500px' }}>
+          <img 
+            src={blog.image || 'https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&q=80&w=2000'} 
+            alt={blog.imageAlt || blog.title} 
+            style={{ width: '100%', height: 'auto', borderRadius: '20px', objectFit: 'contain', maxHeight: '60vh', backgroundColor: 'var(--clr-bg-alt)', boxShadow: '0 8px 30px rgba(0,0,0,0.15)' }}
+          />
+        </div>
       </div>
 
       <div className="container blog-content-layout" style={{ marginTop: '1rem' }}>
@@ -91,16 +97,29 @@ export default function BlogPostPage({ slug: propSlug }) {
               remarkPlugins={[remarkGfm]} 
               rehypePlugins={[rehypeRaw]}
               components={{
-                iframe: ({ node, style, ...props }) => (
+                iframe: ({ node, style, width, height, ...props }) => (
                   <iframe 
                     {...props} 
                     style={{ 
                       width: '100%', 
+                      height: 'auto',
                       borderRadius: '12px', 
                       margin: '1.5rem 0', 
                       aspectRatio: '16/9', 
                       maxWidth: '100%', 
                       display: 'block' 
+                    }} 
+                  />
+                ),
+                img: ({ node, ...props }) => (
+                  <img 
+                    {...props} 
+                    style={{ 
+                      maxWidth: '100%', 
+                      height: 'auto', 
+                      borderRadius: '8px',
+                      display: 'block',
+                      margin: '1.5rem auto'
                     }} 
                   />
                 )
@@ -135,7 +154,7 @@ export default function BlogPostPage({ slug: propSlug }) {
               <h3>Read Next</h3>
               <div className="sidebar-recent-list">
                 {recentBlogs.map(rb => (
-                  <Link key={rb.id} href={`/${rb.slug}`} className="sidebar-recent-item">
+                  <Link key={rb._id || rb.slug} href={`/${rb.slug}`} className="sidebar-recent-item">
                     <img 
                       src={rb.image || 'https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&q=80&w=200'} 
                       alt={rb.imageAlt || rb.title} 
